@@ -1,24 +1,24 @@
 {
-    "short_name": "Chess Tournament",
-    "name": "Chess Tournament",
-    "display": "fullscreen",
-    "orientationx": "landscape",
-    "icons": [
-      {
-        "src": "assets/Icons/Icon_48x48.png",
-        "type": "image/png",
-        "sizes": "48x48"
-      },
-      {
-        "src": "assets/Icons/Icon_96x96.png",
-        "type": "image/png",
-        "sizes": "96x96"
-      },
-      {
-        "src": "assets/Icons/Icon_192x192.png",
-        "type": "image/png",
-        "sizes": "192x192"
-      }
-    ],
-    "start_url": "index.html"
-  }
+  "short_name": "Chess",
+  "name": "Chess Tournament",
+  "display": "standalone",
+  "orientationx": "landscape",
+  "icons": [
+    {
+      "src": "assets/Icons/Icon_48x48.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "assets/Icons/Icon_96x96.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "assets/Icons/Icon_192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": "index.html"
+}
