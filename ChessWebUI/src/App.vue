@@ -62,10 +62,12 @@
                   <ion-list-header>
                     <ion-label>Other</ion-label>
                   </ion-list-header>
-                  <ion-item button detail="true" v-on:click="openPlayers()">
-                    <ion-icon slot="start" name="trophy"></ion-icon>
-                    <ion-label>Tournaments</ion-label>
-                  </ion-item>
+                  <router-link :to="{ name: 'tournaments'}">
+                    <ion-item button detail="true">
+                      <ion-icon slot="start" name="trophy"></ion-icon>
+                      <ion-label>Tournaments</ion-label>
+                    </ion-item>
+                  </router-link>
                 </ion-list>
               </ion-menu-toggle>
             </ion-list>

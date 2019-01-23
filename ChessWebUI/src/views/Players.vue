@@ -15,7 +15,11 @@
       </ion-toolbar>
     </ion-header>
     <ion-content>
-    
+      <ion-searchbar
+        :value="searchInput"
+        @ionInput="searchInput = $event.target.value;"
+        @ionChange="searchInput= $event.target.value;"
+      ></ion-searchbar>
       <!-- <ul>
         <li v-for="tournament of tournaments" :key="tournament.id">
           <p>
@@ -55,6 +59,7 @@ export default {
   components: {},
   data() {
     return {
+      searchInput:"",
       players: [],
       errors: []
     };

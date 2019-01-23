@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Tournament from './views/Tournament.vue'
+import Tournaments from './views/Tournaments.vue'
 import Players from './views/Players.vue'
 import Player from './views/Player.vue'
 import PlayerEdit from './views/PlayerEdit.vue'
@@ -19,7 +20,12 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Tournaments
+    },
+    {
+      path: '/tournaments',
+      name: 'tournaments',
+      component: Tournaments
     },
     {
       path: '/:tournament',
