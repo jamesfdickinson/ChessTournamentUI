@@ -36,7 +36,10 @@
             <ion-button slot="end" color="light" v-on:click="openTable(table.id)">Record Results</ion-button>
           </ion-item>
           <ion-item detail="true" v-for="position of table.positions" :key="position.id" v-on:click="openPlayer(position.playerId)">
-            <ion-icon name="contact" slot="start"></ion-icon>
+            
+            <ion-icon  v-if="position.color=='Black'" src="/images/chess_pawn_black.svg" slot="start"></ion-icon>
+            <ion-icon  v-else-if="position.color=='White'" src="/images/chess_pawn_white.svg" slot="start"></ion-icon>
+            <ion-icon v-else name="contact" slot="start"></ion-icon>
             {{position.playerFirstName}} {{position.playerLastName}}
             <ion-badge slot="end" color="light">{{position.points}}</ion-badge>
           </ion-item>
