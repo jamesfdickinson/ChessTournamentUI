@@ -24,7 +24,7 @@
         </ion-card-content>
       </ion-card>-->
       <ion-card>
-       <ion-img src="./images/chess-board.jpg"></ion-img> 
+        <ion-img src="./images/chess-board.jpg"></ion-img>
         <ion-card-header>
           <ion-card-title>Brookwood and Minter Bridge</ion-card-title>
         </ion-card-header>
@@ -32,63 +32,10 @@
           <p>Jan 26th Chess Tournament at Witch hazel led by Brookwood and Minter Bridge</p>
         </ion-card-content>
       </ion-card>
-      <ion-list>
-        <ion-item button detail="true" v-on:click="openPlayers()">
-          <ion-icon slot="start" name="contact"></ion-icon>
-          <ion-label>Players</ion-label>
-        </ion-item>
-        <ion-item button detail="true" v-on:click="openRounds()">
-          <ion-icon slot="start" name="paper"></ion-icon>
-          <ion-label>Rounds</ion-label>
-        </ion-item>
-        <ion-item button detail="true" v-on:click="openScores()">
-          <ion-icon slot="start" name="podium"></ion-icon>
-          <ion-label>Scores</ion-label>
-        </ion-item>
 
-        <ion-item button detail="true" v-on:click="openSignUp()">
-          <ion-icon slot="start" name="clipboard"></ion-icon>
-          <ion-label>Sign Up</ion-label>
-        </ion-item>
+      <Menu/>
 
-        <ion-item button detail="true" v-on:click="openFAQ()">
-          <ion-icon slot="start" name="help"></ion-icon>
-          <ion-label>FAQ</ion-label>
-        </ion-item>
-        <ion-list-header>
-          <ion-label>Admin</ion-label>
-        </ion-list-header>
 
-        <ion-item button detail="true" v-on:click="openRoster()">
-          <ion-icon slot="start" name="filing"></ion-icon>
-          <ion-label>Roster</ion-label>
-        </ion-item>
-        <ion-item button detail="true" v-on:click="openPlayers()">
-          <ion-icon slot="start" name="create"></ion-icon>
-          <ion-label>Recorder</ion-label>
-        </ion-item>
-        <router-link :to="{ name: 'admin', params: { tournament: tournamentId }}">
-          <ion-item button detail="true">
-            <ion-icon slot="start" name="cog"></ion-icon>
-            <ion-label>Admin Settings</ion-label>
-          </ion-item>
-        </router-link>
-     
-      </ion-list>
-
-      <!-- <ion-button v-on:click="openPlayers()">Players</ion-button>fdfggdfg
-      <ion-button v-on:click="loadData()">Load</ion-button>
-      <ion-button color="danger" v-on:click="clearData()">Clear</ion-button>
-
-      <ion-button color="light">Light</ion-button>
-      <ion-button>Default</ion-button>
-      <ion-button color="secondary">Secondary</ion-button>
-      <ion-button color="danger">Danger</ion-button>
-      <ion-button color="dark">Dark</ion-button>
-
-      <ion-fab-button class="todo-fab">
-        <ion-icon name="add"></ion-icon>
-      </ion-fab-button>-->
     </ion-content>
     <!-- </ion-page> -->
   </div>
@@ -98,11 +45,12 @@
 // @ is an alias to /src
 //import HelloWorld from "@/components/HelloWorld.vue";
 import fetch from "@/fetch.js";
+import Menu from "@/components/Menu.vue";
 
 export default {
   name: "home",
   components: {
-    //HelloWorld
+    Menu
   },
   data() {
     var tournamentId = this.$route.params.tournament || 118;

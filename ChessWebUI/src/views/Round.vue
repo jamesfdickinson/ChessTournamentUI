@@ -2,7 +2,7 @@
   <div class="ion-page" main>
     <!-- <ion-page class="ion-page" main> -->
     <ion-header>
-      <ion-toolbar>
+      <ion-toolbar color="primary">
         <ion-buttons slot="start">
           <ion-menu-toggle>
             <ion-button>
@@ -35,12 +35,24 @@
             <ion-label>Table {{table.id}}</ion-label>
             <ion-button slot="end" color="light" v-on:click="openTable(table.id)">Record Results</ion-button>
           </ion-item>
-          <ion-item detail="true" v-for="position of table.positions" :key="position.id" v-on:click="openPlayer(position.playerId)">
-            
-            <ion-icon  v-if="position.color=='Black'" src="/images/chess_pawn_black.svg" slot="start"></ion-icon>
-            <ion-icon  v-else-if="position.color=='White'" src="/images/chess_pawn_white.svg" slot="start"></ion-icon>
+          <ion-item
+            detail="true"
+            v-for="position of table.positions"
+            :key="position.id"
+            v-on:click="openPlayer(position.playerId)"
+          >
+            <ion-icon
+              v-if="position.color=='Black'"
+              src="/images/chess_pawn_black.svg"
+              slot="start"
+            ></ion-icon>
+            <ion-icon
+              v-else-if="position.color=='White'"
+              src="/images/chess_pawn_white.svg"
+              slot="start"
+            ></ion-icon>
             <ion-icon v-else name="contact" slot="start"></ion-icon>
-            {{position.playerFirstName}} {{position.playerLastName}}
+            <ion-label>{{position.playerFirstName}} {{position.playerLastName}}</ion-label>
             <ion-badge slot="end" color="light">{{position.points}}</ion-badge>
           </ion-item>
           <!-- </ion-list> -->
@@ -113,12 +125,24 @@ export default {
         filteredRound = filteredRound.filter(t => {
           let anyMatched = t.positions.find(p => {
             if (p.table && p.table == searchInput) return true;
-             if (p.table && typeof p.table === 'string' &&  p.table.startsWith(searchInput)) return true;
-            if (p.playerFirstName && p.playerFirstName.toLowerCase().startsWith(searchInput))
+            if (
+              p.table &&
+              typeof p.table === "string" &&
+              p.table.startsWith(searchInput)
+            )
               return true;
-            if (p.playerLastName && p.playerLastName.toLowerCase().startsWith(searchInput))
+            if (
+              p.playerFirstName &&
+              p.playerFirstName.toLowerCase().startsWith(searchInput)
+            )
               return true;
-            if (p.school && p.school.toLowerCase().startsWith(searchInput)) return true;
+            if (
+              p.playerLastName &&
+              p.playerLastName.toLowerCase().startsWith(searchInput)
+            )
+              return true;
+            if (p.school && p.school.toLowerCase().startsWith(searchInput))
+              return true;
             return false;
           });
           return anyMatched;

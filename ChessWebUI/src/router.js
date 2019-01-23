@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+//import Home from './views/Home.vue'
 import Tournament from './views/Tournament.vue'
 import Tournaments from './views/Tournaments.vue'
 import Players from './views/Players.vue'
@@ -9,6 +9,8 @@ import PlayerEdit from './views/PlayerEdit.vue'
 import Rounds from './views/Rounds.vue'
 import Round from './views/Round.vue'
 import Admin from './views/Admin.vue'
+import Reports from './views/Reports.vue'
+import FAQ from './views/FAQ.vue'
 //import RoundEdit from './views/PlayerEdit.vue'
 
 Vue.use(Router)
@@ -32,7 +34,11 @@ export default new Router({
       name: 'tournament',
       component: Tournament
     },
-    
+    {
+      path: '/:tournament/reports',
+      name: 'reports',
+      component: Reports
+    },
      {
       path: '/:tournament/players',
       name: 'players',
@@ -62,6 +68,11 @@ export default new Router({
       path: '/:tournament/admin',
       name: 'admin',
       component: Admin
+    },
+    {
+      path: '/:tournament/faq',
+      name: 'faq',
+      component: FAQ
     },
   ]
 })
