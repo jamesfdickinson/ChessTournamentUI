@@ -95,28 +95,28 @@ export default {
     Menu
   },
   data() {
-    var tournamentId = this.$route.params.tournament || 118;
+    var tournamentId = this.$route.params.tournament || 117;
     return {
       tournamentId: tournamentId
     };
   },
   methods: {
     openHome() {
-      var tournamentId = this.$route.params.tournament || 118;
+      var tournamentId = this.$route.params.tournament || 117;
       this.$router.push({
         name: "tournament",
         params: { tournament: tournamentId }
       });
     },
     openPlayers() {
-      var tournamentId = this.$route.params.tournament || 118;
+      var tournamentId = this.$route.params.tournament || 117;
       this.$router.push({
         name: "players",
         params: { tournament: tournamentId }
       });
     },
     openRounds() {
-      var tournamentId = this.$route.params.tournament || 118;
+      var tournamentId = this.$route.params.tournament || 117;
       this.$router.push({
         name: "rounds",
         params: { tournament: tournamentId }
