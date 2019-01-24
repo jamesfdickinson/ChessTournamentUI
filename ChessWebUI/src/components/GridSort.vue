@@ -89,7 +89,7 @@ export default {
   },
   methods: {
     sortBy: function(key) {
-      //todo: add array of sort keys
+      //add array of sort keys
 
       //remove it if it is in the list
       var index = this.sortKeys.indexOf(key);
@@ -123,19 +123,21 @@ li {
   margin: 0 10px;
 }
 a {
-  color: #42b983;
+  color: #16a085;
 }
 table {
   min-width: 100%;
-  border: 2px solid #42b983;
-  border-radius: 3px;
+  xborder: 2px solid #16a085;
+  xborder-radius: 3px;
   background-color: #fff;
+   
+  
 }
 
 th {
-  background-color: #42b983;
+  background-color: #16a085;
   color: rgba(255, 255, 255, 0.66);
-   color: rgba(255, 255, 255, 1);
+  color: rgba(255, 255, 255, 1);
   cursor: pointer;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -148,13 +150,22 @@ tr:nth-child(even) {
 xtd {
   background-color: #f9f9f9;
 }
-
 th,
 td {
-  xmin-width: 90px;
-  xpadding: 10px 20px;
+  min-width: 90px;
+  padding: 8px 4px;
+  xborder-right: solid white 1px;
+}
+th {
+  font-size: 1em;
+    /* font-size: 20px; */
+    font-weight: 500;
+    
+}
+
+td {
   padding: 4px 4px;
-  font-size: .80em;
+  font-size: 0.8em;
 }
 
 th.active {

@@ -52,18 +52,13 @@
         <ion-list-header>
           <ion-label>Custom Reports</ion-label>
         </ion-list-header>
-        <router-link :to="{ name: 'players', params: { tournament: tournamentId }}">
+        <router-link :to="{ name: 'ReportScoreGroupRank', params: { tournament: tournamentId }}">
           <ion-item button detail="true">
             <ion-icon slot="start" name="school"></ion-icon>
             <ion-label>Group Rank School</ion-label>
           </ion-item>
         </router-link>
-        <router-link :to="{ name: 'players', params: { tournament: tournamentId }}">
-          <ion-item button detail="true">
-            <ion-icon slot="start" name="cog"></ion-icon>
-            <ion-label>Wall Chart</ion-label>
-          </ion-item>
-        </router-link>
+
       </ion-list>
 
       <!-- <ion-button v-on:click="openPlayers()">Players</ion-button>fdfggdfg
@@ -86,7 +81,7 @@
 
 <script>
 // @ is an alias to /src
-import fetch from "@/fetch.js";
+//import fetch from "@/fetch.js";
 
 export default {
   name: "home",

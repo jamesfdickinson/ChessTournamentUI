@@ -68,6 +68,15 @@
             <ion-label>Edit Tournament</ion-label>
           </ion-item>
         </router-link>
+        <ion-list-header>
+          <ion-label>Reports</ion-label>
+        </ion-list-header>
+        <router-link :to="{ name: 'ReportWallChart', params: { tournament: tournamentId }}">
+          <ion-item button detail="true">
+            <ion-icon slot="start" name="cog"></ion-icon>
+            <ion-label>Wall Chart</ion-label>
+          </ion-item>
+        </router-link>
       </ion-list>
 
       <!-- <ion-button v-on:click="openPlayers()">Players</ion-button>fdfggdfg

@@ -22,10 +22,19 @@
       <ion-icon slot="start" name="help"></ion-icon>
       <ion-label>FAQ</ion-label>
     </ion-item>
+
+   <ion-list-header>
+      <ion-label>Recorder</ion-label>
+    </ion-list-header>
+     <router-link :to="{ name: 'Registration', params: { tournament: tournamentId }}">
+          <ion-item button detail="true">
+            <ion-icon slot="start" name="clipboard"></ion-icon>
+            <ion-label>Registration</ion-label>
+          </ion-item>
+        </router-link>
     <ion-list-header>
       <ion-label>Admin</ion-label>
     </ion-list-header>
-
     <ion-item button detail="true" v-on:click="openRoster()">
       <ion-icon slot="start" name="filing"></ion-icon>
       <ion-label>Roster</ion-label>

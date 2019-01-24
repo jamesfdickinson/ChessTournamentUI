@@ -24,7 +24,7 @@
         </ion-card-content>
       </ion-card>-->
       <ion-card>
-        <ion-img src="./images/chess-board.jpg"></ion-img>
+        <ion-img src="/images/chess-board.jpg"></ion-img>
         <ion-card-header>
           <ion-card-title>Brookwood and Minter Bridge</ion-card-title>
         </ion-card-header>

@@ -27,7 +27,6 @@
       <!-- </ion-card-content>
       </ion-card>-->
       <ion-list>
-       
         <ion-item>
           <ion-label position="fixed">Name</ion-label>
           <ion-label slot>{{player.firstName}} {{player.lastName}}</ion-label>
@@ -53,8 +52,8 @@
         <ion-list>-->
         <ion-list-header color="primary">Score</ion-list-header>
         <ion-item>
-          <ion-label  position="fixed">Score</ion-label>
-           <ion-label slot>4</ion-label>
+          <ion-label position="fixed">Score</ion-label>
+          <ion-label slot>4</ion-label>
         </ion-item>
         <!-- </ion-list>
 
@@ -100,7 +99,11 @@ export default {
   methods: {
     editPlayer() {
       var id = this.$route.params.id;
-      this.$router.push({ name: "playerEdit", params: { id: id } });
+      let tournamentId = this.tournamentId;
+      this.$router.push({
+        name: "PlayerEdit",
+        params: { id: id, tournament: tournamentId }
+      });
     },
     loadData() {
       var id = this.$route.params.id;

@@ -3,6 +3,7 @@ import Router from 'vue-router'
 //import Home from './views/Home.vue'
 import Tournament from './views/Tournament.vue'
 import Tournaments from './views/Tournaments.vue'
+import Registration from './views/Registration.vue'
 import Players from './views/Players.vue'
 import Player from './views/Player.vue'
 import PlayerEdit from './views/PlayerEdit.vue'
@@ -15,9 +16,10 @@ import ReportScoreByAll from './views/ReportScoreByAll.vue'
 import ReportScoreByGrade from './views/ReportScoreByGrade.vue'
 import ReportScoreByDivision from './views/ReportScoreByDivision.vue'
 import ReportScoreDetailed from './views/ReportScoreDetailed.vue'
+import ReportScoreGroupRank from './views/ReportScoreGroupRank.vue'
+import ReportWallChart from './views/ReportWallChart.vue'
 
-
-
+ReportScoreGroupRank
 //import RoundEdit from './views/PlayerEdit.vue'
 
 Vue.use(Router)
@@ -41,7 +43,12 @@ export default new Router({
       name: 'tournament',
       component: Tournament
     },
-
+    
+    {
+      path: '/:tournament/Registration',
+      name: 'Registration',
+      component: Registration
+    },
     {
       path: '/:tournament/players',
       name: 'players',
@@ -53,8 +60,8 @@ export default new Router({
       component: Player
     },
     {
-      path: '/:tournament/playeredit/:id',
-      name: 'playerEdit',
+      path: '/:tournament/PlayerEdit/:id',
+      name: 'PlayerEdit',
       component: PlayerEdit
     },
     {
@@ -96,12 +103,23 @@ export default new Router({
       path: '/:tournament/ReportScoreByDivision',
       name: 'ReportScoreByDivision',
       component: ReportScoreByDivision
-    },  {
+    },
+    {
       path: '/:tournament/ReportScoreDetailed',
       name: 'ReportScoreDetailed',
       component: ReportScoreDetailed
     },
-    
+    {
+      path: '/:tournament/ReportScoreGroupRank',
+      name: 'ReportScoreGroupRank',
+      component: ReportScoreGroupRank
+    },
+    {
+      path: '/:tournament/ReportWallChart',
+      name: 'ReportWallChart',
+      component: ReportWallChart
+    },
+
 
   ]
 })
