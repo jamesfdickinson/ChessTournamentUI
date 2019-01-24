@@ -2,7 +2,7 @@
 
 import axios from 'axios'
 
-const API_URL = process.env.API_URL || 'https://chesstournamentapi.azurewebsites.net/api/' || 'https://localhost:44319/api/';
+const API_URL = process.env.API_URL  || 'https://localhost:5001/api/' || 'https://chesstournamentapi.azurewebsites.net/api/';
 
 export default axios.create({
   baseURL: API_URL,

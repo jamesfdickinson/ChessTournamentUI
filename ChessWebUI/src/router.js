@@ -8,9 +8,16 @@ import Player from './views/Player.vue'
 import PlayerEdit from './views/PlayerEdit.vue'
 import Rounds from './views/Rounds.vue'
 import Round from './views/Round.vue'
+import FAQ from './views/FAQ.vue'
 import Admin from './views/Admin.vue'
 import Reports from './views/Reports.vue'
-import FAQ from './views/FAQ.vue'
+import ReportScoreByAll from './views/ReportScoreByAll.vue'
+import ReportScoreByGrade from './views/ReportScoreByGrade.vue'
+import ReportScoreByDivision from './views/ReportScoreByDivision.vue'
+import ReportScoreDetailed from './views/ReportScoreDetailed.vue'
+
+
+
 //import RoundEdit from './views/PlayerEdit.vue'
 
 Vue.use(Router)
@@ -34,12 +41,8 @@ export default new Router({
       name: 'tournament',
       component: Tournament
     },
+
     {
-      path: '/:tournament/reports',
-      name: 'reports',
-      component: Reports
-    },
-     {
       path: '/:tournament/players',
       name: 'players',
       component: Players
@@ -51,7 +54,7 @@ export default new Router({
     },
     {
       path: '/:tournament/playeredit/:id',
-      name: 'playeredit',
+      name: 'playerEdit',
       component: PlayerEdit
     },
     {
@@ -74,5 +77,31 @@ export default new Router({
       name: 'faq',
       component: FAQ
     },
+    {
+      path: '/:tournament/reports',
+      name: 'reports',
+      component: Reports
+    },
+    {
+      path: '/:tournament/ReportScoreByAll',
+      name: 'ReportScoreByAll',
+      component: ReportScoreByAll
+    },
+    {
+      path: '/:tournament/ReportScoreByGrade',
+      name: 'ReportScoreByGrade',
+      component: ReportScoreByGrade
+    },
+    {
+      path: '/:tournament/ReportScoreByDivision',
+      name: 'ReportScoreByDivision',
+      component: ReportScoreByDivision
+    },  {
+      path: '/:tournament/ReportScoreDetailed',
+      name: 'ReportScoreDetailed',
+      component: ReportScoreDetailed
+    },
+    
+
   ]
 })

@@ -19,39 +19,37 @@
           <ion-label>Reports</ion-label>
         </ion-list-header>
 
-       <router-link :to="{ name: 'players', params: { tournament: tournamentId }}">
+        <router-link :to="{ name: 'ReportScoreByAll', params: { tournament: tournamentId }}">
           <ion-item button detail="true">
             <ion-icon slot="start" name="podium"></ion-icon>
             <ion-label>All Players</ion-label>
           </ion-item>
         </router-link>
-
- <router-link :to="{ name: 'players', params: { tournament: tournamentId }}">
+        <router-link :to="{ name: 'ReportScoreByGrade', params: { tournament: tournamentId }}">
           <ion-item button detail="true">
             <ion-icon slot="start" name="podium"></ion-icon>
-            <ion-label>By Grade</ion-label>
+            <ion-label>Scores By Grade</ion-label>
+          </ion-item>
+        </router-link>
+        <router-link :to="{ name: 'ReportScoreByDivision', params: { tournament: tournamentId }}">
+          <ion-item button detail="true">
+            <ion-icon slot="start" name="podium"></ion-icon>
+            <ion-label>Scores By Division</ion-label>
           </ion-item>
         </router-link>
 
-       
         <ion-list-header>
           <ion-label>Detailed Reports</ion-label>
         </ion-list-header>
 
-  <router-link :to="{ name: 'players', params: { tournament: tournamentId }}">
+        <router-link :to="{ name: 'ReportScoreDetailed', params: { tournament: tournamentId }}">
           <ion-item button detail="true">
             <ion-icon slot="start" name="paper"></ion-icon>
-            <ion-label>By Score</ion-label>
+            <ion-label>Scores Detailed</ion-label>
           </ion-item>
         </router-link>
 
-         <router-link :to="{ name: 'players', params: { tournament: tournamentId }}">
-          <ion-item button detail="true">
-            <ion-icon slot="start" name="paper"></ion-icon>
-            <ion-label>By Grade</ion-label>
-          </ion-item>
-        </router-link>
-     <ion-list-header>
+        <ion-list-header>
           <ion-label>Custom Reports</ion-label>
         </ion-list-header>
         <router-link :to="{ name: 'players', params: { tournament: tournamentId }}">
@@ -92,9 +90,7 @@ import fetch from "@/fetch.js";
 
 export default {
   name: "home",
-  components: {
-   
-  },
+  components: {},
   data() {
     var tournamentId = this.$route.params.tournament || 118;
     return {
@@ -104,10 +100,7 @@ export default {
     };
   },
   methods: {
-   
-    loadData() {
- 
-    }
+    loadData() {}
   },
   created() {
     this.loadData();

@@ -100,7 +100,7 @@ export default {
   methods: {
     editPlayer() {
       var id = this.$route.params.id;
-      this.$router.push({ name: "playeredit", params: { id: id } });
+      this.$router.push({ name: "playerEdit", params: { id: id } });
     },
     loadData() {
       var id = this.$route.params.id;
