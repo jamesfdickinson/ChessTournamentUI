@@ -63,8 +63,12 @@ export default {
 
   components: {},
   data() {
+    //todo: save app wide settings
     //remember hideCheckedIn
     var hideCheckedIn = localStorage.getItem("hideCheckedIn");
+    if (hideCheckedIn == null) hideCheckedIn = true;
+    else hideCheckedIn = JSON.parse(hideCheckedIn);
+
     var tournamentId = this.$route.params.tournament;
     return {
       tournamentId: tournamentId,
@@ -125,6 +129,7 @@ export default {
   computed: {
     filteredItems() {
       localStorage.setItem("hideCheckedIn", this.hideCheckedIn);
+      //todo: null
       let data = this.players;
       let hideCheckedIn = this.hideCheckedIn;
       var sortKeys = this.sortKeys;

@@ -58,9 +58,6 @@
           <!-- </ion-list> -->
         </template>
       </ion-list>
-
-      <ion-button v-on:click="loadData()">Load</ion-button>
-      <ion-button color="danger" v-on:click="clearData()">Clear</ion-button>
     </ion-content>
     <!-- </ion-page> -->
   </div>
@@ -76,10 +73,15 @@ export default {
   data() {
     var roundId = this.$route.params.id;
     var tournamentId = this.$route.params.tournament;
+    //todo: save app wide settings
+    var hideCompletedGames = localStorage.getItem("hideCompletedGames");
+    if (hideCompletedGames == null) hideCompletedGames = false;
+    else hideCompletedGames = JSON.parse(hideCompletedGames);
+
     return {
       tournamentId: tournamentId,
       roundId: roundId,
-      hideCompletedGames: false,
+      hideCompletedGames: hideCompletedGames,
       searchInput: "",
       round: [],
       errors: []
@@ -110,6 +112,7 @@ export default {
   },
   computed: {
     filteredItems() {
+      localStorage.setItem("hideCompletedGames", this.hideCompletedGames);
       let filteredRound = this.round;
       let hideCompletedGames = this.hideCompletedGames;
       let searchInput = this.searchInput;

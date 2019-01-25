@@ -32,10 +32,18 @@
           <p>Jan 26th Chess Tournament at Witch hazel led by Brookwood and Minter Bridge</p>
         </ion-card-content>
       </ion-card>
+      <ion-card v-if="status != null">
+        <ion-card-header>
+          <ion-card-title>{{status.state}} - {{status.status}}</ion-card-title>
+        </ion-card-header>
 
+        <ion-card-content>
+         
+            <ion-progress-bar :value="status.percentage"></ion-progress-bar>
+    
+        </ion-card-content>
+      </ion-card>
       <Menu/>
-
-
     </ion-content>
     <!-- </ion-page> -->
   </div>
@@ -57,6 +65,7 @@ export default {
     return {
       tournamentId: tournamentId,
       tournament: {},
+      status: null,
       errors: []
     };
   },
@@ -101,6 +110,15 @@ export default {
         .get(`tournament/${tournamentId}`)
         .then(response => {
           this.tournament = response.data;
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
+
+         fetch
+        .get(`status/${tournamentId}`)
+        .then(response => {
+          this.status = response.data;
         })
         .catch(e => {
           this.errors.push(e);

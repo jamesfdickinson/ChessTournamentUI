@@ -16,7 +16,7 @@
     <ion-content>
       <ion-list>
         <ion-list-header>
-          <ion-label>Admin settins</ion-label>
+          <ion-label>Admin Settings</ion-label>
         </ion-list-header>
         <ion-item button detail="true" v-on:click="openPlayers()">
           <ion-icon slot="start" name="contact"></ion-icon>
@@ -30,12 +30,12 @@
           <ion-icon slot="start" name="podium"></ion-icon>
           <ion-label>Edit Players Bulk</ion-label>
         </ion-item>
-
-        <ion-item button detail="true" v-on:click="openSignUp()">
-          <ion-icon slot="start" name="clipboard"></ion-icon>
-          <ion-label>Registration</ion-label>
-        </ion-item>
-
+        <router-link :to="{ name: 'Registration', params: { tournament: tournamentId }}">
+          <ion-item button detail="true">
+            <ion-icon slot="start" name="clipboard"></ion-icon>
+            <ion-label>Registration</ion-label>
+          </ion-item>
+        </router-link>
         <ion-item button detail="true" v-on:click="openFAQ()">
           <ion-icon slot="start" name="help"></ion-icon>
           <ion-label>Create Round</ion-label>
@@ -44,10 +44,6 @@
           <ion-label>Manage Rounds</ion-label>
         </ion-list-header>
 
-        <ion-item button detail="true" v-on:click="openRoster()">
-          <ion-icon slot="start" name="filing"></ion-icon>
-          <ion-label>Roster</ion-label>
-        </ion-item>
         <ion-item button detail="true" v-on:click="openPlayers()">
           <ion-icon slot="start" name="create"></ion-icon>
           <ion-label>Tools</ion-label>
@@ -77,6 +73,11 @@
             <ion-label>Wall Chart</ion-label>
           </ion-item>
         </router-link>
+
+        <ion-item button detail="true" v-on:click="openRoster()">
+          <ion-icon slot="start" name="filing"></ion-icon>
+          <ion-label>Roster</ion-label>
+        </ion-item>
       </ion-list>
 
       <!-- <ion-button v-on:click="openPlayers()">Players</ion-button>fdfggdfg

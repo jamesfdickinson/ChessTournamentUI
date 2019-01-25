@@ -29,9 +29,7 @@
         </ion-item>
       </ion-list>
 
-      <ion-button v-on:click="loadData()">Load</ion-button>
-      <ion-button color="danger" v-on:click="clearData()">Clear</ion-button>
-    </ion-content>
+     </ion-content>
     <!-- </ion-page> -->
   </div>
 </template>
