@@ -4,11 +4,11 @@
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
-          <ion-menu-toggle>
+          <!-- <ion-menu-toggle> -->
             <ion-button>
-              <ion-icon slot="icon-only" name="menu"></ion-icon>
+              <ion-icon slot="icon-only" name="home"></ion-icon>
             </ion-button>
-          </ion-menu-toggle>
+          <!-- </ion-menu-toggle> -->
         </ion-buttons>
         <ion-title>Chess Tournaments</ion-title>
       </ion-toolbar>
@@ -20,9 +20,9 @@
         @ionChange="searchInput= $event.target.value;"
       ></ion-searchbar>
 
-      <router-link :to="{ name: 'tournament', params: { tournament: 117 }}">
-        <ion-card>
-           <ion-img src="./images/chess-board-thin.jpg"></ion-img>
+      <router-link :to="{ name: 'Tournament', params: { tournament: 117 }}">
+        <ion-card style="max-width:600px;">
+           <ion-img   src="/images/chess-board-thin.jpg"></ion-img>
           <!-- <ion-img src="./images/icons/chess_rook_white.png"></ion-img> -->
           <!-- <ion-img src="./images/chess-board.jpg"></ion-img> -->
           <ion-card-header>
@@ -34,9 +34,9 @@
         </ion-card>
       </router-link>
 
-      <router-link :to="{ name: 'tournament', params: { tournament: 120 }}">
-        <ion-card>
-           <ion-img src="./images/chess-board-colored-thin.jpg"></ion-img>
+      <router-link :to="{ name: 'Tournament', params: { tournament: 120 }}">
+        <ion-card style="max-width:600px;">
+           <ion-img src="/images/chess-board-colored-thin.jpg"></ion-img>
           <!-- <ion-img src="./images/icons/chess_rook_white.png"></ion-img> -->
           <!-- <ion-img src="./images/chess-board.jpg"></ion-img> -->
           <ion-card-header>
@@ -51,7 +51,7 @@
         <template v-for="tournament of tournaments">
           <router-link
             :key="tournament.id"
-            :to="{ name: 'tournament', params: { tournament: tournamentId }}"
+            :to="{ name: 'Tournament', params: { tournament: tournamentId }}"
           >
             <ion-card>
                <ion-img src="./images/chess-board-thin.jpg"></ion-img>

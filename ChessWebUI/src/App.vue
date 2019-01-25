@@ -54,7 +54,7 @@ export default {
     openHome() {
       var tournamentId = this.$route.params.tournament || 117;
       this.$router.push({
-        name: "tournament",
+        name: "Tournament",
         params: { tournament: tournamentId }
       });
     },

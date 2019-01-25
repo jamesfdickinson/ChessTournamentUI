@@ -20,7 +20,7 @@
             :key="tournament.id"
             
           >
-            <ion-card :to="{ name: 'tournament', params: { tournament: tournamentId }}">
+            <ion-card :to="{ name: 'Tournament', params: { tournament: tournamentId }}">
               <ion-img src="./images/chess-board.jpg"></ion-img>
               <ion-card-header>
                 <ion-card-title>{{tournament.name}}</ion-card-title>
@@ -32,7 +32,7 @@
           </router-link>
         </template>
       </ion-list>
-      <router-link :to="{ name: 'tournament', params: { tournament: 117 }}">
+      <router-link :to="{ name: 'Tournament', params: { tournament: 117 }}">
         <ion-card>
           <!-- <ion-img src="./images/chess-board.jpg"></ion-img> -->
           <ion-card-header>

@@ -1,6 +1,7 @@
 import Vue from 'vue'
-import Router from 'vue-router'
+import VueRouter  from 'vue-router'
 //import Home from './views/Home.vue'
+import Login from './views/Login.vue'
 import Tournament from './views/Tournament.vue'
 import Tournaments from './views/Tournaments.vue'
 import Registration from './views/Registration.vue'
@@ -19,31 +20,41 @@ import ReportScoreDetailed from './views/ReportScoreDetailed.vue'
 import ReportScoreGroupRank from './views/ReportScoreGroupRank.vue'
 import ReportWallChart from './views/ReportWallChart.vue'
 
-ReportScoreGroupRank
+
 //import RoundEdit from './views/PlayerEdit.vue'
 
-Vue.use(Router)
+Vue.use(VueRouter )
 
-export default new Router({
+export default new VueRouter ({
   mode: 'history',
   base: process.env.BASE_URL || "",
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'Home',
       component: Tournaments
     },
     {
-      path: '/tournaments',
-      name: 'tournaments',
+      path: '/Login',
+      name: 'Login',
+      component: Login
+    },
+    {
+      path: '/Tournaments',
+      name: 'Tournaments',
       component: Tournaments
     },
     {
       path: '/:tournament',
-      name: 'tournament',
+      name: 'Tournament',
       component: Tournament
     },
-    
+    {
+      path: '/:tournament/Tournament',
+      name: 'Tournament',
+      component: Tournament
+    },
+
     {
       path: '/:tournament/Registration',
       name: 'Registration',
@@ -75,8 +86,8 @@ export default new Router({
       component: Round
     },
     {
-      path: '/:tournament/admin',
-      name: 'admin',
+      path: '/:tournament/Admin',
+      name: 'Admin',
       component: Admin
     },
     {
@@ -122,4 +133,5 @@ export default new Router({
 
 
   ]
-})
+});
+

@@ -48,9 +48,7 @@
         </ion-item>
       </ion-list>
 
-      <ion-button v-on:click="loadData()">Load</ion-button>
-      <ion-button color="danger" v-on:click="clearData()">Clear</ion-button>
-    </ion-content>
+       </ion-content>
     <!-- </ion-page> -->
   </div>
 </template>
@@ -68,6 +66,8 @@ export default {
     var hideCheckedIn = localStorage.getItem("hideCheckedIn");
     if (hideCheckedIn == null) hideCheckedIn = true;
     else hideCheckedIn = JSON.parse(hideCheckedIn);
+
+  
 
     var tournamentId = this.$route.params.tournament;
     return {
@@ -89,12 +89,12 @@ export default {
         params: { id: id, tournament: tournamentId }
       });
     },
-    toggleHideCheckedIn() {
-      let hideCheckedIn = !this.hideCheckedIn;
-      this.hideCheckedIn = hideCheckedIn;
-      //remember hideCheckedIn
-      localStorage.setItem("hideCheckedIn", hideCheckedIn);
-    },
+    // toggleHideCheckedIn() {
+    //   let hideCheckedIn = !this.hideCheckedIn;
+    //   this.hideCheckedIn = hideCheckedIn;
+    //   //remember hideCheckedIn
+    //   localStorage.setItem("hideCheckedIn", hideCheckedIn);
+    // },
     sortBy: function(key) {
       //remove it if it is in the list
       var index = this.sortKeys.indexOf(key);
@@ -128,6 +128,7 @@ export default {
   },
   computed: {
     filteredItems() {
+      if(this.hideCheckedIn != null)
       localStorage.setItem("hideCheckedIn", this.hideCheckedIn);
       //todo: null
       let data = this.players;

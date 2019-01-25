@@ -112,7 +112,8 @@ export default {
   },
   computed: {
     filteredItems() {
-      localStorage.setItem("hideCompletedGames", this.hideCompletedGames);
+      if (this.hideCompletedGames != null)
+        localStorage.setItem("hideCompletedGames", this.hideCompletedGames);
       let filteredRound = this.round;
       let hideCompletedGames = this.hideCompletedGames;
       let searchInput = this.searchInput;

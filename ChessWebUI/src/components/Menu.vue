@@ -33,18 +33,18 @@
       </ion-item>
     </router-link>
 
-    <ion-list-header>
+    <!-- <ion-list-header>
       <ion-label>Coach</ion-label>
     </ion-list-header>
     <ion-item button detail="true" v-on:click="openRoster()">
       <ion-icon slot="start" name="filing"></ion-icon>
       <ion-label>Roster</ion-label>
-    </ion-item>
+    </ion-item>-->
     <ion-list-header>
       <ion-label>Admin</ion-label>
     </ion-list-header>
 
-    <router-link :to="{ name: 'admin', params: { tournament: tournamentId }}">
+    <router-link :to="{ name: 'Admin', params: { tournament: tournamentId }}">
       <ion-item button detail="true">
         <ion-icon slot="start" name="cog"></ion-icon>
         <ion-label>Admin Settings</ion-label>
@@ -53,12 +53,26 @@
     <ion-list-header>
       <ion-label>Other</ion-label>
     </ion-list-header>
-    <router-link :to="{ name: 'tournaments'}">
+    <router-link :to="{ name: 'Tournaments'}">
       <ion-item button detail="true">
         <ion-icon slot="start" name="trophy"></ion-icon>
         <ion-label>Tournaments</ion-label>
       </ion-item>
     </router-link>
+
+    <ion-list-header>
+      <ion-label>Login</ion-label>
+    </ion-list-header>
+    <router-link :to="{ name: 'Login'}">
+      <ion-item button detail="true">
+        <ion-icon slot="start" name="trophy"></ion-icon>
+        <ion-label>Login</ion-label>
+      </ion-item>
+    </router-link>
+    <ion-item button detail="true" v-on:click="LogOut()">
+      <ion-icon slot="start" name="trophy"></ion-icon>
+      <ion-label>Log Out</ion-label>
+    </ion-item>
   </ion-items>
 </template>
 
@@ -74,9 +88,14 @@ export default {
     };
   },
   methods: {
+    LogOut() {
+      //todo: move to auth class
+      localStorage.clear("user");
+      this.$router.push({ path: `/` });
+    },
     openHome() {
       this.$router.push({
-        name: "tournament",
+        name: "Tournament",
         params: { tournament: this.tournamentId }
       });
     },

@@ -40,6 +40,10 @@
           <ion-icon slot="start" name="help"></ion-icon>
           <ion-label>Create Round</ion-label>
         </ion-item>
+          <ion-item button detail="true" v-on:click="openFAQ()">
+          <ion-icon slot="start" name="help"></ion-icon>
+          <ion-label>Edit Rounds</ion-label>
+        </ion-item>
         <ion-list-header>
           <ion-label>Manage Rounds</ion-label>
         </ion-list-header>
