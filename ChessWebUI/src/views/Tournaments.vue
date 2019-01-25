@@ -43,7 +43,7 @@
             <ion-card-title>Girls Tournament @ Brookwood</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            <p>Chess Tournament for girls at Brookwood sponsored by Chess for Success. March 26th </p>
+            <p>Chess Tournament for girls at Brookwood sponsored by Chess for Success. March 23rd </p>
           </ion-card-content>
         </ion-card>
       </router-link>

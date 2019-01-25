@@ -14,21 +14,23 @@
       </ion-toolbar>
     </ion-header>
     <ion-content>
-      <ion-searchbar
+      <ion-list> 
+      <ion-item>   
+         <ion-searchbar 
         :value="searchInput"
         @ionInput="searchInput = $event.target.value;"
         @ionChange="searchInput= $event.target.value;"
       ></ion-searchbar>
-      <ion-item>
+    
         <ion-label>Hide Checked-In</ion-label>
-        <ion-toggle
+        <ion-toggle slot="end"
           :checked="hideCheckedIn"
           @ionInput="hideCheckedIn = $event.target.checked;"
           @ionChange="hideCheckedIn= $event.target.checked;"
         ></ion-toggle>
       </ion-item>
-      <ion-list>
-        <ion-item color="secondary">
+     
+        <ion-item color="light">
           <ion-icon v-on:click="sortBy('isPresent')" slot="start" name="checkmark"></ion-icon>
           <ion-label v-on:click="sortBy('firstName')">Name</ion-label>
           <ion-label v-on:click="sortBy('school')">School</ion-label>
