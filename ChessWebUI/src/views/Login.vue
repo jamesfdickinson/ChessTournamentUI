@@ -80,7 +80,7 @@ export default {
       //https://github.com/vuejs/vue-router/blob/dev/examples/auth-flow/auth.js
       let user = {
         username: "jimmysmells",
-        roles: { 117: "Recorder" },
+        roles: { 117: "Admin" },
         token: "123123"
       };
       localStorage.setItem("user", JSON.stringify(user));
