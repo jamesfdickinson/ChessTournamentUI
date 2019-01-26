@@ -4,39 +4,43 @@
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
+          <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
+        </ion-buttons>
+        <!-- <ion-buttons slot="start">
           <ion-menu-toggle>
             <ion-button>
               <ion-icon slot="icon-only" name="menu"></ion-icon>
             </ion-button>
           </ion-menu-toggle>
-        </ion-buttons>
+        </ion-buttons>-->
         <ion-title>Registration</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content>
-      <ion-list> 
-      <ion-item>   
-         <ion-searchbar 
-        :value="searchInput"
-        @ionInput="searchInput = $event.target.value;"
-        @ionChange="searchInput= $event.target.value;"
-      ></ion-searchbar>
-    
-        <ion-label>Hide Checked-In</ion-label>
-        <ion-toggle slot="end"
-          :checked="hideCheckedIn"
+      <ion-list>
+        <ion-item>
+          <ion-searchbar
+            :value="searchInput"
+            @ionInput="searchInput = $event.target.value;"
+            @ionChange="searchInput= $event.target.value;"
+          ></ion-searchbar>
 
-          @ionChange="hideCheckedIn= $event.target.checked;"
-        ></ion-toggle>
-      </ion-item>
-     
+          <ion-label>Hide Checked-In</ion-label>
+          <ion-toggle
+            slot="end"
+            :checked="hideCheckedIn"
+            @ionChange="hideCheckedIn= $event.target.checked;"
+          ></ion-toggle>
+        </ion-item>
+
         <ion-item color="light">
           <ion-icon v-on:click="sortBy('isPresent')" slot="start" name="checkmark"></ion-icon>
           <ion-label v-on:click="sortBy('firstName')">Name</ion-label>
           <ion-label v-on:click="sortBy('school')">School</ion-label>
         </ion-item>
         <ion-item
-          detail="true" button
+          detail="true"
+          button
           v-for="player of filteredItems"
           :key="player.playerId"
           v-on:click="openPlayer(player.playerId)"
@@ -48,8 +52,7 @@
           <ion-label>{{player.school}}</ion-label>
         </ion-item>
       </ion-list>
-
-       </ion-content>
+    </ion-content>
     <!-- </ion-page> -->
   </div>
 </template>
@@ -67,8 +70,6 @@ export default {
     var hideCheckedIn = localStorage.getItem("hideCheckedIn");
     if (hideCheckedIn == null) hideCheckedIn = true;
     else hideCheckedIn = JSON.parse(hideCheckedIn);
-
-  
 
     var tournamentId = this.$route.params.tournament;
     return {
@@ -129,8 +130,8 @@ export default {
   },
   computed: {
     filteredItems() {
-      if(this.hideCheckedIn != null)
-      localStorage.setItem("hideCheckedIn", this.hideCheckedIn);
+      if (this.hideCheckedIn != null)
+        localStorage.setItem("hideCheckedIn", this.hideCheckedIn);
       //todo: null
       let data = this.players;
       let hideCheckedIn = this.hideCheckedIn;

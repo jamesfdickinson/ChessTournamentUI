@@ -4,11 +4,7 @@
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
-          <ion-menu-toggle>
-            <ion-button>
-              <ion-icon slot="icon-only" name="menu"></ion-icon>
-            </ion-button>
-          </ion-menu-toggle>
+          <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
         </ion-buttons>
 
         <ion-title>Player Edit</ion-title>
@@ -83,7 +79,7 @@
       </ion-list>
 
       <ion-button expand="block" v-on:click="save()">Save</ion-button>
-      <hr/>
+      <hr>
       <ion-button expand="block" color="light" v-on:click="back()">Cancel</ion-button>
       <!-- <ion-button color="danger">Delete</ion-button> -->
     </ion-content>
@@ -108,7 +104,7 @@ export default {
     };
   },
   methods: {
-    back(){
+    back() {
       this.$router.back();
     },
     save() {
@@ -122,10 +118,10 @@ export default {
         .then(response => {
           //back
           this.$router.back();
-           //if (redirect) {
+          //if (redirect) {
           //   this.$router.push({ path: redirect });
           // } else {
-         //    this.$router.push({ path: `/${tournamentId}/Player/${playerId}` });
+          //    this.$router.push({ path: `/${tournamentId}/Player/${playerId}` });
           // }
         })
         .catch(e => {
