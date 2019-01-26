@@ -122,8 +122,8 @@ export default {
 
       if (hideCompletedGames) {
         filteredRound = filteredRound.filter(t => {
-          let totalPoints = t.positions.reduce(p => p.score || 0);
-          return totalPoints > 0;
+          let totalPoints = t.positions.reduce((a,  p) =>  a + (p.points || 0), 0);
+          return totalPoints == 0;
         });
       }
       if (searchInput) {
