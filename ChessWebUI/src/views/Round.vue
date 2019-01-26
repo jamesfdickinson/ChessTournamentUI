@@ -89,10 +89,12 @@ export default {
   },
   methods: {
     openTable(id) {
-      this.$router.push({ name: "table", params: { id: id } });
+      let roundId = this.roundId;
+      let tournamentId = this.tournamentId;
+      this.$router.push({ name: "TableEdit", params: { id: id,round:roundId,tournament:tournamentId } });
     },
     openPlayer(id) {
-      this.$router.push({ name: "player", params: { id: id } });
+      this.$router.push({ name: "Player", params: { id: id } });
     },
     clearData() {
       this.players = [];

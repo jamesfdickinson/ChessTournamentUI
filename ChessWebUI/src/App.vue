@@ -24,7 +24,7 @@
         </ion-menu>
 
         <div id="content">
-          <router-view/>
+          <router-view :key="$route.fullPath" />
         </div>
       </ion-split-pane>
     </ion-app>
@@ -45,28 +45,28 @@ export default {
     Menu
   },
   data() {
-    var tournamentId = this.$route.params.tournament || 117;
+    var tournamentId = this.$route.params.tournament || 120;
     return {
       tournamentId: tournamentId
     };
   },
   methods: {
     openHome() {
-      var tournamentId = this.$route.params.tournament || 117;
+      var tournamentId = this.$route.params.tournament || 120;
       this.$router.push({
         name: "Tournament",
         params: { tournament: tournamentId }
       });
     },
     openPlayers() {
-      var tournamentId = this.$route.params.tournament || 117;
+      var tournamentId = this.$route.params.tournament || 120;
       this.$router.push({
-        name: "players",
+        name: "Players",
         params: { tournament: tournamentId }
       });
     },
     openRounds() {
-      var tournamentId = this.$route.params.tournament || 117;
+      var tournamentId = this.$route.params.tournament || 120;
       this.$router.push({
         name: "rounds",
         params: { tournament: tournamentId }

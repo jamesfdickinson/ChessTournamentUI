@@ -13,10 +13,10 @@
       <ion-label>Scores</ion-label>
     </ion-item>
 
-    <ion-item button detail="true" v-on:click="openSignUp()">
+    <!-- <ion-item button detail="true" v-on:click="openSignUp()">
       <ion-icon slot="start" name="clipboard"></ion-icon>
       <ion-label>Sign Up</ion-label>
-    </ion-item>
+    </ion-item> -->
 
     <ion-item button detail="true" v-on:click="openFAQ()">
       <ion-icon slot="start" name="help"></ion-icon>
@@ -40,6 +40,8 @@
       <ion-icon slot="start" name="filing"></ion-icon>
       <ion-label>Roster</ion-label>
     </ion-item>-->
+
+<!--     
     <ion-list-header>
       <ion-label>Admin</ion-label>
     </ion-list-header>
@@ -49,7 +51,7 @@
         <ion-icon slot="start" name="cog"></ion-icon>
         <ion-label>Admin Settings</ion-label>
       </ion-item>
-    </router-link>
+    </router-link>-->
     <ion-list-header>
       <ion-label>Other</ion-label>
     </ion-list-header>
@@ -58,7 +60,7 @@
         <ion-icon slot="start" name="trophy"></ion-icon>
         <ion-label>Tournaments</ion-label>
       </ion-item>
-    </router-link>
+    </router-link> 
 
     <ion-list-header>
       <ion-label>Login</ion-label>
@@ -81,7 +83,7 @@ export default {
   name: "menutournament",
   components: {},
   data() {
-    var tournamentId = this.$route.params.tournament || 117;
+    var tournamentId = this.$route.params.tournament || 120;
     return {
       tournamentId: tournamentId,
       errors: []
@@ -101,7 +103,7 @@ export default {
     },
     openPlayers() {
       this.$router.push({
-        name: "players",
+        name: "Players",
         params: { tournament: this.tournamentId }
       });
     },

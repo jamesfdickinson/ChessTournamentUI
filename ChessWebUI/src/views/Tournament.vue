@@ -72,7 +72,7 @@ export default {
   methods: {
     openPlayers() {
       this.$router.push({
-        name: "players",
+        name: "Players",
         params: { tournament: this.tournamentId }
       });
     },

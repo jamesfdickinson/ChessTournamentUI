@@ -10,6 +10,7 @@ import Player from './views/Player.vue'
 import PlayerEdit from './views/PlayerEdit.vue'
 import Rounds from './views/Rounds.vue'
 import Round from './views/Round.vue'
+import TableEdit from './views/TableEdit.vue'
 import FAQ from './views/FAQ.vue'
 import Admin from './views/Admin.vue'
 import Reports from './views/Reports.vue'
@@ -51,7 +52,7 @@ export default new VueRouter ({
     },
     {
       path: '/:tournament/Tournament',
-      name: 'Tournament',
+      name: 'TournamentHome',
       component: Tournament
     },
 
@@ -61,13 +62,13 @@ export default new VueRouter ({
       component: Registration
     },
     {
-      path: '/:tournament/players',
-      name: 'players',
+      path: '/:tournament/Players',
+      name: 'Players',
       component: Players
     },
     {
-      path: '/:tournament/player/:id',
-      name: 'player',
+      path: '/:tournament/Player/:id',
+      name: 'Player',
       component: Player
     },
     {
@@ -84,6 +85,11 @@ export default new VueRouter ({
       path: '/:tournament/round/:id',
       name: 'round',
       component: Round
+    },
+    {
+      path: '/:tournament/round/:round/TableEdit/:id',
+      name: 'TableEdit',
+      component: TableEdit
     },
     {
       path: '/:tournament/Admin',

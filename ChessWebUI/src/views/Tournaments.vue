@@ -20,7 +20,7 @@
         @ionChange="searchInput= $event.target.value;"
       ></ion-searchbar>
 
-      <router-link :to="{ name: 'Tournament', params: { tournament: 117 }}"  style="text-decoration: none;">
+      <router-link :to="{ name: 'Tournament', params: { tournament: 120 }}"  style="text-decoration: none;">
         <ion-card style="max-width:600px;">
            <ion-img   src="/images/chess-board-thin.jpg"></ion-img>
           <!-- <ion-img src="./images/icons/chess_rook_white.png"></ion-img> -->
@@ -34,7 +34,7 @@
         </ion-card>
       </router-link>
 
-      <router-link :to="{ name: 'Tournament', params: { tournament: 120 }}" style="text-decoration: none;">
+      <router-link :to="{ name: 'Tournament', params: { tournament: 121 }}" style="text-decoration: none;">
         <ion-card style="max-width:600px;">
            <ion-img src="/images/chess-board-colored-thin.jpg"></ion-img>
           <!-- <ion-img src="./images/icons/chess_rook_white.png"></ion-img> -->

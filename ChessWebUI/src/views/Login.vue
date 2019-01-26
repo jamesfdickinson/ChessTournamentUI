@@ -4,13 +4,12 @@
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
-           <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)" ></ion-icon>
+          <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
         </ion-buttons>
         <ion-title>Login</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content padding>
-     
       <form @submit.prevent="handleSubmit">
         <ion-grid>
           <ion-row justify-content-center>
@@ -20,11 +19,21 @@
               </div>
               <div padding>
                 <ion-item>
-                  <ion-input type="text" placeholder="Username" :value="userName"></ion-input>
+                  <ion-input
+                    type="text"
+                    placeholder="Username"
+                    :value="userName"
+                    @input="userName=$event.target.value"
+                  ></ion-input>
                 </ion-item>
 
                 <ion-item>
-                  <ion-input type="password" placeholder="Password" :value="password"></ion-input>
+                  <ion-input
+                    type="password"
+                    placeholder="Password"
+                    :value="password"
+                    @input="password=$event.target.value"
+                  ></ion-input>
                 </ion-item>
               </div>
 
@@ -72,18 +81,34 @@ export default {
       this.$router.go(-1);
     },
     handleSubmit() {
-      let userName = this.userName;
-      let password = this.password;
+      this.login();
+    },
+    login() {
+      let userName = this.userName.toLowerCase();
+      let password = this.password.toLowerCase();
       let redirect = this.redirect;
       let tournamentId = this.tournamentId;
       //todo: use auth class
       //https://github.com/vuejs/vue-router/blob/dev/examples/auth-flow/auth.js
-      let user = {
-        username: "jimmysmells",
-        roles: { 117: "Admin" },
-        token: "123123"
-      };
-      localStorage.setItem("user", JSON.stringify(user));
+
+      let user = null;
+      if (userName == "bmrecorder" && password == "bmrecorder") {
+        user = {
+          username: "jimmysmells",
+          roles: { 117: "Recorder", 120: "Recorder" },
+          token: "123123"
+        };
+        localStorage.setItem("user", JSON.stringify(user));
+      }
+      if (userName == "bmchess" && password == "check") {
+        user = {
+          username: "jimmysmells",
+          roles: { 117: "Basic", 120: "Basic" },
+          token: "123123"
+        };
+        localStorage.setItem("user", JSON.stringify(user));
+      }
+      if (!user) return;
 
       if (redirect) {
         this.$router.push({ path: redirect });
@@ -92,8 +117,7 @@ export default {
       } else {
         this.$router.push({ path: `/` });
       }
-    },
-    login() {}
+    }
   },
   created() {}
 };

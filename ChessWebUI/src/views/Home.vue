@@ -32,7 +32,7 @@
           </router-link>
         </template>
       </ion-list>
-      <router-link :to="{ name: 'Tournament', params: { tournament: 117 }}">
+      <router-link :to="{ name: 'Tournament', params: { tournament: 120 }}">
         <ion-card>
           <!-- <ion-img src="./images/chess-board.jpg"></ion-img> -->
           <ion-card-header>

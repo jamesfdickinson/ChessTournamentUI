@@ -25,7 +25,7 @@
         <ion-label>Hide Checked-In</ion-label>
         <ion-toggle slot="end"
           :checked="hideCheckedIn"
-          @ionInput="hideCheckedIn = $event.target.checked;"
+
           @ionChange="hideCheckedIn= $event.target.checked;"
         ></ion-toggle>
       </ion-item>
@@ -36,10 +36,9 @@
           <ion-label v-on:click="sortBy('school')">School</ion-label>
         </ion-item>
         <ion-item
-          detail="true"
+          detail="true" button
           v-for="player of filteredItems"
           :key="player.playerId"
-          v-bind:mhref="`player/${player.playerId}`"
           v-on:click="openPlayer(player.playerId)"
         >
           <ion-icon v-if="player.isPresent" slot="start" name="checkmark" color="secondary"></ion-icon>

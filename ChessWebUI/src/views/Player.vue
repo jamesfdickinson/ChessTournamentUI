@@ -53,28 +53,22 @@
         <ion-list-header color="primary">Score</ion-list-header>
         <ion-item>
           <ion-label position="fixed">Score</ion-label>
-          <ion-label slot>4</ion-label>
+          <ion-label slot>{{player.points}}</ion-label>
         </ion-item>
         <!-- </ion-list>
 
         <ion-list>-->
         <ion-list-header color="primary">Games</ion-list-header>
-        <ion-item detail="true">
-          <ion-label>Player Name</ion-label>
-          <ion-badge>99</ion-badge>
+       <ion-item
+          detail="true"
+          v-for="playerGame of playerGames"
+          :key="playerGame.Id"
+          v-on:click="openPlayer(playerGame.playerId)"
+        >
+         <ion-label slot>{{playerGame.fullName}}</ion-label>
+          <ion-badge>{{playerGame.points}}</ion-badge>
         </ion-item>
-        <ion-item detail="true">
-          <ion-label>Player2 Name</ion-label>
-          <ion-badge>99</ion-badge>
-        </ion-item>
-        <ion-item detail="true">
-          <ion-label>Player3 Name</ion-label>
-          <ion-badge>99</ion-badge>
-        </ion-item>
-        <ion-item detail="true">
-          <ion-label>Player4 Name</ion-label>
-          <ion-badge>99</ion-badge>
-        </ion-item>
+
       </ion-list>
     </ion-content>
     <!-- </ion-page> -->
@@ -93,10 +87,14 @@ export default {
     return {
       tournamentId: tournamentId,
       player: {},
+      playerGames:{},
       errors: []
     };
   },
   methods: {
+     openPlayer(id) {
+      this.$router.push({ name: "Player", params: { id: id } });
+    },
     editPlayer() {
       var id = this.$route.params.id;
       let tournamentId = this.tournamentId;
@@ -112,6 +110,15 @@ export default {
         .get(`player/${id}`)
         .then(response => {
           this.player = response.data;
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
+
+         fetch
+        .get(`player/games/${id}`)
+        .then(response => {
+          this.playerGames = response.data;
         })
         .catch(e => {
           this.errors.push(e);

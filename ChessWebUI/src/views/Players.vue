@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     openPlayer(id) {
-      this.$router.push({ name: "player", params: { id: id } });
+      this.$router.push({ name: "Player", params: { id: id } });
     },
     clearData() {
       this.players = [];
