@@ -15,6 +15,7 @@
     </ion-header>
     <ion-content>
       <ion-searchbar
+        placeholder="Table #, First, or Last Name"
         :value="searchInput"
         @ionInput="searchInput = $event.target.value;"
         @ionChange="searchInput= $event.target.value;"
@@ -91,7 +92,10 @@ export default {
     openTable(id) {
       let roundId = this.roundId;
       let tournamentId = this.tournamentId;
-      this.$router.push({ name: "TableEdit", params: { id: id,round:roundId,tournament:tournamentId } });
+      this.$router.push({
+        name: "TableEdit",
+        params: { id: id, round: roundId, tournament: tournamentId }
+      });
     },
     openPlayer(id) {
       this.$router.push({ name: "Player", params: { id: id } });
@@ -122,7 +126,10 @@ export default {
 
       if (hideCompletedGames) {
         filteredRound = filteredRound.filter(t => {
-          let totalPoints = t.positions.reduce((a,  p) =>  a + (p.points || 0), 0);
+          let totalPoints = t.positions.reduce(
+            (a, p) => a + (p.points || 0),
+            0
+          );
           return totalPoints == 0;
         });
       }
