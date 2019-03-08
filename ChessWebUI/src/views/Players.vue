@@ -1,5 +1,5 @@
 <template>
-  <div class="ion-page" main>
+ <layout-menu>
     <!-- <ion-page class="ion-page" main> -->
     <ion-header>
       <ion-toolbar color="primary">
@@ -11,6 +11,7 @@
     </ion-header>
     <ion-content>
       <ion-searchbar
+        placeholder="First Name, Last Name, or School"
         :value="searchInput"
         @ionInput="searchInput = $event.target.value;"
         @ionChange="searchInput= $event.target.value;"
@@ -26,19 +27,18 @@
       <ion-list>
         <ion-item
           detail="true"
-          v-for="player of players"
+          v-for="player of filteredItems"
           :key="player.playerId"
           v-bind:mhref="`player/${player.playerId}`"
           v-on:click="openPlayer(player.playerId)"
         >
           <ion-icon name="contact" slot="start"></ion-icon>
-         <ion-label> {{player.firstName}} {{player.lastName}} </ion-label>
+          <ion-label>{{player.firstName}} {{player.lastName}}</ion-label>
         </ion-item>
       </ion-list>
-
     </ion-content>
     <!-- </ion-page> -->
-  </div>
+   </layout-menu>
 </template>
 
 <script>
@@ -50,7 +50,7 @@ export default {
   components: {},
   data() {
     return {
-      searchInput:"",
+      searchInput: "",
       players: [],
       errors: []
     };
@@ -72,6 +72,32 @@ export default {
         .catch(e => {
           this.errors.push(e);
         });
+    }
+  },
+  computed: {
+    filteredItems() {
+      let filteredRound = this.players;
+      let searchInput = this.searchInput;
+      if (searchInput) {
+        searchInput = searchInput.toLowerCase();
+        filteredRound = filteredRound.filter(p => {
+          if (
+            p.firstName &&
+            p.firstName.toLowerCase().startsWith(searchInput)
+          )
+            return true;
+          if (
+            p.lastName &&
+            p.lastName.toLowerCase().startsWith(searchInput)
+          )
+            return true;
+          if (p.school && p.school.toLowerCase().startsWith(searchInput))
+            return true;
+          return false;
+
+        });
+      }
+      return filteredRound;
     }
   },
   created() {

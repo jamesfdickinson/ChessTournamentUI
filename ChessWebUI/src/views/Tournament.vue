@@ -1,5 +1,5 @@
 <template>
-  <div class="ion-page" main>
+  <layout-menu>
     <!-- <ion-page class="ion-page" main> -->
     <ion-header>
       <ion-toolbar color="primary">
@@ -14,39 +14,30 @@
       </ion-toolbar>
     </ion-header>
     <ion-content>
-      <!-- <ion-card>
-        <ion-img src="./images/chess-board.jpg"></ion-img>
+      <ion-card>
+        <ion-img v-if="!tournament.image" src="./images/chess-board.jpg"></ion-img>
+        <ion-img v-if="tournament.image" :src="tournament.image"></ion-img>
         <ion-card-header>
           <ion-card-title>{{tournament.name}}</ion-card-title>
         </ion-card-header>
         <ion-card-content>
           <p>{{tournament.details}}</p>
         </ion-card-content>
-      </ion-card>-->
-      <ion-card>
-        <ion-img src="/images/chess-board.jpg"></ion-img>
-        <ion-card-header>
-          <ion-card-title>Brookwood and Minter Bridge</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <p>Jan 26th Chess Tournament at Witch hazel led by Brookwood and Minter Bridge</p>
-        </ion-card-content>
       </ion-card>
+
       <ion-card v-if="status != null">
         <ion-card-header>
           <ion-card-title>{{status.state}} - {{status.status}}</ion-card-title>
         </ion-card-header>
 
         <ion-card-content>
-         
-            <ion-progress-bar :value="status.percentage"></ion-progress-bar>
-    
+          <ion-progress-bar :value="status.percentage"></ion-progress-bar>
         </ion-card-content>
       </ion-card>
       <Menu/>
     </ion-content>
     <!-- </ion-page> -->
-  </div>
+  </layout-menu>
 </template>
 
 <script>
@@ -54,6 +45,7 @@
 //import HelloWorld from "@/components/HelloWorld.vue";
 import fetch from "@/fetch.js";
 import Menu from "@/components/Menu.vue";
+import LayoutMenu from "@/components/LayoutMenu.vue";
 
 export default {
   name: "home",
@@ -115,7 +107,7 @@ export default {
           this.errors.push(e);
         });
 
-         fetch
+      fetch
         .get(`status/${tournamentId}`)
         .then(response => {
           this.status = response.data;

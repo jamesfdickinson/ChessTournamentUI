@@ -1,6 +1,34 @@
 
 <template>
-  <router-view :key="$route.fullPath"/>
+  <div id="app">
+    <ion-app>
+      <ion-split-pane when="sm" content-id="content">
+        <ion-menu>
+          <ion-header>
+            <ion-toolbar color="primary">
+              <ion-title>Menu</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content>
+            <ion-list>
+              <ion-list-header>Navigate</ion-list-header>
+              <ion-menu-toggle auto-hide="false">
+                <ion-item button detail="true" v-on:click="openHome()">
+                  <ion-icon slot="start" name="home"></ion-icon>
+                  <ion-label>Home</ion-label>
+                </ion-item>
+                <Menu/>
+              </ion-menu-toggle>
+            </ion-list>
+          </ion-content>
+        </ion-menu>
+
+        <div id="content">
+          <router-view :key="$route.fullPath" />
+        </div>
+      </ion-split-pane>
+    </ion-app>
+  </div>
 </template>
 <!-- 
 <style src='@ionic/core/css/core.css'></style>

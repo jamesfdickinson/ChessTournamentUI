@@ -1,10 +1,12 @@
 import Vue from 'vue'
-import VueRouter  from 'vue-router'
+import VueRouter from 'vue-router'
 //import Home from './views/Home.vue'
 import Login from './views/Login.vue'
 import Tournament from './views/Tournament.vue'
 import Tournaments from './views/Tournaments.vue'
 import Registration from './views/Registration.vue'
+import SignUp from './views/SignUp.vue'
+import SignUpComplete from './views/SignUpComplete.vue'
 import Players from './views/Players.vue'
 import Player from './views/Player.vue'
 import PlayerEdit from './views/PlayerEdit.vue'
@@ -24,9 +26,9 @@ import ReportWallChart from './views/ReportWallChart.vue'
 
 //import RoundEdit from './views/PlayerEdit.vue'
 
-Vue.use(VueRouter )
+Vue.use(VueRouter)
 
-export default new VueRouter ({
+export default new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL || "",
   routes: [
@@ -60,6 +62,16 @@ export default new VueRouter ({
       path: '/:tournament/Registration',
       name: 'Registration',
       component: Registration
+    },
+    {
+      path: '/:tournament/SignUp',
+      name: 'SignUp',
+      component: SignUp
+    },
+    {
+      path: '/:tournament/SignUpComplete',
+      name: 'SignUpComplete',
+      component: SignUpComplete
     },
     {
       path: '/:tournament/Players',
@@ -97,8 +109,8 @@ export default new VueRouter ({
       component: Admin
     },
     {
-      path: '/:tournament/faq',
-      name: 'faq',
+      path: '/:tournament/FAQ',
+      name: 'FAQ',
       component: FAQ
     },
     {

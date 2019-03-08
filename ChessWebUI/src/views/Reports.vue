@@ -1,5 +1,5 @@
 <template>
-  <div class="ion-page" main>
+   <layout-menu>
     <!-- <ion-page class="ion-page" main> -->
     <ion-header>
       <ion-toolbar color="primary">
@@ -78,7 +78,7 @@
       </ion-fab-button>-->
     </ion-content>
     <!-- </ion-page> -->
-  </div>
+  </layout-menu>
 </template>
 
 <script>

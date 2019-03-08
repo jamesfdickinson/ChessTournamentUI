@@ -2,6 +2,16 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 //import  Ionic  from '@ionic/vue';
+import AnalyticsGA from './services/AnalyticsGA'
+import LayoutMenu from "@/components/LayoutMenu.vue";
+import LayoutNoMenu from "@/components/LayoutNoMenu.vue";
+import LayoutRaw from "@/components/LayoutRaw.vue";
+
+
+let version = "2.1";
+let analyticsGA = new AnalyticsGA();
+analyticsGA.TrackStart("Chess", version, "UA-2052018-24");
+analyticsGA.TrackPage("Start");
 
 Vue.config.productionTip = true;
 
@@ -10,15 +20,16 @@ Vue.config.ignoredElements = [/^ion-/]
 
 
 router.beforeEach((to, from, next) => {
+  analyticsGA.TrackPage(to.path);
   //todo: move auth class
   // redirect to login page if not logged in and trying to access a restricted page
   const pagesAdmin = ['Admin'];
   const authRequiredAdmin = pagesAdmin.includes(to.name);
 
-  const pagesRecorder = ['Registration', 'PlayerEdit','TableEdit'];
+  const pagesRecorder = ['Registration', 'PlayerEdit', 'TableEdit'];
   const authRequiredRecorder = pagesRecorder.includes(to.name);
 
-  const pagesBasic = ['Players', 'Tournament'];
+  const pagesBasic = ['Players', 'Reports'];
   const authRequiredBasic = pagesBasic.includes(to.name);
 
 
@@ -28,11 +39,13 @@ router.beforeEach((to, from, next) => {
 
   try {
     user = JSON.parse(localStorage.getItem("user"));
-  } catch{ }
+  } catch{
+    user = null;
+  }
 
   //get role for tournament
   if (user && user.roles && tournamentId) {
-    role = user.roles[tournamentId];;
+    role = user.roles[tournamentId];
   }
 
   //check if has Admin role for tournament
@@ -52,7 +65,12 @@ router.beforeEach((to, from, next) => {
   next();
 });
 
+
+Vue.component('layout-menu', LayoutMenu);
+Vue.component('layout-no-menu', LayoutNoMenu);
+Vue.component('layout-raw', LayoutRaw);
 new Vue({
   router,
-  render: h => h(App)
+  render: h => h(App),
+
 }).$mount('#app')

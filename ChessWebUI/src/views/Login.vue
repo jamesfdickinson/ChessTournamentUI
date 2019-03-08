@@ -1,5 +1,5 @@
 <template>
-  <div class="ion-page" main>
+ <layout-no-menu>
     <!-- <ion-page class="ion-page" main> -->
     <ion-header>
       <ion-toolbar color="primary">
@@ -55,7 +55,7 @@
       </form>-->
     </ion-content>
     <!-- </ion-page> -->
-  </div>
+ </layout-no-menu>
 </template>
 
 <script>

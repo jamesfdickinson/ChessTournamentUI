@@ -1,14 +1,9 @@
 <template>
-  <div class="ion-page" main>
-    <!-- <ion-page class="ion-page" main> -->
+  <layout-menu>
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
-          <ion-menu-toggle>
-            <ion-button>
-              <ion-icon slot="icon-only" name="menu"></ion-icon>
-            </ion-button>
-          </ion-menu-toggle>
+          <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
         </ion-buttons>
         <ion-title>Player</ion-title>
         <ion-buttons slot="end">
@@ -66,22 +61,22 @@
           v-on:click="openPlayer(playerGame.playerId)"
         >
          <ion-label slot>{{playerGame.fullName}}</ion-label>
-          <ion-badge>{{playerGame.points}}</ion-badge>
+          <ion-badge>{{1-playerGame.points}}</ion-badge>
         </ion-item>
 
       </ion-list>
     </ion-content>
     <!-- </ion-page> -->
-  </div>
+  </layout-menu>
 </template>
 
 <script>
 import fetch from "@/fetch.js";
-
+import LayoutMenu from "@/components/LayoutMenu.vue";
 export default {
   name: "home",
 
-  components: {},
+  components: { LayoutMenu},
   data() {
     var tournamentId = this.$route.params.tournament;
     return {

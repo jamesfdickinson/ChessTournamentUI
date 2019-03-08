@@ -16,13 +16,17 @@
     <!-- <ion-item button detail="true" v-on:click="openSignUp()">
       <ion-icon slot="start" name="clipboard"></ion-icon>
       <ion-label>Sign Up</ion-label>
-    </ion-item> -->
-
+    </ion-item>-->
     <ion-item button detail="true" v-on:click="openFAQ()">
       <ion-icon slot="start" name="help"></ion-icon>
       <ion-label>FAQ</ion-label>
     </ion-item>
-
+    <router-link :to="{ name: 'SignUp'}">
+      <ion-item button detail="true">
+        <ion-icon slot="start" name="clipboard"></ion-icon>
+        <ion-label>Sign Up</ion-label>
+      </ion-item>
+    </router-link>
     <ion-list-header>
       <ion-label>Recorder</ion-label>
     </ion-list-header>
@@ -40,8 +44,7 @@
       <ion-icon slot="start" name="filing"></ion-icon>
       <ion-label>Roster</ion-label>
     </ion-item>-->
-
-<!--     
+    <!--     
     <ion-list-header>
       <ion-label>Admin</ion-label>
     </ion-list-header>
@@ -60,19 +63,19 @@
         <ion-icon slot="start" name="trophy"></ion-icon>
         <ion-label>Tournaments</ion-label>
       </ion-item>
-    </router-link> 
+    </router-link>
 
     <ion-list-header>
       <ion-label>Login</ion-label>
     </ion-list-header>
     <router-link :to="{ name: 'Login'}">
       <ion-item button detail="true">
-        <ion-icon slot="start" name="trophy"></ion-icon>
+        <ion-icon slot="start" name="contact"></ion-icon>
         <ion-label>Login</ion-label>
       </ion-item>
     </router-link>
     <ion-item button detail="true" v-on:click="LogOut()">
-      <ion-icon slot="start" name="trophy"></ion-icon>
+      <ion-icon slot="start" name="contact"></ion-icon>
       <ion-label>Log Out</ion-label>
     </ion-item>
   </ion-items>
@@ -127,7 +130,7 @@ export default {
     },
     openFAQ() {
       this.$router.push({
-        name: "faq",
+        name: "FAQ",
         params: { tournament: this.tournamentId }
       });
     },

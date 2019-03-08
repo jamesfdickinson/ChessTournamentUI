@@ -1,5 +1,5 @@
 <template>
-  <div class="ion-page" main>
+  <layout-menu>
     <!-- <ion-page class="ion-page" main> -->
     <ion-header>
       <ion-toolbar color="primary">
@@ -22,7 +22,7 @@
           <ion-list-header :key="position.color">
             <ion-label>{{position.color}}</ion-label>
           </ion-list-header>
-          <ion-item detail="true" :key="position.id" v-on:click="reportWin(position.playerId)">
+          <ion-item button detail="true" :key="position.id" v-on:click="reportWin(position.playerId)">
             <ion-icon
               v-if="position.color=='Black'"
               src="/images/chess_pawn_black.svg"
@@ -40,14 +40,14 @@
         <ion-list-header>
           <ion-label>Tie</ion-label>
         </ion-list-header>
-        <ion-item detail="true" v-on:click="reportTie()">
+        <ion-item button detail="true" v-on:click="reportTie()">
           <ion-icon name="radio-button-off" slot="start"></ion-icon>
           <ion-label>Tie Game</ion-label>
         </ion-item>
       </ion-list>
     </ion-content>
     <!-- </ion-page> -->
-  </div>
+  </layout-menu>
 </template>
 
 <script>
