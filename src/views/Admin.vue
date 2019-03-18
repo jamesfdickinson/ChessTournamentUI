@@ -14,10 +14,12 @@
         <ion-list-header>
           <ion-label>Admin Settings</ion-label>
         </ion-list-header>
-        <ion-item button detail="true" v-on:click="openPlayers()">
+        <router-link :to="{ name: 'PlayerEdit'}">
+        <ion-item button detail="true" >
           <ion-icon slot="start" name="contact"></ion-icon>
           <ion-label>Add Player</ion-label>
         </ion-item>
+        </router-link>
         <ion-item button detail="true" v-on:click="openRounds()">
           <ion-icon slot="start" name="paper"></ion-icon>
           <ion-label>Edit Players</ion-label>

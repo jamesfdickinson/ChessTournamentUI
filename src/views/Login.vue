@@ -95,7 +95,7 @@ export default {
       if (userName == "bmrecorder" && password == "bmrecorder") {
         user = {
           username: "jimmysmells",
-          roles: { 117: "Recorder", 120: "Recorder" },
+          roles: { 117: "Recorder", 120: "Recorder" , 122: "Recorder"},
           token: "123123"
         };
         localStorage.setItem("user", JSON.stringify(user));
@@ -103,7 +103,15 @@ export default {
       if (userName == "bmchess" && password == "check") {
         user = {
           username: "jimmysmells",
-          roles: { 117: "Basic", 120: "Basic" },
+          roles: { 117: "Basic", 120: "Basic", 122: "Basic" },
+          token: "123123"
+        };
+        localStorage.setItem("user", JSON.stringify(user));
+      }
+       if (userName == "admin" && password == "admin") {
+        user = {
+          username: "jimmysmells",
+          roles: { 117: "Admin", 120: "Admin" , 122: "Admin"},
           token: "123123"
         };
         localStorage.setItem("user", JSON.stringify(user));

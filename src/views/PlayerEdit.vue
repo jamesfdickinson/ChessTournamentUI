@@ -82,6 +82,7 @@
       <hr>
       <ion-button expand="block" color="light" v-on:click="back()">Cancel</ion-button>
       <!-- <ion-button color="danger">Delete</ion-button> -->
+      <div style="color:red;">{{error}}</div>
     </ion-content>
     <!-- </ion-page> -->
   </layout-no-menu>
@@ -100,7 +101,7 @@ export default {
       playerId: playerId,
       tournamentId: tournamentId,
       player: {},
-      errors: []
+      error: {}
     };
   },
   methods: {
@@ -113,32 +114,48 @@ export default {
       var playerId = this.playerId;
       var player = this.player;
 
-      fetch
-        .post(`player/${playerId}`, player)
-        .then(response => {
-          //back
-          this.$router.back();
-          //if (redirect) {
-          //   this.$router.push({ path: redirect });
-          // } else {
-          //    this.$router.push({ path: `/${tournamentId}/Player/${playerId}` });
-          // }
-        })
-        .catch(e => {
-          this.errors.push(e);
-        });
+      if (playerId) {
+        fetch
+          .post(`player/${playerId}`, player)
+          .then(response => {
+            //back
+            this.$router.back();
+            //if (redirect) {
+            //   this.$router.push({ path: redirect });
+            // } else {
+            //    this.$router.push({ path: `/${tournamentId}/Player/${playerId}` });
+            // }
+          })
+          .catch(e => {
+            this.error = "Error: Save failed";
+            console.warn(e);
+          });
+      } else {
+        fetch
+          .put(`player`, player)
+          .then(response => {
+            //back
+            this.$router.back();
+          })
+          .catch(e => {
+            this.error = "Error: Save failed";
+            console.warn(e);
+          });
+      }
     },
     loadData() {
       var playerId = this.playerId;
-
-      fetch
-        .get(`player/${playerId}`)
-        .then(response => {
-          this.player = response.data;
-        })
-        .catch(e => {
-          this.errors.push(e);
-        });
+      if (playerId) {
+        fetch
+          .get(`player/${playerId}`)
+          .then(response => {
+            this.player = response.data;
+          })
+          .catch(e => {
+            this.error = "Error: Load failed";
+            console.warn(e);
+          });
+      }
     }
   },
   created() {

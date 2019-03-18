@@ -89,6 +89,11 @@ export default new VueRouter({
       component: PlayerEdit
     },
     {
+      path: '/:tournament/PlayerEdit',
+      name: 'PlayerEdit',
+      component: PlayerEdit
+    },
+    {
       path: '/:tournament/rounds',
       name: 'rounds',
       component: Rounds

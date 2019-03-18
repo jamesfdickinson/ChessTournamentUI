@@ -44,7 +44,7 @@
       <ion-icon slot="start" name="filing"></ion-icon>
       <ion-label>Roster</ion-label>
     </ion-item>-->
-    <!--     
+       
     <ion-list-header>
       <ion-label>Admin</ion-label>
     </ion-list-header>
@@ -54,7 +54,7 @@
         <ion-icon slot="start" name="cog"></ion-icon>
         <ion-label>Admin Settings</ion-label>
       </ion-item>
-    </router-link>-->
+    </router-link>
     <ion-list-header>
       <ion-label>Other</ion-label>
     </ion-list-header>
