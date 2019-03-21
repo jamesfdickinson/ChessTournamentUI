@@ -90,7 +90,7 @@ export default new VueRouter({
     },
     {
       path: '/:tournament/PlayerEdit',
-      name: 'PlayerEdit',
+      name: 'PlayerNew',
       component: PlayerEdit
     },
     {

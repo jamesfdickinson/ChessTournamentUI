@@ -81,6 +81,9 @@
       <ion-button expand="block" v-on:click="save()">Save</ion-button>
       <hr>
       <ion-button expand="block" color="light" v-on:click="back()">Cancel</ion-button>
+      <hr>
+       <ion-button  color="danger" v-on:click="deletePlayer()">Delete</ion-button> 
+    <!-- <ion-button @click="presentAlertConfirm">Show Alert (confirm)</ion-button> -->
       <!-- <ion-button color="danger">Delete</ion-button> -->
       <div style="color:red;">{{error}}</div>
     </ion-content>
@@ -100,8 +103,12 @@ export default {
     return {
       playerId: playerId,
       tournamentId: tournamentId,
-      player: {},
-      error: {}
+      player: {
+        tournamentId: tournamentId,
+        rating: 1000,
+        allowNotifications: true
+      },
+      error: ""
     };
   },
   methods: {
@@ -131,6 +138,7 @@ export default {
             console.warn(e);
           });
       } else {
+        player.tournamentId = tournamentId;
         fetch
           .put(`player`, player)
           .then(response => {
@@ -139,6 +147,21 @@ export default {
           })
           .catch(e => {
             this.error = "Error: Save failed";
+            console.warn(e);
+          });
+      }
+    },
+    deletePlayer() {
+      var playerId = this.playerId;
+      if (playerId) {
+        fetch
+          .delete(`player/${playerId}`)
+          .then(response => {
+            //back
+            this.$router.back();
+          })
+          .catch(e => {
+            this.error = "Error: Delete failed";
             console.warn(e);
           });
       }
@@ -157,6 +180,31 @@ export default {
           });
       }
     }
+    // ,
+    //  presentAlertConfirm() {
+    //   return this.$ionic.alertController
+    //     .create({
+    //       header: 'Confirm!',
+    //       message: 'Message <strong>text</strong>!!!',
+    //       buttons: [
+    //         {
+    //           text: 'Cancel',
+    //           role: 'cancel',
+    //           cssClass: 'secondary',
+    //           handler: blah => {
+    //             console.log('Confirm Cancel:', blah)
+    //           },
+    //         },
+    //         {
+    //           text: 'Okay',
+    //           handler: () => {
+    //             console.log('Confirm Okay')
+    //           },
+    //         },
+    //       ],
+    //     })
+    //     .then(a => a.present())
+    // },
   },
   created() {
     this.loadData();

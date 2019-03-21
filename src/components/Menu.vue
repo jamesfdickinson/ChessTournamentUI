@@ -49,12 +49,18 @@
       <ion-label>Admin</ion-label>
     </ion-list-header>
 
-    <router-link :to="{ name: 'Admin', params: { tournament: tournamentId }}">
+<a v-bind:href="'https://admin.chessclub.io/'+ tournamentId+'/'">
+ <ion-item button detail="true">
+        <ion-icon slot="start" name="cog"></ion-icon>
+        <ion-label>Admin Settings</ion-label>
+      </ion-item>
+</a>
+    <!-- <router-link :to="{ name: 'Admin', params: { tournament: tournamentId }}">
       <ion-item button detail="true">
         <ion-icon slot="start" name="cog"></ion-icon>
         <ion-label>Admin Settings</ion-label>
       </ion-item>
-    </router-link>
+    </router-link> -->
     <ion-list-header>
       <ion-label>Other</ion-label>
     </ion-list-header>

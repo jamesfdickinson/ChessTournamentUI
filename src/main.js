@@ -6,7 +6,7 @@ import AnalyticsGA from './services/AnalyticsGA'
 import LayoutMenu from "@/components/LayoutMenu.vue";
 import LayoutNoMenu from "@/components/LayoutNoMenu.vue";
 import LayoutRaw from "@/components/LayoutRaw.vue";
-
+import JsonCSV from 'vue-json-csv'
 
 let version = "2.1";
 let analyticsGA = new AnalyticsGA();
@@ -65,7 +65,7 @@ router.beforeEach((to, from, next) => {
   next();
 });
 
-
+Vue.component('downloadCsv', JsonCSV)
 Vue.component('layout-menu', LayoutMenu);
 Vue.component('layout-no-menu', LayoutNoMenu);
 Vue.component('layout-raw', LayoutRaw);

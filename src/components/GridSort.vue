@@ -1,24 +1,25 @@
 <template>
-  <table>
-    <thead>
-      <tr>
-        <th
-          v-for="key in columns"
-          :key="key"
-          @click="sortBy(key)"
-          :class="{ active: sortKey == key }"
-        >
-          {{ key | capitalize }}
-          <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'"></span>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="entry in filteredData" :key="entry.indexOf">
-        <td v-for="key in columns" :key="key">{{entry[key]}}</td>
-      </tr>
-    </tbody>
-  </table>
+  <div>
+    <download-csv style="float:right;" :data="filteredData" name="report.csv">
+      <ion-button>Export Data</ion-button>
+    </download-csv>
+    <h1 v-show="title">{{title}}</h1>
+    <table>
+      <thead>
+        <tr>
+          <th v-for="key in columns" :key="key" @click="sortBy(key)">
+            {{ key | capitalize }}
+            <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'"></span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="entry in filteredData" :key="entry.indexOf">
+          <td v-for="key in columns" :key="key">{{entry[key]}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <script>
@@ -27,7 +28,12 @@ export default {
   props: {
     data: Array,
     columns: Array,
-    filterKey: String
+    filterKey: String,
+    sortKeys: {
+      type: Array,
+      default: () => []
+    },
+    title: String
   },
   data: function() {
     var sortOrders = {};
@@ -35,13 +41,22 @@ export default {
       sortOrders[key] = 1;
     });
     return {
-      sortKey: "",
-      sortKeys: [],
       sortOrders: sortOrders
     };
   },
   computed: {
     filteredData: function() {
+      var data = this.getFilteredData();
+      return data;
+    }
+  },
+  filters: {
+    capitalize: function(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+  },
+  methods: {
+    getFilteredData: function() {
       //var sortKey = this.sortKey;
       var sortKeys = this.sortKeys;
       var sortOrders = this.sortOrders;
@@ -80,14 +95,7 @@ export default {
         });
       }
       return data;
-    }
-  },
-  filters: {
-    capitalize: function(str) {
-      return str.charAt(0).toUpperCase() + str.slice(1);
-    }
-  },
-  methods: {
+    },
     sortBy: function(key) {
       //add array of sort keys
 
@@ -130,8 +138,6 @@ table {
   xborder: 2px solid #16a085;
   xborder-radius: 3px;
   background-color: #fff;
-   
-  
 }
 
 th {
@@ -158,9 +164,8 @@ td {
 }
 th {
   font-size: 1em;
-    /* font-size: 20px; */
-    font-weight: 500;
-    
+  /* font-size: 20px; */
+  font-weight: 500;
 }
 
 td {

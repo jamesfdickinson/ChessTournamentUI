@@ -1,11 +1,12 @@
 <template>
-<layout-menu>
+  <layout-menu>
     <!-- <ion-page class="ion-page" main> -->
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
           <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
         </ion-buttons>
+
         <!-- <ion-buttons slot="start">
           <ion-menu-toggle>
             <ion-button>
@@ -14,6 +15,16 @@
           </ion-menu-toggle>
         </ion-buttons>-->
         <ion-title>Registration</ion-title>
+
+        <ion-buttons slot="primary" 
+        v-on:click="$router.push({ name: 'PlayerNew'})" >
+           <ion-button fill="outline">
+              <ion-icon slot="start" name="add"></ion-icon>
+              <ion-label>Add</ion-label>
+            </ion-button>
+    
+        </ion-buttons>
+
       </ion-toolbar>
     </ion-header>
     <ion-content>
@@ -54,7 +65,7 @@
       </ion-list>
     </ion-content>
     <!-- </ion-page> -->
- </layout-menu>
+  </layout-menu>
 </template>
 
 <script>
