@@ -15,16 +15,13 @@
           </ion-menu-toggle>
         </ion-buttons>-->
         <ion-title>Registration</ion-title>
-
-        <ion-buttons slot="primary" 
-        v-on:click="$router.push({ name: 'PlayerNew'})" >
-           <ion-button fill="outline">
-              <ion-icon slot="start" name="add"></ion-icon>
-              <ion-label>Add</ion-label>
-            </ion-button>
-    
+        <ion-buttons slot="end">
+          <ion-button
+            v-on:click="$router.push({ name: 'PlayerNew'})"
+          >
+            <ion-icon name="person-add" size="large"></ion-icon>
+          </ion-button>
         </ion-buttons>
-
       </ion-toolbar>
     </ion-header>
     <ion-content>
