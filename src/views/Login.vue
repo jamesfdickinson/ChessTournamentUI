@@ -92,18 +92,19 @@ export default {
       //https://github.com/vuejs/vue-router/blob/dev/examples/auth-flow/auth.js
 
       let user = null;
-      if (userName == "bmrecorder" && password == "bmrecorder") {
+
+      if (userName == "gcrecorder" && password == "chess2019") {
         user = {
           username: "jimmysmells",
-          roles: { 117: "Recorder", 120: "Recorder" , 122: "Recorder"},
+          roles: { 117: "Recorder", 120: "Recorder" , 121: "Recorder", 122: "Recorder", 123: "Recorder"},
           token: "123123"
         };
         localStorage.setItem("user", JSON.stringify(user));
       }
-      if (userName == "bmchess" && password == "check") {
+      if (userName == "chessgirl" && password == "fun") {
         user = {
           username: "jimmysmells",
-          roles: { 117: "Basic", 120: "Basic", 122: "Basic" },
+          roles: { 117: "Basic", 120: "Basic", 121: "Basic" , 122: "Basic", 123: "Basic" },
           token: "123123"
         };
         localStorage.setItem("user", JSON.stringify(user));
@@ -111,7 +112,7 @@ export default {
        if (userName == "admin" && password == "admin") {
         user = {
           username: "jimmysmells",
-          roles: { 117: "Admin", 120: "Admin" , 122: "Admin"},
+          roles: { 117: "Admin", 120: "Admin", 121: "Admin" , 122: "Admin", 123: "Admin"},
           token: "123123"
         };
         localStorage.setItem("user", JSON.stringify(user));
