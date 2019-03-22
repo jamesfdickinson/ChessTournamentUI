@@ -1,12 +1,17 @@
 <template>
-   <layout-menu>
+  <layout-menu>
     <!-- <ion-page class="ion-page" main> -->
     <ion-header>
       <ion-toolbar color="primary">
-               <ion-buttons slot="start">
+        <ion-buttons slot="start">
           <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
         </ion-buttons>
         <ion-title>Round {{roundId}}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button @click="details()">
+            <ion-icon name="paper" size="large"></ion-icon>
+          </ion-button>
+        </ion-buttons>
       </ion-toolbar>
     </ion-header>
     <ion-content>
@@ -85,6 +90,14 @@ export default {
     };
   },
   methods: {
+    details() {
+      let roundId = this.roundId;
+      let tournamentId = this.tournamentId;
+      this.$router.push({
+        name: "RoundDetails",
+        params: { id: roundId, tournament: tournamentId }
+      });
+    },
     openTable(id) {
       let roundId = this.roundId;
       let tournamentId = this.tournamentId;
@@ -103,7 +116,7 @@ export default {
       var tournamentId = this.tournamentId;
       var roundId = this.roundId;
       fetch
-        .get(`round/${roundId}?tournament=${tournamentId}`)
+        .get(`round/Grouped/${roundId}?tournament=${tournamentId}`)
         .then(response => {
           this.round = response.data;
         })

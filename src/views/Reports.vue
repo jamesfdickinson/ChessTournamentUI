@@ -1,5 +1,5 @@
 <template>
-   <layout-menu>
+  <layout-menu>
     <!-- <ion-page class="ion-page" main> -->
     <ion-header>
       <ion-toolbar color="primary">
@@ -13,13 +13,13 @@
             </ion-button>
           </ion-menu-toggle>
         </ion-buttons>-->
-        <ion-title>Scores</ion-title>
+        <ion-title>Reports</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content>
       <ion-list>
         <ion-list-header>
-          <ion-label>Reports</ion-label>
+          <ion-label>Simple Reports</ion-label>
         </ion-list-header>
 
         <router-link :to="{ name: 'ReportScoreByAll', params: { tournament: tournamentId }}">
@@ -42,23 +42,88 @@
         </router-link>
 
         <ion-list-header>
-          <ion-label>Detailed Reports</ion-label>
+          <ion-label>Player Scores</ion-label>
         </ion-list-header>
 
-        <router-link :to="{ name: 'ReportScoreDetailed', params: { tournament: tournamentId }}">
+        <router-link :to="{ name: 'ReportScoreDetailed', params: { tournament: tournamentId, title:'Detailed Scores' }}">
           <ion-item button detail="true">
             <ion-icon slot="start" name="paper"></ion-icon>
-            <ion-label>Scores Detailed</ion-label>
+            <ion-label>Scores by Points</ion-label>
+          </ion-item>
+        </router-link>
+        <router-link :to="{ name: 'Reports', params: { tournament: tournamentId }}">
+          <ion-item button detail="true">
+            <ion-icon slot="start" name="paper"></ion-icon>
+            <ion-label>Scores by Grade</ion-label>
+          </ion-item>
+        </router-link>
+        <router-link :to="{ name: 'Reports', params: { tournament: tournamentId }}">
+          <ion-item button detail="true">
+            <ion-icon slot="start" name="paper"></ion-icon>
+            <ion-label>Scores by School</ion-label>
+          </ion-item>
+        </router-link>
+        <router-link :to="{ name: 'Reports', params: { tournament: tournamentId }}">
+          <ion-item button detail="true">
+            <ion-icon slot="start" name="paper"></ion-icon>
+            <ion-label>Scores by Name</ion-label>
+          </ion-item>
+        </router-link>
+
+        <ion-list-header>
+          <ion-label>Round Details</ion-label>
+        </ion-list-header>
+        <router-link :to="{ name: 'RoundDetails', params: {id: 1 , tournament: tournamentId }}">
+          <ion-item button detail="true">
+            <ion-icon slot="start" name="apps"></ion-icon>
+            <ion-label>Round 1</ion-label>
+          </ion-item>
+        </router-link>
+        <router-link :to="{ name: 'RoundDetails', params: {id: 2 , tournament: tournamentId }}">
+          <ion-item button detail="true">
+            <ion-icon slot="start" name="apps"></ion-icon>
+            <ion-label>Round 2</ion-label>
+          </ion-item>
+        </router-link>
+        <router-link :to="{ name: 'RoundDetails', params: {id: 3 , tournament: tournamentId }}">
+          <ion-item button detail="true">
+            <ion-icon slot="start" name="apps"></ion-icon>
+            <ion-label>Round 3</ion-label>
+          </ion-item>
+        </router-link>
+        <router-link :to="{ name: 'RoundDetails', params: {id: 4, tournament: tournamentId }}">
+          <ion-item button detail="true">
+            <ion-icon slot="start" name="apps"></ion-icon>
+            <ion-label>Round 4</ion-label>
+          </ion-item>
+        </router-link>
+        <router-link :to="{ name: 'RoundDetails', params: {id: 5 , tournament: tournamentId }}">
+          <ion-item button detail="true">
+            <ion-icon slot="start" name="apps"></ion-icon>
+            <ion-label>Round 5</ion-label>
           </ion-item>
         </router-link>
 
         <ion-list-header>
           <ion-label>Custom Reports</ion-label>
         </ion-list-header>
+        <router-link :to="{ name: 'Reports', params: { tournament: tournamentId }}">
+          <ion-item button detail="true">
+            <ion-icon slot="start" name="school"></ion-icon>
+            <ion-label>School Group Rank</ion-label>
+          </ion-item>
+        </router-link>
+
         <router-link :to="{ name: 'ReportScoreGroupRank', params: { tournament: tournamentId }}">
           <ion-item button detail="true">
             <ion-icon slot="start" name="school"></ion-icon>
-            <ion-label>Group Rank School</ion-label>
+            <ion-label>Group Sub-Grade Rank School</ion-label>
+          </ion-item>
+        </router-link>
+        <router-link :to="{ name: 'ReportWallChart', params: { tournament: tournamentId }}">
+          <ion-item button detail="true">
+            <ion-icon slot="start" name="albums"></ion-icon>
+            <ion-label>Wall Chart</ion-label>
           </ion-item>
         </router-link>
       </ion-list>

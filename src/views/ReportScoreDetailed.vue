@@ -1,23 +1,27 @@
 <template>
   <layout-raw>
-    <!-- <ion-header>
-      <ion-toolbar color="primary">
-        <ion-buttons slot="start">
-          <ion-menu-toggle>
-            <ion-button>
-              <ion-icon slot="icon-only" name="menu"></ion-icon>
+  
+        <ion-toolbar color="primary">
+          <ion-buttons slot="start">
+            <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
+          </ion-buttons>
+          <ion-title>Scores - Detailed</ion-title>
+          <ion-buttons slot="end">
+            <ion-button @click="print()">
+              <ion-icon name="print" size="large"></ion-icon>
             </ion-button>
-          </ion-menu-toggle>
-        </ion-buttons>
-        <ion-title>Scores - Detailed</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content scroll-x="true">-->
-     <a href="#" onclick="window.history.back();">Back</a>
-      <h1>Detailed Scores </h1>
-    <GridSort :data="gridData" :columns="gridColumns"></GridSort>
-
-    <!-- </ion-content> -->
+          </ion-buttons>
+        </ion-toolbar>
+   
+   
+  
+    <div class="section-to-print">
+      <!--   <ion-content scroll-x="true">-->
+      <!-- <a href="#" onclick="window.history.back();">Back</a> -->
+      <!-- <h1>Detailed Scores </h1> -->
+      <GridSort :data="gridData" :columns="gridColumns" :title="title" :description="description"></GridSort>
+    </div>
+  
   </layout-raw>
 </template>
 
@@ -32,12 +36,16 @@ export default {
   },
   data() {
     var tournamentId = this.$route.params.tournament;
-    return {
+    var title = this.$route.params.title ||"Detailed Scores";
+    var description = null;
+     return {
       tournamentId: tournamentId,
       data: [],
       searchQuery: "",
       gridColumns: ["name", "points", "school", "grade", "division"],
       gridData: [],
+      title: title,
+      description:description,
       // [
       //   { name: "Chuck Norris", points: Infinity, grade: 1 },
       //   { name: "Bruce Lee", points: 3000, grade: 1 },
@@ -67,6 +75,9 @@ export default {
         .catch(e => {
           this.errors.push(e);
         });
+    },
+    print() {
+      window.print();
     }
   },
   created() {
@@ -74,3 +85,24 @@ export default {
   }
 };
 </script>
+<style>
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .section-to-print,
+  .section-to-print * {
+    visibility: visible;
+  }
+  .section-to-print {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+  } 
+ .section-not-to-print {
+    visibility: hidden;
+  }
+}
+</style>
+

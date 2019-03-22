@@ -12,18 +12,19 @@
     <ion-content scroll-x="true">
      
      
-       <ion-item>  <h1>ScoreGroupRank</h1>
+       <!-- <ion-item>  
+         <h1>ScoreGroupRank</h1>
          </ion-item>
       <ion-item>
       
       <p>This report generates scores based on 3 grade groups k-2, 3-5, 6-8. The points are of the top 4 scores of per school.</p>
-      </ion-item>
+      </ion-item> -->
       <!-- <form id="search">
         Search
         <input name="query" v-model="searchQuery">
       </form>
       <GridSort :data="gridData" :columns="gridColumns" :filter-key="searchQuery"></GridSort>-->
-      <GridSort :data="gridData" :columns="gridColumns"></GridSort>
+      <GridSort :data="gridData" :columns="gridColumns" :title="title" :description="description"></GridSort>
 
       <!-- <ion-list>
         <ion-item
@@ -52,12 +53,16 @@ export default {
   },
   data() {
     var tournamentId = this.$route.params.tournament;
+    var title = "Score Group Rank";
+    var description = "This report generates scores based on 3 grade groups k-2, 3-5, 6-8. The points are of the top 4 scores of per school.";
     return {
       tournamentId: tournamentId,
       data: [],
       searchQuery: "",
       gridColumns: ["grouping", "school", "rank", "totalPoints",  "players"],
       gridData: [],
+        title: title,
+      description:description,
       errors: []
     };
   },

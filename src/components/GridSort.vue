@@ -1,24 +1,33 @@
 <template>
   <div>
-    <download-csv style="float:right;" :data="filteredData" name="report.csv">
-      <ion-button>Export Data</ion-button>
-    </download-csv>
-    <h1 v-show="title">{{title}}</h1>
-    <table>
-      <thead>
-        <tr>
-          <th v-for="key in columns" :key="key" @click="sortBy(key)">
-            {{ key | capitalize }}
-            <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'"></span>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="entry in filteredData" :key="entry.indexOf">
-          <td v-for="key in columns" :key="key">{{entry[key]}}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="section-not-to-print">
+      <!-- <ion-button style="float:right;" @click="print()">Print</ion-button>-->
+      <download-csv style="float:right;" :data="filteredData" :name="(title||'report')+'.csv'">
+        <ion-button>Export Data</ion-button>
+      </download-csv>
+    </div>
+    <div id="printable" class="section-to-print">
+      <h1 v-show="title" class="title">{{title}}</h1>
+      <div v-show="description" class="description">{{description}}</div>
+      <table>
+        <thead>
+          <tr>
+            <th v-for="key in columns" :key="key" @click="sortBy(key)">
+              {{ key | capitalize }}
+              <span
+                class="arrow section-not-to-print"
+                :class="sortOrders[key] > 0 ? 'asc' : 'dsc'"
+              ></span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="entry in filteredData" :key="entry.indexOf">
+            <td v-for="key in columns" :key="key">{{entry[key]}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -33,7 +42,8 @@ export default {
       type: Array,
       default: () => []
     },
-    title: String
+    title: String,
+    description: String
   },
   data: function() {
     var sortOrders = {};
@@ -113,12 +123,21 @@ export default {
       //sort order
       this.sortOrders[key] = this.sortOrders[key] * -1;
     }
+    // ,    print() {
+    //   window.print();
+    // }
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.title {
+  margin: 20px 10px 10px 10px;
+}
+.description {
+  margin: 3px 10px 3px 10px;
+}
 h3 {
   margin: 40px 0 0;
 }
@@ -142,6 +161,8 @@ table {
 
 th {
   background-color: #16a085;
+  background-color: #3880ff;
+
   color: rgba(255, 255, 255, 0.66);
   color: rgba(255, 255, 255, 1);
   cursor: pointer;
@@ -149,6 +170,9 @@ th {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+
+  white-space: nowrap;
+  text-align: left;
 }
 tr:nth-child(even) {
   background-color: #f2f2f2;
@@ -158,9 +182,10 @@ xtd {
 }
 th,
 td {
-  min-width: 90px;
+  min-width: 50px;
   padding: 8px 4px;
   xborder-right: solid white 1px;
+  text-align: left;
 }
 th {
   font-size: 1em;
@@ -200,5 +225,13 @@ th.active .arrow {
   border-left: 4px solid transparent;
   border-right: 4px solid transparent;
   border-top: 4px solid #fff;
+}
+
+@media print {
+  .section-not-to-print *,
+  .section-not-to-print {
+    visibility: hidden;
+    display: none;
+  }
 }
 </style>

@@ -8,6 +8,7 @@ import LayoutNoMenu from "@/components/LayoutNoMenu.vue";
 import LayoutRaw from "@/components/LayoutRaw.vue";
 import JsonCSV from 'vue-json-csv'
 
+
 let version = "2.1";
 let analyticsGA = new AnalyticsGA();
 analyticsGA.TrackStart("Chess", version, "UA-2052018-24");
@@ -17,7 +18,6 @@ Vue.config.productionTip = true;
 
 Vue.config.ignoredElements = [/^ion-/]
 //Vue.use(Ionic);
-
 
 router.beforeEach((to, from, next) => {
   analyticsGA.TrackPage(to.path);
