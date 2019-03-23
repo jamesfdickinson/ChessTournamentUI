@@ -118,7 +118,7 @@ export default {
     },
     openRounds() {
       this.$router.push({
-        name: "rounds",
+        name: "Rounds",
         params: { tournament: this.tournamentId }
       });
     },

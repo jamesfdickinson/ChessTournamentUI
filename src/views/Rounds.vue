@@ -4,7 +4,7 @@
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
-          <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
+          <ion-icon name="arrow-round-back" size="large" @click="$router.push({ name: 'Tournament', params: { tournament: tournamentId } })"></ion-icon>
         </ion-buttons>
         <!-- <ion-buttons slot="start">
           <ion-menu-toggle>
@@ -54,7 +54,7 @@ export default {
   methods: {
     openRound(id) {
       this.$router.push({
-        name: "round",
+        name: "Round",
         params: { tournament: this.tournamentId, id: id }
       });
     },

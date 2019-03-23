@@ -95,13 +95,13 @@ export default new VueRouter({
       component: PlayerEdit
     },
     {
-      path: '/:tournament/rounds',
-      name: 'rounds',
+      path: '/:tournament/Rounds',
+      name: 'Rounds',
       component: Rounds
     },
     {
-      path: '/:tournament/round/:id',
-      name: 'round',
+      path: '/:tournament/Round/:id',
+      name: 'Round',
       component: Round
     },
     {
