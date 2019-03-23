@@ -1,6 +1,5 @@
 <template>
-  <layout-no-menu>
-    <!-- <ion-page class="ion-page" main> -->
+  <layout-raw>
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
@@ -8,19 +7,16 @@
         </ion-buttons>
         <ion-title>Scores - Score Group Rank Details</ion-title>
         <ion-buttons slot="end">
-            <ion-button @click="print()">
-              <ion-icon name="print" size="large"></ion-icon>
-            </ion-button>
-          </ion-buttons>
+          <ion-button @click="print()">
+            <ion-icon name="print" size="large"></ion-icon>
+          </ion-button>
+        </ion-buttons>
       </ion-toolbar>
     </ion-header>
-    <ion-content scroll-x="true">
-
+    <div class="section-to-print">
       <GridSort :data="gridData" :columns="gridColumns" :title="title" :description="description"></GridSort>
-
-    </ion-content>
-    <!-- </ion-page> -->
- </layout-no-menu>
+    </div>
+  </layout-raw>
 </template>
 
 <script>
@@ -35,15 +31,24 @@ export default {
   data() {
     var tournamentId = this.$route.params.tournament;
     var title = "Score Group Rank - Details";
-    var description = "This report ranks schools based on the top 5 total points from each school (per division).";
+    var description =
+      "This report ranks schools based on the top 5 total points from each school (per division).";
     return {
       tournamentId: tournamentId,
       data: [],
       searchQuery: "",
-      gridColumns: ["school", "rank", "groupPoints", "division",  "player","points","grade"],
+      gridColumns: [
+        "school",
+        "rank",
+        "groupPoints",
+        "division",
+        "player",
+        "points",
+        "grade"
+      ],
       gridData: [],
       title: title,
-      description:description,
+      description: description,
       errors: []
     };
   },
