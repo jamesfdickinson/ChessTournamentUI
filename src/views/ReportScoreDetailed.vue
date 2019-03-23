@@ -19,7 +19,7 @@
       <!--   <ion-content scroll-x="true">-->
       <!-- <a href="#" onclick="window.history.back();">Back</a> -->
       <!-- <h1>Detailed Scores </h1> -->
-      <GridSort :data="gridData" :columns="gridColumns" :title="title" :description="description"></GridSort>
+      <GridSort :data="gridData" :columns="gridColumns" :sortKeys="sortKeys" :sortOrders="sortOrders" :title="title" :description="description"></GridSort>
     </div>
   
   </layout-raw>
@@ -37,7 +37,10 @@ export default {
   data() {
     var tournamentId = this.$route.params.tournament;
     var title = this.$route.params.title ||"Detailed Scores";
-    var description = null;
+    var description = this.$route.params.description || null;
+    var sortKeys = this.$route.params.sortKeys || ["division","points"];
+    var sortOrders = this.$route.params.sortOrders || {division:-1,points:-1};
+
      return {
       tournamentId: tournamentId,
       data: [],
@@ -46,6 +49,8 @@ export default {
       gridData: [],
       title: title,
       description:description,
+      sortKeys:sortKeys,
+      sortOrders:sortOrders,
       // [
       //   { name: "Chuck Norris", points: Infinity, grade: 1 },
       //   { name: "Bruce Lee", points: 3000, grade: 1 },

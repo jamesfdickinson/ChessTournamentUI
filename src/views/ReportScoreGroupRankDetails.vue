@@ -6,7 +6,7 @@
         <ion-buttons slot="start">
           <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
         </ion-buttons>
-        <ion-title>Scores - Score Group Rank</ion-title>
+        <ion-title>Scores - Score Group Rank Details</ion-title>
         <ion-buttons slot="end">
             <ion-button @click="print()">
               <ion-icon name="print" size="large"></ion-icon>
@@ -34,15 +34,15 @@ export default {
   },
   data() {
     var tournamentId = this.$route.params.tournament;
-    var title = "Score Group Rank";
+    var title = "Score Group Rank - Details";
     var description = "This report ranks schools based on the top 5 total points from each school (per division).";
     return {
       tournamentId: tournamentId,
       data: [],
       searchQuery: "",
-      gridColumns: ["school", "rank", "groupPoints", "players",  "division"],
+      gridColumns: ["school", "rank", "groupPoints", "division",  "player","points","grade"],
       gridData: [],
-        title: title,
+      title: title,
       description:description,
       errors: []
     };
@@ -55,7 +55,7 @@ export default {
       var tournamentId = this.tournamentId;
 
       fetch
-        .get(`report/ScoreGroupRank/${tournamentId}`)
+        .get(`report/ScoreGroupRankDetails/${tournamentId}`)
         .then(response => {
           this.data = response.data;
           this.gridData = this.data;

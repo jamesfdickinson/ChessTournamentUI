@@ -6,7 +6,7 @@
         <ion-buttons slot="start">
           <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
         </ion-buttons>
-        <ion-title>Scores - Score Group Rank</ion-title>
+        <ion-title>Scores - ScoreGroupRank</ion-title>
         <ion-buttons slot="end">
             <ion-button @click="print()">
               <ion-icon name="print" size="large"></ion-icon>
@@ -15,9 +15,33 @@
       </ion-toolbar>
     </ion-header>
     <ion-content scroll-x="true">
-
+     
+     
+       <!-- <ion-item>  
+         <h1>ScoreGroupRank</h1>
+         </ion-item>
+      <ion-item>
+      
+      <p>This report generates scores based on 3 grade groups k-2, 3-5, 6-8. The points are of the top 4 scores of per school.</p>
+      </ion-item> -->
+      <!-- <form id="search">
+        Search
+        <input name="query" v-model="searchQuery">
+      </form>
+      <GridSort :data="gridData" :columns="gridColumns" :filter-key="searchQuery"></GridSort>-->
       <GridSort :data="gridData" :columns="gridColumns" :title="title" :description="description"></GridSort>
 
+      <!-- <ion-list>
+        <ion-item
+          detail="true"
+          v-for="score of data"
+          :key="score.playerId"
+          v-on:click="openPlayer(score.playerId)"
+        >
+          <ion-label>{{score.firstName}} {{score.lastName}}</ion-label>
+          <ion-badge slot="end" color="light">{{score.points}}</ion-badge>
+        </ion-item>
+      </ion-list>-->
     </ion-content>
     <!-- </ion-page> -->
  </layout-no-menu>
@@ -34,13 +58,13 @@ export default {
   },
   data() {
     var tournamentId = this.$route.params.tournament;
-    var title = "Score Group Rank";
-    var description = "This report ranks schools based on the top 5 total points from each school (per division).";
+    var title = "Score Sub Grade Group Rank";
+    var description = "This report generates scores based on 3 grade groups k-2, 3-5, 6-8. The points are of the top 4 scores of per school.";
     return {
       tournamentId: tournamentId,
       data: [],
       searchQuery: "",
-      gridColumns: ["school", "rank", "groupPoints", "players",  "division"],
+      gridColumns: ["grouping", "school", "rank", "totalPoints",  "players"],
       gridData: [],
         title: title,
       description:description,
@@ -48,6 +72,9 @@ export default {
     };
   },
   methods: {
+    openPlayer(id) {
+      this.$router.push({ name: "Player", params: { id: id } });
+    },
     print() {
       window.print();
     },
@@ -55,7 +82,7 @@ export default {
       var tournamentId = this.tournamentId;
 
       fetch
-        .get(`report/ScoreGroupRank/${tournamentId}`)
+        .get(`report/ScoreSubGradeGroupRank/${tournamentId}`)
         .then(response => {
           this.data = response.data;
           this.gridData = this.data;

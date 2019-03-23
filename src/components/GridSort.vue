@@ -16,7 +16,7 @@
               {{ key | capitalize }}
               <span
                 class="arrow section-not-to-print"
-                :class="sortOrders[key] > 0 ? 'asc' : 'dsc'"
+                :class="sortOrders && (sortOrders[key] > 0) ? 'asc' : 'dsc'"
               ></span>
             </th>
           </tr>
@@ -42,17 +42,19 @@ export default {
       type: Array,
       default: () => []
     },
+    sortOrders: {
+      type: Object,
+      default: () => ({})
+    },
     title: String,
     description: String
   },
   data: function() {
-    var sortOrders = {};
-    this.columns.forEach(function(key) {
-      sortOrders[key] = 1;
-    });
-    return {
-      sortOrders: sortOrders
-    };
+    // var sortOrders = {};
+    // this.columns.forEach(function(key) {
+    //   sortOrders[key] = 1;
+    // });
+    return {};
   },
   computed: {
     filteredData: function() {
@@ -95,6 +97,8 @@ export default {
         data = data.slice().sort(function(a, b) {
           for (let i = 0; i < sortKeys.length; i++) {
             let sortKey = sortKeys[i];
+
+            if (!sortOrders) sortOrders = {};
             let order = sortOrders[sortKey] || 1;
             let aV = a[sortKey];
             let bV = b[sortKey];
@@ -121,6 +125,8 @@ export default {
       // this.sortKey = key;
 
       //sort order
+      if (!this.sortOrders) this.sortOrders = {};
+      if (!this.sortOrders[key]) this.sortOrders[key] = 1; 
       this.sortOrders[key] = this.sortOrders[key] * -1;
     }
     // ,    print() {

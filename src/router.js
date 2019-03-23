@@ -22,6 +22,8 @@ import ReportScoreByGrade from './views/ReportScoreByGrade.vue'
 import ReportScoreByDivision from './views/ReportScoreByDivision.vue'
 import ReportScoreDetailed from './views/ReportScoreDetailed.vue'
 import ReportScoreGroupRank from './views/ReportScoreGroupRank.vue'
+import ReportScoreGroupRankDetails from './views/ReportScoreGroupRankDetails.vue'
+import ReportScoreSubGradeGroupRank from './views/ReportScoreSubGradeGroupRank.vue'
 import ReportWallChart from './views/ReportWallChart.vue'
 
 
@@ -153,6 +155,16 @@ export default new VueRouter({
       path: '/:tournament/ReportScoreGroupRank',
       name: 'ReportScoreGroupRank',
       component: ReportScoreGroupRank
+    },
+    {
+      path: '/:tournament/ReportScoreGroupRankDetails',
+      name: 'ReportScoreGroupRankDetails',
+      component: ReportScoreGroupRankDetails
+    },
+    {
+      path: '/:tournament/ReportScoreSubGradeGroupRank',
+      name: 'ReportScoreSubGradeGroupRank',
+      component: ReportScoreSubGradeGroupRank
     },
     {
       path: '/:tournament/ReportWallChart',
