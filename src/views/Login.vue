@@ -93,10 +93,26 @@ export default {
 
       let user = null;
 
-      if (userName == "gcrecorder" && password == "chess2019") {
+      if (userName == "recorder" && password == "recorder") {
         user = {
           username: "jimmysmells",
-          roles: { 117: "Recorder", 120: "Recorder" , 121: "Recorder", 122: "Recorder", 123: "Recorder"},
+          roles: { 117: "Recorder", 120: "Recorder" , 121: "Recorder", 122: "Recorder", 123: "Recorder", 115: "Recorder", 124: "Recorder"},
+          token: "123123"
+        };
+        localStorage.setItem("user", JSON.stringify(user));
+      }
+     if (userName == "larry" && password == "lawrence") {
+        user = {
+          username: "jimmysmells",
+          roles: { 117: "Admin", 120: "Admin", 121: "Admin" , 122: "Admin", 123: "Admin", 115: "Admin", 124: "Admin"},
+          token: "123123"
+        };
+        localStorage.setItem("user", JSON.stringify(user));
+      }
+      if (userName == "ddg" && password == "intel") {
+        user = {
+          username: "jimmysmells",
+          roles: {  124: "Basic"},
           token: "123123"
         };
         localStorage.setItem("user", JSON.stringify(user));
@@ -117,6 +133,7 @@ export default {
         };
         localStorage.setItem("user", JSON.stringify(user));
       }
+
       if (!user) return;
 
       if (redirect) {
