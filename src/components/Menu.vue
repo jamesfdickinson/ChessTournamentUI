@@ -21,12 +21,12 @@
       <ion-icon slot="start" name="help"></ion-icon>
       <ion-label>FAQ</ion-label>
     </ion-item>
-    <!-- <router-link :to="{ name: 'SignUp'}">
+    <router-link :to="{ name: 'SignUp'}">
       <ion-item button detail="true">
         <ion-icon slot="start" name="clipboard"></ion-icon>
         <ion-label>Sign Up</ion-label>
       </ion-item>
-    </router-link> -->
+    </router-link> 
     <ion-list-header>
       <ion-label>Recorder</ion-label>
     </ion-list-header>
