@@ -26,7 +26,7 @@
         <ion-icon slot="start" name="clipboard"></ion-icon>
         <ion-label>Sign Up</ion-label>
       </ion-item>
-    </router-link> 
+    </router-link>
     <ion-list-header>
       <ion-label>Recorder</ion-label>
     </ion-list-header>
@@ -44,23 +44,23 @@
       <ion-icon slot="start" name="filing"></ion-icon>
       <ion-label>Roster</ion-label>
     </ion-item>-->
-       
+
     <ion-list-header>
       <ion-label>Admin</ion-label>
     </ion-list-header>
 
-<a v-bind:href="'https://admin.chessclub.io/'+ tournamentId+'/'">
- <ion-item button detail="true">
+    <a v-bind:href="'https://admin.chessclub.io/'+ tournamentId+'/'">
+      <ion-item button detail="true">
         <ion-icon slot="start" name="cog"></ion-icon>
         <ion-label>Admin Settings</ion-label>
       </ion-item>
-</a>
+    </a>
     <!-- <router-link :to="{ name: 'Admin', params: { tournament: tournamentId }}">
       <ion-item button detail="true">
         <ion-icon slot="start" name="cog"></ion-icon>
         <ion-label>Admin Settings</ion-label>
       </ion-item>
-    </router-link> -->
+    </router-link>-->
     <ion-list-header>
       <ion-label>Other</ion-label>
     </ion-list-header>
@@ -86,7 +86,11 @@
     </ion-item>
   </ion-items>
 </template>
-
+<style scoped>
+a {
+  text-decoration: none;
+}
+</style>
 <script>
 export default {
   name: "menutournament",
