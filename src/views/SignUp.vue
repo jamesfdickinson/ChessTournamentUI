@@ -72,11 +72,11 @@
                 <ion-select-option value="6">6</ion-select-option>
                 <ion-select-option value="7">7</ion-select-option>
                 <ion-select-option value="8">8</ion-select-option>
-                <ion-select-option value="9">9</ion-select-option>
+                <!-- <ion-select-option value="9">9</ion-select-option>
                 <ion-select-option value="10">10</ion-select-option>
                 <ion-select-option value="11">11</ion-select-option>
-                <ion-select-option value="12">12</ion-select-option>
-                <ion-select-option value="13">Adult</ion-select-option>
+                <ion-select-option value="12">12</ion-select-option> -->
+                <ion-select-option value="12">Open Division</ion-select-option>
               </ion-select>
             </ion-item>
             <!-- <ion-item>

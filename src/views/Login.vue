@@ -96,7 +96,7 @@ export default {
       if (userName == "recorder" && password == "recorder") {
         user = {
           username: "jimmysmells",
-          roles: { 117: "Recorder", 120: "Recorder" , 121: "Recorder", 122: "Recorder", 123: "Recorder", 115: "Recorder", 124: "Recorder"},
+          roles: { 117: "Recorder", 120: "Recorder" , 121: "Recorder", 122: "Recorder", 123: "Recorder", 115: "Recorder", 124: "Recorder", 125: "Recorder"},
           token: "123123"
         };
         localStorage.setItem("user", JSON.stringify(user));
@@ -104,7 +104,7 @@ export default {
      if (userName == "larry" && password == "lawrence") {
         user = {
           username: "jimmysmells",
-          roles: { 117: "Admin", 120: "Admin", 121: "Admin" , 122: "Admin", 123: "Admin", 115: "Admin", 124: "Admin"},
+          roles: { 117: "Admin", 120: "Admin", 121: "Admin" , 122: "Admin", 123: "Admin", 115: "Admin", 124: "Admin", 125: "Admin"},
           token: "123123"
         };
         localStorage.setItem("user", JSON.stringify(user));
@@ -128,7 +128,7 @@ export default {
        if (userName == "admin" && password == "admin") {
         user = {
           username: "jimmysmells",
-          roles: { 117: "Admin", 120: "Admin", 121: "Admin" , 122: "Admin", 123: "Admin"},
+          roles: { 117: "Admin", 120: "Admin", 121: "Admin" , 122: "Admin", 123: "Admin", 125: "Admin"},
           token: "123123"
         };
         localStorage.setItem("user", JSON.stringify(user));

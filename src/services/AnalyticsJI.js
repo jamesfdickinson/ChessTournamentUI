@@ -46,10 +46,10 @@ export default class AnalyticsJI {
         this.os = os;
 
         this.Track("Start");
-    };
+    }
     TrackPage(page, urlParameters) {
         this.Track("PageView", page, urlParameters);
-    };
+    }
 
     Track(Event, parameter1, parameter2) {
         var appName = this.appName;
@@ -62,7 +62,7 @@ export default class AnalyticsJI {
         var currentCulture = window.navigator.userLanguage || window.navigator.language;//works IE/SAFARI/CHROME/FF
 
         this.SendData(appName, version, Event, parameter1, parameter2, currentCulture, sessionid, uuid, os);
-    };
+    }
     GetOS() {
         var os = "Other";
         var ua = navigator.userAgent;
