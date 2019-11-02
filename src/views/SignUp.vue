@@ -33,9 +33,20 @@
               <ion-label position="stacked">Last Name</ion-label>
               <ion-input :value="player.lastName" @input="player.lastName = $event.target.value"></ion-input>
             </ion-item>
-            <ion-item>
+            <!-- <ion-item>
               <ion-label position="stacked">School</ion-label>
               <ion-input :value="player.school" @input="player.school = $event.target.value"></ion-input>
+            </ion-item> -->
+            <ion-item>
+              <ion-label position="stacked">School</ion-label>
+              <ion-select placeholder="Select One" :value="player.school"
+               @ionChange="player.school= $event.target.value;" >
+                <ion-select-option
+                  v-for="school in schools"
+                  :key="school"
+                  :value="school"
+                >{{ school }}</ion-select-option>
+              </ion-select>
             </ion-item>
             <!-- <ion-item>
               <ion-label position="stacked">Grade</ion-label>
@@ -55,7 +66,7 @@
                 <option value="12">12</option>
                 <option value="13">Adult</option>
               </select>
-            </ion-item> -->
+            </ion-item>-->
             <ion-item>
               <ion-label position="stacked">Grade</ion-label>
               <ion-select
@@ -75,7 +86,7 @@
                 <!-- <ion-select-option value="9">9</ion-select-option>
                 <ion-select-option value="10">10</ion-select-option>
                 <ion-select-option value="11">11</ion-select-option>
-                <ion-select-option value="12">12</ion-select-option> -->
+                <ion-select-option value="12">12</ion-select-option>-->
                 <ion-select-option value="12">Open Division</ion-select-option>
               </ion-select>
             </ion-item>
@@ -86,7 +97,7 @@
                 :value="player.grade"
                 @input="player.grade = $event.target.value;player.rating =player.grade*100"
               ></ion-input>
-            </ion-item> -->
+            </ion-item>-->
             <ion-item>
               <ion-label position="stacked">Rating</ion-label>
               <ion-input
@@ -148,7 +159,7 @@
       </form>
     </ion-content>
     <!-- </ion-page> -->
-   </layout-no-menu>
+  </layout-no-menu>
 </template>
 
 <script>
@@ -157,7 +168,7 @@ import LayoutNoMenu from "@/components/LayoutNoMenu.vue";
 
 export default {
   name: "home",
-  components: {LayoutNoMenu},
+  components: { LayoutNoMenu },
   data() {
     var tournamentId = this.$route.params.tournament;
     var playerId = this.$route.params.id;
@@ -181,6 +192,7 @@ export default {
       playerId: playerId,
       tournamentId: tournamentId,
       tournament: {},
+      schools: [],
       player: player,
       agreeTerms: false,
       errors: []
@@ -229,6 +241,15 @@ export default {
         .get(`tournament/${tournamentId}`)
         .then(response => {
           this.tournament = response.data;
+          if (this.tournament && this.tournament.schools) {
+            this.schools = this.tournament.schools
+              .split(",")
+              .map(function(item) {
+                return item.trim();
+              });
+          } else {
+            this.schools = ["Unknown"];
+          }
         })
         .catch(e => {
           this.errors.push(e);
