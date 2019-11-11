@@ -37,7 +37,7 @@
               <ion-label position="stacked">School</ion-label>
               <ion-input :value="player.school" @input="player.school = $event.target.value"></ion-input>
             </ion-item> -->
-            <ion-item>
+            <!-- <ion-item>
               <ion-label position="stacked">School</ion-label>
               <ion-select placeholder="Select One" :value="player.school"
                @ionChange="player.school= $event.target.value;" >
@@ -47,10 +47,46 @@
                   :value="school"
                 >{{ school }}</ion-select-option>
               </ion-select>
+            </ion-item> -->
+            <ion-item>
+              <ion-label position="stacked">School</ion-label>
+              <div style="width: 100%;">
+                <select  v-model="player.school"  >
+                 <option disabled value="">Select One</option>
+                  <option
+                    v-for="school in schools"
+                    :key="school"
+                    :value="school"
+                  >{{ school }}</option>
+                </select>
+              </div>
+              </ion-item>
+             <ion-item>
+              <ion-label position="stacked">Grade</ion-label>
+              <div style="width: 100%;">
+                <select  v-model="player.grade" @change="player.rating =player.grade*100;">
+                  <option disabled value="">Select One</option>
+                  <option value="0">K</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="12">Open Division</option>
+                </select>
+              </div>
             </ion-item>
             <!-- <ion-item>
               <ion-label position="stacked">Grade</ion-label>
-              <select placeholder="Select One">
+              <select 
+                placeholder="Select One"
+                :value="player.grade"
+                @ionChange="player.grade= $event.target.value;player.rating =player.grade*100;"
+              >
+               <option disabled value="">Select One</option>
                 <option value="0">K</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -64,10 +100,10 @@
                 <option value="10">10</option>
                 <option value="11">11</option>
                 <option value="12">12</option>
-                <option value="13">Adult</option>
+                <option value="12">Open Division</option>
               </select>
-            </ion-item>-->
-            <ion-item>
+            </ion-item> -->
+            <!-- <ion-item>
               <ion-label position="stacked">Grade</ion-label>
               <ion-select
                 placeholder="Select One"
@@ -83,13 +119,13 @@
                 <ion-select-option value="6">6</ion-select-option>
                 <ion-select-option value="7">7</ion-select-option>
                 <ion-select-option value="8">8</ion-select-option>
-                <!-- <ion-select-option value="9">9</ion-select-option>
+                 <ion-select-option value="9">9</ion-select-option>
                 <ion-select-option value="10">10</ion-select-option>
                 <ion-select-option value="11">11</ion-select-option>
-                <ion-select-option value="12">12</ion-select-option>-->
+                <ion-select-option value="12">12</ion-select-option>
                 <ion-select-option value="12">Open Division</ion-select-option>
               </ion-select>
-            </ion-item>
+            </ion-item> -->
             <!-- <ion-item>
               <ion-label position="stacked">Grade</ion-label>
               <ion-input
