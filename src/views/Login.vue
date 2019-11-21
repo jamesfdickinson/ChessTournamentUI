@@ -109,6 +109,15 @@ export default {
         };
         localStorage.setItem("user", JSON.stringify(user));
       }
+      if (userName == "southmeadows" && password == "chess123") {
+        user = {
+          username: "jimmysmells",
+          roles: {  125: "Basic"},
+          token: "123125"
+        };
+        localStorage.setItem("user", JSON.stringify(user));
+      }
+      
       if (userName == "ddg" && password == "intel") {
         user = {
           username: "jimmysmells",
