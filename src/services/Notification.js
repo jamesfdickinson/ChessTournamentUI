@@ -22,7 +22,7 @@ export default class Notification {
             "userId": userId
         };
         return fetch.post(`NotificationToken`, data);
-    };
+    }
     tokenRefresh(token) {
         return this.sendTokenToServer(token).then(function () {
             return "Notification: sent token to server";
