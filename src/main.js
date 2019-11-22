@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 //import  Ionic  from '@ionic/vue';
 import AnalyticsGA from './services/AnalyticsGA'
+import Firebase from './services/Firebase'
 import LayoutMenu from "@/components/LayoutMenu.vue";
 import LayoutNoMenu from "@/components/LayoutNoMenu.vue";
 import LayoutRaw from "@/components/LayoutRaw.vue";
@@ -14,6 +15,8 @@ let analyticsGA = new AnalyticsGA();
 analyticsGA.TrackStart("Chess", version, "UA-2052018-24");
 analyticsGA.TrackPage("Start");
 
+Firebase.init();
+
 Vue.config.productionTip = true;
 
 Vue.config.ignoredElements = [/^ion-/]
@@ -21,8 +24,11 @@ Vue.config.ignoredElements = [/^ion-/]
 
 router.beforeEach((to, from, next) => {
   analyticsGA.TrackPage(to.path);
+
+  //todo: user meta data on route table to determin roles needed - https://jasonwatmore.com/post/2019/03/08/vuejs-role-based-authorization-tutorial-with-example#fake-backend-js
   //todo: move auth class
-  // redirect to login page if not logged in and trying to access a restricted page
+
+  //redirect to login page if not logged in and trying to access a restricted page
   const pagesAdmin = ['Admin'];
   const authRequiredAdmin = pagesAdmin.includes(to.name);
 
@@ -35,30 +41,38 @@ router.beforeEach((to, from, next) => {
 
 
   let tournamentId = to.params.tournament;
-  let role = "";
+  let roles = [];
   let user = null;
 
   try {
+    //get user
     user = JSON.parse(localStorage.getItem("user"));
+    //get role for tournament
+    if (user && user.roles) {
+      roles = user.roles;
+    }
   } catch{
     user = null;
   }
 
-  //get role for tournament
-  if (user && user.roles && tournamentId) {
-    role = user.roles[tournamentId];
-  }
+  //contains role "tournamentId-role".  
+  let adminRole = tournamentId + "-Admin";
+  let recorderRole = tournamentId + "-Recorder";
+  let basicRole = tournamentId + "-Basic";
+
+
+
 
   //check if has Admin role for tournament
-  if (authRequiredAdmin && !(role == "Admin")) {
+  if (authRequiredAdmin && !(roles.includes(adminRole))) {
     return next(`/Login?redirect=${to.path}`);
   }
   //check if has Recorder role for tournament
-  if (authRequiredRecorder && !(role == "Admin" || role == "Recorder")) {
+  if (authRequiredRecorder && !(roles.includes(adminRole) || roles.includes(recorderRole))) {
     return next(`/Login?redirect=${to.path}`);
   }
   //check if has Recorder role for tournament
-  if (authRequiredBasic && !(role == "Admin" || role == "Recorder" || role == "Basic")) {
+  if (authRequiredBasic && !(roles.includes(adminRole) || roles.includes(recorderRole) || roles.includes(basicRole))) {
     return next(`/Login?redirect=${to.path}`);
   }
 

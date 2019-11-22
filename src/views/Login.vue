@@ -1,5 +1,5 @@
 <template>
- <layout-no-menu>
+  <layout-no-menu>
     <!-- <ion-page class="ion-page" main> -->
     <ion-header>
       <ion-toolbar color="primary">
@@ -55,12 +55,14 @@
       </form>-->
     </ion-content>
     <!-- </ion-page> -->
- </layout-no-menu>
+  </layout-no-menu>
 </template>
 
 <script>
-import fetch from "@/fetch.js";
-
+import Authentication from "@/services/Authentication.js";
+import Notification from "@/services/Notification.js";
+const authentication = new Authentication();
+const notification = new Notification();
 export default {
   name: "home",
 
@@ -84,74 +86,28 @@ export default {
       this.login();
     },
     login() {
-      let userName = this.userName.toLowerCase();
-      let password = this.password.toLowerCase();
+      let userName = this.userName;
+      let password = this.password;
       let redirect = this.redirect;
       let tournamentId = this.tournamentId;
-      //todo: use auth class
-      //https://github.com/vuejs/vue-router/blob/dev/examples/auth-flow/auth.js
 
-      let user = null;
-
-      if (userName == "recorder" && password == "recorder") {
-        user = {
-          username: "jimmysmells",
-          roles: { 117: "Recorder", 120: "Recorder" , 121: "Recorder", 122: "Recorder", 123: "Recorder", 115: "Recorder", 124: "Recorder", 125: "Recorder"},
-          token: "123123"
-        };
-        localStorage.setItem("user", JSON.stringify(user));
-      }
-     if (userName == "larry" && password == "lawrence") {
-        user = {
-          username: "jimmysmells",
-          roles: { 117: "Admin", 120: "Admin", 121: "Admin" , 122: "Admin", 123: "Admin", 115: "Admin", 124: "Admin", 125: "Admin"},
-          token: "123123"
-        };
-        localStorage.setItem("user", JSON.stringify(user));
-      }
-      if (userName == "southmeadows" && password == "chess123") {
-        user = {
-          username: "jimmysmells",
-          roles: {  125: "Basic"},
-          token: "123125"
-        };
-        localStorage.setItem("user", JSON.stringify(user));
-      }
-      
-      if (userName == "ddg" && password == "intel") {
-        user = {
-          username: "jimmysmells",
-          roles: {  124: "Basic"},
-          token: "123123"
-        };
-        localStorage.setItem("user", JSON.stringify(user));
-      }
-      if (userName == "chessgirl" && password == "fun") {
-        user = {
-          username: "jimmysmells",
-          roles: { 117: "Basic", 120: "Basic", 121: "Basic" , 122: "Basic", 123: "Basic" },
-          token: "123123"
-        };
-        localStorage.setItem("user", JSON.stringify(user));
-      }
-       if (userName == "admin" && password == "admin") {
-        user = {
-          username: "jimmysmells",
-          roles: { 117: "Admin", 120: "Admin", 121: "Admin" , 122: "Admin", 123: "Admin", 125: "Admin"},
-          token: "123123"
-        };
-        localStorage.setItem("user", JSON.stringify(user));
-      }
-
-      if (!user) return;
-
-      if (redirect) {
-        this.$router.push({ path: redirect });
-      } else if (tournamentId) {
-        this.$router.push({ path: `/${tournamentId}` });
-      } else {
-        this.$router.push({ path: `/` });
-      }
+      authentication
+        .login(userName, password)
+        .then(userData => {
+          let user = userData;
+          console.log("User Logged in: " + user.username, user);
+          if (redirect) {
+            this.$router.push({ path: redirect });
+          } else if (tournamentId) {
+            this.$router.push({ path: `/${tournamentId}` });
+          } else {
+            this.$router.push({ path: `/` });
+          }
+          notification.requestNotificationToken();
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
     }
   },
   created() {}
