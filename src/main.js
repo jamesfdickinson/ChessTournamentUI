@@ -50,6 +50,9 @@ router.beforeEach((to, from, next) => {
     //get role for tournament
     if (user && user.roles) {
       roles = user.roles;
+      //migrate from old ssytem that are still logged in
+      //todo: remove in a few days
+      if(!Array.isArray(roles)) roles = [];
     }
   } catch{
     user = null;
