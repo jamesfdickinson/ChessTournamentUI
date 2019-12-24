@@ -6,3 +6,6 @@
     --ion-color-secondary-shade: #005a00;
     --ion-color-secondary-tint: #1a751a;
   }
+  ion-list a{
+    text-decoration: none;
+  }
