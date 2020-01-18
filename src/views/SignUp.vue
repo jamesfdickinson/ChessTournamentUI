@@ -200,11 +200,9 @@
 
 <script>
 import fetch from "@/fetch.js";
-import LayoutNoMenu from "@/components/LayoutNoMenu.vue";
-
 export default {
   name: "home",
-  components: { LayoutNoMenu },
+  components: { },
   data() {
     var tournamentId = this.$route.params.tournament;
     var playerId = this.$route.params.id;

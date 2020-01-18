@@ -117,7 +117,7 @@ export default {
     },
     save() {
       let tournamentId = this.tournamentId;
-      let redirect = this.redirect;
+      //let redirect = this.redirect;
       var playerId = this.playerId;
       var player = this.player;
 
@@ -125,6 +125,7 @@ export default {
         fetch
           .post(`player/${playerId}`, player)
           .then(response => {
+            console.log(response);
             //back
             this.$router.back();
             //if (redirect) {
@@ -142,6 +143,7 @@ export default {
         fetch
           .put(`player`, player)
           .then(response => {
+            console.log(response);
             //back
             this.$router.back();
           })
@@ -157,6 +159,7 @@ export default {
         fetch
           .delete(`player/${playerId}`)
           .then(response => {
+            console.log(response);
             //back
             this.$router.back();
           })

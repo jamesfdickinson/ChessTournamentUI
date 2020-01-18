@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 //import Home from './views/Home.vue'
 import Login from './views/Login.vue'
+import AccessDenied from './views/AccessDenied.vue'
 import Tournament from './views/Tournament.vue'
 import Tournaments from './views/Tournaments.vue'
 import Registration from './views/Registration.vue'
@@ -25,7 +26,8 @@ import ReportScoreGroupRank from './views/ReportScoreGroupRank.vue'
 import ReportScoreGroupRankDetails from './views/ReportScoreGroupRankDetails.vue'
 import ReportScoreSubGradeGroupRank from './views/ReportScoreSubGradeGroupRank.vue'
 import ReportWallChart from './views/ReportWallChart.vue'
-
+import UserCreate from './views/UserCreate.vue'
+import UserEdit from './views/UserEdit.vue'
 
 //import RoundEdit from './views/PlayerEdit.vue'
 
@@ -45,6 +47,22 @@ export default new VueRouter({
       name: 'Login',
       component: Login
     },
+    {
+      path: '/UserCreate',
+      name: 'UserCreate',
+      component: UserCreate
+    },
+    {
+      path: '/UserEdit',
+      name: 'UserEdit',
+      component: UserEdit
+    },   
+    {
+      path: '/:tournament/AccessDenied',
+      name: 'AccessDenied',
+      component: AccessDenied
+    },
+    
     {
       path: '/Tournaments',
       name: 'Tournaments',

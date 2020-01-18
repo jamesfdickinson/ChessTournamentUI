@@ -1,10 +1,13 @@
 import fetch from "@/fetch.js";
 import firebase from "@/services/Firebase.js";
+import Authentication from '@/services/Authentication'
+
 export default class Notification {
     constructor() {
         this.firebase = firebase;
         this.firebase.onMessage = function () { };
         this.firebase.onTokenRefresh = this.tokenRefresh.bind(this);
+        this.authentication = new Authentication();
     }
     init() {
         this.firebase.init();
@@ -13,7 +16,7 @@ export default class Notification {
         //todo: get userId should be from centralize class or passed in on request, but it can also be called from a token refresh
         //get user Id
         if (!userId) {
-            let user = JSON.parse(localStorage.getItem("user")) || {};
+            let user = this.authentication.getUser() || {};
             userId = user.id;
         }
         console.log('Sending token to server...');

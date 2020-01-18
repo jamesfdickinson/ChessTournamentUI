@@ -39,20 +39,19 @@
 
               <div padding>
                 <ion-button type="submit" size="large" expand="block">Login</ion-button>
+                <ul style="color:red;">
+                  <li v-for="error in errors" v-bind:key="error">*{{ error }}</li>
+                </ul>
               </div>
             </ion-col>
           </ion-row>
         </ion-grid>
       </form>
-      <!-- <form @submit.prevent="handleSubmit">
-        <ion-item color>
-          <ion-label slot>Division</ion-label>
-          <ion-card background="light">
-            <ion-input  type="text" v-bind:value="division"/>
-          </ion-card>
-          <ion-button slot type="submit">Submit</ion-button>
-        </ion-item>
-      </form>-->
+
+      <div padding style="text-align:center;margin-top:15px;">
+        <p>Need an account?</p>
+        <ion-button type="button" size="large" expand v-on:click="openSignUp()">Sign up</ion-button>
+      </div>
     </ion-content>
     <!-- </ion-page> -->
   </layout-no-menu>
@@ -82,6 +81,9 @@ export default {
     back() {
       this.$router.go(-1);
     },
+    openSignUp() {
+      this.$router.push({ path: "UserCreate" });
+    },
     handleSubmit() {
       this.login();
     },
@@ -90,7 +92,7 @@ export default {
       let password = this.password;
       let redirect = this.redirect;
       let tournamentId = this.tournamentId;
-
+      this.errors = [];
       authentication
         .login(userName, password)
         .then(userData => {

@@ -12,6 +12,11 @@
             <!-- </ion-menu-toggle> -->
           </ion-buttons>
           <ion-title>Chess Tournaments</ion-title>
+          <ion-buttons slot="end">
+            <ion-button v-on:click="editUser()">
+              <ion-icon name="contact"></ion-icon>
+            </ion-button>
+          </ion-buttons>
         </ion-toolbar>
       </ion-header>
       <ion-content>
@@ -78,7 +83,6 @@
 <script>
 // @ is an alias to /src
 import fetch from "@/fetch.js";
-
 export default {
   name: "home",
   data() {
@@ -89,6 +93,9 @@ export default {
     };
   },
   methods: {
+    editUser() {
+      this.$router.push({ name: "UserEdit" });
+    },
     loadData() {
       fetch
         .get(`tournament`)
