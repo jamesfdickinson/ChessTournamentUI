@@ -43,7 +43,7 @@ export default {
   color: white;
   padding: 3px 5px;
   display: inline-block;
-  margin-right: 10px;
+  
   overflow: hidden;
   word-break: break-all;
 

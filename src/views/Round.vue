@@ -59,7 +59,7 @@
             ></ion-icon>
             <ion-icon v-else name="contact" slot="start"></ion-icon>
             
-            <InitialBox :title="position.playerSchool"></InitialBox>
+            <InitialBox :title="position.playerSchool" style="margin-right: 10px;"></InitialBox>
           
             
              <!-- <div
