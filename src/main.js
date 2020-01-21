@@ -29,7 +29,7 @@ router.beforeEach((to, from, next) => {
   analyticsGA.TrackPage(to.path);
 
   //todo: user meta data on route table to determin roles needed - https://jasonwatmore.com/post/2019/03/08/vuejs-role-based-authorization-tutorial-with-example#fake-backend-js
-  //todo: move auth class
+  //todo: move auth class ////
 
   //get user
   let user = authentication.getUser();
