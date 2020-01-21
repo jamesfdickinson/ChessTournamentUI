@@ -34,7 +34,7 @@
         >
  
     <!-- <ion-icon name="contact" slot="start"></ion-icon>  -->
-               <InitialBox :title="player.school" slot="start"></InitialBox>
+               <SchoolIcon :title="player.school" slot="start"></SchoolIcon>
         
           <ion-label>{{player.firstName}} {{player.lastName}}</ion-label>
         </ion-item>
@@ -46,10 +46,10 @@
 
 <script>
 import fetch from "@/fetch.js";
-import InitialBox from "@/components/InitialBox.vue";
+import SchoolIcon from "@/components/SchoolIcon.vue";
 export default {
   name: "home",
-  components: { InitialBox },
+  components: { SchoolIcon },
   data() {
     return {
       searchInput: "",

@@ -71,7 +71,7 @@ export default {
       this.$router.go(-1);
     },
     login() {
-      this.$router.push({ path: "Login" });
+      this.$router.push({ path: "/Login" });
     },
     handleSubmit() {
       this.requestAccess();

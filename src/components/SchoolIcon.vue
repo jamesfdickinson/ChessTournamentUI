@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: "InitialBox",
+  name: "SchoolIcon",
   props: {
     title: String
   },

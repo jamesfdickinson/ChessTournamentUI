@@ -3,7 +3,7 @@ export default class Authentication {
     constructor() {
     }
     register(user) {
-        return fetch.put(`user`, user)
+        return fetch.put(`authentication/register`, user)
             .then(response => {
                 var user = response.data;
                 localStorage.setItem("user", JSON.stringify(user));
@@ -23,7 +23,7 @@ export default class Authentication {
             });
     }
     login(username, password) {
-        return fetch.post(`authentication`, { username, password })
+        return fetch.post(`authentication/login`, { username, password })
             .then(response => {
                 var user = response.data;
                 localStorage.setItem("user", JSON.stringify(user));

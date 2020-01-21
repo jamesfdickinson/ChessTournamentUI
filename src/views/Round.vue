@@ -59,14 +59,8 @@
             ></ion-icon>
             <ion-icon v-else name="contact" slot="start"></ion-icon>
             
-            <InitialBox :title="position.playerSchool" style="margin-right: 10px;"></InitialBox>
+            <SchoolIcon :title="position.playerSchool" style="margin-right: 10px;"></SchoolIcon>
           
-            
-             <!-- <div
-              slot="start"
-              class="initialBox"
-              v-bind:style="{'background-color':stringToColour(position.playerSchool) }"
-            >{{position.playerSchool.substring(0, 2)}}</div> -->
             <ion-label>{{position.playerFirstName}} {{position.playerLastName}}</ion-label>
             <ion-badge slot="end" color="light">{{position.points}}</ion-badge>
           </ion-item>
@@ -80,10 +74,10 @@
 
 <script>
 import fetch from "@/fetch.js";
-import InitialBox from "@/components/InitialBox.vue";
+import SchoolIcon from "@/components/SchoolIcon.vue";
 export default {
   name: "home",
-  components: { InitialBox },
+  components: { SchoolIcon },
   data() {
     var roundId = this.$route.params.id;
     var tournamentId = this.$route.params.tournament;
