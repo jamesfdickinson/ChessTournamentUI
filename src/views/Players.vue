@@ -4,7 +4,7 @@
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
-          <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
+          <ion-icon name="arrow-round-back" size="large" @click="$router.push('./')"></ion-icon>
         </ion-buttons>
         <ion-title>Players</ion-title>
       </ion-toolbar>
@@ -25,17 +25,16 @@
         </li>
       </ul>-->
       <ion-list>
-         <ion-item
+        <ion-item
           detail="true"
           v-for="player of filteredItems"
           :key="player.playerId"
           v-bind:mhref="`player/${player.playerId}`"
           v-on:click="openPlayer(player.playerId)"
         >
- 
-    <!-- <ion-icon name="contact" slot="start"></ion-icon>  -->
-               <SchoolIcon :title="player.school" slot="start"></SchoolIcon>
-        
+          <!-- <ion-icon name="contact" slot="start"></ion-icon>  -->
+          <SchoolIcon :title="player.school" :image="player.image" slot="start"></SchoolIcon>
+
           <ion-label>{{player.firstName}} {{player.lastName}}</ion-label>
         </ion-item>
       </ion-list>
