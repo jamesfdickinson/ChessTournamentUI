@@ -26,6 +26,7 @@ import ReportScoreGroupRank from './views/ReportScoreGroupRank.vue'
 import ReportScoreGroupRankDetails from './views/ReportScoreGroupRankDetails.vue'
 import ReportScoreSubGradeGroupRank from './views/ReportScoreSubGradeGroupRank.vue'
 import ReportWallChart from './views/ReportWallChart.vue'
+import User from './views/User.vue'
 import UserCreate from './views/UserCreate.vue'
 import UserEdit from './views/UserEdit.vue'
 
@@ -46,6 +47,11 @@ export default new VueRouter({
       path: '/Login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/User',
+      name: 'User',
+      component: User
     },
     {
       path: '/UserCreate',

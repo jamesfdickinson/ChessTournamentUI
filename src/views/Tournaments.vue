@@ -13,7 +13,7 @@
           </ion-buttons>
           <ion-title>Chess Tournaments</ion-title>
           <ion-buttons slot="end">
-            <ion-button v-on:click="editUser()">
+            <ion-button v-on:click="userDetails()">
               <ion-icon name="contact"></ion-icon>
             </ion-button>
           </ion-buttons>
@@ -93,8 +93,8 @@ export default {
     };
   },
   methods: {
-    editUser() {
-      this.$router.push({ name: "UserEdit" });
+    userDetails() {
+      this.$router.push({ name: "User" });
     },
     loadData() {
       fetch

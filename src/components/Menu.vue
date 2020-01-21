@@ -74,12 +74,12 @@
     <ion-list-header>
       <ion-label>Login</ion-label>
     </ion-list-header>
-    <router-link :to="{ name: 'Login'}">
+    <!-- <router-link :to="{ name: 'Login'}">
       <ion-item button detail="true">
         <ion-icon slot="start" name="contact"></ion-icon>
         <ion-label>Login</ion-label>
       </ion-item>
-    </router-link>
+    </router-link> -->
     <ion-item button detail="true" v-on:click="LogOut()">
       <ion-icon slot="start" name="contact"></ion-icon>
       <ion-label>Log Out</ion-label>

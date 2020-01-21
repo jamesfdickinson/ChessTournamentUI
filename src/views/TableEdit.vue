@@ -61,7 +61,7 @@ export default {
     let tournamentId = this.$route.params.tournament;
     let round = this.$route.params.round;
     let tableId = this.$route.params.id;
-    let redirect = this.$route.query.redirect;
+    //let redirect = this.$route.query.redirect;
     return {
       tournamentId: tournamentId,
       round: round,

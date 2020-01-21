@@ -11,12 +11,17 @@
           </ion-menu-toggle>
         </ion-buttons>
         <ion-title>Chess Tournament</ion-title>
+        <ion-buttons slot="end">
+          <ion-button v-on:click="userDetails()">
+            <ion-icon name="contact"></ion-icon>
+          </ion-button>
+        </ion-buttons>
       </ion-toolbar>
     </ion-header>
     <ion-content>
       <ion-card>
-        <img v-if="!tournament.image" src="/images/chess-board.jpg"/>
-        <img v-if="tournament.image" :src="tournament.image"/>
+        <img v-if="!tournament.image" src="/images/chess-board.jpg" />
+        <img v-if="tournament.image" :src="tournament.image" />
         <ion-card-header>
           <ion-card-title>{{tournament.name}}</ion-card-title>
         </ion-card-header>
@@ -34,7 +39,7 @@
           <ion-progress-bar :value="status.percentage"></ion-progress-bar>
         </ion-card-content>
       </ion-card>
-      <Menu/>
+      <Menu />
     </ion-content>
     <!-- </ion-page> -->
   </layout-menu>
@@ -45,7 +50,7 @@
 //import HelloWorld from "@/components/HelloWorld.vue";
 import fetch from "@/fetch.js";
 import Menu from "@/components/Menu.vue";
-import LayoutMenu from "@/components/LayoutMenu.vue";
+//import LayoutMenu from "@/components/LayoutMenu.vue";
 
 export default {
   name: "home",
@@ -62,6 +67,9 @@ export default {
     };
   },
   methods: {
+    userDetails() {
+      this.$router.push({ name: "User" });
+    },
     openPlayers() {
       this.$router.push({
         name: "Players",

@@ -1,5 +1,5 @@
 <template>
- <layout-menu>
+  <layout-menu>
     <!-- <ion-page class="ion-page" main> -->
     <ion-header>
       <ion-toolbar color="primary">
@@ -25,29 +25,31 @@
         </li>
       </ul>-->
       <ion-list>
-        <ion-item
+         <ion-item
           detail="true"
           v-for="player of filteredItems"
           :key="player.playerId"
           v-bind:mhref="`player/${player.playerId}`"
           v-on:click="openPlayer(player.playerId)"
         >
-          <ion-icon name="contact" slot="start"></ion-icon>
+ 
+    <!-- <ion-icon name="contact" slot="start"></ion-icon>  -->
+               <InitialBox :title="player.school" slot="start"></InitialBox>
+        
           <ion-label>{{player.firstName}} {{player.lastName}}</ion-label>
         </ion-item>
       </ion-list>
     </ion-content>
     <!-- </ion-page> -->
-   </layout-menu>
+  </layout-menu>
 </template>
 
 <script>
 import fetch from "@/fetch.js";
-
+import InitialBox from "@/components/InitialBox.vue";
 export default {
   name: "home",
-
-  components: {},
+  components: { InitialBox },
   data() {
     return {
       searchInput: "",
@@ -56,6 +58,19 @@ export default {
     };
   },
   methods: {
+    stringToColour(str) {
+      var hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        hash = str.charCodeAt(i) + ((hash << 5) - hash);
+      }
+      var colour = "#";
+      for (let i = 0; i < 3; i++) {
+        let value = (hash >> (i * 8)) & 0xff;
+        value = Math.floor(value * 0.7); //make darker
+        colour += ("00" + value.toString(16)).substr(-2);
+      }
+      return colour;
+    },
     openPlayer(id) {
       this.$router.push({ name: "Player", params: { id: id } });
     },
@@ -81,20 +96,13 @@ export default {
       if (searchInput) {
         searchInput = searchInput.toLowerCase();
         filteredRound = filteredRound.filter(p => {
-          if (
-            p.firstName &&
-            p.firstName.toLowerCase().startsWith(searchInput)
-          )
+          if (p.firstName && p.firstName.toLowerCase().startsWith(searchInput))
             return true;
-          if (
-            p.lastName &&
-            p.lastName.toLowerCase().startsWith(searchInput)
-          )
+          if (p.lastName && p.lastName.toLowerCase().startsWith(searchInput))
             return true;
           if (p.school && p.school.toLowerCase().startsWith(searchInput))
             return true;
           return false;
-
         });
       }
       return filteredRound;

@@ -4,7 +4,11 @@
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
-          <ion-icon name="arrow-round-back" size="large" @click="$router.push({ name: 'Rounds', params: { tournament:tournamentId } })"></ion-icon>
+          <ion-icon
+            name="arrow-round-back"
+            size="large"
+            @click="$router.push({ name: 'Rounds', params: { tournament:tournamentId } })"
+          ></ion-icon>
         </ion-buttons>
         <ion-title>Round {{roundId}}</ion-title>
         <ion-buttons slot="end">
@@ -54,6 +58,15 @@
               slot="start"
             ></ion-icon>
             <ion-icon v-else name="contact" slot="start"></ion-icon>
+            
+            <InitialBox :title="position.playerSchool"></InitialBox>
+          
+            
+             <!-- <div
+              slot="start"
+              class="initialBox"
+              v-bind:style="{'background-color':stringToColour(position.playerSchool) }"
+            >{{position.playerSchool.substring(0, 2)}}</div> -->
             <ion-label>{{position.playerFirstName}} {{position.playerLastName}}</ion-label>
             <ion-badge slot="end" color="light">{{position.points}}</ion-badge>
           </ion-item>
@@ -67,11 +80,10 @@
 
 <script>
 import fetch from "@/fetch.js";
-
+import InitialBox from "@/components/InitialBox.vue";
 export default {
   name: "home",
-
-  components: {},
+  components: { InitialBox },
   data() {
     var roundId = this.$route.params.id;
     var tournamentId = this.$route.params.tournament;
@@ -90,6 +102,19 @@ export default {
     };
   },
   methods: {
+    stringToColour(str) {
+      var hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        hash = str.charCodeAt(i) + ((hash << 5) - hash);
+      }
+      var colour = "#";
+      for (let i = 0; i < 3; i++) {
+        let value = (hash >> (i * 8)) & 0xff;
+        value = Math.floor(value * 0.7); //make darker
+        colour += ("00" + value.toString(16)).substr(-2);
+      }
+      return colour;
+    },
     details() {
       let roundId = this.roundId;
       let tournamentId = this.tournamentId;
