@@ -44,6 +44,11 @@ export default new VueRouter({
       component: Tournaments
     },
     {
+      path: '/index.html',
+      name: 'Home',
+      component: Tournaments
+    },
+    {
       path: '/Login',
       name: 'Login',
       component: Login

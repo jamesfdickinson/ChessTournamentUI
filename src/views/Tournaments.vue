@@ -63,7 +63,7 @@
               style="text-decoration: none;"
             >
               <ion-card style="max-width:600px;">
-                <img v-if="!tournament.image" src="/images/chess-board-thin.jpg" />
+                <img v-if="!tournament.image" src="images/chess-board-thin.jpg" />
                 <img v-if="tournament.image" :src="tournament.image" />
                 <ion-card-header>
                   <ion-card-title>{{tournament.name}}</ion-card-title>

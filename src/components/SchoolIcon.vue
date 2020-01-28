@@ -2,7 +2,7 @@
 <template>
   <div>
     <div v-show="isLoaded" class="schoolIcon">
-      <img :src="'/images/schools/'+title+'.png'" @load="loaded"  />
+      <img :src="'images/schools/'+title+'.png'" @load="loaded"  />
     </div>
     <!-- <img v-if="image" v-bind:src="image" /> -->
     <div

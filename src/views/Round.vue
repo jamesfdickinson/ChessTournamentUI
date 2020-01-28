@@ -49,12 +49,12 @@
           >
             <ion-icon
               v-if="position.color=='Black'"
-              src="/images/chess_pawn_black.svg"
+              src="images/chess_pawn_black.svg"
               slot="start"
             ></ion-icon>
             <ion-icon
               v-else-if="position.color=='White'"
-              src="/images/chess_pawn_white.svg"
+              src="images/chess_pawn_white.svg"
               slot="start"
             ></ion-icon>
             <ion-icon v-else name="contact" slot="start"></ion-icon>
