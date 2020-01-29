@@ -23,7 +23,7 @@
 
         <ion-item>
           <ion-label position="fixed">Password</ion-label>
-          <ion-button v-on:click="changePassword()">Change Password</ion-button>
+          <ion-button v-on:click="PasswordChange()">Change Password</ion-button>
         </ion-item>
         <!-- <ion-item>
           <ion-label>Allow Notifications</ion-label>
@@ -75,6 +75,9 @@ export default {
     logOut() {
       authentication.logout();
       this.$router.push({ path: `/` });
+    },
+    PasswordChange(){
+        this.$router.push({ path: `PasswordChange` });
     },
     save() {
       let user = this.user;

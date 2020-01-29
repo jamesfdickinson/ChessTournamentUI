@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 //import Home from './views/Home.vue'
 import Login from './views/Login.vue'
+import PasswordChange from './views/PasswordChange.vue'
+import PasswordResetRequest from './views/PasswordResetRequest.vue'
 import AccessDenied from './views/AccessDenied.vue'
 import Tournament from './views/Tournament.vue'
 import Tournaments from './views/Tournaments.vue'
@@ -54,6 +56,16 @@ export default new VueRouter({
       component: Login
     },
     {
+      path: '/PasswordChange',
+      name: 'PasswordChange',
+      component: PasswordChange
+    },  
+    {
+      path: '/PasswordResetRequest',
+      name: 'PasswordResetRequest',
+      component: PasswordResetRequest
+    },
+    {
       path: '/User',
       name: 'User',
       component: User
@@ -67,13 +79,13 @@ export default new VueRouter({
       path: '/UserEdit',
       name: 'UserEdit',
       component: UserEdit
-    },   
+    },
     {
       path: '/:tournament/AccessDenied',
       name: 'AccessDenied',
       component: AccessDenied
     },
-    
+
     {
       path: '/Tournaments',
       name: 'Tournaments',

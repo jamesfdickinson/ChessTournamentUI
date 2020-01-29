@@ -52,6 +52,11 @@
         <p>Need an account?</p>
         <ion-button type="button" size="large" expand v-on:click="openSignUp()">Sign up</ion-button>
       </div>
+       <div padding style="text-align:center;margin-top:15px;">
+  
+     <p><a v-on:click="openPasswordReset()"> Forgot password?</a></p>
+   
+      </div>
     </ion-content>
     <!-- </ion-page> -->
   </layout-no-menu>
@@ -83,6 +88,9 @@ export default {
     },
     openSignUp() {
       this.$router.push({ path: "UserCreate" });
+    },
+    openPasswordReset(){
+      this.$router.push({ path: "PasswordResetRequest" });
     },
     handleSubmit() {
       this.login();

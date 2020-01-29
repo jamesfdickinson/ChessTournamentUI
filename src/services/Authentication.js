@@ -14,6 +14,24 @@ export default class Authentication {
                 throw error;
             });
     }
+    changePassword(userName,oldPassword,newPassword,token) {
+        var passwords = {
+            userName: userName,
+            oldPassword: oldPassword,
+            newPassword: newPassword,
+            token:token
+        };
+        return fetch.put(`authentication/changepassword`, passwords)
+            .then(response => {
+                return response;
+            });
+    }
+    passwordReset(userName){
+        return fetch.post(`authentication/sendPasswordReset`, {userName:userName})
+            .then(response => {
+                return response;
+            });
+    }
     update(user) {
         return fetch.post(`user`, user)
             .then(response => {
