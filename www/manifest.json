@@ -5,17 +5,17 @@
   "orientationx": "landscape",
   "icons": [
     {
-      "src": "images/Icons/chess_rook_white.png",
+      "src": "images/icons/icon-48.png",
       "type": "image/png",
       "sizes": "48x48"
     },
     {
-      "src": "images/Icons/chess_rook_white.png",
+      "src": "images/icons/icon-96.png",
       "type": "image/png",
       "sizes": "96x96"
     },
     {
-      "src": "images/Icons/chess_rook_white.png",
+      "src": "images/icons/icon-192.png",
       "type": "image/png",
       "sizes": "192x192"
     }
