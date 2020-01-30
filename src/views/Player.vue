@@ -54,16 +54,20 @@
 
         <ion-list>-->
         <ion-list-header color="primary">Games</ion-list-header>
-       <ion-item
+        <ion-item
           detail="true"
           v-for="playerGame of playerGames"
           :key="playerGame.Id"
           v-on:click="openPlayer(playerGame.playerId)"
         >
-         <ion-label slot>{{playerGame.fullName}}</ion-label>
+          <ion-label slot>{{playerGame.fullName}}</ion-label>
           <ion-badge>{{1-playerGame.points}}</ion-badge>
         </ion-item>
-
+        <ion-list-header color="primary">Achievements</ion-list-header>
+        <ion-item  v-for="achievement of achievements" :key="achievement">
+          <ion-icon slot="start" name="trophy"></ion-icon>
+          <ion-label>{{achievement}}</ion-label>
+        </ion-item>
       </ion-list>
     </ion-content>
     <!-- </ion-page> -->
@@ -76,18 +80,19 @@ import LayoutMenu from "@/components/LayoutMenu.vue";
 export default {
   name: "home",
 
-  components: { LayoutMenu},
+  components: { LayoutMenu },
   data() {
     var tournamentId = this.$route.params.tournament;
     return {
       tournamentId: tournamentId,
       player: {},
-      playerGames:{},
+      playerGames: {},
+      achievements: [],
       errors: []
     };
   },
   methods: {
-     openPlayer(id) {
+    openPlayer(id) {
       this.$router.push({ name: "Player", params: { id: id } });
     },
     editPlayer() {
@@ -110,10 +115,19 @@ export default {
           this.errors.push(e);
         });
 
-         fetch
+      fetch
         .get(`player/games/${id}`)
         .then(response => {
           this.playerGames = response.data;
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
+
+      fetch
+        .get(`achievement/${id}`)
+        .then(response => {
+          this.achievements = response.data;
         })
         .catch(e => {
           this.errors.push(e);

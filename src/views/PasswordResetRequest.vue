@@ -69,6 +69,7 @@ export default {
         .passwordReset(userName)
         .then(results => {
           this.results = "Sent email with reset code. ";
+          console.log(results);
         })
         .catch(e => {
           this.results ="Error sending request";

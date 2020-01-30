@@ -10,7 +10,7 @@ export default class Authentication {
                 return user;
             })
             .catch((error)=> {
-                if(error.response)  throw error.response.data;
+                if(error.response)  throw error.response.data || error.response.statusText;
                 throw error;
             });
     }
@@ -48,7 +48,7 @@ export default class Authentication {
                 return user;
             })            
             .catch((error)=> {
-                if(error.response)  throw error.response.data;
+                if(error.response)  throw error.response.data || error.response.statusText;
                 throw error;
             });
     }
