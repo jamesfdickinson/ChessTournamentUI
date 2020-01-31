@@ -63,7 +63,7 @@
           <ion-label slot>{{playerGame.fullName}}</ion-label>
           <ion-badge>{{1-playerGame.points}}</ion-badge>
         </ion-item>
-        <ion-list-header color="primary">Achievements</ion-list-header>
+        <ion-list-header v-if="achievements && achievements.length > 0" color="primary">Achievements</ion-list-header>
         <ion-item  v-for="achievement of achievements" :key="achievement">
           <ion-icon slot="start" name="trophy"></ion-icon>
           <ion-label>{{achievement}}</ion-label>

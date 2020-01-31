@@ -1,23 +1,23 @@
-import fetch from "@/fetch.js";
 import Firebase from "@/services/Firebase.js";
 import FirebaseNative from "@/services/FirebaseNative.js";
-import Authentication from '@/services/Authentication'
 
 export default class Notification {
     constructor() {
-        if (FirebaseNative.isAvailable())
-            this.firebase = FirebaseNative;//add as static
+    
+        if (typeof cordova !== 'undefined')
+            this.firebase = new FirebaseNative();
         else
             this.firebase = Firebase;//add as static
+
         this.firebase.onMessage = function () { };
         this.firebase.onTokenUpdated = this.tokenRefresh.bind(this);
-        this.authentication = new Authentication();
-        this.onTokenRefresh =  function (token) { };
+        this.onTokenRefresh =  function () { };
     }
     init() {
         this.firebase.init();
     }
     tokenRefresh(token) {
+        console.log("Notification Token: "+ token)
         if(this.onTokenRefresh)this.onTokenRefresh(token);
     }
     requestNotificationToken() {

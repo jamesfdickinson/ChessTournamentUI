@@ -36,7 +36,8 @@
                   ></ion-input>
                 </ion-item>
               </div>
-
+              <!-- Needs a sumbit button so the form will submit on enter. <input type="submit"> or <button>(defaults to submit) will work. The ion-button is in the shadow dom and the form does not see it !-->
+              <input type="submit" style="display: none">
               <div padding>
                 <ion-button type="submit" size="large" expand="block">Login</ion-button>
                 <ul style="color:red;">
