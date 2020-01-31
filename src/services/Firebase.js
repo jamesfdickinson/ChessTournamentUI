@@ -4,7 +4,7 @@ class Firebase {
         this.firebase = window.firebase;
         this.messaging = null;
         this.onMessage = function () { };
-        this.onTokenRefresh = function () { };
+        this.onTokenUpdated = function () { };
     }
     init() {
         if (typeof this.firebase == "undefined") {
@@ -47,8 +47,11 @@ class Firebase {
             });
         } catch (ex) {
             console.warn('Firebase Init(): ', ex.message);
-         }
+        }
 
+    }
+    requestPermission() {
+        return window.Notification.requestPermission();
     }
     getToken() {
         if (this.messaging === null) {

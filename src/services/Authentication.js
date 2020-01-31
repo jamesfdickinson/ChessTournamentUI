@@ -71,6 +71,19 @@ export default class Authentication {
         var user = JSON.parse(localStorage.getItem("user"));
         return user.token;
     }
+    sendNotificationToken(currentToken, userId){
+         //get user Id
+        if (!userId) {
+            let user = this.authentication.getUser() || {};
+            userId = user.id;
+        }
+        console.log('Sending token to server...');
+        let data = {
+            "token": currentToken,
+            "userId": userId
+        };
+        return fetch.post(`NotificationToken`, data);
+    }
     inviteCode(code, tournamentId) {
         var user = this.getUser() || {};
         var userId = user.id;
@@ -84,21 +97,21 @@ export default class Authentication {
                 if(error.response)  throw error.response.data;
                 throw error;
             });
+    }    
+    fakeInviteCode(code, tournamentId) {
+        return new Promise(function (resolve, reject) {
+            if (code !== "123") reject("Invalid invite code");
 
-
-        // return new Promise(function (resolve, reject) {
-        //     if (code !== "123") reject("Invalid invite code");
-
-        //     var newRole = tournamentId + "-Basic";
-        //     var user = this.getUser();
-        //     //add rule if not there
-        //     if (user.roles.indexOf(newRole) === -1) {
-        //         user.roles.push(newRole);
-        //         //save
-        //         localStorage.setItem("user", JSON.stringify(user));
-        //     }
-        //     resolve(true);
-        // }.bind(this));
+            var newRole = tournamentId + "-Basic";
+            var user = this.getUser();
+            //add rule if not there
+            if (user.roles.indexOf(newRole) === -1) {
+                user.roles.push(newRole);
+                //save
+                localStorage.setItem("user", JSON.stringify(user));
+            }
+            resolve(true);
+        }.bind(this));
     }
     fakeLogin(userName, password) {
         return new Promise(function (resolve, reject) {

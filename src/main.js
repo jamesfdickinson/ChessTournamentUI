@@ -4,12 +4,11 @@ import router from './router'
 //import  Ionic  from '@ionic/vue';
 import AnalyticsGA from './services/AnalyticsGA'
 import Authentication from './services/Authentication'
-import Firebase from './services/Firebase'
+import Notification from './services/Notification'
 import LayoutMenu from "@/components/LayoutMenu.vue";
 import LayoutNoMenu from "@/components/LayoutNoMenu.vue";
 import LayoutRaw from "@/components/LayoutRaw.vue";
 import JsonCSV from 'vue-json-csv'
-
 
 let version = "2.1";
 let analyticsGA = new AnalyticsGA();
@@ -18,7 +17,11 @@ analyticsGA.TrackPage("Start");
 
 let authentication = new Authentication();
 
-Firebase.init();
+let notification = new Notification();
+notification.init();
+notification.onTokenRefresh(function (token) {
+  authentication.sendNotificationToken(token);
+});
 
 Vue.config.productionTip = true;
 
@@ -33,10 +36,10 @@ router.beforeEach((to, from, next) => {
 
   //get user
   let user = authentication.getUser();
-  
+
 
   //requirer 
-  const pagesNoAuthenticationRequired = ['UserCreate','Login','SignUp','SignUpComplete','FAQ','PasswordResetRequest','PasswordChange'];
+  const pagesNoAuthenticationRequired = ['UserCreate', 'Login', 'SignUp', 'SignUpComplete', 'FAQ', 'PasswordResetRequest', 'PasswordChange'];
   const authRequired = !pagesNoAuthenticationRequired.includes(to.name);
   if (authRequired && !user) {
     return next(`/Login?redirect=${to.path}`);
