@@ -37,7 +37,7 @@ import UserEdit from './views/UserEdit.vue'
 Vue.use(VueRouter)
 
 export default new VueRouter({
-  mode: 'history',
+  mode: process.env.CORDOVA_PLATFORM ? 'hash' : 'history',
   base: process.env.BASE_URL || "",
   routes: [
     {
