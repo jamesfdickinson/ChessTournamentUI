@@ -1,0 +1,7 @@
+{
+  "name": "Chess Tournament",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "custom"
+}
