@@ -43,7 +43,6 @@ export default class FirebaseNative {
             }.bind(this));
         }.bind(this));
 
-        this.RegisterNotification();
     }
     requestPermission() {
         //todo: change to event 'deviceready' and promise waiting for the results or timing out.
