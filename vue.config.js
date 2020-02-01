@@ -5,9 +5,5 @@ module.exports = {
 
     devServer: {
         //https: true
-      },
-
-    pluginOptions: {
-      cordovaPath: 'src-cordova'
-    }
+      }
 }
