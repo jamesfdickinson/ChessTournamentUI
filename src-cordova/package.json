@@ -15,11 +15,19 @@
   "devDependencies": {
     "cordova-android": "^9.0.0-nightly.2020.1.24.92268b2e",
     "cordova-ios": "^6.0.0-nightly.2020.1.24.266d339e",
-    "cordova-plugin-whitelist": "^1.3.4"
+    "cordova-plugin-firebase-messaging": "^4.0.2",
+    "cordova-plugin-whitelist": "^1.3.4",
+    "cordova-support-android-plugin": "^1.0.1",
+    "cordova-support-google-services": "^1.3.2"
   },
   "cordova": {
     "plugins": {
-      "cordova-plugin-whitelist": {}
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-firebase-messaging": {
+        "FIREBASE_ANALYTICS_VERSION": "17.2.+",
+        "FIREBASE_MESSAGING_VERSION": "20.1.+",
+        "ANDROIDX_CORE_VERSION": "1.0.+"
+      }
     },
     "platforms": [
       "android",
