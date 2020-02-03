@@ -6,7 +6,7 @@ Currently several local schools are using chessclub.io.
 
 The tournament software is a web based and mobile optimized solution needed for our growing tournaments. After volunteering to run the pairings and scoring for local grade school chess club tournaments, we ran into multiple bottlenecks.  We tried different softwares and none could support larger groups than 50 without delaying the tournaments timeline even with multiple scorekeepers.  
 
-This project is designed to be a web based solution designed for mobile and tables that allows multiple scorekeepers to enter scores at the same time.  The software allows for quick corrections by coaches and exception without halting the full tournament.  The parents could also see their children's scores win real time.  
+This project is designed to be a web based solution designed for mobile and tables that allows multiple scorekeepers to enter scores at the same time.  The software allows for quick corrections by coaches and exception without halting the full tournament.  The parents could also see their children's scores in real time.  
 
 We have ran multiple tournaments with 200+ students all of which ended on time or ahead of schedule.  The tournament have also moved to paperless and without cables.  All registration, scorekeeping and pairing were done on mobile devices or tablets.  
 
