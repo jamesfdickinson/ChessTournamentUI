@@ -8,7 +8,7 @@ The tournament software is a web based and mobile optimized solution needed for 
 
 This project is designed to be a web based solution designed for mobile and tables that allows multiple scorekeepers to enter scores at the same time.  The software allows for quick corrections by coaches and exception without halting the full tournament.  The parents could also see their children's scores in real time.  
 
-We have ran multiple tournaments with 200+ students all of which ended on time or ahead of schedule.  The tournament have also moved to paperless and without cables.  All registration, scorekeeping and pairing were done on mobile devices or tablets.  
+We have ran multiple tournaments with 200+ students all of which ended on time or ahead of schedule. The tournament have also moved to paperless and without cables. All registration, score keeping and pairing were done on mobile devices or tablets.  Push notification all for quick and seamless round transitions and communication.
 
 Other tournament software had limited pairing algorithms.  The new system took into account grade, school, previously played opponents, and ELO ranking. All the weights can be adjusted on the fly as seen fit by the coaches. Once pairing are created, the students start finding their next table via the app and a text message, often even before we announce a new round.
 
