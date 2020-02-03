@@ -1,7 +1,7 @@
 import Firebase from "@/services/Firebase.js";
 import FirebaseNative from "@/services/FirebaseNative.js";
 
-export default class Notification {
+class Notification {
     constructor() {
     
         if (typeof cordova !== 'undefined')
@@ -17,7 +17,7 @@ export default class Notification {
         this.firebase.init();
     }
     tokenRefresh(token) {
-        console.log("Notification Token: "+ token)
+        console.log("Notification Token refreshed: "+ token)
         if(this.onTokenRefresh)this.onTokenRefresh(token);
     }
     requestNotificationToken() {
@@ -27,7 +27,10 @@ export default class Notification {
             .then((permission) => {
                 if (permission === 'granted') {
                     console.log('Notification permission granted.');
-                    return this.firebase.getToken();
+                    return this.firebase.getToken().then((token) => {
+                        if (this.tokenRefresh) this.tokenRefresh(token);
+                        return token;
+                    });
                 } else {
                     console.log("Notification: Unable to get permission to notify.");
                     return null;
@@ -35,3 +38,4 @@ export default class Notification {
             });
     }
 }
+export default new Notification(); 

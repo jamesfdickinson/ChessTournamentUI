@@ -57,10 +57,7 @@ class Firebase {
         if (this.messaging === null) {
             this.init();
         }
-        return this.messaging.getToken().then((token) => {
-            if (this.onTokenUpdated) this.onTokenUpdated(token);
-            return token;
-        });
+        return this.messaging.getToken();
     }
 }
 export default new Firebase();
