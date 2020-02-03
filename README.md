@@ -10,7 +10,7 @@ This project is designed to be a web based solution designed for mobile and tabl
 
 We have ran multiple tournaments with 200+ students all of which ended on time or ahead of schedule.  The tournament have also moved to paperless and without cables.  All registration, scorekeeping and pairing were done on mobile devices or tablets.  
 
-Other tournament software were limit in the pairing algorithm.  The new system took into account grade, school, previously played opponents, and ELO ranking. All the weights can be adjusted on the fly as seen fit by the coaches. Once pairing are created, the students start finding their next table via the app and a text message, often even before we announce a new round.
+Other tournament software had limited pairing algorithms.  The new system took into account grade, school, previously played opponents, and ELO ranking. All the weights can be adjusted on the fly as seen fit by the coaches. Once pairing are created, the students start finding their next table via the app and a text message, often even before we announce a new round.
 
 
 <img src="./screenshots/Tournaments.png" alt="Tournaments" width="200"/><img src="./screenshots/TournamentPage.png" alt="Tournament" width="200"/><img src="./screenshots/RoundsPage.png" alt="RoundsPage" width="200"/><img src="./screenshots/RoundPage.png" alt="RoundPage" width="200"/><img src="./screenshots/Menu.png" alt="Menu" width="200"/><img src="./screenshots/Reports.png" alt="Reports" width="200"/>
