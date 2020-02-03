@@ -40,7 +40,7 @@ class Firebase {
             }.bind(this));
             this.messaging.onTokenRefresh(() => {
                 this.messaging.getToken().then((refreshedToken) => {
-                    if (this.onTokenRefresh) this.onTokenRefresh(refreshedToken);
+                    if (this.onTokenUpdated) this.onTokenUpdated(refreshedToken);
                 }).catch((err) => {
                     console.log('Unable to retrieve refreshed token ', err);
                 });
@@ -58,7 +58,6 @@ class Firebase {
             this.init();
         }
         return this.messaging.getToken().then((token) => {
-            if (this.onTokenRefresh) this.onTokenRefresh(token);
             return token;
         });
     }
