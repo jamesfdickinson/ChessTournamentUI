@@ -58,7 +58,10 @@ export default class FirebaseNative {
         if (typeof cordova == 'undefined' || typeof cordova.plugins == 'undefined' || typeof cordova.plugins.firebase == 'undefined') {
             return new Promise.reject("cordova.plugins.firebase.messaging plugin is missing");
         }
-        return cordova.plugins.firebase.messaging.getToken();
+        return cordova.plugins.firebase.messaging.getToken().then((token) => {
+            if (this.onTokenUpdated) this.onTokenUpdated(token);
+            return token;
+        });;
     }
     message(data) {
 

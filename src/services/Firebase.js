@@ -58,6 +58,7 @@ class Firebase {
             this.init();
         }
         return this.messaging.getToken().then((token) => {
+            if (this.onTokenUpdated) this.onTokenUpdated(token);
             return token;
         });
     }
