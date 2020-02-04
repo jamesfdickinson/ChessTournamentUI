@@ -74,7 +74,7 @@ export default class Authentication {
     sendNotificationToken(currentToken, userId){
          //get user Id
         if (!userId) {
-            let user = this.authentication.getUser() || {};
+            let user = this.getUser() || {};
             userId = user.id;
         }
         console.log('Sending token to server...');
