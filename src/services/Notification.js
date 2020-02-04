@@ -1,9 +1,13 @@
 import Firebase from "@/services/Firebase.js";
 import FirebaseNative from "@/services/FirebaseNative.js";
 
-class Notification {
+let instance = null;
+export default class Notification {
     constructor() {
-    
+        if(instance){
+            return instance;
+          }
+
         if (typeof cordova !== 'undefined')
             this.firebase = new FirebaseNative();
         else
@@ -11,14 +15,16 @@ class Notification {
 
         this.firebase.onMessage = function () { };
         this.firebase.onTokenUpdated = this.tokenRefresh.bind(this);
-        this.onTokenRefresh =  function () { };
+        this.onTokenRefresh = function () { };
+
+        instance = this;
     }
     init() {
         this.firebase.init();
     }
     tokenRefresh(token) {
-        console.log("Notification Token refreshed: "+ token)
-        if(this.onTokenRefresh)this.onTokenRefresh(token);
+        console.log("Notification Token refreshed: " + token)
+        if (this.onTokenRefresh) this.onTokenRefresh(token);
     }
     requestNotificationToken() {
         console.log('Requesting permission...');
@@ -38,4 +44,3 @@ class Notification {
             });
     }
 }
-export default new Notification(); 
