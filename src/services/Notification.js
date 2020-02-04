@@ -31,7 +31,7 @@ export default class Notification {
         // [START request_permission]
         return this.firebase.requestPermission()
             .then((permission) => {
-                if (permission === 'granted') {
+                if (permission === true) {
                     console.log('Notification permission granted.');
                     return this.firebase.getToken().then((token) => {
                         if (this.tokenRefresh) this.tokenRefresh(token);

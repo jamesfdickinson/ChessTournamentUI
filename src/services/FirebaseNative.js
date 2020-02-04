@@ -52,6 +52,7 @@ export default class FirebaseNative {
         }
         return cordova.plugins.firebase.messaging.requestPermission({ forceShow: true }).then(function () {
             console.log("You'll get foreground notifications when a push message arrives");
+            return true;
         }.bind(this));
     }
     getToken() {

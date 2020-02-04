@@ -51,7 +51,13 @@ class Firebase {
 
     }
     requestPermission() {
-        return window.Notification.requestPermission();
+        return window.Notification.requestPermission().then((permission) => {
+            if (permission === 'granted') {
+                 return true;
+            } else {
+                return false
+            }
+        });;
     }
     getToken() {
         if (this.messaging === null) {
