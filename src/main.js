@@ -19,9 +19,9 @@ let authentication = new Authentication();
 
 let notification = new Notification();
 notification.init();
-notification.onTokenRefresh(function (token) {
+notification.onTokenRefresh = function (token) {
   authentication.sendNotificationToken(token);
-});
+};
 
 Vue.config.productionTip = true;
 
