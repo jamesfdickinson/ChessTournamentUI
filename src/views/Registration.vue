@@ -44,7 +44,7 @@
         <ion-item color="light">
           <ion-icon v-on:click="sortBy('isPresent')" slot="start" name="checkmark"></ion-icon>
           <ion-label v-on:click="sortBy('firstName')">Name</ion-label>
-          <ion-label v-on:click="sortBy('school')">School</ion-label>
+          <ion-label v-on:click="sortBy('school')">Team</ion-label>
         </ion-item>
         <ion-item
           detail="true"

@@ -12,7 +12,7 @@ import JsonCSV from 'vue-json-csv'
 
 let version = "2.1";
 let analyticsGA = new AnalyticsGA();
-analyticsGA.TrackStart("Chess", version, "UA-2052018-24");
+analyticsGA.TrackStart("Tournament", version, "UA-2052018-24");
 analyticsGA.TrackPage("Start");
 
 let authentication = new Authentication();

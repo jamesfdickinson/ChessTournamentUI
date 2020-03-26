@@ -29,7 +29,7 @@
           <tr>
             <th>#</th>
             <th>Name</th>
-            <th>School/Team</th>
+            <th>Team</th>
             <th>Gr</th>
             <th>Rd1</th>
             <th>Rd2</th>

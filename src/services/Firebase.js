@@ -57,7 +57,7 @@ class Firebase {
             } else {
                 return false
             }
-        });;
+        });
     }
     getToken() {
         if (this.messaging === null) {

@@ -11,7 +11,7 @@
             </ion-button>
             <!-- </ion-menu-toggle> -->
           </ion-buttons>
-          <ion-title>Chess Tournaments</ion-title>
+          <ion-title>Tournaments</ion-title>
           <ion-buttons slot="end">
             <ion-button v-on:click="userDetails()">
               <ion-icon name="contact"></ion-icon>

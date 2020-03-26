@@ -11,7 +11,7 @@
               </ion-button>
             </ion-menu-toggle>
           </ion-buttons>
-          <ion-title>Chess Tournament</ion-title>
+          <ion-title>Tournament</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content>

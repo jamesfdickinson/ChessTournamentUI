@@ -7,7 +7,7 @@
           <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
         </ion-buttons>
 
-        <ion-title>Create User</ion-title>
+        <ion-title>User</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content>

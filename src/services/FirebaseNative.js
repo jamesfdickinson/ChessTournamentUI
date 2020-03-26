@@ -1,5 +1,6 @@
 //https://github.com/chemerisuk/cordova-plugin-firebase-messaging
 //https://medium.com/glucosio-project/whats-new-in-firebase-cloud-messaging-and-how-to-migrate-from-gcm-578019c2167d
+/*global cordova */
 export default class FirebaseNative {
     constructor() {
         this.onMessage = function () { };
@@ -71,5 +72,5 @@ export default class FirebaseNative {
         //trigger event
         if (this.onMessage)
             this.onMessage(data);
-    };
+    }
 }    

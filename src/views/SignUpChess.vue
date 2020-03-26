@@ -19,7 +19,7 @@
       </ion-item>
       <ion-item>
         <router-link :to="{ name: 'FAQ'}">
-          <a>FAQ, Rules, and Terms and Conditions</a>
+          <a>Read the FAQ and Rules</a>
         </router-link>
       </ion-item>
       <form @submit.prevent="handleSubmit">
@@ -37,8 +37,8 @@
               <ion-label position="stacked">School</ion-label>
               <ion-input :value="player.school" @input="player.school = $event.target.value"></ion-input>
             </ion-item> -->
-            <ion-item>
-              <ion-label position="stacked">Team</ion-label>
+            <!-- <ion-item>
+              <ion-label position="stacked">School</ion-label>
               <ion-select placeholder="Select One" :value="player.school"
                @ionChange="player.school= $event.target.value;" >
                 <ion-select-option
@@ -47,9 +47,9 @@
                   :value="school"
                 >{{ school }}</ion-select-option>
               </ion-select>
-            </ion-item>
-            <!-- <ion-item>
-              <ion-label position="stacked">Team</ion-label>
+            </ion-item> -->
+            <ion-item>
+              <ion-label position="stacked">School</ion-label>
               <div style="width: 100%;">
                 <select  v-model="player.school"  >
                  <option disabled value="">Select One</option>
@@ -60,8 +60,8 @@
                   >{{ school }}</option>
                 </select>
               </div>
-              </ion-item> -->
-             <!-- <ion-item>
+              </ion-item>
+             <ion-item>
               <ion-label position="stacked">Grade</ion-label>
               <div style="width: 100%;">
                 <select  v-model="player.grade" @change="player.rating =player.grade*100;">
@@ -78,7 +78,7 @@
                   <option value="12">Open Division</option>
                 </select>
               </div>
-            </ion-item> -->
+            </ion-item>
             <!-- <ion-item>
               <ion-label position="stacked">Grade</ion-label>
               <select 
@@ -142,15 +142,15 @@
                 @input="player.rating = $event.target.value"
               ></ion-input>
             </ion-item>
-            <!-- <ion-item>
+            <ion-item>
               <ion-label position="stacked">Parent's Name</ion-label>
               <ion-input
                 :value="player.parentName"
                 @input="player.parentName = $event.target.value"
               ></ion-input>
-            </ion-item> -->
+            </ion-item>
             <ion-item>
-              <ion-label position="stacked">Email</ion-label>
+              <ion-label position="stacked">Parent's Email</ion-label>
               <ion-input
                 type="email"
                 :value="player.parentEmail"
@@ -158,7 +158,7 @@
               ></ion-input>
             </ion-item>
             <ion-item>
-              <ion-label position="stacked">Phone Number</ion-label>
+              <ion-label position="stacked">Parent's Phone Number</ion-label>
               <ion-input
                 inputmode="tel"
                 :value="player.parentPhone"
@@ -176,7 +176,7 @@
             <ion-item>
               <ion-label
                 text-wrap
-              >By signing up, you agree to our terms of use, privacy policy, another rules found in the FAQ and Terms and Conditions</ion-label>
+              >By signing up, you agree to our terms of use, privacy policy, another rules found in the</ion-label>
               <ion-checkbox
                 slot="start"
                 :checked="agreeTerms"
@@ -241,9 +241,6 @@ export default {
       let player = this.player;
       let agreeTerms = this.agreeTerms;
 
-      //add default grade for cribbage
-      if(!player.grade) player.grade = 12;
-
       player.tournamentId = tournamentId;
 
       //validation
@@ -251,12 +248,11 @@ export default {
       if (!agreeTerms) this.errors.push("agree to terms is required.");
       if (!player.firstName) this.errors.push("first name is required.");
       if (!player.lastName) this.errors.push("last name is required.");
-      if (!player.school) this.errors.push("team is required.");
+      if (!player.school) this.errors.push("school is required.");
       if (!player.grade) this.errors.push("grade is required.");
       if (isNaN(player.grade)) this.errors.push("grade is not a number.");
       if (!player.rating) this.rating = 1000;
       if (isNaN(player.rating)) this.errors.push("rating is not a number.");
-      if (!player.email) this.errors.push("email is required.");
 
       if (this.errors.length > 0) return;
 

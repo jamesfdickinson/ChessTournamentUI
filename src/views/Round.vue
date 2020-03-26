@@ -39,6 +39,7 @@
           <!-- <ion-list   :key="table.id"> -->
           <ion-item :key="table.id" color="primary">
             <ion-label>Table {{table.id}}</ion-label>
+
             <ion-button slot="end" color="light" v-on:click="openTable(table.id)">Record Results</ion-button>
           </ion-item>
           <ion-item
@@ -47,20 +48,22 @@
             :key="position.id"
             v-on:click="openPlayer(position.playerId)"
           >
-            <ion-icon
-              v-if="position.color=='Black'"
-              src="images/chess_pawn_black.svg"
+            <ion-button
               slot="start"
-            ></ion-icon>
+              color="light"
+              v-on:click="play(table.id,position.playerId,position.playerFirstName,position.email)"
+            >Play</ion-button>
+
+            <!-- <ion-icon v-if="position.color=='Black'" src="images/chess_pawn_black.svg" slot="start"></ion-icon>
             <ion-icon
               v-else-if="position.color=='White'"
               src="images/chess_pawn_white.svg"
               slot="start"
             ></ion-icon>
             <ion-icon v-else name="contact" slot="start"></ion-icon>
-            
+            -->
             <SchoolIcon :title="position.playerSchool" style="margin-right: 10px;"></SchoolIcon>
-          
+
             <ion-label>{{position.playerFirstName}} {{position.playerLastName}}</ion-label>
             <ion-badge slot="end" color="light">{{position.points}}</ion-badge>
           </ion-item>
@@ -116,6 +119,19 @@ export default {
         name: "RoundDetails",
         params: { id: roundId, tournament: tournamentId }
       });
+    },
+    play(table, id, name, avatar,email) {
+      let roundId = this.roundId;
+      let tournamentId = this.tournamentId;
+      let room = "tournament-" + tournamentId + "-" + roundId + "-" + table;
+      name = name ? window.encodeURI(name) : "";
+      avatar = avatar ? window.encodeURI(avatar) : "";
+      email = email ? window.encodeURI(email) : "";
+      //todo: make this work for apps if installed - deep link
+      let parameters = `room=${room}&id=t-${id}&name=${name}&avatar=${avatar}&email=${email}`;
+      let urlBase = 'http://192.168.1.28:8081/CribbageUI/www/?';
+      let url = urlBase + parameters;
+      window.open(url, "_blank");
     },
     openTable(id) {
       let roundId = this.roundId;

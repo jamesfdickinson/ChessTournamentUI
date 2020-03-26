@@ -21,7 +21,7 @@
           <ion-input :value="player.lastName" @input="player.lastName = $event.target.value"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="stacked">School</ion-label>
+          <ion-label position="stacked">Team</ion-label>
           <ion-input :value="player.school" @input="player.school = $event.target.value"></ion-input>
         </ion-item>
         <ion-item>

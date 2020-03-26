@@ -11,7 +11,7 @@
     </ion-header>
     <ion-content>
       <ion-searchbar
-        placeholder="First Name, Last Name, or School"
+        placeholder="First Name, Last Name, or Team"
         :value="searchInput"
         @ionInput="searchInput = $event.target.value;"
         @ionChange="searchInput= $event.target.value;"
