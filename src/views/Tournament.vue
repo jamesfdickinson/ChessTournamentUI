@@ -20,8 +20,8 @@
     </ion-header>
     <ion-content>
       <ion-card >
-        <img style="max-height:300px;width: auto;" v-if="!tournament.image" src="images/chess-board.jpg" />
-        <img style="max-height:300px;width: auto;" v-if="tournament.image" :src="tournament.image" />
+        <img style="max-height:300px;width: auto;margin: 0 auto;" v-if="!tournament.image" src="images/chess-board.jpg" />
+        <img style="max-height:300px;width: auto;margin: 0 auto;" v-if="tournament.image" :src="tournament.image" />
         <ion-card-header>
           <ion-card-title>{{tournament.name}}</ion-card-title>
         </ion-card-header>
