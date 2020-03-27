@@ -256,7 +256,7 @@ export default {
       if (isNaN(player.grade)) this.errors.push("grade is not a number.");
       if (!player.rating) this.rating = 1000;
       if (isNaN(player.rating)) this.errors.push("rating is not a number.");
-      if (!player.email) this.errors.push("email is required.");
+      if (!player.parentEmail) this.errors.push("email is required.");
 
       if (this.errors.length > 0) return;
 
