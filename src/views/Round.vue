@@ -39,7 +39,7 @@
           <!-- <ion-list   :key="table.id"> -->
           <ion-item :key="table.id" color="primary">
             <ion-label>Table {{table.id}}</ion-label>
-            <ion-button slot="start" color="light" v-on:click="openTable(table.id)">🔊</ion-button>
+            <!-- <ion-button slot="start" color="light" v-on:click="openTable(table.id)">🔊</ion-button> -->
             <ion-button slot="end" color="light" v-on:click="openTable(table.id)">Record Results</ion-button>
           </ion-item>
           <ion-item
@@ -129,7 +129,8 @@ export default {
       email = email ? window.encodeURI(email) : "";
       //todo: make this work for apps if installed - deep link
       let parameters = `room=${room}&id=t-${id}&name=${name}&avatar=${avatar}&email=${email}`;
-      let urlBase = "http://192.168.1.28:8081/CribbageUI/www/?";
+      //let urlBase = "http://192.168.1.28:8081/CribbageUI/www/?";
+      let urlBase = "https://cardgames.app/cribbage/game/?";
       let url = urlBase + parameters;
       window.open(url, "_blank");
     },
