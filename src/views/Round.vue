@@ -133,6 +133,7 @@ export default {
       let urlBase = "https://cardgames.app/cribbage/game/?";
       let url = urlBase + parameters;
       window.open(url, "_blank");
+      return false;
     },
     openTable(id) {
       let roundId = this.roundId;
