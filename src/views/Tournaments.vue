@@ -98,7 +98,7 @@ export default {
     },
     loadData() {
       fetch
-        .get(`tournament`)
+        .get(`tournament/type/Cribbage`)
         .then(response => {
           this.tournaments = response.data;
           if (this.tournaments) this.tournaments.sort((a, b) => b.id - a.id);
