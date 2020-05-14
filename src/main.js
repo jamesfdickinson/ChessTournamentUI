@@ -46,7 +46,7 @@ router.beforeEach((to, from, next) => {
 
 
   //requirer 
-  const pagesNoAuthenticationRequired = ['UserCreate', 'Login', 'SignUp', 'SignUpComplete', 'FAQ', 'PasswordResetRequest', 'PasswordChange'];
+  const pagesNoAuthenticationRequired = ['UserCreate', 'Login', 'PasswordResetRequest', 'PasswordChange'];
   const authRequired = !pagesNoAuthenticationRequired.includes(to.name);
   if (authRequired && !user) {
     return next(`/Login?redirect=${to.path}`);
@@ -59,7 +59,7 @@ router.beforeEach((to, from, next) => {
   const pagesRecorder = ['Registration', 'PlayerEdit', 'TableEdit'];
   const authRequiredRecorder = pagesRecorder.includes(to.name);
 
-  const pagesBasic = ['Players', 'Reports', 'Tournament'];
+  const pagesBasic = ['Players', 'Reports', 'Tournament', 'Tournament','SignUp', 'SignUpComplete', 'FAQ'];
   //const pagesBasic = [];
   const authRequiredBasic = pagesBasic.includes(to.name);
 
