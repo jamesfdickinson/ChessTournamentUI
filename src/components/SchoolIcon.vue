@@ -9,7 +9,7 @@
       v-if="!isLoaded"
       class="initialBox"
       v-bind:style="{'background-color':stringToColour(title) }"
-    >{{title.substring(0, 2)}}</div>
+    >{{(title||"-").substring(0, 2)}}</div>
   </div>
 </template>
 
@@ -30,6 +30,7 @@ export default {
       this.isLoaded = true;
     },
     stringToColour(str) {
+      if(!str) str = "";
       var hash = 0;
       for (let i = 0; i < str.length; i++) {
         hash = str.charCodeAt(i) + ((hash << 5) - hash);

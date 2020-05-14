@@ -68,22 +68,22 @@
           <ion-input :value="player.parentName" @input="player.parentName = $event.target.value"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="stacked">Parent's Email</ion-label>
+          <ion-label position="stacked">Email</ion-label>
           <ion-input :value="player.parentEmail" @input="player.parentEmail = $event.target.value"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="stacked">Parent's Phone Number</ion-label>
+          <ion-label position="stacked">Phone Number</ion-label>
           <ion-input :value="player.parentPhone" @input="player.parentPhone = $event.target.value"></ion-input>
         </ion-item>
         <ion-item></ion-item>
       </ion-list>
 
       <ion-button expand="block" v-on:click="save()">Save</ion-button>
-      <hr>
+      <hr />
       <ion-button expand="block" color="light" v-on:click="back()">Cancel</ion-button>
-      <hr>
-       <ion-button  color="danger" v-on:click="deletePlayer()">Delete</ion-button> 
-    <!-- <ion-button @click="presentAlertConfirm">Show Alert (confirm)</ion-button> -->
+      <hr />
+      <ion-button color="danger" v-on:click="deletePlayer()">Delete</ion-button>
+      <!-- <ion-button @click="presentAlertConfirm">Show Alert (confirm)</ion-button> -->
       <!-- <ion-button color="danger">Delete</ion-button> -->
       <div style="color:red;">{{error}}</div>
     </ion-content>
@@ -106,7 +106,8 @@ export default {
       player: {
         tournamentId: tournamentId,
         rating: 1000,
-        allowNotifications: true
+        allowNotifications: true,
+        division: 1
       },
       error: ""
     };
@@ -116,10 +117,26 @@ export default {
       this.$router.back();
     },
     save() {
+      this.error = "";
       let tournamentId = this.tournamentId;
       //let redirect = this.redirect;
       var playerId = this.playerId;
       var player = this.player;
+
+      //validation
+      let errors = [];
+      if (!player.firstName) errors.push("first name is required.");
+      if (!player.school) errors.push("team is required.");
+      if (!player.grade) errors.push("grade is required.");
+      if (isNaN(player.grade)) errors.push("grade is not a number.");
+      if (!player.rating) player.rating = 1000;
+      if (isNaN(player.rating)) errors.push("rating is not a number.");
+      if (!player.division) player.division = 1;
+      if (isNaN(player.division)) errors.push("division is not a number.");
+      if (errors.length > 0) {
+        this.error = errors;
+        return;
+      }
 
       if (playerId) {
         fetch
@@ -154,14 +171,19 @@ export default {
       }
     },
     deletePlayer() {
-      var playerId = this.playerId;
+      let playerId = this.playerId;
+      let tournamentId = this.tournamentId;
       if (playerId) {
         fetch
           .delete(`player/${playerId}`)
           .then(response => {
             console.log(response);
             //back
-            this.$router.back();
+            //this.$router.back();
+            this.$router.push({
+              name: "Players",
+              params: { tournament: tournamentId }
+            });
           })
           .catch(e => {
             this.error = "Error: Delete failed";

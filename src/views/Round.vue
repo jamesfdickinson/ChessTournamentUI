@@ -38,9 +38,14 @@
         <template v-for="table of filteredItems">
           <!-- <ion-list   :key="table.id"> -->
           <ion-item :key="table.id" color="primary">
-            <ion-label>Table {{table.id}}</ion-label>
+            <ion-label slot="start">Table {{table.id}}</ion-label>
+            <ion-button
+              slot="start"
+              color="light"
+              v-on:click="play(table.id);$event.stopPropagation();"
+            >Room {{getRoom(table.id)}}</ion-button>
             <!-- <ion-button slot="start" color="light" v-on:click="openTable(table.id)">🔊</ion-button> -->
-            <ion-button slot="end" color="light" v-on:click="openTable(table.id)">Record Results</ion-button>
+            <ion-button slot="end" color="light" v-on:click="openTable(table.id)">Record</ion-button>
           </ion-item>
           <ion-item
             detail="true"
@@ -48,11 +53,12 @@
             :key="position.id"
             v-on:click="openPlayer(position.playerId)"
           >
-            <ion-button
-              slot="start"
+            <!-- <ion-button
+              
               color="light"
-              v-on:click="play(table.id,position.playerId,position.playerFirstName,position.email)"
+              v-on:click="play(table.id,position.playerId,position.playerFirstName,position.email);$event.stopPropagation();"
             >Play</ion-button>
+            -->
 
             <!-- <ion-icon v-if="position.color=='Black'" src="images/chess_pawn_black.svg" slot="start"></ion-icon>
             <ion-icon
@@ -120,21 +126,48 @@ export default {
         params: { id: roundId, tournament: tournamentId }
       });
     },
-    play(table, id, name, avatar, email) {
-      let roundId = this.roundId;
+    numToSSColumn(num) {
+      let s = "";
+      let t = "";
+      while (num > 0) {
+        t = (num - 1) % 26;
+        s = String.fromCharCode(65 + t) + s;
+        num = ((num - t) / 26) | 0;
+      }
+      return s || undefined;
+    },
+    getRoom(table) {
       let tournamentId = this.tournamentId;
-      let room = "tournament-" + tournamentId + "-" + roundId + "-" + table;
-      name = name ? window.encodeURI(name) : "";
-      avatar = avatar ? window.encodeURI(avatar) : "";
-      email = email ? window.encodeURI(email) : "";
-      //todo: make this work for apps if installed - deep link
-      let parameters = `room=${room}&id=t-${id}&name=${name}&avatar=${avatar}&email=${email}`;
-      //let urlBase = "http://192.168.1.28:8081/CribbageUI/www/?";
+      let roundId = this.roundId;
+      let tournamentCode = this.numToSSColumn(tournamentId);
+      let room = `${tournamentCode}${roundId}${table}`;
+      return room;
+    },
+    play(table) {
+      let room = this.getRoom(table);
+      let parameters = `room=${room}`;
       let urlBase = "https://cardgames.app/cribbage/game/?";
       let url = urlBase + parameters;
       window.open(url, "_blank");
       return false;
     },
+    // play2(table, id, name, avatar, email) {
+    //   let roundId = this.roundId;
+    //   let tournamentId = this.tournamentId;
+    //   let room = "tournament-" + tournamentId + "-" + roundId + "-" + table;
+    //   name = name ? window.encodeURI(name) : "";
+    //   avatar = avatar ? window.encodeURI(avatar) : "";
+    //   email = email ? window.encodeURI(email) : "";
+    //   //todo: make this work for apps if installed - deep link
+    //   //let parameters = `room=${room}&id=t-${id}&name=${name}&avatar=${avatar}&email=${email}`;
+
+    //   let parameters = `room=${room}`;
+    //   //let urlBase = "http://192.168.1.28:8081/CribbageUI/www/?";
+    //   let urlBase = "https://cardgames.app/cribbage/game/?";
+    //   let url = urlBase + parameters;
+    //   window.open(url, "_blank");
+    //   return false;
+    // },
     openTable(id) {
       let roundId = this.roundId;
       let tournamentId = this.tournamentId;

@@ -6,19 +6,27 @@ import PasswordChange from './views/PasswordChange.vue'
 import PasswordResetRequest from './views/PasswordResetRequest.vue'
 import AccessDenied from './views/AccessDenied.vue'
 import Tournament from './views/Tournament.vue'
+import TournamentEdit from './views/TournamentEdit.vue'
 import Tournaments from './views/Tournaments.vue'
 import Registration from './views/Registration.vue'
 import SignUp from './views/SignUp.vue'
 import SignUpComplete from './views/SignUpComplete.vue'
+import SignUpEdit from './views/SignUpEdit.vue'
 import Players from './views/Players.vue'
 import Player from './views/Player.vue'
 import PlayerEdit from './views/PlayerEdit.vue'
 import Rounds from './views/Rounds.vue'
+import RoundsEdit from './views/RoundsEdit.vue'
 import Round from './views/Round.vue'
+import RoundEdit from './views/RoundEdit.vue'
+import RoundCreate from './views/RoundCreate.vue'
 import RoundDetails from './views/RoundDetails.vue'
 import TableEdit from './views/TableEdit.vue'
 import FAQ from './views/FAQ.vue'
+import FAQEdit from './views/FAQEdit.vue'
 import Admin from './views/Admin.vue'
+import AdminTools from './views/AdminTools.vue'
+import SendMessage from './views/SendMessage.vue'
 import Reports from './views/Reports.vue'
 import ReportScoreByAll from './views/ReportScoreByAll.vue'
 import ReportScoreByGrade from './views/ReportScoreByGrade.vue'
@@ -31,6 +39,8 @@ import ReportWallChart from './views/ReportWallChart.vue'
 import User from './views/User.vue'
 import UserCreate from './views/UserCreate.vue'
 import UserEdit from './views/UserEdit.vue'
+import UserAccess from './views/UserAccess.vue'
+
 
 //import RoundEdit from './views/PlayerEdit.vue'
 
@@ -38,8 +48,8 @@ Vue.use(VueRouter)
 
 export default new VueRouter({
   base: process.env.BASE_URL || "",
-  mode: (process.env.BASE_URL === "." ||  process.env.BASE_URL === ""||  process.env.BASE_URL === "./") ? 'hash' : 'history',
-  
+  mode: (process.env.BASE_URL === "." || process.env.BASE_URL === "" || process.env.BASE_URL === "./") ? 'hash' : 'history',
+
   routes: [
     {
       path: '/',
@@ -60,7 +70,7 @@ export default new VueRouter({
       path: '/PasswordChange',
       name: 'PasswordChange',
       component: PasswordChange
-    },  
+    },
     {
       path: '/PasswordResetRequest',
       name: 'PasswordResetRequest',
@@ -80,6 +90,11 @@ export default new VueRouter({
       path: '/UserEdit',
       name: 'UserEdit',
       component: UserEdit
+    },
+    {
+      path: '/:tournament/UserAccess',
+      name: 'UserAccess',
+      component: UserAccess
     },
     {
       path: '/:tournament/AccessDenied',
@@ -102,7 +117,11 @@ export default new VueRouter({
       name: 'TournamentHome',
       component: Tournament
     },
-
+    {
+      path: '/:tournament/TournamentEdit',
+      name: 'TournamentEdit',
+      component: TournamentEdit
+    },
     {
       path: '/:tournament/Registration',
       name: 'Registration',
@@ -117,6 +136,11 @@ export default new VueRouter({
       path: '/:tournament/SignUpComplete',
       name: 'SignUpComplete',
       component: SignUpComplete
+    },
+    {
+      path: '/:tournament/SignUpEdit',
+      name: 'SignUpEdit',
+      component: SignUpEdit
     },
     {
       path: '/:tournament/Players',
@@ -144,6 +168,21 @@ export default new VueRouter({
       component: Rounds
     },
     {
+      path: '/:tournament/RoundCreate',
+      name: 'RoundCreate',
+      component: RoundCreate
+    },
+    {
+      path: '/:tournament/RoundEdit/:id',
+      name: 'RoundEdit',
+      component: RoundEdit
+    },
+    {
+      path: '/:tournament/RoundsEdit',
+      name: 'RoundsEdit',
+      component: RoundsEdit
+    },
+    {
       path: '/:tournament/Round/:id',
       name: 'Round',
       component: Round
@@ -164,9 +203,24 @@ export default new VueRouter({
       component: Admin
     },
     {
+      path: '/:tournament/AdminTools',
+      name: 'AdminTools',
+      component: AdminTools
+    },
+    {
+      path: '/:tournament/SendMessage',
+      name: 'SendMessage',
+      component: SendMessage
+    },
+    {
       path: '/:tournament/FAQ',
       name: 'FAQ',
       component: FAQ
+    },
+    {
+      path: '/:tournament/FAQEdit',
+      name: 'FAQEdit',
+      component: FAQEdit
     },
     {
       path: '/:tournament/reports',

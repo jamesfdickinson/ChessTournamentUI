@@ -4,43 +4,34 @@
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
-          <ion-icon name="arrow-round-back" size="large" @click="$router.push('./')"></ion-icon>
+          <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
         </ion-buttons>
-        <ion-title>Players</ion-title>
-        <ion-buttons slot="end">
-          <ion-button v-on:click="addPlayer()">
-            <ion-icon name="person-add"></ion-icon>
-          </ion-button>
-        </ion-buttons>
+        <ion-title>User Access</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content>
+    <ion-content> 
       <ion-searchbar
-        placeholder="First Name, Last Name, or Team"
+        placeholder="Name, Role, or Email"
         :value="searchInput"
         @ionInput="searchInput = $event.target.value;"
         @ionChange="searchInput= $event.target.value;"
       ></ion-searchbar>
-      <!-- <ul>
-        <li v-for="tournament of tournaments" :key="tournament.id">
-          <p>
-            <strong>{{tournament.name}}</strong>
-          </p>
-          <p>{{tournament.name}}</p>
-        </li>
-      </ul>-->
       <ion-list>
-        <ion-item
+           <!-- <ion-item
           detail="true"
-          v-for="player of filteredItems"
-          :key="player.playerId"
+          v-for="users of filteredItems"
+          :key="users.userId"
           v-bind:mhref="`player/${player.playerId}`"
           v-on:click="openPlayer(player.playerId)"
-        >
-          <!-- <ion-icon name="contact" slot="start"></ion-icon>  -->
-          <SchoolIcon :title="player.school" :image="player.image" slot="start"></SchoolIcon>
+        > -->
+        <ion-item
+          detail="true"
+          v-for="user of filteredItems"
+          :key="user.id"
 
-          <ion-label>{{player.firstName}} {{player.lastName}}</ion-label>
+        >
+
+          <ion-label>{{user.role}} - {{user.userName}}</ion-label>
         </ion-item>
       </ion-list>
     </ion-content>
@@ -50,14 +41,14 @@
 
 <script>
 import fetch from "@/fetch.js";
-import SchoolIcon from "@/components/SchoolIcon.vue";
+
 export default {
   name: "home",
-  components: { SchoolIcon },
+
   data() {
     return {
       searchInput: "",
-      players: [],
+      users: [],
       errors: []
     };
   },
@@ -75,23 +66,18 @@ export default {
       }
       return colour;
     },
-    addPlayer(){
-   var tournamentId = this.$route.params.tournament;
-     this.$router.push({ name: 'PlayerNew', params: { tournament: tournamentId }});
-  
-    },
-    openPlayer(id) {
-      this.$router.push({ name: "Player", params: { id: id } });
-    },
+    // openPlayer(id) {
+    //  // this.$router.push({ name: "Player", params: { id: id } });
+    // },
     clearData() {
       this.players = [];
     },
     loadData() {
       var tournamentId = this.$route.params.tournament;
       fetch
-        .get(`players/${tournamentId}`)
+        .get(`users/${tournamentId}`)
         .then(response => {
-          this.players = response.data;
+          this.users = response.data;
         })
         .catch(e => {
           this.errors.push(e);
@@ -100,16 +86,18 @@ export default {
   },
   computed: {
     filteredItems() {
-      let filteredRound = this.players;
+      let filteredRound = this.users;
       let searchInput = this.searchInput;
       if (searchInput) {
         searchInput = searchInput.toLowerCase();
         filteredRound = filteredRound.filter(p => {
-          if (p.firstName && p.firstName.toLowerCase().startsWith(searchInput))
+          if (p.role && p.role.toLowerCase().startsWith(searchInput))
             return true;
-          if (p.lastName && p.lastName.toLowerCase().startsWith(searchInput))
+          if (p.userName && p.userName.toLowerCase().startsWith(searchInput))
             return true;
-          if (p.school && p.school.toLowerCase().startsWith(searchInput))
+          if (p.email && p.email.toLowerCase().startsWith(searchInput))
+            return true;
+          if (p.userId === searchInput)
             return true;
           return false;
         });

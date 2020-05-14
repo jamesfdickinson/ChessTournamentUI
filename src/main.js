@@ -1,7 +1,11 @@
+// import '@ionic/core/css/core.css'
+// import '@ionic/core/css/ionic.bundle.css'
 import Vue from 'vue'
+import VueSimpleAlert from "vue-simple-alert";
+import CKEditor from '@ckeditor/ckeditor5-vue';
 import App from './App.vue'
 import router from './router'
-//import  Ionic  from '@ionic/vue';
+// import Ionic  from '@ionic/vue';
 import AnalyticsGA from './services/AnalyticsGA'
 import Authentication from './services/Authentication'
 import Notification from './services/Notification'
@@ -9,6 +13,8 @@ import LayoutMenu from "@/components/LayoutMenu.vue";
 import LayoutNoMenu from "@/components/LayoutNoMenu.vue";
 import LayoutRaw from "@/components/LayoutRaw.vue";
 import JsonCSV from 'vue-json-csv'
+
+//install ionic vue - https://www.youtube.com/watch?v=k6LH1L61E0Q
 
 let version = "2.1";
 let analyticsGA = new AnalyticsGA();
@@ -27,7 +33,8 @@ Vue.config.productionTip = true;
 
 Vue.config.ignoredElements = [/^ion-/]
 //Vue.use(Ionic);
-
+Vue.use(VueSimpleAlert);
+Vue.use( CKEditor );
 router.beforeEach((to, from, next) => {
   analyticsGA.TrackPage(to.path);
 

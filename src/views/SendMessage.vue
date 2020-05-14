@@ -1,0 +1,139 @@
+<template>
+  <layout-menu>
+    <!-- <ion-page class="ion-page" main> -->
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+          <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
+        </ion-buttons>
+        <ion-title>Send Message</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <!-- <ion-list-header>
+          <ion-label>Send New Round Message to All</ion-label>
+        </ion-list-header>-->
+
+        <ion-card>
+          <ion-list>
+            <ion-list-header>
+              <ion-label>Send Round Message to All (nofitication)</ion-label>
+            </ion-list-header>
+            <ion-item>
+              <ion-input
+                placeholder="Round number"
+                :value="round"
+                @input="round = $event.target.value"
+              ></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-button expand="block" v-on:click="sendRoundNotification()">Send Notification</ion-button>
+              <ion-button expand="block" v-on:click="sendRoundSMS()">Send SMS</ion-button>
+            </ion-item>
+          </ion-list>
+        </ion-card>
+
+        <ion-card>
+          <ion-list>
+            <ion-list-header>
+              <ion-label>Send Message to Player</ion-label>
+            </ion-list-header>
+            <ion-item>
+              <ion-label position="stacked">Player</ion-label>
+              <ion-select
+                placeholder="Select One"
+                :value="player"
+                @ionChange="player= $event.target.value;"
+              >
+                <ion-select-option
+                  v-for="player in players"
+                  :key="player.id"
+                  :value="player.id"
+                >{{ player.name }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-input
+                placeholder="message"
+                :value="message"
+                @input="message = $event.target.value"
+              ></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-button expand="block" v-on:click="sendPlayerNotification()">Send Notification</ion-button>
+              <ion-button expand="block" v-on:click="sendPlayerSMS()">Send SMS</ion-button>
+            </ion-item>
+          </ion-list>
+        </ion-card>
+      </ion-list>
+      <div style="color:green;">{{success}}</div>
+      <div style="color:red;">{{error}}</div>
+    </ion-content>
+    <!-- </ion-page> -->
+  </layout-menu>
+</template>
+
+<script>
+import fetch from "@/fetch.js";
+
+export default {
+  name: "home",
+  components: {},
+  data() {
+    var tournamentId = this.$route.params.tournament;
+
+    return {
+      tournamentId: tournamentId,
+      players: [],
+      round: null,
+      error: "",
+      success: ""
+    };
+  },
+  methods: {
+    back() {
+      this.$router.back();
+    },
+    sendRoundNotification() {
+      let tournamentId = this.tournamentId;
+      let round = this.round;
+      this.error = "";
+      this.success = "";
+
+      if (!round) {
+        this.error = "Missing round number";
+        return;
+      }
+      if (tournamentId && round) {
+        let url = `notification/roundpushNotification/${tournamentId}?round=${round}`;
+        fetch
+          .post(url)
+          .then(response => {
+            this.success = "Sent: " + response.data || "";
+            console.log(response);
+          })
+          .catch(e => {
+            this.error = "Error: " + e;
+            console.warn(e);
+          });
+      }
+    },
+    sendRoundSMS() {
+      this.error = "SMS is disabled";
+    },
+    sendPlayerNotification() {
+      this.error = "sendPlayerNotification is disabled";
+    },
+    sendPlayerSMS() {
+      this.error = "sendPlayerSMS is disabled";
+    },
+    loadData() {
+      //todo: get current round number
+    }
+  },
+  created() {
+    this.loadData();
+  }
+};
+</script>
