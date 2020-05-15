@@ -56,7 +56,7 @@ router.beforeEach((to, from, next) => {
   const pagesAdmin = ['Admin'];
   const authRequiredAdmin = pagesAdmin.includes(to.name);
 
-  const pagesRecorder = ['Registration', 'PlayerEdit', 'TableEdit'];
+  const pagesRecorder = ['Registration', 'PlayerEdit','PlayerNew', 'TableEdit'];
   const authRequiredRecorder = pagesRecorder.includes(to.name);
 
   const pagesBasic = ['Players', 'Reports', 'Tournament', 'Tournament','SignUp', 'SignUpComplete', 'FAQ'];

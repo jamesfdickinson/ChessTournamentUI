@@ -270,7 +270,10 @@ export default {
         .get(`rounds/${tournamentId}`)
         .then(response => {
           let rounds = response.data;
-          let maxRound = Math.max(...rounds) || 0;
+          let maxRound = 0;
+          if (rounds && rounds.length != 0) {
+            maxRound = Math.max(...rounds) || 0;
+          }
           this.round = maxRound + 1;
         })
         .catch(e => {
