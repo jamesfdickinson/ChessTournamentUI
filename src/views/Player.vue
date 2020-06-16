@@ -32,7 +32,7 @@
         </ion-item>
          <ion-item>
           <ion-label position="fixed">Team</ion-label>
-          <ion-label slot>{{player.school}}</ion-label>
+          <ion-label slot>{{player.team}}</ion-label>
         </ion-item>
       <!--  <ion-item>
           <ion-label position="fixed">Grade</ion-label>

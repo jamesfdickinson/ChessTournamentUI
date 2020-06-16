@@ -7,6 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <base href="<%= BASE_URL %>" >
 
+  <title>Tournament</title>
+
   <link rel="manifest" href="/manifest.json">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -30,7 +32,14 @@
   <script src="cordova.js"></script>
   
   <link href="css/print.css" rel="stylesheet">
-  <title>Tournament</title>
+  
+  <!--https://docs.widgetbot.io/tutorial/ -->
+<script src="https://cdn.jsdelivr.net/npm/@widgetbot/crate@3" async defer>
+  new Crate({
+    server: '722588029050552471',
+    channel: '722588029050552475'
+  })
+</script>
 </head>
 
 <body>

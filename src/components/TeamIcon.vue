@@ -1,8 +1,8 @@
 
 <template>
   <div>
-    <div v-show="isLoaded" class="schoolIcon">
-      <img :src="'images/schools/'+title+'.png'" @load="loaded"  />
+    <div v-show="isLoaded" class="teamIcon">
+      <img :src="'images/teams/'+title+'.png'" @load="loaded"  />
     </div>
     <!-- <img v-if="image" v-bind:src="image" /> -->
     <div
@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  name: "SchoolIcon",
+  name: "TeamIcon",
   props: {
     title: String
   },
@@ -47,13 +47,13 @@ export default {
 };
 </script>
 <style scoped>
-.schoolIcon {
+.teamIcon {
   max-height: 25px;
   width: 32px;
   display: inline-block;
   text-align: center;
 }
-.schoolIcon img {
+.teamIcon img {
   max-width: 100%;
   height: auto;
   border-radius: 5px;

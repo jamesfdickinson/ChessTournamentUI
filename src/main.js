@@ -64,7 +64,7 @@ router.beforeEach((to, from, next) => {
     roles = user.roles||[];
   }
   //check server roles locally
-  let allowAccess = authorization.isPageAllowed(toPage, tournamentId, roles);
+  let allowAccess = authorization.isPageAllowed(toPage, tournamentId, roles,userName);
   if (allowAccess) {
     next();
   } else {
@@ -73,7 +73,7 @@ router.beforeEach((to, from, next) => {
       .then((user) => {
         if(!user) throw "no user found";
         let roles = user.roles||[];
-        let allowAccess2ndTry = authorization.isPageAllowed(toPage, tournamentId, roles);
+        let allowAccess2ndTry = authorization.isPageAllowed(toPage, tournamentId, roles,userName);
         if (allowAccess2ndTry) {
           next();
         } else {
@@ -82,7 +82,7 @@ router.beforeEach((to, from, next) => {
       })
       .catch(() => {
         return next(`/${tournamentId}/AccessDenied?redirect=${to.path}`);
-      })
+      });
   }
 });
 

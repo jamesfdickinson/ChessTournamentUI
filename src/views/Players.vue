@@ -38,7 +38,7 @@
           v-on:click="openPlayer(player.playerId)"
         >
           <!-- <ion-icon name="contact" slot="start"></ion-icon>  -->
-          <SchoolIcon :title="player.school" :image="player.image" slot="start"></SchoolIcon>
+          <TeamIcon :title="player.team" :image="player.image" slot="start"></TeamIcon>
 
           <ion-label>{{player.firstName}} {{player.lastName}}</ion-label>
         </ion-item>
@@ -50,10 +50,10 @@
 
 <script>
 import fetch from "@/fetch.js";
-import SchoolIcon from "@/components/SchoolIcon.vue";
+import TeamIcon from "@/components/TeamIcon.vue";
 export default {
   name: "home",
-  components: { SchoolIcon },
+  components: { TeamIcon },
   data() {
     return {
       searchInput: "",
@@ -109,7 +109,7 @@ export default {
             return true;
           if (p.lastName && p.lastName.toLowerCase().startsWith(searchInput))
             return true;
-          if (p.school && p.school.toLowerCase().startsWith(searchInput))
+          if (p.team && p.team.toLowerCase().startsWith(searchInput))
             return true;
           return false;
         });

@@ -76,7 +76,7 @@ export default {
         "color",
         "points",
         "totalPoints",
-        "school",
+        "team",
         "grade",
         "division"
       ],

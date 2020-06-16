@@ -61,7 +61,7 @@ export default {
       let round = id;
       let tournamentId = this.$route.params.tournament;
 
-      this.$confirm(`Are you want to delete round ${round}?`).then(() => {
+      this.$confirm(`Do you want to delete round ${round}?`).then(() => {
         fetch
           .delete(`round/${round}?tournament=${tournamentId}`)
           .then(response => {

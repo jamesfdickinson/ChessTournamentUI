@@ -122,7 +122,7 @@ export default {
             return true;
           if (p.details && p.details.toLowerCase().startsWith(searchInput))
             return true;
-          if (p.schools && p.schools.toLowerCase().startsWith(searchInput))
+          if (p.teams && p.teams.toLowerCase().startsWith(searchInput))
             return true;
           return false;
         });

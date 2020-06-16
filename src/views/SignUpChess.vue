@@ -34,30 +34,30 @@
               <ion-input :value="player.lastName" @input="player.lastName = $event.target.value"></ion-input>
             </ion-item>
             <!-- <ion-item>
-              <ion-label position="stacked">School</ion-label>
-              <ion-input :value="player.school" @input="player.school = $event.target.value"></ion-input>
+              <ion-label position="stacked">Team</ion-label>
+              <ion-input :value="player.team" @input="player.team = $event.target.value"></ion-input>
             </ion-item> -->
             <!-- <ion-item>
-              <ion-label position="stacked">School</ion-label>
-              <ion-select placeholder="Select One" :value="player.school"
-               @ionChange="player.school= $event.target.value;" >
+              <ion-label position="stacked">Team</ion-label>
+              <ion-select placeholder="Select One" :value="player.team"
+               @ionChange="player.team= $event.target.value;" >
                 <ion-select-option
-                  v-for="school in schools"
-                  :key="school"
-                  :value="school"
-                >{{ school }}</ion-select-option>
+                  v-for="team in teams"
+                  :key="team"
+                  :value="team"
+                >{{ team }}</ion-select-option>
               </ion-select>
             </ion-item> -->
             <ion-item>
-              <ion-label position="stacked">School</ion-label>
+              <ion-label position="stacked">Team</ion-label>
               <div style="width: 100%;">
-                <select  v-model="player.school"  >
+                <select  v-model="player.team"  >
                  <option disabled value="">Select One</option>
                   <option
-                    v-for="school in schools"
-                    :key="school"
-                    :value="school"
-                  >{{ school }}</option>
+                    v-for="team in teams"
+                    :key="team"
+                    :value="team"
+                  >{{ team }}</option>
                 </select>
               </div>
               </ion-item>
@@ -210,7 +210,7 @@ export default {
       tournamentId: tournamentId,
       firstName: "",
       lastName: "",
-      school: "",
+      team: "",
       grade: "",
       rating: 1000,
       division: 1,
@@ -226,7 +226,7 @@ export default {
       playerId: playerId,
       tournamentId: tournamentId,
       tournament: {},
-      schools: [],
+      teams: [],
       player: player,
       agreeTerms: false,
       errors: []
@@ -248,7 +248,7 @@ export default {
       if (!agreeTerms) this.errors.push("agree to terms is required.");
       if (!player.firstName) this.errors.push("first name is required.");
       if (!player.lastName) this.errors.push("last name is required.");
-      if (!player.school) this.errors.push("school is required.");
+      if (!player.team) this.errors.push("team is required.");
       if (!player.grade) this.errors.push("grade is required.");
       if (isNaN(player.grade)) this.errors.push("grade is not a number.");
       if (!player.rating) this.rating = 1000;
@@ -275,14 +275,14 @@ export default {
         .get(`tournament/${tournamentId}`)
         .then(response => {
           this.tournament = response.data;
-          if (this.tournament && this.tournament.schools) {
-            this.schools = this.tournament.schools
+          if (this.tournament && this.tournament.teams) {
+            this.teams = this.tournament.teams
               .split(",")
               .map(function(item) {
                 return item.trim();
               });
           } else {
-            this.schools = ["Unknown"];
+            this.teams = ["Unknown"];
           }
         })
         .catch(e => {

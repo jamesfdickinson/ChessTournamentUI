@@ -58,7 +58,7 @@ export default {
       let round = id;
       let tournamentId = this.$route.params.tournament;
 
-      this.$confirm(`Are you want to delete round ${round}?`).then(() => {
+      this.$confirm(`Do you want to delete round ${round}?`).then(() => {
         fetch
           .delete(`round/${round}?tournament=${tournamentId}`)
           .then(response => {
@@ -71,12 +71,12 @@ export default {
       });
     },
     editRound(id) {
-      this.errors = [];
-      this.errors.push("Round edit comming soon. Use users view to make edits. "+id);
-      // this.$router.push({
-      //   name: "Round",
-      //   params: { tournament: this.tournamentId, id: id }
-      // });
+     // this.errors = [];
+     // this.errors.push("Round edit comming soon. Use users view to make edits. "+id);
+      this.$router.push({
+        name: "Round",
+        params: { tournament: this.tournamentId, id: id }
+      });
     },
     clearData() {
       this.players = [];

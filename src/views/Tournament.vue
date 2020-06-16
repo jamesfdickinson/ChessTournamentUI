@@ -39,6 +39,10 @@
           <ion-progress-bar :value="status.percentage"></ion-progress-bar>
         </ion-card-content>
       </ion-card>
+<div>
+
+
+</div>
       <Menu />
     </ion-content>
     <!-- </ion-page> -->

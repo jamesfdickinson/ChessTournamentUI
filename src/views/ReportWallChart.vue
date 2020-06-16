@@ -43,7 +43,7 @@
             <tr :key="row.playerId">
               <td>{{row.rankId}}</td>
               <td>{{row.firstName}} {{row.lastName}}</td>
-              <td>{{row.school}}</td>
+              <td>{{row.team}}</td>
               <td>{{row.grade}}</td>
               <td>{{row.rd1Color}} {{row.rd1Played}}</td>
               <td>{{row.rd2Color}} {{row.rd2Played}}</td>

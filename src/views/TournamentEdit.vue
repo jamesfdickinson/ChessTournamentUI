@@ -71,8 +71,8 @@
           <ion-label position="stacked">Teams (separated by commas)</ion-label>
           <ion-textarea
             auto-grow="true"
-            :value="tournament.schools"
-            @input="tournament.schools = $event.target.value"
+            :value="tournament.teams"
+            @input="tournament.teams = $event.target.value"
           ></ion-textarea>
         </ion-item>
        
@@ -184,7 +184,7 @@ export default {
         image: null,
         isPublic: true,
         owner: null,
-        schools: "",
+        teams: "",
         showSignUpPage: true,
         signUpText: "",
         type: null,

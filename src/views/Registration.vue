@@ -44,7 +44,7 @@
         <ion-item color="light">
           <ion-icon v-on:click="sortBy('isPresent')" slot="start" name="checkmark"></ion-icon>
           <ion-label v-on:click="sortBy('firstName')">Name</ion-label>
-          <ion-label v-on:click="sortBy('school')">Team</ion-label>
+          <ion-label v-on:click="sortBy('team')">Team</ion-label>
         </ion-item>
         <ion-item
           detail="true"
@@ -57,7 +57,7 @@
           <ion-icon v-if="!player.isPresent" slot="start" name="radio-button-off" color="secondary"></ion-icon>
 
           <ion-label>{{player.firstName}} {{player.lastName}}</ion-label>
-          <ion-label>{{player.school}}</ion-label>
+          <ion-label>{{player.team}}</ion-label>
         </ion-item>
       </ion-list>
     </ion-content>
@@ -172,7 +172,7 @@ export default {
             return true;
           if (p.lastName && p.lastName.toLowerCase().startsWith(searchInput))
             return true;
-          if (p.school && p.school.toLowerCase().startsWith(searchInput))
+          if (p.team && p.team.toLowerCase().startsWith(searchInput))
             return true;
           return false;
         });

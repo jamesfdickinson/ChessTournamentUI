@@ -26,7 +26,7 @@
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Team</ion-label>
-          <ion-input :value="player.school" @input="player.school = $event.target.value"></ion-input>
+          <ion-input :value="player.team" @input="player.team = $event.target.value"></ion-input>
         </ion-item>
       <!--   <ion-item>
           <ion-label position="stacked">Grade</ion-label>
@@ -130,7 +130,7 @@ export default {
       //validation
       let errors = [];
       if (!player.firstName) errors.push("first name is required.");
-      if (!player.school) errors.push("team is required.");
+      if (!player.team) errors.push("team is required.");
       if (!player.grade) errors.push("grade is required.");
       if (isNaN(player.grade)) errors.push("grade is not a number.");
       if (!player.rating) player.rating = 1000;

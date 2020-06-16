@@ -41,10 +41,10 @@
           <ion-range
             min="0"
             max="100"
-            :value="filter.sameSchoolWeight"
-            @ionChange="filter.sameSchoolWeight = $event.target.value"
+            :value="filter.sameTeamWeight"
+            @ionChange="filter.sameTeamWeight = $event.target.value"
           >
-            <ion-label slot="end">{{filter.sameSchoolWeight}}</ion-label>
+            <ion-label slot="end">{{filter.sameTeamWeight}}</ion-label>
           </ion-range>
         </ion-item>
         <ion-item>
@@ -106,8 +106,8 @@
           <ion-label>Not Same Team</ion-label>
           <ion-checkbox
             slot="start"
-            :checked="filter.sameSchoolAbsolute"
-            @ionChange="filter.sameSchoolAbsolute = ($event.target.checked == true);"
+            :checked="filter.sameTeamAbsolute"
+            @ionChange="filter.sameTeamAbsolute = ($event.target.checked == true);"
           ></ion-checkbox>
         </ion-item>
       </ion-list>
@@ -140,7 +140,7 @@
                 </td>
                 <td>{{match.firstName}} {{match.lastName}}</td>
                 <td>{{match.color}}</td>
-                <td>{{match.school}}</td>
+                <td>{{match.team}}</td>
                 <td>{{match.totalPoints}}</td>
                 <td>{{match.grade}}</td>
                 <td>{{match.division}}</td>
@@ -190,11 +190,11 @@ export default {
       sendNotifications: true,
       filter: {
         scoreMatchWeight: 90,
-        sameSchoolWeight: 50,
+        sameTeamWeight: 50,
         playedBeforeWeight: 70,
         sameGradeWeight: 10,
         sameRatingWeight: 10,
-        sameSchoolAbsolute: false,
+        sameTeamAbsolute: false,
         playedBeforeAbsolute: true
       },
       matches: [],

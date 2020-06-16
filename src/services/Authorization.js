@@ -18,7 +18,7 @@ export default class Authorization {
                 throw error;
             });
     }
-    isPageAllowed(toPage,tournamentId, roles) {
+    isPageAllowed(toPage,tournamentId, roles,userName) {
         if(!roles) roles = [];
         //redirect to login page if not logged in and trying to access a restricted page
         const pagesAdmin = ['Admin'];

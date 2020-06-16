@@ -56,7 +56,7 @@ export default {
         image: null,
         isPublic: true,
         owner: null,
-        schools: "",
+        teams: "",
         showSignUpPage: true,
         signUpText: "",
         type: null

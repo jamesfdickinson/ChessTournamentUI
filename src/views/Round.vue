@@ -36,44 +36,76 @@
 
       <ion-list>
         <template v-for="table of filteredItems">
-          <!-- <ion-list   :key="table.id"> -->
-          <ion-item :key="table.id" color="primary">
-            <ion-label slot="start">Table {{table.id}}</ion-label>
-            <ion-button
-              slot="start"
-              color="light"
-              v-on:click="play(table.id);$event.stopPropagation();"
-            >Room {{getRoom(table.id)}}</ion-button>
-            <!-- <ion-button slot="start" color="light" v-on:click="openTable(table.id)">🔊</ion-button> -->
-            <ion-button slot="end" color="light" v-on:click="openTable(table.id)">Record</ion-button>
-          </ion-item>
-          <ion-item
-            detail="true"
-            v-for="position of table.positions"
-            :key="position.id"
-            v-on:click="openPlayer(position.playerId)"
-          >
-            <!-- <ion-button
+          <div :key="table.id">
+            <ion-item color="primary">
+              <ion-label slot="start">Table {{table.id}}</ion-label>
+              <!-- <ion-label slot="start">Room {{getRoom(table.id)}}</ion-label> -->
+              <!-- <ion-button
+                slot="start"
+                color="light"
+                v-on:click="play(table.id);$event.stopPropagation();"
+              >Room {{getRoom(table.id)}}</ion-button> -->
+              <!-- <ion-button slot="start" color="light" v-on:click="openTable(table.id)">🔊</ion-button> -->
+              <!-- <ion-button slot="end" color="light" v-on:click="openTable(table.id)">Record</ion-button> -->
+
+              <ion-buttons slot="end">
+                <ion-button v-on:click="openTable(table.id)">
+                  <ion-icon name="create"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-item>
+            <ion-item
+              detail="true"
+              v-for="position of table.positions"
+              :key="position.id"
+              v-on:click="openPlayer(position.playerId)"
+            >
+              <!-- <ion-button
               
               color="light"
               v-on:click="play(table.id,position.playerId,position.playerFirstName,position.email);$event.stopPropagation();"
             >Play</ion-button>
-            -->
+              -->
 
-            <!-- <ion-icon v-if="position.color=='Black'" src="images/chess_pawn_black.svg" slot="start"></ion-icon>
+              <!-- <ion-icon v-if="position.color=='Black'" src="images/chess_pawn_black.svg" slot="start"></ion-icon>
             <ion-icon
               v-else-if="position.color=='White'"
               src="images/chess_pawn_white.svg"
               slot="start"
             ></ion-icon>
             <ion-icon v-else name="contact" slot="start"></ion-icon>
-            -->
-            <SchoolIcon :title="position.playerSchool" style="margin-right: 10px;"></SchoolIcon>
+              -->
+              <TeamIcon :title="position.playerTeam" style="margin-right: 10px;"></TeamIcon>
 
-            <ion-label>{{position.playerFirstName}} {{position.playerLastName}}</ion-label>
-            <ion-badge slot="end" color="light">{{position.points}}</ion-badge>
-          </ion-item>
-          <!-- </ion-list> -->
+              <ion-label>{{position.playerFirstName}} {{position.playerLastName}}</ion-label>
+              <ion-badge slot="end" color="light">{{position.points}}</ion-badge>
+            </ion-item>
+            <!-- <ion-item>
+              <ion-label slot="start">Room {{getRoom(table.id)}}</ion-label>
+              <ion-button slot="end" expand="block" v-on:click="play(table.id)">Join</ion-button>
+            </ion-item>
+            <ion-item text-center>
+              <ion-label>
+                <ion-button v-on:click="play(table.id)" color="light">Join: {{getRoom(table.id)}}</ion-button>
+              </ion-label>
+            </ion-item> -->
+
+            <ion-item>
+              <ion-grid>
+                <ion-row>
+                  <ion-col class="ion-text-center">
+                    <ion-button
+                      expand="block"
+                      v-on:click="play(table.id)"
+                    >Join {{getRoom(table.id)}}</ion-button>
+                  </ion-col>
+                  <ion-col class="ion-text-center">
+                    <ion-button expand="block" color="light" v-on:click="play(table.id)">Spectate</ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
+          </div>
         </template>
       </ion-list>
     </ion-content>
@@ -83,10 +115,10 @@
 
 <script>
 import fetch from "@/fetch.js";
-import SchoolIcon from "@/components/SchoolIcon.vue";
+import TeamIcon from "@/components/TeamIcon.vue";
 export default {
   name: "home",
-  components: { SchoolIcon },
+  components: { TeamIcon },
   data() {
     var roundId = this.$route.params.id;
     var tournamentId = this.$route.params.tournament;
@@ -136,11 +168,17 @@ export default {
       }
       return s || undefined;
     },
-    getRoom(table) {
+    getRoom2(table) {
       let tournamentId = this.tournamentId;
       let roundId = this.roundId;
       let tournamentCode = this.numToSSColumn(tournamentId);
       let room = `${tournamentCode}${roundId}${table}`;
+      return room;
+    },
+    getRoom(table) {
+      let tournamentId = this.tournamentId;
+      let roundId = this.roundId;
+      let room = `${tournamentId}r${roundId}t${table}`;
       return room;
     },
     play(table) {
@@ -233,7 +271,7 @@ export default {
               p.playerLastName.toLowerCase().startsWith(searchInput)
             )
               return true;
-            if (p.school && p.school.toLowerCase().startsWith(searchInput))
+            if (p.team && p.team.toLowerCase().startsWith(searchInput))
               return true;
             return false;
           });

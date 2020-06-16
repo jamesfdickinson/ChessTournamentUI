@@ -125,7 +125,7 @@ export default {
         });
     },
     deleteAllRounds() {
-      this.$confirm(`Are you want to delete all rounds?`).then(() => {
+      this.$confirm(`Do you want to delete all rounds?`).then(() => {
         var tournamentId = this.tournamentId;
         fetch
           .get(`tools/DeleteAllRounds/${tournamentId}`)
@@ -138,7 +138,7 @@ export default {
       });
     },
     deleteAllPlayers() {
-      this.$confirm(`Are you want to delete all players?`).then(() => {
+      this.$confirm(`Do you want to delete all players?`).then(() => {
         var tournamentId = this.tournamentId;
         fetch
           .get(`tools/DeleteAllPlayers/${tournamentId}`)

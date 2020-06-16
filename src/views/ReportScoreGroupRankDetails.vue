@@ -32,13 +32,13 @@ export default {
     var tournamentId = this.$route.params.tournament;
     var title = "Score Group Rank - Details";
     var description =
-      "This report ranks schools based on the top 5 total points from each school (per division).";
+      "This report ranks teams based on the top 5 total points from each team (per division).";
     return {
       tournamentId: tournamentId,
       data: [],
       searchQuery: "",
       gridColumns: [
-        "school",
+        "team",
         "rank",
         "groupPoints",
         "division",
