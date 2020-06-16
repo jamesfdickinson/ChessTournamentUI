@@ -15,6 +15,10 @@
           <ion-label position="stacked">Name</ion-label>
           <ion-input :value="tournament.name" @input="tournament.name = $event.target.value"></ion-input>
         </ion-item>
+         <ion-item>
+          <ion-label position="stacked">Type</ion-label>
+          <ion-input :value="tournament.type" @input="tournament.type = $event.target.value"></ion-input>
+        </ion-item> 
         <ion-item>
           <ion-label position="stacked">Details</ion-label>
           <ion-textarea
@@ -24,10 +28,39 @@
           ></ion-textarea>
         </ion-item>
         <ion-item>
-          <ion-label position="stacked">Invite Code - Basic</ion-label>
+          <ion-label position="stacked">Rounds</ion-label>
+          <ion-input :value="tournament.rounds" @input="tournament.rounds = $event.target.value"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Pairing Algorithm</ion-label>
+          <ion-select
+            placeholder="Select One"
+            :value="tournament.pairing"
+            @ionChange="tournament.pairing= $event.target.value;"
+          >
+            <ion-select-option value="Swiss">Swiss</ion-select-option>
+            <ion-select-option value="SingleElimination">Single Elimination</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Invite Code: Basic</ion-label>
           <ion-input
             :value="tournament.accessCodeBasic"
             @input="tournament.accessCodeBasic = $event.target.value"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Invite Code: Recorder</ion-label>
+          <ion-input
+            :value="tournament.accessCodeRecorder"
+            @input="tournament.accessCodeRecorder = $event.target.value"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Invite Code: Admin</ion-label>
+          <ion-input
+            :value="tournament.accessCodeAdmin"
+            @input="tournament.accessCodeAdmin = $event.target.value"
           ></ion-input>
         </ion-item>
         <ion-item>
@@ -42,10 +75,16 @@
             @input="tournament.schools = $event.target.value"
           ></ion-textarea>
         </ion-item>
-        <ion-item>
-          <ion-label position="stacked">Type</ion-label>
-          <ion-input :value="tournament.type" @input="tournament.type = $event.target.value"></ion-input>
+       
+         <ion-item>
+          <ion-label>Auto Advance Rounds</ion-label>
+          <ion-checkbox
+            slot="start"
+            :checked="tournament.autoAdvanceRounds"
+            @ionChange="tournament.autoAdvanceRounds = ($event.target.checked == true);"
+          ></ion-checkbox>
         </ion-item>
+      
         <ion-item>
           <ion-label>Is Hidden</ion-label>
           <ion-checkbox
@@ -117,11 +156,27 @@ export default {
       Math.random()
         .toString(36)
         .substring(2, 5);
+            var randomInviteCodeRecorder =
+      Math.random()
+        .toString(36)
+        .substring(2, 5) +
+      Math.random()
+        .toString(36)
+        .substring(2, 5);
+            var randomInviteCodeAdmin =
+      Math.random()
+        .toString(36)
+        .substring(2, 5) +
+      Math.random()
+        .toString(36)
+        .substring(2, 5);
     return {
       tournamentId: tournamentId,
       tournament: {
         name: "",
         accessCodeBasic: randomInviteCode,
+        accessCodeRecorder: randomInviteCodeRecorder,
+        accessCodeAdmin: randomInviteCodeAdmin,
         details: "",
         faqcontent: "",
         hidden: false,
@@ -132,7 +187,10 @@ export default {
         schools: "",
         showSignUpPage: true,
         signUpText: "",
-        type: null
+        type: null,
+        rounds:5,
+        pairing: "Swiss",
+        autoAdvanceRounds: true
       },
       error: ""
     };

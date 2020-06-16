@@ -97,8 +97,11 @@ export default {
         .catch(e => {
           this.errors.push(e);
         });
-    }
+    },
+
   },
-  created() {}
+  created() {
+    //check for updated rights from server
+  }
 };
 </script>

@@ -86,7 +86,7 @@
         <router-link :to="{ name: 'UserAccess', params: { tournament: tournamentId }}">
           <ion-item button detail="true">
             <ion-icon slot="start" name="cog"></ion-icon>
-            <ion-label>*Users Access</ion-label>
+            <ion-label>Users Access</ion-label>
           </ion-item>
         </router-link>
         <ion-list-header>

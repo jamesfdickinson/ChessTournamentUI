@@ -21,17 +21,21 @@
           <ion-input :value="player.lastName" @input="player.lastName = $event.target.value"></ion-input>
         </ion-item>
         <ion-item>
+          <ion-label position="stacked">User ID</ion-label>
+          <ion-input :value="player.gameUserId" @input="player.gameUserId = $event.target.value"></ion-input>
+        </ion-item>
+        <ion-item>
           <ion-label position="stacked">Team</ion-label>
           <ion-input :value="player.school" @input="player.school = $event.target.value"></ion-input>
         </ion-item>
-        <ion-item>
+      <!--   <ion-item>
           <ion-label position="stacked">Grade</ion-label>
           <ion-input :value="player.grade" @input="player.grade = $event.target.value"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Rating</ion-label>
           <ion-input :value="player.rating" @input="player.rating = $event.target.value"></ion-input>
-        </ion-item>
+        </ion-item> -->
         <ion-item>
           <ion-label position="stacked">Division</ion-label>
           <ion-input :value="player.division" @input="player.division = $event.target.value"></ion-input>
@@ -55,27 +59,27 @@
             @ionChange="player.paid = ($event.target.checked == true);"
           ></ion-checkbox>
         </ion-item>
-        <ion-item>
+        <!-- <ion-item>
           <ion-label>Allow SMS Notifications</ion-label>
           <ion-checkbox
             slot="start"
             :checked="player.allowNotifications"
             @ionChange="player.allowNotifications = ($event.target.checked == true);"
           ></ion-checkbox>
-        </ion-item>
-        <ion-item>
+        </ion-item> -->
+        <!-- <ion-item>
           <ion-label position="stacked">Parent's Name</ion-label>
           <ion-input :value="player.parentName" @input="player.parentName = $event.target.value"></ion-input>
-        </ion-item>
+        </ion-item> -->
         <ion-item>
           <ion-label position="stacked">Email</ion-label>
           <ion-input :value="player.parentEmail" @input="player.parentEmail = $event.target.value"></ion-input>
         </ion-item>
-        <ion-item>
+        <!-- <ion-item>
           <ion-label position="stacked">Phone Number</ion-label>
           <ion-input :value="player.parentPhone" @input="player.parentPhone = $event.target.value"></ion-input>
-        </ion-item>
-        <ion-item></ion-item>
+        </ion-item> -->
+      
       </ion-list>
 
       <ion-button expand="block" v-on:click="save()">Save</ion-button>

@@ -71,11 +71,10 @@ export default {
   name: "home",
   components: {},
   data() {
-    var userId = this.$route.params.id;
+    var userName = this.$route.params.id;
     return {
       user: {
-        id: userId,
-        username: null,
+        username: userName,
         email: null,
         firstName: null,
         lastName: null,

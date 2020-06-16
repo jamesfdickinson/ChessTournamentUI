@@ -20,6 +20,8 @@ import RoundsEdit from './views/RoundsEdit.vue'
 import Round from './views/Round.vue'
 import RoundEdit from './views/RoundEdit.vue'
 import RoundCreate from './views/RoundCreate.vue'
+import RoundCreateSwiss from './views/RoundCreateSwiss.vue'
+import RoundCreateSingleElimination from './views/RoundCreateSingleElimination.vue'
 import RoundDetails from './views/RoundDetails.vue'
 import TableEdit from './views/TableEdit.vue'
 import FAQ from './views/FAQ.vue'
@@ -27,6 +29,7 @@ import FAQEdit from './views/FAQEdit.vue'
 import Admin from './views/Admin.vue'
 import AdminTools from './views/AdminTools.vue'
 import SendMessage from './views/SendMessage.vue'
+import Standings from './views/Standings.vue'
 import Reports from './views/Reports.vue'
 import ReportScoreByAll from './views/ReportScoreByAll.vue'
 import ReportScoreByGrade from './views/ReportScoreByGrade.vue'
@@ -173,6 +176,16 @@ export default new VueRouter({
       component: RoundCreate
     },
     {
+      path: '/:tournament/RoundCreateSwiss',
+      name: 'RoundCreateSwiss',
+      component: RoundCreateSwiss
+    },
+    {
+      path: '/:tournament/RoundCreateSingleElimination',
+      name: 'RoundCreateSingleElimination',
+      component: RoundCreateSingleElimination
+    },
+    {
       path: '/:tournament/RoundEdit/:id',
       name: 'RoundEdit',
       component: RoundEdit
@@ -221,6 +234,11 @@ export default new VueRouter({
       path: '/:tournament/FAQEdit',
       name: 'FAQEdit',
       component: FAQEdit
+    },
+    {
+      path: '/:tournament/standings',
+      name: 'Standings',
+      component: Standings
     },
     {
       path: '/:tournament/reports',

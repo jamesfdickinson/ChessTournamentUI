@@ -9,25 +9,25 @@ export default class Authentication {
                 localStorage.setItem("user", JSON.stringify(user));
                 return user;
             })
-            .catch((error)=> {
-                if(error.response)  throw error.response.data || error.response.statusText;
+            .catch((error) => {
+                if (error.response) throw error.response.data || error.response.statusText;
                 throw error;
             });
     }
-    changePassword(userName,oldPassword,newPassword,token) {
+    changePassword(userName, oldPassword, newPassword, token) {
         var passwords = {
             userName: userName,
             oldPassword: oldPassword,
             newPassword: newPassword,
-            token:token
+            token: token
         };
         return fetch.put(`authentication/changepassword`, passwords)
             .then(response => {
                 return response;
             });
     }
-    passwordReset(userName){
-        return fetch.post(`authentication/sendPasswordReset`, {userName:userName})
+    passwordReset(userName) {
+        return fetch.post(`authentication/sendPasswordReset`, { userName: userName })
             .then(response => {
                 return response;
             });
@@ -46,9 +46,9 @@ export default class Authentication {
                 var user = response.data;
                 localStorage.setItem("user", JSON.stringify(user));
                 return user;
-            })            
-            .catch((error)=> {
-                if(error.response)  throw error.response.data || error.response.statusText;
+            })
+            .catch((error) => {
+                if (error.response) throw error.response.data || error.response.statusText;
                 throw error;
             });
     }
@@ -71,33 +71,34 @@ export default class Authentication {
         var user = JSON.parse(localStorage.getItem("user"));
         return user.token;
     }
-    sendNotificationToken(currentToken, userId){
-         //get user Id
-        if (!userId) {
+    sendNotificationToken(currentToken, userName) {
+        //get user Id
+        if (!userName) {
             let user = this.getUser() || {};
-            userId = user.id;
+            userName = user.userName;
         }
         console.log('Sending token to server...');
         let data = {
             "token": currentToken,
-            "userId": userId
+            "userName": userName
         };
         return fetch.post(`NotificationToken`, data);
     }
+   
     inviteCode(code, tournamentId) {
         var user = this.getUser() || {};
-        var userId = user.id;
-        return fetch.post(`accesscode`, { code: code, userId: userId, tournamentId: tournamentId })
+        var userName = user.userName;
+        return fetch.post(`accesscode`, { code: code, userName: userName, tournamentId: tournamentId })
             .then(response => {
                 var user = response.data;
                 localStorage.setItem("user", JSON.stringify(user));
                 return user;
             })
-            .catch((error)=> {
-                if(error.response)  throw error.response.data;
+            .catch((error) => {
+                if (error.response) throw error.response.data;
                 throw error;
             });
-    }    
+    }
     fakeInviteCode(code, tournamentId) {
         return new Promise(function (resolve, reject) {
             if (code !== "123") reject("Invalid invite code");

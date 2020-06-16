@@ -33,11 +33,18 @@
               <ion-label position="stacked">Last Name</ion-label>
               <ion-input :value="player.lastName" @input="player.lastName = $event.target.value"></ion-input>
             </ion-item>
+            <ion-item>
+              <ion-label position="stacked">Cribbage ID</ion-label>
+              <ion-input
+                :value="player.gameUserID"
+                @input="player.gameUserID = $event.target.value"
+              ></ion-input>
+            </ion-item>
             <!-- <ion-item>
               <ion-label position="stacked">School</ion-label>
               <ion-input :value="player.school" @input="player.school = $event.target.value"></ion-input>
-            </ion-item> -->
-            <ion-item>
+            </ion-item>-->
+            <!-- <ion-item>
               <ion-label position="stacked">Team</ion-label>
               <ion-select placeholder="Select One" :value="player.school"
                @ionChange="player.school= $event.target.value;" >
@@ -47,7 +54,7 @@
                   :value="school"
                 >{{ school }}</ion-select-option>
               </ion-select>
-            </ion-item>
+            </ion-item>-->
             <!-- <ion-item>
               <ion-label position="stacked">Team</ion-label>
               <div style="width: 100%;">
@@ -60,8 +67,8 @@
                   >{{ school }}</option>
                 </select>
               </div>
-              </ion-item> -->
-             <!-- <ion-item>
+            </ion-item>-->
+            <!-- <ion-item>
               <ion-label position="stacked">Grade</ion-label>
               <div style="width: 100%;">
                 <select  v-model="player.grade" @change="player.rating =player.grade*100;">
@@ -78,7 +85,7 @@
                   <option value="12">Open Division</option>
                 </select>
               </div>
-            </ion-item> -->
+            </ion-item>-->
             <!-- <ion-item>
               <ion-label position="stacked">Grade</ion-label>
               <select 
@@ -102,7 +109,7 @@
                 <option value="12">12</option>
                 <option value="12">Open Division</option>
               </select>
-            </ion-item> -->
+            </ion-item>-->
             <!-- <ion-item>
               <ion-label position="stacked">Grade</ion-label>
               <ion-select
@@ -125,7 +132,7 @@
                 <ion-select-option value="12">12</ion-select-option>
                 <ion-select-option value="12">Open Division</ion-select-option>
               </ion-select>
-            </ion-item> -->
+            </ion-item>-->
             <!-- <ion-item>
               <ion-label position="stacked">Grade</ion-label>
               <ion-input
@@ -134,21 +141,21 @@
                 @input="player.grade = $event.target.value;player.rating =player.grade*100"
               ></ion-input>
             </ion-item>-->
-            <ion-item>
+            <!-- <ion-item>
               <ion-label position="stacked">Rating</ion-label>
               <ion-input
                 type="number"
                 :value="player.rating"
                 @input="player.rating = $event.target.value"
               ></ion-input>
-            </ion-item>
+            </ion-item>-->
             <!-- <ion-item>
               <ion-label position="stacked">Parent's Name</ion-label>
               <ion-input
                 :value="player.parentName"
                 @input="player.parentName = $event.target.value"
               ></ion-input>
-            </ion-item> -->
+            </ion-item>-->
             <ion-item>
               <ion-label position="stacked">Email</ion-label>
               <ion-input
@@ -157,7 +164,7 @@
                 @input="player.parentEmail = $event.target.value"
               ></ion-input>
             </ion-item>
-            <ion-item>
+            <!-- <ion-item>
               <ion-label position="stacked">Phone Number</ion-label>
               <ion-input
                 inputmode="tel"
@@ -172,7 +179,7 @@
                 :checked="player.allowNotifications"
                 @ionChange="player.allowNotifications = ($event.target.checked == true);"
               ></ion-checkbox>
-            </ion-item>
+            </ion-item>-->
             <ion-item>
               <ion-label
                 text-wrap
@@ -202,7 +209,7 @@
 import fetch from "@/fetch.js";
 export default {
   name: "home",
-  components: { },
+  components: {},
   data() {
     var tournamentId = this.$route.params.tournament;
     var playerId = this.$route.params.id;
@@ -210,8 +217,8 @@ export default {
       tournamentId: tournamentId,
       firstName: "",
       lastName: "",
-      school: "",
       grade: "",
+      team: "",
       rating: 1000,
       division: 1,
       isPresent: false,
@@ -242,7 +249,7 @@ export default {
       let agreeTerms = this.agreeTerms;
 
       //add default grade for cribbage
-      if(!player.grade) player.grade = 12;
+      if (!player.grade) player.grade = 12;
 
       player.tournamentId = tournamentId;
 
@@ -251,7 +258,7 @@ export default {
       if (!agreeTerms) this.errors.push("agree to terms is required.");
       if (!player.firstName) this.errors.push("first name is required.");
       if (!player.lastName) this.errors.push("last name is required.");
-      if (!player.school) this.errors.push("team is required.");
+      if (!player.team) this.errors.push("team is required.");
       if (!player.grade) this.errors.push("grade is required.");
       if (isNaN(player.grade)) this.errors.push("grade is not a number.");
       if (!player.rating) this.rating = 1000;

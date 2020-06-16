@@ -8,6 +8,7 @@ import router from './router'
 // import Ionic  from '@ionic/vue';
 import AnalyticsGA from './services/AnalyticsGA'
 import Authentication from './services/Authentication'
+import Authorization from './services/Authorization'
 import Notification from './services/Notification'
 import LayoutMenu from "@/components/LayoutMenu.vue";
 import LayoutNoMenu from "@/components/LayoutNoMenu.vue";
@@ -22,6 +23,7 @@ analyticsGA.TrackStart("Tournament", version, "UA-2052018-24");
 analyticsGA.TrackPage("Start");
 
 let authentication = new Authentication();
+let authorization = new Authorization();
 
 let notification = new Notification();
 notification.init();
@@ -34,7 +36,7 @@ Vue.config.productionTip = true;
 Vue.config.ignoredElements = [/^ion-/]
 //Vue.use(Ionic);
 Vue.use(VueSimpleAlert);
-Vue.use( CKEditor );
+Vue.use(CKEditor);
 router.beforeEach((to, from, next) => {
   analyticsGA.TrackPage(to.path);
 
@@ -45,51 +47,43 @@ router.beforeEach((to, from, next) => {
   let user = authentication.getUser();
 
 
-  //requirer 
+  //require
   const pagesNoAuthenticationRequired = ['UserCreate', 'Login', 'PasswordResetRequest', 'PasswordChange'];
   const authRequired = !pagesNoAuthenticationRequired.includes(to.name);
   if (authRequired && !user) {
     return next(`/Login?redirect=${to.path}`);
   }
 
-  //redirect to login page if not logged in and trying to access a restricted page
-  const pagesAdmin = ['Admin'];
-  const authRequiredAdmin = pagesAdmin.includes(to.name);
-
-  const pagesRecorder = ['Registration', 'PlayerEdit','PlayerNew', 'TableEdit'];
-  const authRequiredRecorder = pagesRecorder.includes(to.name);
-
-  const pagesBasic = ['Players', 'Reports', 'Tournament', 'Tournament','SignUp', 'SignUpComplete', 'FAQ'];
-  //const pagesBasic = [];
-  const authRequiredBasic = pagesBasic.includes(to.name);
-
-
+  let toPage = to.name;
   let tournamentId = to.params.tournament;
+  let userName = null;
   let roles = [];
 
-  if (user && user.roles) {
-    roles = user.roles;
+  if (user){
+    userName = user.userName;
+    roles = user.roles||[];
   }
-
-  //contains role "tournamentId-role".  
-  let adminRole = tournamentId + "-Admin";
-  let recorderRole = tournamentId + "-Recorder";
-  let basicRole = tournamentId + "-Basic";
-
-  //check if has Admin role for tournament
-  if (authRequiredAdmin && !(roles.includes(adminRole))) {
-    return next(`/${tournamentId}/AccessDenied?redirect=${to.path}`);
+  //check server roles locally
+  let allowAccess = authorization.isPageAllowed(toPage, tournamentId, roles);
+  if (allowAccess) {
+    next();
+  } else {
+    //check server roles from server
+    authorization.refreshAccess(userName)
+      .then((user) => {
+        if(!user) throw "no user found";
+        let roles = user.roles||[];
+        let allowAccess2ndTry = authorization.isPageAllowed(toPage, tournamentId, roles);
+        if (allowAccess2ndTry) {
+          next();
+        } else {
+          return next(`/${tournamentId}/AccessDenied?redirect=${to.path}`);
+        }
+      })
+      .catch(() => {
+        return next(`/${tournamentId}/AccessDenied?redirect=${to.path}`);
+      })
   }
-  //check if has Recorder role for tournament
-  if (authRequiredRecorder && !(roles.includes(adminRole) || roles.includes(recorderRole))) {
-    return next(`/${tournamentId}/AccessDenied?redirect=${to.path}`);
-  }
-  //check if has Recorder role for tournament
-  if (authRequiredBasic && !(roles.includes(adminRole) || roles.includes(recorderRole) || roles.includes(basicRole))) {
-    return next(`/${tournamentId}/AccessDenied?redirect=${to.path}`);
-  }
-
-  next();
 });
 
 Vue.component('downloadCsv', JsonCSV)
