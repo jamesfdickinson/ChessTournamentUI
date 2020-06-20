@@ -40,11 +40,12 @@
             <ion-item color="primary">
               <ion-label slot="start">Table {{table.id}}</ion-label>
               <!-- <ion-label slot="start">Room {{getRoom(table.id)}}</ion-label> -->
-              <!-- <ion-button
+               <ion-button
                 slot="start"
-                color="light"
+                color="light" 
+                fill="outline"
                 v-on:click="play(table.id);$event.stopPropagation();"
-              >Room {{getRoom(table.id)}}</ion-button> -->
+              >Room {{getRoom(table.id)}}</ion-button> 
               <!-- <ion-button slot="start" color="light" v-on:click="openTable(table.id)">🔊</ion-button> -->
               <!-- <ion-button slot="end" color="light" v-on:click="openTable(table.id)">Record</ion-button> -->
 
@@ -90,7 +91,7 @@
               </ion-label>
             </ion-item> -->
 
-            <ion-item>
+            <!-- <ion-item>
               <ion-grid>
                 <ion-row>
                   <ion-col class="ion-text-center">
@@ -104,7 +105,7 @@
                   </ion-col>
                 </ion-row>
               </ion-grid>
-            </ion-item>
+            </ion-item> -->
           </div>
         </template>
       </ion-list>

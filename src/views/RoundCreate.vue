@@ -20,12 +20,12 @@
             <ion-label>Swiss </ion-label>
           </ion-item>
         </router-link>
-           <router-link :to="{ name: 'RoundCreateSingleElimination', params: { tournament: tournamentId }}">
+           <!-- <router-link :to="{ name: 'RoundCreateSingleElimination', params: { tournament: tournamentId }}">
           <ion-item button detail="true">
             <ion-icon slot="start" name="git-branch"></ion-icon>
             <ion-label>Single Elimination </ion-label>
           </ion-item>
-        </router-link>
+        </router-link> -->
       </ion-list>
     </ion-content>
     <!-- </ion-page> -->

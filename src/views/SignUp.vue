@@ -35,7 +35,7 @@
           </ion-item>
           <ion-item>
             <ion-label position="stacked">Cribbage ID</ion-label>
-            <ion-input :value="player.gameUserID" @input="player.gameUserID = $event.target.value"></ion-input>
+            <ion-input :value="player.gamerId" @input="player.gamerId = $event.target.value"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label position="stacked">Email</ion-label>

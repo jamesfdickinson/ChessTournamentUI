@@ -21,8 +21,8 @@
           <ion-input :value="player.lastName" @input="player.lastName = $event.target.value"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="stacked">User ID</ion-label>
-          <ion-input :value="player.gameUserId" @input="player.gameUserId = $event.target.value"></ion-input>
+          <ion-label position="stacked">Gamer ID</ion-label>
+          <ion-input :value="player.gamerId" @input="player.gamerId = $event.target.value"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Team</ion-label>

@@ -27,8 +27,8 @@
           <ion-label slot>{{player.firstName}} {{player.lastName}}</ion-label>
         </ion-item>
         <ion-item>
-          <ion-label position="fixed">User ID</ion-label>
-          <ion-label slot>{{player.gameUserID}} {{player.gameUserID}}</ion-label>
+          <ion-label position="fixed">Gamer ID</ion-label>
+          <ion-label slot>{{player.gamerId}}</ion-label>
         </ion-item>
          <ion-item>
           <ion-label position="fixed">Team</ion-label>

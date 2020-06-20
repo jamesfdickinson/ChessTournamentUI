@@ -176,8 +176,8 @@
 </template>
 
 <script>
-import fetch from "@/fetch.js";
-
+import TournamentAPI from "@/services/TournamentAPI";
+const tournamentAPI = new TournamentAPI();
 export default {
   name: "home",
 
@@ -210,14 +210,11 @@ export default {
       let round = this.round;
       let filter = this.filter;
 
-      fetch
-        .post(
-          `round/GenerateTopDown/${round}?tournament=${tournamentId}`,
-          filter
-        )
-        .then(response => {
-          this.matches = response.data;
-          console.log(response.data);
+      tournamentAPI
+        .generateTopDownRound(tournamentId,round,filter)
+        .then(data => {
+          this.matches = data;
+          console.log(data);
         })
         .catch(e => {
           this.errors.push(e);
@@ -231,13 +228,14 @@ export default {
       let matches = this.matches;
       let sendNotifications = this.sendNotifications;
 
-      fetch
-        .put(`match/${tournamentId}`, matches)
-        .then(response => {
-          console.log(`Round ${round} created : ${response.data}`);
+      tournamentAPI
+        .saveMatches(tournamentId, matches)
+        .then(data => {
+          console.log(`Round ${round} created : ${data}`);
           //send notifications
           if (sendNotifications) {
             this.sendRoundNotifications(tournamentId, round);
+            this.sendRoundGameInvites(tournamentId, round);
           }
           //go to round page
           this.$router.push({
@@ -251,12 +249,11 @@ export default {
     },
     sendRoundNotifications(tournamentId, round) {
       if (tournamentId && round) {
-        let url = `notification/roundpushNotification/${tournamentId}?round=${round}`;
-        fetch
-          .post(url)
-          .then(response => {
-            this.success = "Sent: " + response.data || "";
-            console.log(response);
+        tournamentAPI
+          .sendRoundNotifications(tournamentId, round)
+          .then(data => {
+            this.success = "Sent: " + data || "";
+            console.log(data);
           })
           .catch(e => {
             this.error = "Error: " + e;
@@ -264,12 +261,26 @@ export default {
           });
       }
     },
+    sendRoundGameInvites(tournamentId,round){
+      if (tournamentId && round) {
+        tournamentAPI
+          .sendRoundGameInvite(tournamentId, round)
+          .then(data => {
+            this.success = "Sent: " + data || "";
+            console.log(data);
+          })
+          .catch(e => {
+            this.error = "Error: " + e;
+            console.warn(e);
+          });
+      }
+    },    
     loadData() {
       let tournamentId = this.$route.params.tournament;
-      fetch
-        .get(`rounds/${tournamentId}`)
-        .then(response => {
-          let rounds = response.data;
+      tournamentAPI
+        .rounds(tournamentId)
+        .then(data => {
+          let rounds = data;
           let maxRound = 0;
           if (rounds && rounds.length != 0) {
             maxRound = Math.max(...rounds) || 0;

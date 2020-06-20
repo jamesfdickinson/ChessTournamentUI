@@ -66,6 +66,24 @@
             </ion-item>
           </ion-list>
         </ion-card>
+
+        <ion-card>
+          <ion-list>
+            <ion-list-header>
+              <ion-label>Send game invites to All</ion-label>
+            </ion-list-header>
+            <ion-item>
+              <ion-input
+                placeholder="Round number"
+                :value="round"
+                @input="round = $event.target.value"
+              ></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-button expand="block" v-on:click="sendRoundGameInvites()">Send Invites</ion-button>
+            </ion-item>
+          </ion-list>
+        </ion-card>
       </ion-list>
       <div style="color:green;">{{success}}</div>
       <div style="color:red;">{{error}}</div>
@@ -75,8 +93,8 @@
 </template>
 
 <script>
-import fetch from "@/fetch.js";
-
+import TournamentAPI from "@/services/TournamentAPI";
+const tournamentAPI = new TournamentAPI();
 export default {
   name: "home",
   components: {},
@@ -87,6 +105,8 @@ export default {
       tournamentId: tournamentId,
       players: [],
       round: null,
+      player:null,
+      message:null,
       error: "",
       success: ""
     };
@@ -106,12 +126,34 @@ export default {
         return;
       }
       if (tournamentId && round) {
-        let url = `notification/roundpushNotification/${tournamentId}?round=${round}`;
-        fetch
-          .post(url)
-          .then(response => {
-            this.success = "Sent: " + response.data || "";
-            console.log(response);
+        tournamentAPI
+          .sendRoundNotifications(tournamentId, round)
+          .then(data => {
+            this.success = "Sent: " + data || "";
+            console.log(data);
+          })
+          .catch(e => {
+            this.error = "Error: " + e;
+            console.warn(e);
+          });
+      }
+    },
+    sendRoundGameInvites(){
+      let tournamentId = this.tournamentId;
+      let round = this.round;
+      this.error = "";
+      this.success = "";
+
+      if (!round) {
+        this.error = "Missing round number";
+        return;
+      }
+      if (tournamentId && round) {
+        tournamentAPI
+          .sendRoundGameInvite(tournamentId, round)
+          .then(data => {
+            this.success = "Sent: " + data || "";
+            console.log(data);
           })
           .catch(e => {
             this.error = "Error: " + e;

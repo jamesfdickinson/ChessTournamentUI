@@ -15,10 +15,10 @@
           <ion-label position="stacked">Name</ion-label>
           <ion-input :value="tournament.name" @input="tournament.name = $event.target.value"></ion-input>
         </ion-item>
-         <ion-item>
+        <ion-item>
           <ion-label position="stacked">Type</ion-label>
           <ion-input :value="tournament.type" @input="tournament.type = $event.target.value"></ion-input>
-        </ion-item> 
+        </ion-item>
         <ion-item>
           <ion-label position="stacked">Details</ion-label>
           <ion-textarea
@@ -39,7 +39,7 @@
             @ionChange="tournament.pairing= $event.target.value;"
           >
             <ion-select-option value="Swiss">Swiss</ion-select-option>
-            <ion-select-option value="SingleElimination">Single Elimination</ion-select-option>
+            <!-- <ion-select-option value="SingleElimination">Single Elimination</ion-select-option> -->
           </ion-select>
         </ion-item>
         <ion-item>
@@ -75,8 +75,8 @@
             @input="tournament.teams = $event.target.value"
           ></ion-textarea>
         </ion-item>
-       
-         <ion-item>
+
+        <ion-item>
           <ion-label>Auto Advance Rounds</ion-label>
           <ion-checkbox
             slot="start"
@@ -84,7 +84,15 @@
             @ionChange="tournament.autoAdvanceRounds = ($event.target.checked == true);"
           ></ion-checkbox>
         </ion-item>
-      
+        <ion-item>
+          <ion-label>Allow Notifications</ion-label>
+          <ion-checkbox
+            slot="start"
+            :checked="tournament.allowNotifications"
+            @ionChange="tournament.allowNotifications = ($event.target.checked == true);"
+          ></ion-checkbox>
+        </ion-item>
+
         <ion-item>
           <ion-label>Is Hidden</ion-label>
           <ion-checkbox
@@ -156,14 +164,14 @@ export default {
       Math.random()
         .toString(36)
         .substring(2, 5);
-            var randomInviteCodeRecorder =
+    var randomInviteCodeRecorder =
       Math.random()
         .toString(36)
         .substring(2, 5) +
       Math.random()
         .toString(36)
         .substring(2, 5);
-            var randomInviteCodeAdmin =
+    var randomInviteCodeAdmin =
       Math.random()
         .toString(36)
         .substring(2, 5) +
@@ -188,9 +196,14 @@ export default {
         showSignUpPage: true,
         signUpText: "",
         type: null,
-        rounds:5,
+        rounds: 5,
         pairing: "Swiss",
-        autoAdvanceRounds: true
+        gameRoomLink: null,
+        autoAdvanceRounds: true,
+        allowNotifications: true,
+        allowRegistration: true,
+        state: "Setup",
+        maxPlayers:50
       },
       error: ""
     };

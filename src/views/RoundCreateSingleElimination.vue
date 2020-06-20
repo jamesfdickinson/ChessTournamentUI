@@ -235,10 +235,6 @@ export default {
         .put(`match/${tournamentId}`, matches)
         .then(response => {
           console.log(`Round ${round} created : ${response.data}`);
-          //send notifications
-          if (sendNotifications) {
-            this.sendRoundNotifications(tournamentId, round);
-          }
           //go to round page
           this.$router.push({
             name: "Round",
@@ -248,21 +244,6 @@ export default {
         .catch(e => {
           this.errors.push(e);
         });
-    },
-    sendRoundNotifications(tournamentId, round) {
-      if (tournamentId && round) {
-        let url = `notification/roundpushNotification/${tournamentId}?round=${round}`;
-        fetch
-          .post(url)
-          .then(response => {
-            this.success = "Sent: " + response.data || "";
-            console.log(response);
-          })
-          .catch(e => {
-            this.error = "Error: " + e;
-            console.warn(e);
-          });
-      }
     },
     loadData() {
       let tournamentId = this.$route.params.tournament;
