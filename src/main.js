@@ -45,7 +45,7 @@ notification.onMessage = function (payload) {
 
   let notification = payload.notification;
   let message = notification.title;
-  let url = (notification.fcmOptions) ? notification.fcmOptions.link : null;
+  let url = (payload.fcmOptions) ? payload.fcmOptions.link : null;
   toast.show(message, 8000, "/audio/arpeggio.mp3",url,"_self");
 };
 Vue.config.productionTip = true;
