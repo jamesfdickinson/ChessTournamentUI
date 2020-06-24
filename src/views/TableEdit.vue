@@ -18,8 +18,13 @@
         </ion-item>
         <ion-item>
           <ion-label>Room</ion-label>
-          <ion-label slot="end">{{getRoom(table.id)}}</ion-label>
-          <ion-button slot="end" color="light" v-on:click="play(table.id);">Join</ion-button>
+          <ion-label slot="end">{{getRoomName(table.id,table.round,table.tournamentId)}}</ion-label>
+          <ion-button
+            slot="end"
+            color="light"
+            :href="getRoomLink(table.id,table.round,table.tournamentId)"
+            target="_blank"
+          >Join</ion-button>
         </ion-item>
       </ion-list>
       <ion-list>
@@ -99,6 +104,30 @@ export default {
       let roundId = this.round;
       let room = `${tournamentId}r${roundId}t${table}`;
       return room;
+    },
+    getRoomName(table, round, tournament) {
+      //todo: pass template in from tournament settings or position
+      let tableNameTemplate = "[table]r[round]t[tournament]";
+
+      if (!tableNameTemplate) tableNameTemplate = "Table [table]";
+      let tableName = tableNameTemplate
+        .replace("[tournament]", tournament)
+        .replace("[round]", round)
+        .replace("[table]", table);
+      return tableName;
+    },
+    getRoomLink(table, round, tournament) {
+      //todo: pass template in from tournament settings or position
+      let tableLinkTemplate =
+        "https://cardgames.app/cribbage/game/?room=[table]r[round]t[tournament]";
+
+      if (!tableLinkTemplate) return "";
+
+      let url = tableLinkTemplate
+        .replace("[tournament]", tournament)
+        .replace("[round]", round)
+        .replace("[table]", table);
+      return url;
     },
     play(table) {
       let room = this.getRoom(table);

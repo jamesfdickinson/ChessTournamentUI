@@ -38,18 +38,64 @@
         <template v-for="table of filteredItems">
           <div :key="table.id">
             <ion-item color="primary">
-              <ion-label slot="start">Table {{table.id}}</ion-label>
-              <!-- <ion-label slot="start">Room {{getRoom(table.id)}}</ion-label> -->
-               <ion-button
+              <!-- <ion-label slot="start">Table {{table.id}}</ion-label> -->
+
+              <ion-label slot="start">{{getRoomName(table.id,table.round,table.tournamentId)}}</ion-label>
+            
+            <ion-button
                 slot="start"
-                color="light" 
+                color="light"
+                fill="outline"
+               :href="getRoomLink(table.id,table.round,table.tournamentId)"
+                  target="_blank"
+              >Join</ion-button>
+            
+              <!-- <ion-button slot="start" v-on:click="openTable(table.id)">
+                  <ion-icon name="open"></ion-icon>
+                </ion-button>
+              -->
+              <!-- <ion-icon slot="start" name="open"></ion-icon> -->
+
+              <!--              
+                <ion-icon slot="end" name="open"></ion-icon>
+          
+                <ion-icon slot="end" name="eye"></ion-icon>
+              <ion-icon  slot="end" name="logo-game-controller-b"></ion-icon>-->
+              <!--  -->
+              <!-- <ion-buttons slot="start">
+                <ion-button v-on:click="openTable(table.id)">
+                <ion-icon name="add-circle-outline"></ion-icon>
+                </ion-button>
+              </ion-buttons>-->
+              <!-- <ion-icon name="logo-game-controller-b"></ion-icon>
+              <ion-icon name="open"></ion-icon>
+              <ion-button v-on:click="openTable(table.id)">
+                <ion-icon name="open"></ion-icon>
+              </ion-button>-->
+
+              <!-- <ion-icon name="open"></ion-icon>
+              -->
+
+              <!-- <ion-button
+                slot="start"
+                color="light"
                 fill="outline"
                 v-on:click="play(table.id);$event.stopPropagation();"
-              >Room {{getRoom(table.id)}}</ion-button> 
+              >{{getRoomName(table.id,table.round,table.tournamentId)}}</ion-button>-->
+
               <!-- <ion-button slot="start" color="light" v-on:click="openTable(table.id)">🔊</ion-button> -->
               <!-- <ion-button slot="end" color="light" v-on:click="openTable(table.id)">Record</ion-button> -->
 
               <ion-buttons slot="end">
+                <!-- <ion-button :href="getRoomLink(table.id,table.round,table.tournamentId)">
+                  <ion-icon name="logo-game-controller-b"></ion-icon>
+                </ion-button>-->
+                <!-- <ion-button
+                  :href="getRoomLink(table.id,table.round,table.tournamentId)"
+                  target="_blank"
+                >
+                  <ion-icon name="open"></ion-icon>
+                </ion-button> -->
                 <ion-button v-on:click="openTable(table.id)">
                   <ion-icon name="create"></ion-icon>
                 </ion-button>
@@ -89,7 +135,7 @@
               <ion-label>
                 <ion-button v-on:click="play(table.id)" color="light">Join: {{getRoom(table.id)}}</ion-button>
               </ion-label>
-            </ion-item> -->
+            </ion-item>-->
 
             <!-- <ion-item>
               <ion-grid>
@@ -105,7 +151,7 @@
                   </ion-col>
                 </ion-row>
               </ion-grid>
-            </ion-item> -->
+            </ion-item>-->
           </div>
         </template>
       </ion-list>
@@ -158,6 +204,30 @@ export default {
         name: "RoundDetails",
         params: { id: roundId, tournament: tournamentId }
       });
+    },
+    getRoomName(table, round, tournament) {
+      //todo: pass template in from tournament settings or position
+      let tableNameTemplate = "Room [table]r[round]t[tournament]";
+
+      if (!tableNameTemplate) tableNameTemplate = "Table [table]";
+      let tableName = tableNameTemplate
+        .replace("[tournament]", tournament)
+        .replace("[round]", round)
+        .replace("[table]", table);
+      return tableName;
+    },
+    getRoomLink(table, round, tournament) {
+      //todo: pass template in from tournament settings or position
+      let tableLinkTemplate =
+        "https://cardgames.app/cribbage/game/?room=[table]r[round]t[tournament]";
+
+      if (!tableLinkTemplate) return "";
+
+      let url = tableLinkTemplate
+        .replace("[tournament]", tournament)
+        .replace("[round]", round)
+        .replace("[table]", table);
+      return url;
     },
     numToSSColumn(num) {
       let s = "";

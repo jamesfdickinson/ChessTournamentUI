@@ -5,6 +5,11 @@ import VueSimpleAlert from "vue-simple-alert";
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import App from './App.vue'
 import router from './router'
+
+// import Ionic from "@ionic/vue"
+// import "@ionic/core/css/core.css"
+// import "@ionic/core/css/ionic.bundle.css"
+
 // import Ionic  from '@ionic/vue';
 import AnalyticsGA from './services/AnalyticsGA'
 import Authentication from './services/Authentication'
