@@ -43,8 +43,8 @@ notification.onMessage = function (payload) {
   if (!payload) return false;
   if (!payload.notification) return false;
 
-  let notification = payload.notifcation;
-  let message = notifnotificationcation.title;
+  let notification = payload.notification;
+  let message = notification.title;
   let url = (notification.fcmOptions) ? notification.fcmOptions.link : null;
   toast.show(message, 8000, "/audio/arpeggio.mp3",url,"_self");
 };
