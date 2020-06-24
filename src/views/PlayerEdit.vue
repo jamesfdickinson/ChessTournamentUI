@@ -112,7 +112,8 @@ export default {
         rating: 1000,
         allowNotifications: true,
         division: 1,
-        team:""
+        team:"",
+        isPresent:true
       },
       error: ""
     };

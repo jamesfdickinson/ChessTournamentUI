@@ -42,6 +42,10 @@
           <ion-icon slot="start" name="trash"></ion-icon>
           <ion-label>Delete all players</ion-label>
         </ion-item>
+        <ion-item button detail="true" v-on:click="showToast()">
+          <ion-icon slot="start" name="contact"></ion-icon>
+          <ion-label>Test Show Toast</ion-label>
+        </ion-item>
       </ion-list>
       <div style="color:green;">{{message}}</div>
       <div style="color:red;">{{error}}</div>
@@ -54,7 +58,7 @@
 // @ is an alias to /src
 //import HelloWorld from "@/components/HelloWorld.vue";
 import fetch from "@/fetch.js";
-
+import Toast from "@/components/Toast.js";
 export default {
   name: "home",
   components: {
@@ -149,10 +153,12 @@ export default {
             this.error = e;
           });
       });
+    },
+    showToast() {
+      let toast = new Toast();
+      toast.show("Round 5 has started",8000,"/audio/arpeggio.mp3","/27/Round/5",null);
     }
   },
-  created() {
-   
-  }
+  created() {}
 };
 </script>

@@ -15,7 +15,6 @@
       </ion-item>
     </router-link>
 
-
     <!-- <ion-item button detail="true" v-on:click="openSignUp()">
       <ion-icon slot="start" name="clipboard"></ion-icon>
       <ion-label>Sign Up</ion-label>
@@ -30,12 +29,12 @@
         <ion-label>Sign Up</ion-label>
       </ion-item>
     </router-link>
-   <ion-list-header>
+    <ion-list-header>
       <ion-label>Admin</ion-label>
     </ion-list-header>
-     <!-- <ion-list-header>
+    <!-- <ion-list-header>
       <ion-label>Recorder</ion-label>
-    </ion-list-header> -->
+    </ion-list-header>-->
     <router-link :to="{ name: 'Registration', params: { tournament: tournamentId }}">
       <ion-item button detail="true">
         <ion-icon slot="start" name="clipboard"></ion-icon>
@@ -53,7 +52,7 @@
 
     <!-- <ion-list-header>
       <ion-label>Admin</ion-label>
-    </ion-list-header> -->
+    </ion-list-header>-->
     <router-link :to="{ name: 'Admin', params: { tournament: tournamentId }}">
       <ion-item button detail="true">
         <ion-icon slot="start" name="cog"></ion-icon>
@@ -79,7 +78,7 @@
 
     <!-- <ion-list-header>
       <ion-label>Login</ion-label>
-    </ion-list-header> -->
+    </ion-list-header>-->
     <!-- <router-link :to="{ name: 'Login'}">
       <ion-item button detail="true">
         <ion-icon slot="start" name="contact"></ion-icon>

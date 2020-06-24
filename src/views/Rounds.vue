@@ -4,7 +4,11 @@
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
-          <ion-icon name="arrow-round-back" size="large" @click="$router.push({ name: 'Tournament', params: { tournament: tournamentId } })"></ion-icon>
+          <ion-icon
+            name="arrow-round-back"
+            size="large"
+            @click="$router.push({ name: 'Tournament', params: { tournament: tournamentId } })"
+          ></ion-icon>
         </ion-buttons>
         <!-- <ion-buttons slot="start">
           <ion-menu-toggle>
@@ -14,6 +18,11 @@
           </ion-menu-toggle>
         </ion-buttons>-->
         <ion-title>Rounds</ion-title>
+        <ion-buttons slot="end">
+          <ion-button @click="$router.push({ name: 'RoundCreate' })">
+            <ion-icon name="add-circle-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
       </ion-toolbar>
     </ion-header>
     <ion-content>

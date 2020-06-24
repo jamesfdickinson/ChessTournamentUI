@@ -18,6 +18,7 @@ import Notification from './services/Notification'
 import LayoutMenu from "@/components/LayoutMenu.vue";
 import LayoutNoMenu from "@/components/LayoutNoMenu.vue";
 import LayoutRaw from "@/components/LayoutRaw.vue";
+import Toast from "@/components/Toast.js";
 import JsonCSV from 'vue-json-csv'
 
 //install ionic vue - https://www.youtube.com/watch?v=k6LH1L61E0Q
@@ -30,12 +31,23 @@ analyticsGA.TrackPage("Start");
 let authentication = new Authentication();
 let authorization = new Authorization();
 
+let toast = new Toast();
+
 let notification = new Notification();
 notification.init();
 notification.onTokenRefresh = function (token) {
   authentication.sendNotificationToken(token);
 };
+notification.onMessage = function (payload) {
+  //show toast message
+  if (!payload) return false;
+  if (!payload.notifcation) return false;
 
+  let notifcation = payload.notifcation;
+  let message = notifcation.title;
+  let url = (notifcation.fcmOptions) ? notifcation.fcmOptions.link : null;
+  toast.show(message, 8000, "/audio/arpeggio.mp3,url","_self");
+};
 Vue.config.productionTip = true;
 
 Vue.config.ignoredElements = [/^ion-/]
@@ -64,21 +76,21 @@ router.beforeEach((to, from, next) => {
   let userName = null;
   let roles = [];
 
-  if (user){
+  if (user) {
     userName = user.userName;
-    roles = user.roles||[];
+    roles = user.roles || [];
   }
   //check server roles locally
-  let allowAccess = authorization.isPageAllowed(toPage, tournamentId, roles,userName);
+  let allowAccess = authorization.isPageAllowed(toPage, tournamentId, roles, userName);
   if (allowAccess) {
     next();
   } else {
     //check server roles from server
     authorization.refreshAccess(userName)
       .then((user) => {
-        if(!user) throw "no user found";
-        let roles = user.roles||[];
-        let allowAccess2ndTry = authorization.isPageAllowed(toPage, tournamentId, roles,userName);
+        if (!user) throw "no user found";
+        let roles = user.roles || [];
+        let allowAccess2ndTry = authorization.isPageAllowed(toPage, tournamentId, roles, userName);
         if (allowAccess2ndTry) {
           next();
         } else {

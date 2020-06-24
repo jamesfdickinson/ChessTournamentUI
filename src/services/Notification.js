@@ -4,23 +4,26 @@ import FirebaseNative from "@/services/FirebaseNative.js";
 let instance = null;
 export default class Notification {
     constructor() {
-        if(instance){
+        if (instance) {
             return instance;
-          }
+        }
 
         if (typeof cordova !== 'undefined')
             this.firebase = new FirebaseNative();
         else
             this.firebase = Firebase;//add as static
 
-        this.firebase.onMessage = function () { };
+        this.firebase.onMessage = this.message.bind(this);
         this.firebase.onTokenUpdated = this.tokenRefresh.bind(this);
         this.onTokenRefresh = function () { };
-
+        this.onMessage = function () { };
         instance = this;
     }
     init() {
         this.firebase.init();
+    }
+    message(payload) {
+        if (this.onMessage) this.onMessage(payload);
     }
     tokenRefresh(token) {
         console.log("Notification Token refreshed: " + token)

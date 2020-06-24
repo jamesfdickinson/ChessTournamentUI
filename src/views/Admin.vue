@@ -109,7 +109,6 @@
             <ion-icon slot="start" name="cog"></ion-icon>
             <ion-label>Old Admin Site</ion-label>
           </ion-item>
-          <ion-item>* = Not fully migrated from the old admin site</ion-item>
         </a>
         <!-- <ion-list-header>
           <ion-label>Reports</ion-label>
@@ -149,7 +148,7 @@ export default {
   name: "home",
   components: {
     //HelloWorld
-  },
+  },   
   data() {
     var tournamentId = this.$route.params.tournament || 118;
     return {
@@ -158,7 +157,7 @@ export default {
       errors: []
     };
   },
-  methods: {
+  methods: { 
     openPlayers() {
       this.$router.push({
         name: "Players",

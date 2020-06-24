@@ -86,7 +86,7 @@ export default {
       team: "",
       rating: 1000,
       division: 1,
-      isPresent: false,
+      isPresent: true,
       paid: false,
       parentName: "",
       parentEmail: "",
