@@ -11,21 +11,22 @@
     </ion-header>
     <ion-content>
       <ion-list>
-      <ion-list-header>
+      <!-- <ion-list-header>
           <ion-label>Players</ion-label>
         </ion-list-header>
-        <!-- <router-link :to="{ name: 'Players', params: { tournament: tournamentId }}">
+        <router-link :to="{ name: 'Players', params: { tournament: tournamentId }}">
           <ion-item button detail="true">
             <ion-icon slot="start" name="people"></ion-icon>
             <ion-label>Players</ion-label>
           </ion-item>
-        </router-link> -->
+        </router-link> 
         <router-link :to="{ name: 'PlayerNew', params: { tournament: tournamentId }}">
           <ion-item button detail="true">
             <ion-icon slot="start" name="person-add"></ion-icon>
             <ion-label>Add Player</ion-label>
           </ion-item>
         </router-link>
+        -->
 
         <!-- <ion-item button detail="true" v-on:click="openRounds()">
           <ion-icon slot="start" name="paper"></ion-icon>
@@ -46,7 +47,8 @@
           <ion-icon slot="start" name="filing"></ion-icon>
           <ion-label>Roster</ion-label>
         </ion-item>-->
-        <ion-list-header>
+
+        <!-- <ion-list-header>
           <ion-label>Manage Rounds</ion-label>
         </ion-list-header>
         <router-link :to="{ name: 'RoundCreate', params: { tournament: tournamentId }}">
@@ -60,7 +62,8 @@
             <ion-icon slot="start" name="list"></ion-icon>
             <ion-label>*Edit Rounds</ion-label>
           </ion-item>
-        </router-link>
+        </router-link> -->
+
         <ion-list-header>
           <ion-label>Tournament Settings</ion-label>
         </ion-list-header>

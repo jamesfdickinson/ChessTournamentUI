@@ -26,13 +26,13 @@
         <!-- <ion-card> -->
         <ion-list>
           <ion-item>
-            <ion-label position="stacked">First Name</ion-label>
+            <ion-label position="stacked">Name</ion-label>
             <ion-input :value="player.firstName" @input="player.firstName = $event.target.value"></ion-input>
           </ion-item>
-          <ion-item>
+          <!-- <ion-item>
             <ion-label position="stacked">Last Name</ion-label>
             <ion-input :value="player.lastName" @input="player.lastName = $event.target.value"></ion-input>
-          </ion-item>
+          </ion-item> -->
           <ion-item>
             <ion-label position="stacked">Cribbage ID</ion-label>
             <ion-input :value="player.gamerId" @input="player.gamerId = $event.target.value"></ion-input>
@@ -122,7 +122,7 @@ export default {
       this.errors = [];
       if (!agreeTerms) this.errors.push("agree to terms is required.");
       if (!player.firstName) this.errors.push("first name is required.");
-      if (!player.lastName) this.errors.push("last name is required.");
+      //if (!player.lastName) this.errors.push("last name is required.");
       //if (!player.team) this.errors.push("team is required.");
       if (!player.grade) this.errors.push("grade is required.");
       if (isNaN(player.grade)) this.errors.push("grade is not a number.");

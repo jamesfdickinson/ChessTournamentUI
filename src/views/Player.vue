@@ -7,7 +7,7 @@
         </ion-buttons>
         <ion-title>Player</ion-title>
         <ion-buttons slot="end">
-          <ion-button v-on:click="editPlayer()">
+          <ion-button @click="$router.push({ name: 'PlayerEdit', params: { id: id} })">
             <ion-icon name="create"></ion-icon>
           </ion-button>
         </ion-buttons>
@@ -87,7 +87,9 @@ export default {
   components: { LayoutMenu },
   data() {
     var tournamentId = this.$route.params.tournament;
+    var id = this.$route.params.id;
     return {
+      id: id,
       tournamentId: tournamentId,
       player: {},
       playerGames: {},

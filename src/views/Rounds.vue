@@ -19,8 +19,8 @@
         </ion-buttons>-->
         <ion-title>Rounds</ion-title>
         <ion-buttons slot="end">
-          <ion-button @click="$router.push({ name: 'RoundCreate' })">
-            <ion-icon name="add-circle-outline"></ion-icon>
+          <ion-button @click="$router.push({ name: 'RoundsEdit', params: { tournament: tournamentId } })">
+            <ion-icon name="create"></ion-icon>
           </ion-button>
         </ion-buttons>
       </ion-toolbar>

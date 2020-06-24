@@ -11,12 +11,7 @@
     </ion-header>
     <ion-content>
       <ion-list>
-        <ion-item
-          detail="true"
-          v-for="round of rounds"
-          :key="round"
-          v-on:click="editRound(round)"
-        >
+        <ion-item detail="true" v-for="round of rounds" :key="round" v-on:click="editRound(round)">
           <ion-icon
             name="trash"
             slot="start"
@@ -25,6 +20,9 @@
           <ion-label>Round {{round}}</ion-label>
         </ion-item>
       </ion-list>
+      <section>
+        <ion-button expand="block" @click="$router.push({ name: 'RoundCreate' })">Create Round</ion-button>
+      </section>
       <div style="color:green;">{{message}}</div>
       <ul style="color:red;">
         <li v-for="error in errors" v-bind:key="error">*{{ error }}</li>
@@ -71,8 +69,8 @@ export default {
       });
     },
     editRound(id) {
-     // this.errors = [];
-     // this.errors.push("Round edit comming soon. Use users view to make edits. "+id);
+      // this.errors = [];
+      // this.errors.push("Round edit comming soon. Use users view to make edits. "+id);
       this.$router.push({
         name: "Round",
         params: { tournament: this.tournamentId, id: id }

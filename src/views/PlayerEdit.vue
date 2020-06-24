@@ -28,14 +28,14 @@
           <ion-label position="stacked">Team</ion-label>
           <ion-input :value="player.team" @input="player.team = $event.target.value"></ion-input>
         </ion-item>
-      <!--   <ion-item>
+        <!--   <ion-item>
           <ion-label position="stacked">Grade</ion-label>
           <ion-input :value="player.grade" @input="player.grade = $event.target.value"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Rating</ion-label>
           <ion-input :value="player.rating" @input="player.rating = $event.target.value"></ion-input>
-        </ion-item> -->
+        </ion-item>-->
         <ion-item>
           <ion-label position="stacked">Division</ion-label>
           <ion-input :value="player.division" @input="player.division = $event.target.value"></ion-input>
@@ -66,11 +66,11 @@
             :checked="player.allowNotifications"
             @ionChange="player.allowNotifications = ($event.target.checked == true);"
           ></ion-checkbox>
-        </ion-item> -->
+        </ion-item>-->
         <!-- <ion-item>
           <ion-label position="stacked">Parent's Name</ion-label>
           <ion-input :value="player.parentName" @input="player.parentName = $event.target.value"></ion-input>
-        </ion-item> -->
+        </ion-item>-->
         <ion-item>
           <ion-label position="stacked">Email</ion-label>
           <ion-input :value="player.parentEmail" @input="player.parentEmail = $event.target.value"></ion-input>
@@ -78,17 +78,17 @@
         <!-- <ion-item>
           <ion-label position="stacked">Phone Number</ion-label>
           <ion-input :value="player.parentPhone" @input="player.parentPhone = $event.target.value"></ion-input>
-        </ion-item> -->
-      
+        </ion-item>-->
       </ion-list>
-
-      <ion-button expand="block" v-on:click="save()">Save</ion-button>
-      <hr />
-      <ion-button expand="block" color="light" v-on:click="back()">Cancel</ion-button>
-      <hr />
-      <ion-button color="danger" v-on:click="deletePlayer()">Delete</ion-button>
-      <!-- <ion-button @click="presentAlertConfirm">Show Alert (confirm)</ion-button> -->
-      <!-- <ion-button color="danger">Delete</ion-button> -->
+      <section>
+        <ion-button expand="block" v-on:click="save()">Save</ion-button>
+        <hr />
+        <ion-button expand="block" color="light" v-on:click="back()">Cancel</ion-button>
+        <hr />
+        <ion-button color="danger" v-on:click="deletePlayer()">Delete</ion-button>
+        <!-- <ion-button @click="presentAlertConfirm">Show Alert (confirm)</ion-button> -->
+        <!-- <ion-button color="danger">Delete</ion-button> -->
+      </section>
       <div style="color:red;">{{error}}</div>
     </ion-content>
     <!-- </ion-page> -->
@@ -112,8 +112,8 @@ export default {
         rating: 1000,
         allowNotifications: true,
         division: 1,
-        team:"",
-        isPresent:true
+        team: "",
+        isPresent: true
       },
       error: ""
     };
