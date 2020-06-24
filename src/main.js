@@ -41,12 +41,12 @@ notification.onTokenRefresh = function (token) {
 notification.onMessage = function (payload) {
   //show toast message
   if (!payload) return false;
-  if (!payload.notifcation) return false;
+  if (!payload.notification) return false;
 
-  let notifcation = payload.notifcation;
-  let message = notifcation.title;
-  let url = (notifcation.fcmOptions) ? notifcation.fcmOptions.link : null;
-  toast.show(message, 8000, "/audio/arpeggio.mp3,url","_self");
+  let notification = payload.notifcation;
+  let message = notifnotificationcation.title;
+  let url = (notification.fcmOptions) ? notification.fcmOptions.link : null;
+  toast.show(message, 8000, "/audio/arpeggio.mp3",url,"_self");
 };
 Vue.config.productionTip = true;
 
