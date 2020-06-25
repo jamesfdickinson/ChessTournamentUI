@@ -153,8 +153,8 @@
               <ion-label position="stacked">Parent's Email</ion-label>
               <ion-input
                 type="email"
-                :value="player.parentEmail"
-                @input="player.parentEmail = $event.target.value"
+                :value="player.email"
+                @input="player.email = $event.target.value"
               ></ion-input>
             </ion-item>
             <ion-item>
@@ -217,7 +217,7 @@ export default {
       isPresent: false,
       paid: false,
       parentName: "",
-      parentEmail: "",
+      email: "",
       parentPhone: "",
       emailHelpList: true,
       allowNotifications: true

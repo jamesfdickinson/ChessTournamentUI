@@ -73,7 +73,7 @@
         </ion-item>-->
         <ion-item>
           <ion-label position="stacked">Email</ion-label>
-          <ion-input :value="player.parentEmail" @input="player.parentEmail = $event.target.value"></ion-input>
+          <ion-input :value="player.email" @input="player.email = $event.target.value"></ion-input>
         </ion-item>
         <!-- <ion-item>
           <ion-label position="stacked">Phone Number</ion-label>

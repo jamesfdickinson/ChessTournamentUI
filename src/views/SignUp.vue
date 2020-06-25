@@ -47,8 +47,8 @@
               <ion-label position="stacked">Email</ion-label>
               <ion-input
                 type="email"
-                :value="player.parentEmail"
-                @input="player.parentEmail = $event.target.value"
+                :value="player.email"
+                @input="player.email = $event.target.value"
               ></ion-input>
             </ion-item>
             <ion-item>
@@ -94,7 +94,7 @@ export default {
       isPresent: true,
       paid: false,
       parentName: "",
-      parentEmail: "",
+      email: "",
       parentPhone: "",
       emailHelpList: true,
       allowNotifications: true
@@ -104,7 +104,7 @@ export default {
       tournamentId: tournamentId,
       tournament: {},
       teams: [],
-      showSignUpPage:true,
+      showSignUpPage: true,
       player: player,
       agreeTerms: false,
       errors: []
@@ -118,11 +118,12 @@ export default {
       let tournamentId = this.tournamentId;
       let player = this.player;
       let agreeTerms = this.agreeTerms;
-
+      let tournament = this.tournament;
       //add default grade for cribbage
       if (!player.grade) player.grade = 12;
 
       player.tournamentId = tournamentId;
+      if (tournament) player.isPresent = tournament.requireCheckIn === true;
 
       //validation
       this.errors = [];
@@ -134,7 +135,7 @@ export default {
       if (isNaN(player.grade)) this.errors.push("grade is not a number.");
       if (!player.rating) this.rating = 1000;
       if (isNaN(player.rating)) this.errors.push("rating is not a number.");
-      if (!player.parentEmail) this.errors.push("email is required.");
+      if (!player.email) this.errors.push("email is required.");
 
       if (this.errors.length > 0) return;
 
