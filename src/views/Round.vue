@@ -40,16 +40,16 @@
             <ion-item color="primary">
               <!-- <ion-label slot="start">Table {{table.id}}</ion-label> -->
 
-              <ion-label slot="start">{{getRoomName(table.id,table.round,table.tournamentId)}}</ion-label>
-            
-            <ion-button
+              <ion-label slot="start">Room {{table.id}}</ion-label>
+
+              <ion-button
                 slot="start"
                 color="light"
                 fill="outline"
-               :href="getRoomLink(table.id,table.round,table.tournamentId)"
-                  target="_blank"
+                :href="getRoomLink(table.id)"
+                target="_blank"
               >Join</ion-button>
-            
+
               <!-- <ion-button slot="start" v-on:click="openTable(table.id)">
                   <ion-icon name="open"></ion-icon>
                 </ion-button>
@@ -95,7 +95,7 @@
                   target="_blank"
                 >
                   <ion-icon name="open"></ion-icon>
-                </ion-button> -->
+                </ion-button>-->
                 <ion-button v-on:click="openTable(table.id)">
                   <ion-icon name="create"></ion-icon>
                 </ion-button>
@@ -216,17 +216,19 @@ export default {
         .replace("[table]", table);
       return tableName;
     },
-    getRoomLink(table, round, tournament) {
+    getRoomLink(room) {
       //todo: pass template in from tournament settings or position
-      let tableLinkTemplate =
-        "https://cardgames.app/cribbage/game/?room=[table]r[round]t[tournament]";
+      let linkTemplate = "https://cardgames.app/cribbage/game/?room=[room]";
 
-      if (!tableLinkTemplate) return "";
+      if (!linkTemplate) return "";
 
-      let url = tableLinkTemplate
-        .replace("[tournament]", tournament)
-        .replace("[round]", round)
-        .replace("[table]", table);
+      let url = linkTemplate;
+
+      url = url.replace("[room]", room);
+      // url = url.replace("[tournament]", tournament);
+      // url = url.replace("[round]", round);
+      // url = url.replace("[table]", table);
+
       return url;
     },
     numToSSColumn(num) {

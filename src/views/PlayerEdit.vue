@@ -158,7 +158,7 @@ export default {
             // }
           })
           .catch(e => {
-            this.error = "Error: Save failed";
+            this.error = "Error: Save failed."  + e;
             console.warn(e);
           });
       } else {
@@ -171,7 +171,7 @@ export default {
             this.$router.back();
           })
           .catch(e => {
-            this.error = "Error: Save failed";
+            this.error = "Error: Save failed." + e;
             console.warn(e);
           });
       }
@@ -211,31 +211,6 @@ export default {
           });
       }
     }
-    // ,
-    //  presentAlertConfirm() {
-    //   return this.$ionic.alertController
-    //     .create({
-    //       header: 'Confirm!',
-    //       message: 'Message <strong>text</strong>!!!',
-    //       buttons: [
-    //         {
-    //           text: 'Cancel',
-    //           role: 'cancel',
-    //           cssClass: 'secondary',
-    //           handler: blah => {
-    //             console.log('Confirm Cancel:', blah)
-    //           },
-    //         },
-    //         {
-    //           text: 'Okay',
-    //           handler: () => {
-    //             console.log('Confirm Okay')
-    //           },
-    //         },
-    //       ],
-    //     })
-    //     .then(a => a.present())
-    // },
   },
   created() {
     this.loadData();

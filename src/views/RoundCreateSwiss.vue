@@ -135,9 +135,10 @@
           <tbody>
             <template v-for="match of matches">
               <tr :key="`${match.table}-${match.playerId}`">
-                <td>
+                <!-- <td>
                   <input v-model="match.table" style="width: 40px;" />
-                </td>
+                </td> -->
+                <td>{{match.table}}</td>
                 <td>{{match.firstName}} {{match.lastName}}</td>
                 <td>{{match.color}}</td>
                 <td>{{match.team}}</td>

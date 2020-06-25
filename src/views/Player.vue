@@ -30,18 +30,18 @@
           <ion-label position="fixed">Gamer ID</ion-label>
           <ion-label slot>{{player.gamerId}}</ion-label>
         </ion-item>
-         <ion-item>
+        <ion-item>
           <ion-label position="fixed">Team</ion-label>
           <ion-label slot>{{player.team}}</ion-label>
         </ion-item>
-      <!--  <ion-item>
+        <!--  <ion-item>
           <ion-label position="fixed">Grade</ion-label>
           <ion-label slot>{{player.grade}}</ion-label>
         </ion-item>
         <ion-item>
           <ion-label position="fixed">Rating</ion-label>
           <ion-label slot>{{player.rating}}</ion-label>
-        </ion-item> -->
+        </ion-item>-->
         <ion-item>
           <ion-label position="fixed">Division</ion-label>
           <ion-label slot>{{player.division}}</ion-label>
@@ -68,7 +68,7 @@
           <ion-badge>{{1-playerGame.points}}</ion-badge>
         </ion-item>
         <ion-list-header v-if="achievements && achievements.length > 0" color="primary">Achievements</ion-list-header>
-        <ion-item  v-for="achievement of achievements" :key="achievement">
+        <ion-item v-for="achievement of achievements" :key="achievement">
           <ion-icon slot="start" name="trophy"></ion-icon>
           <ion-label>{{achievement}}</ion-label>
         </ion-item>

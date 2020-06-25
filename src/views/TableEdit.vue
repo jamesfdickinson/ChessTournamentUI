@@ -12,19 +12,14 @@
     <ion-content padding>
       <!-- <ion-card> -->
       <ion-list>
-        <ion-item>
+        <!-- <ion-item>
           <ion-label>Table</ion-label>
           <ion-label slot="end">{{table.id}}</ion-label>
-        </ion-item>
+        </ion-item>-->
         <ion-item>
           <ion-label>Room</ion-label>
-          <ion-label slot="end">{{getRoomName(table.id,table.round,table.tournamentId)}}</ion-label>
-          <ion-button
-            slot="end"
-            color="light"
-            :href="getRoomLink(table.id,table.round,table.tournamentId)"
-            target="_blank"
-          >Join</ion-button>
+          <ion-label slot="end">{{table.id}}</ion-label>
+          <ion-button slot="end" color="light" :href="getRoomLink(table.id)" target="_blank">Join</ion-button>
         </ion-item>
       </ion-list>
       <ion-list>
@@ -103,34 +98,19 @@ export default {
     back() {
       this.$router.go(-1);
     },
-    getRoom(table) {
-      let tournamentId = this.tournamentId;
-      let roundId = this.round;
-      let room = `${tournamentId}r${roundId}t${table}`;
-      return room;
-    },
-    getRoomName(table, round, tournament) {
+    getRoomLink(room) {
       //todo: pass template in from tournament settings or position
-      let tableNameTemplate = "[table]r[round]t[tournament]";
+      let linkTemplate = "https://cardgames.app/cribbage/game/?room=[room]";
 
-      if (!tableNameTemplate) tableNameTemplate = "Table [table]";
-      let tableName = tableNameTemplate
-        .replace("[tournament]", tournament)
-        .replace("[round]", round)
-        .replace("[table]", table);
-      return tableName;
-    },
-    getRoomLink(table, round, tournament) {
-      //todo: pass template in from tournament settings or position
-      let tableLinkTemplate =
-        "https://cardgames.app/cribbage/game/?room=[table]r[round]t[tournament]";
+      if (!linkTemplate) return "";
 
-      if (!tableLinkTemplate) return "";
+      let url = linkTemplate;
 
-      let url = tableLinkTemplate
-        .replace("[tournament]", tournament)
-        .replace("[round]", round)
-        .replace("[table]", table);
+      url = url.replace("[room]", room);
+      // url = url.replace("[tournament]", tournament);
+      // url = url.replace("[round]", round);
+      // url = url.replace("[table]", table);
+
       return url;
     },
     play(table) {
