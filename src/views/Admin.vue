@@ -77,7 +77,7 @@
         <router-link :to="{ name: 'FAQEdit', params: { tournament: tournamentId }}">
           <ion-item button detail="true">
             <ion-icon slot="start" name="cog"></ion-icon>
-            <ion-label>FAQ</ion-label>
+            <ion-label>FAQ </ion-label>
           </ion-item>
         </router-link>
         <router-link :to="{ name: 'SignUpEdit', params: { tournament: tournamentId }}">

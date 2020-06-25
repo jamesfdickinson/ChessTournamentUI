@@ -11,60 +11,65 @@
       </ion-toolbar>
     </ion-header>
     <ion-content>
-      <!-- <ion-item>
+      <div v-if="!showSignUpPage">
+        <ion-item>
+          <p>Sign up is closed</p>
+        </ion-item>
+      </div>
+      <div v-if="showSignUpPage">
+        <!-- <ion-item>
         <h3>Sign Up</h3>
-      </ion-item>-->
-      <ion-item>
-        <p v-html="tournament.signUpText"></p>
-      </ion-item>
-      <ion-item>
-        <router-link :to="{ name: 'FAQ'}">
-          <a>FAQ, Rules, and Terms and Conditions</a>
-        </router-link>
-      </ion-item>
-      <form @submit.prevent="handleSubmit">
-        <!-- <ion-card> -->
-        <ion-list>
-          <ion-item>
-            <ion-label position="stacked">Name</ion-label>
-            <ion-input :value="player.firstName" @input="player.firstName = $event.target.value"></ion-input>
-          </ion-item>
-          <!-- <ion-item>
+        </ion-item>-->
+        <ion-item>
+          <p v-html="tournament.signUpText"></p>
+        </ion-item>
+        <ion-item>
+          <router-link :to="{ name: 'FAQ'}">
+            <a>FAQ, Rules, and Terms and Conditions</a>
+          </router-link>
+        </ion-item>
+        <form @submit.prevent="handleSubmit">
+          <!-- <ion-card> -->
+          <ion-list>
+            <ion-item>
+              <ion-label position="stacked">Name</ion-label>
+              <ion-input :value="player.firstName" @input="player.firstName = $event.target.value"></ion-input>
+            </ion-item>
+            <!-- <ion-item>
             <ion-label position="stacked">Last Name</ion-label>
             <ion-input :value="player.lastName" @input="player.lastName = $event.target.value"></ion-input>
-          </ion-item> -->
-          <ion-item>
-            <ion-label position="stacked">Cribbage ID</ion-label>
-            <ion-input :value="player.gamerId" @input="player.gamerId = $event.target.value"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked">Email</ion-label>
-            <ion-input
-              type="email"
-              :value="player.parentEmail"
-              @input="player.parentEmail = $event.target.value"
-            ></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label
-              text-wrap
-            >By signing up, you agree to our terms of use, privacy policy, another rules found in the FAQ and Terms and Conditions</ion-label>
-            <ion-checkbox
-              slot="start"
-              :checked="agreeTerms"
-              @ionChange="agreeTerms = ($event.target.checked == true);"
-            ></ion-checkbox>
-          </ion-item>
-        </ion-list>
-        <!-- </ion-card> -->
-        <ion-button type="submit" expand="block">Submit</ion-button>
-        <!-- <p v-if="errors.length">
+            </ion-item>-->
+            <ion-item>
+              <ion-label position="stacked">Cribbage ID</ion-label>
+              <ion-input :value="player.gamerId" @input="player.gamerId = $event.target.value"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked">Email</ion-label>
+              <ion-input
+                type="email"
+                :value="player.parentEmail"
+                @input="player.parentEmail = $event.target.value"
+              ></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label text-wrap>I agree to the terms of use, privacy policy, and tournament rules</ion-label>
+              <ion-checkbox
+                slot="start"
+                :checked="agreeTerms"
+                @ionChange="agreeTerms = ($event.target.checked == true);"
+              ></ion-checkbox>
+            </ion-item>
+          </ion-list>
+          <!-- </ion-card> -->
+          <ion-button type="submit" expand="block">Submit</ion-button>
+          <!-- <p v-if="errors.length">
           <b>Please correct the following error(s):</b>
-        </p>-->
-        <ul style="color:red;">
-          <li v-for="error in errors" v-bind:key="error">*{{ error }}</li>
-        </ul>
-      </form>
+          </p>-->
+          <ul style="color:red;">
+            <li v-for="error in errors" v-bind:key="error">*{{ error }}</li>
+          </ul>
+        </form>
+      </div>
     </ion-content>
     <!-- </ion-page> -->
   </layout-no-menu>
@@ -99,6 +104,7 @@ export default {
       tournamentId: tournamentId,
       tournament: {},
       teams: [],
+      showSignUpPage:true,
       player: player,
       agreeTerms: false,
       errors: []
@@ -150,9 +156,11 @@ export default {
       fetch
         .get(`tournament/${tournamentId}`)
         .then(response => {
-          this.tournament = response.data;
-          if (this.tournament && this.tournament.teams) {
-            this.teams = this.tournament.teams.split(",").map(function(item) {
+          let tournament = response.data;
+          this.tournament = tournament;
+          if (tournament) this.showSignUpPage = tournament.showSignUpPage;
+          if (tournament && tournament.teams) {
+            this.teams = tournament.teams.split(",").map(function(item) {
               return item.trim();
             });
           } else {

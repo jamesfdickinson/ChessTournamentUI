@@ -101,14 +101,14 @@
             @ionChange="tournament.hidden = ($event.target.checked == true);"
           ></ion-checkbox>
         </ion-item>
-        <!-- <ion-item>
+         <ion-item>
           <ion-label>Show Signup Page</ion-label>
           <ion-checkbox
             slot="start"
             :checked="tournament.showSignUpPage"
             @ionChange="tournament.showSignUpPage = ($event.target.checked == true);"
           ></ion-checkbox>
-        </ion-item>-->
+        </ion-item>
         <!-- <ion-item>
           <ion-label>Is Public</ion-label>
           <ion-checkbox

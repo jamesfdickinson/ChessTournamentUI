@@ -75,7 +75,11 @@
 
 <script>
 import TournamentAPI from "@/services/TournamentAPI";
+import Authentication from "@/services/Authentication";
+import Authorization from "@/services/Authorization";
 const tournamentAPI = new TournamentAPI();
+const authentication = new Authentication();
+const authorization = new Authorization();
 
 export default {
   name: "TableEdit",
@@ -172,6 +176,54 @@ export default {
         }
       }
     },
+    checkAccess(table) {
+      let round = this.round;
+      let tableId = this.tableId;
+      let tournamentId = this.tournamentId;
+
+      //page access based on role
+      let allowAccess = this.authorizationPage();
+      if (allowAccess) return true;
+
+      //allow self report
+      let allowAccessUser = this.authorizationPageUser(table);
+      if (!allowAccessUser && !allowAccess) {
+        let redirectUrl = `/${tournamentId}/AccessDenied?redirect=/${tournamentId}/round/${round}/TableEdit/${tableId}`;
+        this.$router.replace(redirectUrl);
+      }
+    },
+    authorizationPage() {
+      let tournamentId = this.tournamentId;
+      let user = authentication.getUser();
+      if (!user) return false;
+      let roles = user.roles || [];
+
+      //page access based on role
+      let allowAccess = authorization.isPageAllowed(
+        "TableEdit",
+        tournamentId,
+        roles
+      );
+
+      return allowAccess;
+    },
+    authorizationPageUser(table) {
+      let user = authentication.getUser();
+      if (!user) return false;
+      let userName = user.userName;
+
+      //allow self report
+      if (!table) return false;
+      let positions = table.positions;
+      if (!positions) return;
+
+      for (let i = 0; i < positions.length; i++) {
+        let position = positions[i];
+        let playerEmail = position.playerEmail;
+        if (playerEmail === userName) return true;
+      }
+      return false;
+    },
     loadData() {
       let round = this.round;
       let tableId = this.tableId;
@@ -180,6 +232,7 @@ export default {
         .tableGet(tournamentId, round, tableId)
         .then(data => {
           this.table = data;
+          //this.checkAccess(this.table);
         })
         .catch(e => {
           this.errors.push(e);

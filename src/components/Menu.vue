@@ -154,15 +154,15 @@ export default {
       this.posts = [];
     },
     loadData() {
-      // var tournamentId = this.tournamentId;
-      // fetch
-      //   .get(`tournament/${tournamentId}`)
-      //   .then(response => {
-      //     this.tournament = response.data;
-      //   })
-      //   .catch(e => {
-      //     this.errors.push(e);
-      //   });
+      // // var tournamentId = this.tournamentId;
+      // // fetch
+      // //   .get(`tournament/${tournamentId}`)
+      // //   .then(response => {
+      // //     this.tournament = response.data;
+      // //   })
+      // //   .catch(e => {
+      // //     this.errors.push(e);
+      // //   });
     }
   },
   created() {
