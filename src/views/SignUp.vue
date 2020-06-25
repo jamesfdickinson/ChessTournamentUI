@@ -123,7 +123,7 @@ export default {
       if (!player.grade) player.grade = 12;
 
       player.tournamentId = tournamentId;
-      if (tournament) player.isPresent = tournament.requireCheckIn === true;
+      if (tournament) player.isPresent = !(tournament.requireCheckIn === true);
 
       //validation
       this.errors = [];
