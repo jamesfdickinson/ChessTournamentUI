@@ -40,7 +40,7 @@
             <ion-input :value="player.lastName" @input="player.lastName = $event.target.value"></ion-input>
             </ion-item>-->
             <ion-item>
-              <ion-label position="stacked">Cribbage ID</ion-label>
+              <ion-label position="stacked">Cribbage ID (Invite Code)</ion-label>
               <ion-input :value="player.gamerId" @input="player.gamerId = $event.target.value"></ion-input>
             </ion-item>
             <ion-item>
@@ -136,6 +136,7 @@ export default {
       if (!player.rating) this.rating = 1000;
       if (isNaN(player.rating)) this.errors.push("rating is not a number.");
       if (!player.email) this.errors.push("email is required.");
+       if (!player.gamerId) this.errors.push("Cribbage Id (Invite Code) is required.");
 
       if (this.errors.length > 0) return;
 
