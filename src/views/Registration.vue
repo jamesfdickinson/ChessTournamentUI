@@ -16,9 +16,7 @@
         </ion-buttons>-->
         <ion-title>Registration</ion-title>
         <ion-buttons slot="end">
-          <ion-button
-            v-on:click="$router.push({ name: 'PlayerNew'})"
-          >
+          <ion-button v-on:click="$router.push({ name: 'PlayerNew'})">
             <ion-icon name="person-add" size="large"></ion-icon>
           </ion-button>
         </ion-buttons>
@@ -47,17 +45,33 @@
           <ion-label v-on:click="sortBy('team')">Team</ion-label>
         </ion-item>
         <ion-item
-          detail="true"
-          button
+     
           v-for="player of filteredItems"
           :key="player.playerId"
-          v-on:click="openPlayer(player.playerId)"
+         
         >
-          <ion-icon v-if="player.isPresent" slot="start" name="checkmark" color="secondary"></ion-icon>
-          <ion-icon v-if="!player.isPresent" slot="start" name="radio-button-off" color="secondary"></ion-icon>
+          <ion-icon
+            v-if="player.isPresent"
+            @click="checkOut(player.playerId)"
+            slot="start"
+            name="checkmark"
+            color="secondary"
+          ></ion-icon>
+          <ion-icon
+            v-if="!player.isPresent"
+            @click="checkIn(player.playerId)"
+            slot="start"
+            name="radio-button-off"
+            color="secondary"
+          ></ion-icon>
 
           <ion-label>{{player.firstName}} {{player.lastName}}</ion-label>
           <ion-label>{{player.team}}</ion-label>
+           <ion-icon
+              name="create"
+              slot="end"
+              @click="openPlayer(player.playerId)"
+            ></ion-icon>
         </ion-item>
       </ion-list>
     </ion-content>
@@ -124,6 +138,18 @@ export default {
     //   if(!this.sortOrders[key]) this.sortOrders[key] = -1;
     //   this.sortOrders[key] = this.sortOrders[key] * -1;
     // },
+    checkIn(playerId) {
+      if (!playerId) return;
+      fetch.post(`player/${playerId}/checkin/true`).then(() => {
+        this.loadData();
+      });
+    },
+    checkOut(playerId) {
+      if (!playerId) return;
+      fetch.post(`player/${playerId}/checkin/false`).then(() => {
+        this.loadData();
+      });
+    },
     loadData() {
       var tournamentId = this.$route.params.tournament;
       fetch

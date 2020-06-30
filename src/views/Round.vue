@@ -122,7 +122,8 @@
             ></ion-icon>
             <ion-icon v-else name="contact" slot="start"></ion-icon>
               -->
-              <TeamIcon :title="position.playerTeam" style="margin-right: 10px;"></TeamIcon>
+              <!-- <TeamIcon :title="position.playerTeam" style="margin-right: 10px;"></TeamIcon> -->
+              <TeamIcon :title="position.playerFirstName" style="margin-right: 10px;"></TeamIcon>
 
               <ion-label>{{position.playerFirstName}} {{position.playerLastName}}</ion-label>
               <ion-badge slot="end" color="light">{{position.points}}</ion-badge>

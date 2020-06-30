@@ -107,12 +107,12 @@
             <ion-label>Tools</ion-label>
           </ion-item>
         </router-link>
-        <a v-bind:href="'https://admin.chessclub.io/'+ tournamentId+'/'">
+        <!-- <a v-bind:href="'https://admin.chessclub.io/'+ tournamentId+'/'">
           <ion-item button detail="true">
             <ion-icon slot="start" name="cog"></ion-icon>
             <ion-label>Old Admin Site</ion-label>
           </ion-item>
-        </a>
+        </a> -->
         <!-- <ion-list-header>
           <ion-label>Reports</ion-label>
         </ion-list-header>

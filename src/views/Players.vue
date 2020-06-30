@@ -38,7 +38,8 @@
           v-on:click="openPlayer(player.playerId)"
         >
           <!-- <ion-icon name="contact" slot="start"></ion-icon>  -->
-          <TeamIcon :title="player.team" :image="player.image" slot="start"></TeamIcon>
+          <!-- <TeamIcon :title="player.team" :image="player.image" slot="start"></TeamIcon> -->
+          <TeamIcon :title="player.firstName" :image="player.image" slot="start"></TeamIcon>
 
           <ion-label>{{player.firstName}} {{player.lastName}}</ion-label>
         </ion-item>
@@ -75,10 +76,12 @@ export default {
       }
       return colour;
     },
-    addPlayer(){
-   var tournamentId = this.$route.params.tournament;
-     this.$router.push({ name: 'PlayerNew', params: { tournament: tournamentId }});
-  
+    addPlayer() {
+      var tournamentId = this.$route.params.tournament;
+      this.$router.push({
+        name: "PlayerNew",
+        params: { tournament: tournamentId }
+      });
     },
     openPlayer(id) {
       this.$router.push({ name: "Player", params: { id: id } });

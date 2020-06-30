@@ -20,11 +20,11 @@
     </ion-header>
     <ion-content>
       <ion-card>
-        <img
+        <!-- <img
           style="max-height:300px;width: auto;margin: 0 auto;"
           v-if="!tournament.image"
           src="images/chess-board.jpg"
-        />
+        /> -->
         <img
           style="max-height:300px;width: auto;margin: 0 auto;"
           v-if="tournament.image"
@@ -48,6 +48,71 @@
         </ion-card-content>
       </ion-card>
 
+      <ion-card v-if="tournament.allowRegistration === true && userPlayers.length === 0">
+        <ion-item>
+          <ion-icon name="clipboard" slot="start"></ion-icon>
+          <ion-label>You not are registered</ion-label>
+          <ion-button
+            slot="end"
+            @click="$router.push({ name: 'SignUp', params: { tournament:tournamentId } })"
+          >Sign-Up</ion-button>
+        </ion-item>
+      </ion-card>
+      <!-- 
+      <ion-card v-if="tournament.allowRegistration === true">
+
+        <ion-item v-if="userPlayers.length === 0">
+          <ion-icon name="clipboard" slot="start"></ion-icon>
+          <ion-label>You not are registered</ion-label>
+          <ion-button
+            slot="end"
+            @click="$router.push({ name: 'SignUp', params: { tournament:tournamentId } })"
+          >Sign-Up</ion-button>
+        </ion-item>
+        <ion-item v-if=" userPlayers.length !== 0">
+          <ion-icon name="clipboard" slot="start"></ion-icon>
+          <ion-label>You are registered</ion-label>
+        </ion-item>
+      </ion-card>-->
+      <template v-for="userPlayer of userPlayers">
+        <ion-card :key="userPlayer.playerId">
+          <ion-card-header>
+            <ion-card-title>{{userPlayer.firstName}} {{userPlayer.lastName}}</ion-card-title>
+          </ion-card-header>
+          <!-- <ion-item>
+            <ion-icon name="contact" slot="start"></ion-icon>
+            <ion-icon
+              name="create"
+              slot="end"
+              @click="$router.push({ name: 'PlayerEdit', params: { id: userPlayer.playerId} })"
+            ></ion-icon>
+            <ion-label>{{userPlayer.firstName}} {{userPlayer.lastName}}</ion-label>
+          </ion-item>-->
+          <ion-item>
+            <ion-icon name="clipboard" slot="start"></ion-icon>
+            <ion-label>You are registered</ion-label>
+            <ion-button
+              slot="end"
+              @click="$router.push({ name: 'Player', params: { id: userPlayer.playerId} })"
+            >View</ion-button>
+            <!-- <ion-button
+              slot="end"
+              @click="$router.push({ name: 'PlayerEdit', params: { id: userPlayer.playerId} })"
+            >Edit</ion-button> -->
+          </ion-item>
+          <ion-item v-if="tournament.allowCheckIn === true && userPlayer.isPresent === false">
+            <ion-icon name="close-circle-outline" slot="start" color="danger"></ion-icon>
+            <ion-label color="danger">You are NOT checked-in</ion-label>
+            <ion-button slot="end" @click="checkIn(userPlayer.playerId)">Check-in</ion-button>
+          </ion-item>
+          <ion-item v-if="userPlayer.isPresent === true">
+            <ion-icon name="checkmark" slot="start" color="success"></ion-icon>
+            <ion-label>You are ready to play</ion-label>
+            <ion-button slot="end" @click="checkOut(userPlayer.playerId)">Leave</ion-button>
+          </ion-item>
+        </ion-card>
+      </template>
+
       <!-- <ion-card>
         <ion-card-header>
           <ion-card-title>Your Pairing</ion-card-title>
@@ -66,7 +131,7 @@
 
           <ion-label>John Smith</ion-label>
         </ion-item>
-      </ion-card> -->
+      </ion-card>-->
 
       <div></div>
       <Menu />
@@ -80,8 +145,9 @@
 //import HelloWorld from "@/components/HelloWorld.vue";
 import fetch from "@/fetch.js";
 import Menu from "@/components/Menu.vue";
+import Authentication from "@/services/Authentication";
 //import LayoutMenu from "@/components/LayoutMenu.vue";
-
+const authentication = new Authentication();
 export default {
   name: "home",
   components: {
@@ -92,7 +158,9 @@ export default {
     return {
       tournamentId: tournamentId,
       tournament: {},
+      state: "signup1",
       status: null,
+      userPlayers: [],
       errors: []
     };
   },
@@ -100,39 +168,18 @@ export default {
     userDetails() {
       this.$router.push({ name: "User" });
     },
-    openPlayers() {
-      this.$router.push({
-        name: "Players",
-        params: { tournament: this.tournamentId }
+    editPlayer() {},
+    checkIn(playerId) {
+      if (!playerId) return;
+      fetch.post(`player/${playerId}/checkin/true`).then(() => {
+        this.loadData();
       });
     },
-    openRounds() {
-      this.$router.push({
-        name: "rounds",
-        params: { tournament: this.tournamentId }
+    checkOut(playerId) {
+      if (!playerId) return;
+      fetch.post(`player/${playerId}/checkin/false`).then(() => {
+        this.loadData();
       });
-    },
-    openScores() {
-      this.$router.push({
-        name: "scores",
-        params: { tournament: this.tournamentId }
-      });
-    },
-    openSignUp() {
-      this.$router.push({
-        name: "signup",
-        params: { tournament: this.tournamentId }
-      });
-    },
-    openFAQ() {
-      this.$router.push({
-        name: "faq",
-        params: { tournament: this.tournamentId }
-      });
-    },
-    clearData() {
-      this.$router.push({ path: "home" });
-      this.posts = [];
     },
     loadData() {
       var tournamentId = this.tournamentId;
@@ -153,6 +200,17 @@ export default {
         .catch(e => {
           this.errors.push(e);
         });
+      let user = authentication.getUser();
+      if (user && user.email) {
+        fetch
+          .get(`players/${tournamentId}?email=${user.email}`)
+          .then(response => {
+            this.userPlayers = response.data || [];
+          })
+          .catch(e => {
+            this.errors.push(e);
+          });
+      }
     }
   },
   created() {

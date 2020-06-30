@@ -117,7 +117,14 @@
             @ionChange="tournament.requireCheckIn = ($event.target.checked == true);"
           ></ion-checkbox>
         </ion-item>
-        
+          <ion-item>
+          <ion-label>Allow Check-In</ion-label>
+          <ion-checkbox
+            slot="start"
+            :checked="tournament.allowCheckIn"
+            @ionChange="tournament.allowCheckIn = ($event.target.checked == true);"
+          ></ion-checkbox>
+        </ion-item>
         <!-- <ion-item>
           <ion-label>Is Public</ion-label>
           <ion-checkbox
@@ -213,7 +220,8 @@ export default {
         allowRegistration: true,
         state: "Setup",
         maxPlayers:50,
-        requireCheckIn: false
+        requireCheckIn: true,
+        allowCheckIn: false
       },
       error: ""
     };
