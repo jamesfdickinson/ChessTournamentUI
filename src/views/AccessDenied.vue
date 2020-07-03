@@ -15,7 +15,7 @@
           <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
             <div padding>
               <h3>Access Denied</h3>
-              <p>Ask the Tournament Director to grant you access or enter the invite code below.</p>
+              <p>Ask the Tournament Director to grant you access or enter the access code below.</p>
             </div>
 
             <ion-card>
@@ -24,7 +24,7 @@
                   <ion-item>
                     <ion-input
                       type="text"
-                      placeholder="Invite Code"
+                      placeholder="Access Code"
                       :value="inviteCode"
                       @input="inviteCode=$event.target.value"
                     ></ion-input>

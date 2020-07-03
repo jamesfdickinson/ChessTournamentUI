@@ -41,7 +41,11 @@
             </ion-item>-->
             <ion-item>
               <ion-label position="stacked">Cribbage ID</ion-label>
-              <ion-input type="number" :value="player.gamerId" @input="player.gamerId = $event.target.value"></ion-input>
+              <ion-input
+                type="number"
+                :value="player.gamerId"
+                @input="player.gamerId = $event.target.value"
+              ></ion-input>
             </ion-item>
             <ion-item>
               <ion-label position="stacked">Email</ion-label>
@@ -77,6 +81,8 @@
 
 <script>
 import fetch from "@/fetch.js";
+import Authentication from "@/services/Authentication";
+const authentication = new Authentication();
 export default {
   name: "home",
   components: {},
@@ -136,7 +142,8 @@ export default {
       if (!player.rating) this.rating = 1000;
       if (isNaN(player.rating)) this.errors.push("rating is not a number.");
       if (!player.email) this.errors.push("email is required.");
-       if (!player.gamerId) this.errors.push("Cribbage Id (Invite Code) is required.");
+      if (!player.gamerId)
+        this.errors.push("Cribbage Id (Invite Code) is required.");
 
       if (this.errors.length > 0) return;
 
@@ -145,7 +152,7 @@ export default {
         .then(response => {
           console.log(response);
           //back
-          this.$router.push({ name: `SignUpComplete` });
+          this.$router.push({ name: `Tournament` });
         })
         .catch(e => {
           //todo: display error
@@ -172,6 +179,10 @@ export default {
         .catch(e => {
           this.errors.push(e);
         });
+      let user = authentication.getUser();
+      if (user && user.email) {
+        this.player.email = user.email;
+      }
     }
   },
   created() {

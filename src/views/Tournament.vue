@@ -112,7 +112,13 @@
           </ion-item>
         </ion-card>
       </template>
-
+<!-- <iframe frameborder="0"
+        scrolling="no"
+        id="chat_embed"
+        src="https://www.twitch.tv/embed/jamesfdickinson/chat?parent=192.168.1.11"
+        height="500"
+        width="100%">
+</iframe>   -->
       <!-- <ion-card>
         <ion-card-header>
           <ion-card-title>Your Pairing</ion-card-title>

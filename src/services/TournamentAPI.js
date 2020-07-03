@@ -5,13 +5,13 @@ export default class TournamentAPI {
     matchUpdate(match) {
         return fetch.post(`match/${match.id}`, match);
     }
-    rounds(tournamentId){
-        return  fetch
-        .get(`rounds/${tournamentId}`)
-        .then(response => {
-          let data = response.data;
-          return data
-        })
+    rounds(tournamentId) {
+        return fetch
+            .get(`rounds/${tournamentId}`)
+            .then(response => {
+                let data = response.data;
+                return data
+            })
     }
     tableGet(tournamentId, round, tableId) {
         //api/table/1?round=2&tournament=117
@@ -33,13 +33,45 @@ export default class TournamentAPI {
                 return matches;
             })
     }
-    saveMatches(tournamentId,matches) {
+    saveMatches(tournamentId, matches) {
         return fetch
             .put(`match/${tournamentId}`, matches)
             .then(response => {
                 let data = response.data;
                 return data;
             });
+    }
+    sendTournamentUsersNotifications(tournamentId, title, body, url) {
+        const message = {
+            title: title,
+            body: body,
+            url: url
+        };
+
+        if (tournamentId) {
+            let url = `notification/SendPushNotificationToAllUsers/${tournamentId}`;
+            return fetch.post(url, message)
+                .then(response => {
+                    let data = response.data;
+                    return data;
+                });
+        }
+    }
+    sendTournamentPlayersNotifications(tournamentId, title, body, url) {
+        const message = {
+            title: title,
+            body: body,
+            url: url
+        };
+
+        if (tournamentId) {
+            let url = `notification/SendPushNotificationToAllPlayers/${tournamentId}`;
+            return fetch.post(url, message)
+                .then(response => {
+                    let data = response.data;
+                    return data;
+                });
+        }
     }
     sendRoundNotifications(tournamentId, round) {
         if (tournamentId && round) {

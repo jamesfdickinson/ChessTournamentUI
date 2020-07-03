@@ -42,22 +42,29 @@
             <!-- <ion-select-option value="SingleElimination">Single Elimination</ion-select-option> -->
           </ion-select>
         </ion-item>
+         <ion-item>
+          <ion-label position="stacked">State</ion-label>
+          <ion-input
+            :value="tournament.state"
+            @input="tournament.state = $event.target.value"
+          ></ion-input>
+        </ion-item>
         <ion-item>
-          <ion-label position="stacked">Invite Code: Basic</ion-label>
+          <ion-label position="stacked">Access Code: Basic</ion-label>
           <ion-input
             :value="tournament.accessCodeBasic"
             @input="tournament.accessCodeBasic = $event.target.value"
           ></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="stacked">Invite Code: Recorder</ion-label>
+          <ion-label position="stacked">Access Code: Recorder</ion-label>
           <ion-input
             :value="tournament.accessCodeRecorder"
             @input="tournament.accessCodeRecorder = $event.target.value"
           ></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="stacked">Invite Code: Admin</ion-label>
+          <ion-label position="stacked">Access Code: Admin</ion-label>
           <ion-input
             :value="tournament.accessCodeAdmin"
             @input="tournament.accessCodeAdmin = $event.target.value"
@@ -218,7 +225,7 @@ export default {
         autoAdvanceRounds: true,
         allowNotifications: true,
         allowRegistration: true,
-        state: "Setup",
+        state: "setup",
         maxPlayers:50,
         requireCheckIn: true,
         allowCheckIn: false

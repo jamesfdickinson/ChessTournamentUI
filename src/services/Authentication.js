@@ -101,7 +101,7 @@ export default class Authentication {
     }
     fakeInviteCode(code, tournamentId) {
         return new Promise(function (resolve, reject) {
-            if (code !== "123") reject("Invalid invite code");
+            if (code !== "123") reject("Invalid access code");
 
             var newRole = tournamentId + "-Basic";
             var user = this.getUser();
