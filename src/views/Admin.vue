@@ -74,7 +74,7 @@
             Stay in this mode for all rounds until the tournament is complete.
           </p>
           <!--<p>If you are playing a long running tournament, such as 1 round a day, switch back to "Check-In" mode after each round. 
-            Then use the tools and mark all players as "not present". When you resume the tournament, let the player check in again.</p> -->
+          Then use the tools and mark all players as "not present". When you resume the tournament, let the player check in again.</p>-->
           <ion-item>
             <ion-button @click="changeState('check-in')">Back</ion-button>
             <ion-button slot="end" @click="changeState('end')">End Tournament</ion-button>
@@ -331,6 +331,15 @@
           </ion-item>
         </router-link>
         <ion-list-header>
+          <ion-label>Check-In</ion-label>
+        </ion-list-header>
+        <router-link :to="{ name: 'CheckIn', params: { tournament: tournamentId }}">
+          <ion-item button detail="true">
+            <ion-icon slot="start" name="clipboard"></ion-icon>
+            <ion-label>Check-In</ion-label>
+          </ion-item>
+        </router-link>
+        <ion-list-header>
           <ion-label>Tools</ion-label>
         </ion-list-header>
         <router-link :to="{ name: 'SendMessage', params: { tournament: tournamentId }}">
@@ -345,6 +354,7 @@
             <ion-label>Tools</ion-label>
           </ion-item>
         </router-link>
+
         <!-- <a v-bind:href="'https://admin.chessclub.io/'+ tournamentId+'/'">
           <ion-item button detail="true">
             <ion-icon slot="start" name="cog"></ion-icon>

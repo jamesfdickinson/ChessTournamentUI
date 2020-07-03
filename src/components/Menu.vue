@@ -35,12 +35,12 @@
     <!-- <ion-list-header>
       <ion-label>Recorder</ion-label>
     </ion-list-header>-->
-    <router-link :to="{ name: 'CheckIn', params: { tournament: tournamentId }}">
+    <!-- <router-link :to="{ name: 'CheckIn', params: { tournament: tournamentId }}">
       <ion-item button detail="true">
         <ion-icon slot="start" name="clipboard"></ion-icon>
         <ion-label>Check-In</ion-label>
       </ion-item>
-    </router-link>
+    </router-link> -->
 
     <!-- <ion-list-header>
       <ion-label>Coach</ion-label>
