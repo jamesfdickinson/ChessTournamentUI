@@ -57,7 +57,7 @@
       <ion-card v-if="tournament.allowRegistration === true && userPlayers.length === 0">
         <ion-item>
           <ion-icon name="clipboard" slot="start"></ion-icon>
-          <ion-label>You not are registered</ion-label>
+          <ion-label>You are not registered</ion-label>
           <ion-button
             slot="end"
             @click="$router.push({ name: 'SignUp', params: { tournament:tournamentId } })"
