@@ -73,7 +73,7 @@
             Now you should create your first round. If "Auto Advance Rounds" is enabled it will create the rounds automatically.
             Stay in this mode for all rounds until the tournament is complete.
           </p>
-          <!-- <p>If you are playing a long running tournament, such as 1 round a day, switch back to "Check-In" mode after each round. 
+          <!--<p>If you are playing a long running tournament, such as 1 round a day, switch back to "Check-In" mode after each round. 
             Then use the tools and mark all players as "not present". When you resume the tournament, let the player check in again.</p> -->
           <ion-item>
             <ion-button @click="changeState('check-in')">Back</ion-button>
