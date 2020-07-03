@@ -35,10 +35,10 @@
     <!-- <ion-list-header>
       <ion-label>Recorder</ion-label>
     </ion-list-header>-->
-    <router-link :to="{ name: 'Registration', params: { tournament: tournamentId }}">
+    <router-link :to="{ name: 'CheckIn', params: { tournament: tournamentId }}">
       <ion-item button detail="true">
         <ion-icon slot="start" name="clipboard"></ion-icon>
-        <ion-label>Registration</ion-label>
+        <ion-label>Check-In</ion-label>
       </ion-item>
     </router-link>
 
@@ -85,10 +85,10 @@
         <ion-label>Login</ion-label>
       </ion-item>
     </router-link>-->
-    <ion-item button detail="true" v-on:click="LogOut()">
+    <!-- <ion-item button detail="true" v-on:click="LogOut()">
       <ion-icon slot="start" name="contact"></ion-icon>
       <ion-label>Log Out</ion-label>
-    </ion-item>
+    </ion-item> -->
   </ion-items>
 </template>
 <style scoped>

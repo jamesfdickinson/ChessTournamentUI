@@ -42,12 +42,9 @@
             <!-- <ion-select-option value="SingleElimination">Single Elimination</ion-select-option> -->
           </ion-select>
         </ion-item>
-         <ion-item>
+        <ion-item>
           <ion-label position="stacked">State</ion-label>
-          <ion-input
-            :value="tournament.state"
-            @input="tournament.state = $event.target.value"
-          ></ion-input>
+          <ion-input :value="tournament.state" @input="tournament.state = $event.target.value"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Access Code: Basic</ion-label>
@@ -82,7 +79,13 @@
             @input="tournament.teams = $event.target.value"
           ></ion-textarea>
         </ion-item>
-
+        <ion-item>
+          <ion-label position="stacked">Max Players</ion-label>
+          <ion-input
+            :value="tournament.maxPlayers"
+            @input="tournament.maxPlayers = $event.target.value"
+          ></ion-input>
+        </ion-item>
         <ion-item>
           <ion-label>Auto Advance Rounds</ion-label>
           <ion-checkbox
@@ -108,7 +111,7 @@
             @ionChange="tournament.hidden = ($event.target.checked == true);"
           ></ion-checkbox>
         </ion-item>
-         <ion-item>
+        <ion-item>
           <ion-label>Show Signup Page</ion-label>
           <ion-checkbox
             slot="start"
@@ -116,7 +119,7 @@
             @ionChange="tournament.showSignUpPage = ($event.target.checked == true);"
           ></ion-checkbox>
         </ion-item>
-         <ion-item>
+        <ion-item>
           <ion-label>Require Check-In</ion-label>
           <ion-checkbox
             slot="start"
@@ -124,7 +127,7 @@
             @ionChange="tournament.requireCheckIn = ($event.target.checked == true);"
           ></ion-checkbox>
         </ion-item>
-          <ion-item>
+        <ion-item>
           <ion-label>Allow Check-In</ion-label>
           <ion-checkbox
             slot="start"
@@ -226,7 +229,7 @@ export default {
         allowNotifications: true,
         allowRegistration: true,
         state: "setup",
-        maxPlayers:50,
+        maxPlayers: 50,
         requireCheckIn: true,
         allowCheckIn: false
       },

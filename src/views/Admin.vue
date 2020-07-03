@@ -41,7 +41,7 @@
             Click "Check-In" when you are for checking in player for the tournament.
           </p>
           <ion-item>
-            <ion-button @click="changeState('setup')">Setup</ion-button>
+            <ion-button @click="changeState('setup')">Back</ion-button>
             <ion-button slot="end" @click="changeState('check-in')">Check-In</ion-button>
           </ion-item>
         </ion-card-content>
@@ -58,7 +58,7 @@
             When all players have checked in, click "Start Tournament".
           </p>
           <ion-item>
-            <ion-button @click="changeState('registration')">Registration</ion-button>
+            <ion-button @click="changeState('registration')">Back</ion-button>
             <ion-button slot="end" @click="changeState('play')">Start Tournament</ion-button>
           </ion-item>
         </ion-card-content>
@@ -69,12 +69,14 @@
         </ion-card-header>
         <ion-card-content>
           <p>
-            "Play" step starts the tournament play. It blocks registration and check-in's.
-            Now you should create your first round, unless the "Auto Advance Rounds" is enabled and creates it for you.
-            Play all rounds until the tournament is over.
+            "Play" step starts the tournament play.
+            Now you should create your first round. If "Auto Advance Rounds" is enabled it will create the rounds automatically.
+            Stay in this mode for all rounds until the tournament is complete.
           </p>
+          <!-- <p>If you are playing a long running tournament, such as 1 round a day, switch back to "Check-In" mode after each round. 
+            Then use the tools and mark all players as "not present". When you resume the tournament, let the player check in again.</p> -->
           <ion-item>
-            <ion-button @click="changeState('check-in')">Check-In</ion-button>
+            <ion-button @click="changeState('check-in')">Back</ion-button>
             <ion-button slot="end" @click="changeState('end')">End Tournament</ion-button>
           </ion-item>
         </ion-card-content>
@@ -86,7 +88,7 @@
         <ion-card-content>
           <p>"End" step means the tournament is over.</p>
           <ion-item>
-            <ion-button @click="changeState('play')">Start Tournament</ion-button>
+            <ion-button @click="changeState('play')">Back</ion-button>
             <ion-button slot="end" @click="changeState('setup')">Set Up</ion-button>
           </ion-item>
         </ion-card-content>
@@ -272,10 +274,10 @@
           <ion-icon slot="start" name="podium"></ion-icon>
           <ion-label>*Edit Players Bulk 2</ion-label>
         </ion-item>-->
-        <!-- <router-link :to="{ name: 'Registration', params: { tournament: tournamentId }}">
+        <!-- <router-link :to="{ name: 'Check-In', params: { tournament: tournamentId }}">
           <ion-item button detail="true">
             <ion-icon slot="start" name="clipboard"></ion-icon>
-            <ion-label>Registration</ion-label>
+            <ion-label>Check-In</ion-label>
           </ion-item>
         </router-link>-->
 

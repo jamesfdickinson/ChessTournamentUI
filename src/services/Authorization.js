@@ -18,13 +18,13 @@ export default class Authorization {
                 throw error;
             });
     }
-    isPageAllowed(toPage,tournamentId, roles,userName) {
+    isPageAllowed(toPage,tournamentId, roles) {
         if(!roles) roles = [];
         //redirect to login page if not logged in and trying to access a restricted page
         const pagesAdmin = ['Admin'];
         const authRequiredAdmin = pagesAdmin.includes(toPage);
 
-        const pagesRecorder = ['Registration', 'PlayerEdit', 'PlayerNew', 'TableEdit'];
+        const pagesRecorder = ['CheckIn', 'PlayerEdit', 'PlayerNew', 'TableEdit'];
         const authRequiredRecorder = pagesRecorder.includes(toPage);
 
         const pagesBasic = ['Players', 'Reports', 'Tournament', 'Tournament', 'SignUp', 'SignUpComplete', 'FAQ'];

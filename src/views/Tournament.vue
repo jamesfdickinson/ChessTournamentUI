@@ -24,7 +24,7 @@
           style="max-height:300px;width: auto;margin: 0 auto;"
           v-if="!tournament.image"
           src="images/chess-board.jpg"
-        /> -->
+        />-->
         <img
           style="max-height:300px;width: auto;margin: 0 auto;"
           v-if="tournament.image"
@@ -47,7 +47,13 @@
           <ion-progress-bar :value="status.percentage"></ion-progress-bar>
         </ion-card-content>
       </ion-card>
-
+      <ion-card>
+        <ion-item>
+          <ion-icon name="mic" slot="start"></ion-icon>
+          <ion-label>Discord Chat</ion-label>
+          <ion-button slot="end" href="https://discord.gg/75VYvF5" target="_blank">Join Chat</ion-button>
+        </ion-item>
+      </ion-card>
       <ion-card v-if="tournament.allowRegistration === true && userPlayers.length === 0">
         <ion-item>
           <ion-icon name="clipboard" slot="start"></ion-icon>
@@ -75,50 +81,70 @@
         </ion-item>
       </ion-card>-->
       <template v-for="userPlayer of userPlayers">
+        <!-- <ion-list-header :key="userPlayer.playerId">
+          {{userPlayer.firstName}} {{userPlayer.lastName}}
+        </ion-list-header>-->
+
         <ion-card :key="userPlayer.playerId">
-          <ion-card-header>
-            <ion-card-title>{{userPlayer.firstName}} {{userPlayer.lastName}}</ion-card-title>
-          </ion-card-header>
+          <!-- <ion-card-header>
+            <ion-card-subtitle>{{userPlayer.firstName}} {{userPlayer.lastName}}</ion-card-subtitle>
+          </ion-card-header>-->
           <!-- <ion-item>
             <ion-icon name="contact" slot="start"></ion-icon>
+            <ion-label>{{userPlayer.firstName}} {{userPlayer.lastName}}</ion-label>
+            <ion-button
+              slot="end"
+              @click="$router.push({ name: 'PlayerEdit', params: { id: userPlayer.playerId} })"
+            >Edit</ion-button>
+          </ion-item>
+          <ion-item>
+            <ion-icon name="contact" slot="start"></ion-icon>
+            <ion-label>{{userPlayer.firstName}} {{userPlayer.lastName}}</ion-label>
             <ion-icon
               name="create"
               slot="end"
               @click="$router.push({ name: 'PlayerEdit', params: { id: userPlayer.playerId} })"
             ></ion-icon>
-            <ion-label>{{userPlayer.firstName}} {{userPlayer.lastName}}</ion-label>
-          </ion-item>-->
-          <ion-item>
+          </ion-item> -->
+          <!-- <ion-item>
             <ion-icon name="clipboard" slot="start"></ion-icon>
-            <ion-label>You are registered</ion-label>
+            <ion-label>Registered</ion-label>
             <ion-button
               slot="end"
               @click="$router.push({ name: 'Player', params: { id: userPlayer.playerId} })"
             >View</ion-button>
-            <!-- <ion-button
+          </ion-item>
+          <ion-item>
+            <ion-icon name="clipboard" slot="start"></ion-icon>
+            <ion-label>Registered</ion-label>
+            <ion-button
               slot="end"
               @click="$router.push({ name: 'PlayerEdit', params: { id: userPlayer.playerId} })"
-            >Edit</ion-button> -->
-          </ion-item>
-          <ion-item v-if="tournament.allowCheckIn === true && userPlayer.isPresent === false">
+            >Edit</ion-button>
+          </ion-item>-->
+          <ion-item v-if=" userPlayer.isPresent === false">
             <ion-icon name="close-circle-outline" slot="start" color="danger"></ion-icon>
-            <ion-label color="danger">You are NOT checked-in</ion-label>
-            <ion-button slot="end" @click="checkIn(userPlayer.playerId)">Check-in</ion-button>
+            <ion-label color="danger">NOT checked-in</ion-label>
+            <ion-button
+              slot="end"
+              :disabled="!tournament.allowCheckIn"
+              @click="checkIn(userPlayer.playerId)"
+            >Check-in</ion-button>
           </ion-item>
           <ion-item v-if="userPlayer.isPresent === true">
             <ion-icon name="checkmark" slot="start" color="success"></ion-icon>
-            <ion-label>You are ready to play</ion-label>
+            <ion-label>Ready to play</ion-label>
             <ion-button slot="end" @click="checkOut(userPlayer.playerId)">Leave</ion-button>
           </ion-item>
         </ion-card>
       </template>
-<!-- <iframe frameborder="0"
+      <!-- <iframe frameborder="0"
         scrolling="no"
         id="chat_embed"
         src="https://www.twitch.tv/embed/jamesfdickinson/chat?parent=192.168.1.11"
         height="500"
         width="100%">
-</iframe>   -->
+      </iframe>-->
       <!-- <ion-card>
         <ion-card-header>
           <ion-card-title>Your Pairing</ion-card-title>

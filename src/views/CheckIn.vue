@@ -14,7 +14,7 @@
             </ion-button>
           </ion-menu-toggle>
         </ion-buttons>-->
-        <ion-title>Registration</ion-title>
+        <ion-title>Check-In</ion-title>
         <ion-buttons slot="end">
           <ion-button v-on:click="$router.push({ name: 'PlayerNew'})">
             <ion-icon name="person-add" size="large"></ion-icon>

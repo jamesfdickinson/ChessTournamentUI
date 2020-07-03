@@ -51,6 +51,9 @@ export default {
       editor: ClassicEditor,
       editorConfig: {
         // The configuration of the rich-text editor.
+        link: {
+          addTargetToExternalLinks: true
+        }
       },
       tournament: {
         name: "",
