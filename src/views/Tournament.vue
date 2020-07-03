@@ -106,7 +106,7 @@
               @click="$router.push({ name: 'PlayerEdit', params: { id: userPlayer.playerId} })"
             ></ion-icon>
           </ion-item> -->
-          <!-- <ion-item>
+           <ion-item>
             <ion-icon name="clipboard" slot="start"></ion-icon>
             <ion-label>Registered</ion-label>
             <ion-button
@@ -114,15 +114,15 @@
               @click="$router.push({ name: 'Player', params: { id: userPlayer.playerId} })"
             >View</ion-button>
           </ion-item>
-          <ion-item>
+          <!-- <ion-item>
             <ion-icon name="clipboard" slot="start"></ion-icon>
             <ion-label>Registered</ion-label>
             <ion-button
               slot="end"
               @click="$router.push({ name: 'PlayerEdit', params: { id: userPlayer.playerId} })"
             >Edit</ion-button>
-          </ion-item>-->
-          <ion-item v-if=" userPlayer.isPresent === false">
+          </ion-item> -->
+          <ion-item v-if="tournament.allowCheckIn && userPlayer.isPresent === false">
             <ion-icon name="close-circle-outline" slot="start" color="danger"></ion-icon>
             <ion-label color="danger">NOT checked-in</ion-label>
             <ion-button
