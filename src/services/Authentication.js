@@ -85,35 +85,7 @@ export default class Authentication {
         return fetch.post(`NotificationToken`, data);
     }
    
-    inviteCode(code, tournamentId) {
-        var user = this.getUser() || {};
-        var userName = user.userName;
-        return fetch.post(`accesscode`, { code: code, userName: userName, tournamentId: tournamentId })
-            .then(response => {
-                var user = response.data;
-                localStorage.setItem("user", JSON.stringify(user));
-                return user;
-            })
-            .catch((error) => {
-                if (error.response) throw error.response.data;
-                throw error;
-            });
-    }
-    fakeInviteCode(code, tournamentId) {
-        return new Promise(function (resolve, reject) {
-            if (code !== "123") reject("Invalid access code");
-
-            var newRole = tournamentId + "-Basic";
-            var user = this.getUser();
-            //add rule if not there
-            if (user.roles.indexOf(newRole) === -1) {
-                user.roles.push(newRole);
-                //save
-                localStorage.setItem("user", JSON.stringify(user));
-            }
-            resolve(true);
-        }.bind(this));
-    }
+    
     fakeLogin(userName, password) {
         return new Promise(function (resolve, reject) {
             let user = null;

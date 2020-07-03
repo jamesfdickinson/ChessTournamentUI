@@ -80,13 +80,14 @@ router.beforeEach((to, from, next) => {
     userName = user.userName;
     roles = user.roles || [];
   }
-  //check server roles locally
+  //check roles locally
   let allowAccess = authorization.isPageAllowed(toPage, tournamentId, roles, userName);
   if (allowAccess) {
     next();
   } else {
-    //check server roles from server
-    authorization.refreshAccess(userName)
+    //check roles from server
+    authorization.requestAccess(userName,tournamentId)
+    //authorization.refreshAccess(userName)
       .then((user) => {
         if (!user) throw "no user found";
         let roles = user.roles || [];

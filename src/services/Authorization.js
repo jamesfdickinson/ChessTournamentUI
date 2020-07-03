@@ -2,6 +2,22 @@ import fetch from "@/fetch.js";
 export default class Authorization {
     constructor() {
     }
+    requestAccess(userName, tournamentId) {
+        if (!userName) {
+            var user = this.getUser() || {};
+            userName = user.userName;
+        }
+        return fetch.post(`authentication/RequestAccess/${userName}?tournament=${tournamentId}`)
+            .then(response => {
+                var user = response.data;
+                localStorage.setItem("user", JSON.stringify(user));
+                return user;
+            })
+            .catch((error) => {
+                if (error.response) throw error.response.data || error.response.statusText;
+                throw error;
+            });
+    }
     refreshAccess(userName) {
         if (!userName) {
             var user = this.getUser() || {};
@@ -29,8 +45,7 @@ export default class Authorization {
 
         const pagesBasic = ['Players', 'Reports', 'Tournament', 'Tournament', 'SignUp', 'SignUpComplete', 'FAQ'];
         //const pagesBasic = [];
-        const authRequiredBasic = pagesBasic.includes(toPage);
-
+        let authRequiredBasic = pagesBasic.includes(toPage);
 
         //contains role "tournamentId-role".  
         let adminRole = tournamentId + "-Admin";
@@ -52,6 +67,33 @@ export default class Authorization {
 
         return true;
 
+    }
+    inviteCode(code,userName, tournamentId) {
+        return fetch.post(`accesscode`, { code: code, userName: userName, tournamentId: tournamentId })
+            .then(response => {
+                var user = response.data;
+                localStorage.setItem("user", JSON.stringify(user));
+                return user;
+            })
+            .catch((error) => {
+                if (error.response) throw error.response.data;
+                throw error;
+            });
+    }
+    fakeInviteCode(code, tournamentId) {
+        return new Promise(function (resolve, reject) {
+            if (code !== "123") reject("Invalid access code");
+
+            var newRole = tournamentId + "-Basic";
+            var user = this.getUser();
+            //add rule if not there
+            if (user.roles.indexOf(newRole) === -1) {
+                user.roles.push(newRole);
+                //save
+                localStorage.setItem("user", JSON.stringify(user));
+            }
+            resolve(true);
+        }.bind(this));
     }
 
 }

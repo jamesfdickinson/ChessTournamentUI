@@ -52,17 +52,20 @@
 
 <script>
 import Authentication from "@/services/Authentication.js";
+import Authorization from "@/services/Authorization.js";
 const authentication = new Authentication();
+const authorization = new Authorization();
 export default {
   name: "home",
 
   components: {},
   data() {
     let tournamentId = this.$route.params.tournament;
-    //let redirect = this.$route.query.redirect;
+    let redirect = this.$route.query.redirect;
     return {
       tournamentId: tournamentId,
       inviteCode: "",
+      redirect: redirect,
       errors: []
     };
   },
@@ -81,8 +84,14 @@ export default {
       let redirect = this.redirect;
       let tournamentId = this.tournamentId;
       this.errors = [];
-      authentication
-        .inviteCode(inviteCode, tournamentId)
+      const user = authentication.getUser();
+      if (!user || !user.userName) {
+        this.errors.push("User not found or logged in");
+        return;
+      }
+      let userName = user.userName;
+      authorization
+        .inviteCode(inviteCode,userName, tournamentId)
         .then(userData => {
           let user = userData;
           console.log("User Logged in: " + user.username, user);
@@ -97,8 +106,7 @@ export default {
         .catch(e => {
           this.errors.push(e);
         });
-    },
-
+    }
   },
   created() {
     //check for updated rights from server

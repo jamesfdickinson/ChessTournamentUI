@@ -8,6 +8,7 @@
 }
 ion-content {
   user-select: text;
+  -webkit-user-select: text;
 }
 ion-list a {
   text-decoration: none;
