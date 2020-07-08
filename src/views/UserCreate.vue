@@ -14,6 +14,13 @@
       <form @submit.prevent="handleSubmit">
         <ion-list>
           <ion-item>
+            <ion-label position="stacked">Name</ion-label>
+            <ion-input
+              :value="user.name"
+              @input="user.name = $event.target.value"
+            ></ion-input>
+          </ion-item>
+          <ion-item>
             <ion-label position="stacked">Email</ion-label>
             <ion-input
               type="email"
@@ -79,8 +86,7 @@ export default {
         id: userId,
         username: null,
         email: null,
-        firstName: null,
-        lastName: null,
+        name: null,
         password: null,
         allowNotifications: true
       },

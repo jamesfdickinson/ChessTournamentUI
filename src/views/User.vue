@@ -13,6 +13,10 @@
     <ion-content>
       <ion-list>
         <ion-item>
+          <ion-label position="fixed">Name</ion-label>
+          <ion-label>{{user.name}}</ion-label>
+        </ion-item>
+        <ion-item>
           <ion-label position="fixed">User Name</ion-label>
           <ion-label>{{user.userName}}</ion-label>
         </ion-item>
@@ -59,8 +63,7 @@ export default {
         id: user.id,
         userName: user.userName,
         email: user.email,
-        firstName: null,
-        lastName: null,
+        name: user.name,
         password: null,
         passwordVerify: null,
         allowNotifications: user.allowNotifications
@@ -76,8 +79,8 @@ export default {
       authentication.logout();
       this.$router.push({ path: `/` });
     },
-    PasswordChange(){
-        this.$router.push({ path: `PasswordChange` });
+    PasswordChange() {
+      this.$router.push({ path: `PasswordChange` });
     },
     save() {
       let user = this.user;

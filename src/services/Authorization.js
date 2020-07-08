@@ -69,7 +69,7 @@ export default class Authorization {
 
     }
     inviteCode(code,userName, tournamentId) {
-        return fetch.post(`accesscode`, { code: code, userName: userName, tournamentId: tournamentId })
+        return fetch.post(`accesscode`, { code: code, userName: userName, tournamentId: parseInt(tournamentId) })
             .then(response => {
                 var user = response.data;
                 localStorage.setItem("user", JSON.stringify(user));

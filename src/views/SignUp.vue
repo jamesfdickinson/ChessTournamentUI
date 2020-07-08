@@ -180,8 +180,9 @@ export default {
           this.errors.push(e);
         });
       let user = authentication.getUser();
-      if (user && user.email) {
-        this.player.email = user.email;
+      if (user) {
+        if (user.email) this.player.email = user.email;
+        if (user.name) this.player.firstName = user.name;
       }
     }
   },

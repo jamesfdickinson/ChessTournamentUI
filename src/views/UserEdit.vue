@@ -11,12 +11,20 @@
     </ion-header>
     <ion-content>
       <ion-list>
+         <ion-item>
+          <ion-label position="stacked">Name</ion-label>
+          <ion-input
+            :value="user.name"
+            @input="user.name = $event.target.value"
+            required
+          ></ion-input>
+        </ion-item>
         <ion-item>
           <ion-label position="stacked">Email</ion-label>
           <ion-input
             type="email"
-            :value="user.Email"
-            @input="user.Email = $event.target.value"
+            :value="user.email"
+            @input="user.email = $event.target.value"
             required
           ></ion-input>
         </ion-item>
@@ -76,8 +84,7 @@ export default {
       user: {
         username: userName,
         email: null,
-        firstName: null,
-        lastName: null,
+        name: null,
         password: null,
         passwordVerify: null,
         allowNotifications: true
