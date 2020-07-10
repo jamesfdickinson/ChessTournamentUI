@@ -164,6 +164,8 @@
 <script>
 import fetch from "@/fetch.js";
 import TeamIcon from "@/components/TeamIcon.vue";
+import Authentication from "@/services/Authentication";
+const authentication = new Authentication();
 export default {
   name: "home",
   components: { TeamIcon },
@@ -219,13 +221,34 @@ export default {
     },
     getRoomLink(room) {
       //todo: pass template in from tournament settings or position
-      let linkTemplate = "https://cardgames.app/cribbage/game/?room=[room]";
+      let linkTemplate =
+        "https://cardgames.app/cribbage/game/?room=[room]&name=[name]&email=[email]&id=[id]";
 
       if (!linkTemplate) return "";
+      let user = authentication.getUser();
+      var userName = user && user.name ? user.name : "unknown";
+      let email = user && user.email ? user.email : "";
+      let name = user && user.name ? user.name : "";
+      let gamerId = user && user.gamerId ? user.gamerId : "";
 
       let url = linkTemplate;
 
+      // //get gamerId from player if user is player
+      // let round = this.round;
+      // if (round && round.positions) {
+      //   let position = round.positions.filter(
+      //     p => p.room === room && p.playerEmail === email && email
+      //   );
+      //   if (position.length > 0) {
+      //     gamerId = position.playerGamerId;
+      //   }
+      // }
+
       url = url.replace("[room]", room);
+      url = url.replace("[email]", email);
+      url = url.replace("[name]", name);
+      url = url.replace("[id]", gamerId);
+
       // url = url.replace("[tournament]", tournament);
       // url = url.replace("[round]", round);
       // url = url.replace("[table]", table);

@@ -44,7 +44,6 @@
       <table class="table">
         <thead>
           <tr>
-            <th>Name</th>
             <th>User</th>
             <th>Role</th>
             <th></th>
@@ -53,8 +52,8 @@
         <tbody>
           <template v-for="tournamentUser of filteredItems">
             <tr :key="tournamentUser.id">
-              <td>{{tournamentUser.name}}</td>
-              <td>{{tournamentUser.userName}}</td>
+ 
+              <td>{{tournamentUser.name}} {{tournamentUser.userName}}</td>
               <td>{{tournamentUser.role}}</td>
               <td>
 

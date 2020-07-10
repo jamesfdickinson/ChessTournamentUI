@@ -10,7 +10,7 @@
             </ion-button>
           </ion-menu-toggle>
         </ion-buttons>
-        <ion-title>{{tournament.name}}</ion-title>
+        <ion-title>Tournament</ion-title>
         <ion-buttons slot="end">
           <ion-button v-on:click="userDetails()">
             <ion-icon name="contact"></ion-icon>
@@ -19,26 +19,23 @@
       </ion-toolbar>
     </ion-header>
     <ion-content>
-      <div class="title">
-        <img v-if="tournament.image" :src="tournament.image" />
-      </div>
-      <!-- <div class="title">
-        <img v-if="tournament.image" :src="tournament.image" />
-        <div class="bottomLabel">
-          <h1>{{tournament.name}}</h1>
+      <ion-card>
+        <div class="title">
+          <img v-if="tournament.image" :src="tournament.image" />
         </div>
-      </div>-->
-      <!-- <p>{{tournament.details}}</p> -->
-      <ion-item>
-        <ion-label>
-          <h1>{{tournament.name}}</h1>
-          <p>{{tournament.details}}</p>
-        </ion-label>
-      </ion-item>
+        <ion-item>
+          <ion-label>
+            <h1>{{tournament.name}}</h1>
+            <p>{{tournament.details}}</p>
+          </ion-label>
+        </ion-item>
+      </ion-card>
       <!-- <ion-item>
         <ion-icon slot="start" name="information-circle-outline"></ion-icon>
         <ion-label>{{tournament.details}}</ion-label>
       </ion-item>-->
+
+       <ion-card>
       <ion-item v-if="status != null">
         <ion-icon slot="start" name="alarm"></ion-icon>
         <ion-label>
@@ -79,16 +76,15 @@
         </ion-item>
       </ion-card>-->
 
-      <ion-card v-if="tournament.allowRegistration === true && userPlayers.length === 0">
-        <ion-item>
-          <ion-icon name="clipboard" slot="start"></ion-icon>
-          <ion-label>You are not registered</ion-label>
-          <ion-button
-            slot="end"
-            @click="$router.push({ name: 'SignUp', params: { tournament:tournamentId } })"
-          >Sign-Up</ion-button>
-        </ion-item>
-      </ion-card>
+      <ion-item v-if="tournament.allowRegistration === true && userPlayers.length === 0">
+        <ion-icon name="clipboard" slot="start"></ion-icon>
+        <ion-label>You are not registered</ion-label>
+        <ion-button
+          slot="end"
+          @click="$router.push({ name: 'SignUp', params: { tournament:tournamentId } })"
+        >Sign-Up</ion-button>
+      </ion-item>
+
       <!-- 
       <ion-card v-if="tournament.allowRegistration === true">
 
@@ -131,7 +127,7 @@
               @click="$router.push({ name: 'PlayerEdit', params: { id: userPlayer.playerId} })"
             ></ion-icon>
           </ion-item>-->
-          <ion-item>
+          <ion-item v-if="!tournament.allowCheckIn">
             <ion-icon name="clipboard" slot="start"></ion-icon>
             <ion-label>Registered</ion-label>
             <ion-button
@@ -164,6 +160,7 @@
           <!-- </ion-card> -->
         </div>
       </template>
+        </ion-card>
       <!-- <iframe frameborder="0"
         scrolling="no"
         id="chat_embed"
@@ -243,7 +240,6 @@
       </router-link>
     </ion-content>
     <!-- </ion-page> -->
-    
   </layout-menu>
 </template>
 
@@ -357,5 +353,4 @@ export default {
 a {
   text-decoration: none;
 }
-
 </style>

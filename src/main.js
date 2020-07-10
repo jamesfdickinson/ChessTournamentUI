@@ -18,6 +18,7 @@ import Notification from './services/Notification'
 import LayoutMenu from "@/components/LayoutMenu.vue";
 import LayoutNoMenu from "@/components/LayoutNoMenu.vue";
 import LayoutRaw from "@/components/LayoutRaw.vue";
+import LayoutTabs from "@/components/LayoutTabs.vue";
 import Toast from "@/components/Toast.js";
 import JsonCSV from 'vue-json-csv'
 
@@ -108,6 +109,7 @@ Vue.component('downloadCsv', JsonCSV)
 Vue.component('layout-menu', LayoutMenu);
 Vue.component('layout-no-menu', LayoutNoMenu);
 Vue.component('layout-raw', LayoutRaw);
+Vue.component('layout-tabs', LayoutTabs);
 new Vue({
   router,
   render: h => h(App),
