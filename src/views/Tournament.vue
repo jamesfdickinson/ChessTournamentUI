@@ -212,12 +212,12 @@
             <ion-label>FAQ</ion-label>
           </ion-item>
         </router-link>
-        <router-link :to="{ name: 'SignUp'}">
+        <!-- <router-link :to="{ name: 'SignUp'}">
           <ion-item button detail="true">
             <ion-icon slot="start" name="clipboard"></ion-icon>
             <ion-label>Sign Up</ion-label>
           </ion-item>
-        </router-link>
+        </router-link> -->
       </ion-items>
       <ion-card style="height:200px;">
         <Chat :channel="tournamentId.toString()" :userName="userName"></Chat>

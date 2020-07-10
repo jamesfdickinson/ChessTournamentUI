@@ -121,7 +121,7 @@ export default {
       this.$router.back();
     },
     handleSubmit() {
-      let tournamentId = this.tournamentId;
+      let tournamentId = parseInt(this.tournamentId);
       let player = this.player;
       let agreeTerms = this.agreeTerms;
       let tournament = this.tournament;
