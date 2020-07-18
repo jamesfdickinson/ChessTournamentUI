@@ -66,8 +66,10 @@
 <script>
 import Authentication from "@/services/Authentication.js";
 import Notification from "@/services/Notification.js";
+import NotificationSocket from "@/services/NotificationSocket.js";
 const authentication = new Authentication();
 const notification = new Notification();
+const notificationSocket = new NotificationSocket();
 export default {
   name: "home",
 
@@ -115,6 +117,7 @@ export default {
             this.$router.push({ path: `/` });
           }
           notification.requestNotificationToken();
+          notificationSocket.reconnect(user.token);
         })
         .catch(e => {
           this.errors.push(e);

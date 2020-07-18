@@ -173,7 +173,7 @@ export default new VueRouter({
     {
       path: '/:tournament/RoundCreate',
       name: 'RoundCreate',
-      component: RoundCreate
+      component: RoundCreateSwiss
     },
     {
       path: '/:tournament/RoundCreateSwiss',

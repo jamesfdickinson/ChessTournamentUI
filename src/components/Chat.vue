@@ -48,7 +48,8 @@
 <script>
 import SignalR from "@/services/SignalR.js";
 const signalR = new SignalR();
-
+import Authentication from "@/services/Authentication";
+const authentication = new Authentication();
 export default {
   name: "Chat",
   props: {
@@ -129,7 +130,9 @@ export default {
     connectToChat() {
       var channel = this.channel.toString();
       let userName = this.userName || "Unknown";
-      signalR.connect().then(r => {
+      let token = authentication.getToken();
+
+      signalR.connect(token,"chathub").then(r => {
         console.log(r);
         signalR.onReceiveMessage = this.onMessage.bind(this);
         signalR.onReceiveMessages = this.onMessages.bind(this);

@@ -21,34 +21,58 @@ import LayoutRaw from "@/components/LayoutRaw.vue";
 import LayoutTabs from "@/components/LayoutTabs.vue";
 import Toast from "@/components/Toast.js";
 import JsonCSV from 'vue-json-csv'
+import NotificationSocket from "@/services/NotificationSocket.js";
+import EventBus from "@/services/EventBus.js";
 
 //install ionic vue - https://www.youtube.com/watch?v=k6LH1L61E0Q
 
-let version = "2.1";
-let analyticsGA = new AnalyticsGA();
+const version = "2.1";
+const analyticsGA = new AnalyticsGA();
 analyticsGA.TrackStart("Tournament", version, "UA-2052018-24");
 analyticsGA.TrackPage("Start");
 
-let authentication = new Authentication();
-let authorization = new Authorization();
+const authentication = new Authentication();
+const authorization = new Authorization();
 
-let toast = new Toast();
+const toast = new Toast();
 
-let notification = new Notification();
+const notification = new Notification();
 notification.init();
 notification.onTokenRefresh = function (token) {
   authentication.sendNotificationToken(token);
 };
 notification.onMessage = function (payload) {
-  //show toast message
-  if (!payload) return false;
-  if (!payload.notification) return false;
+  // //show toast message
+  // if (!payload) return false;
+  // if (!payload.notification) return false;
 
-  let notification = payload.notification;
-  let message = notification.title;
-  let url = (payload.fcmOptions) ? payload.fcmOptions.link : null;
-  toast.show(message, 15000, "/audio/arpeggio.mp3",url,"_self");
+  // let notification = payload.notification;
+  // let message = notification.title;
+  // let url = (payload.fcmOptions) ? payload.fcmOptions.link : null;
+  // toast.show(message, 15000, "/audio/arpeggio.mp3", url, "_self");
 };
+
+const token = authentication.getToken();
+
+const notificationSocket = new NotificationSocket();
+notificationSocket.connect(token);
+// notificationSocket.connect(token).then(() => {
+//   let user = authentication.getUser();
+//   if (user) signalR.send("Login", user.userName);
+// });
+notificationSocket.onUpdate = function (data) {
+   EventBus.$emit('updated', data);
+};
+notificationSocket.onNotification = function (notification) {
+  //show toast message
+  if (!notification) return false;
+
+  let message = notification.title;
+  let url = notification.link;
+  toast.show(message, 15000, "/audio/arpeggio.mp3", url, "_self");
+};
+
+
 Vue.config.productionTip = true;
 
 Vue.config.ignoredElements = [/^ion-/]
@@ -87,8 +111,8 @@ router.beforeEach((to, from, next) => {
     next();
   } else {
     //check roles from server
-    authorization.requestAccess(userName,tournamentId)
-    //authorization.refreshAccess(userName)
+    authorization.requestAccess(userName, tournamentId)
+      //authorization.refreshAccess(userName)
       .then((user) => {
         if (!user) throw "no user found";
         let roles = user.roles || [];
