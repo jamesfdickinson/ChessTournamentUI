@@ -85,6 +85,8 @@ export default {
       this.$nextTick(() => this.scrollToEnd());
     },
     onMessages(messages) {
+      //clear array
+      this.chatLog.splice(0,this.chatLog.length);
       let chatLog = this.chatLog;
       for (let i = 0; i < messages.length; i++) {
         let message = messages[i];

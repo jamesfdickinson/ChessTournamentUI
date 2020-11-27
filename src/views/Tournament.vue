@@ -170,9 +170,9 @@
       <!-- <ion-list-header>Players</ion-list-header>
       <Standings></Standings>-->
 
-      <ion-card style="xheight:220px;  overflow-y: auto;">
+      <ion-card v-if="standings && standings.length > 0" style="xheight:220px;  overflow-y: auto;">
         <ion-list-header>Standings</ion-list-header>
-        <Standings :players="players"></Standings>
+        <Standings :players="standings"></Standings>
       </ion-card>
     </ion-content>
     <!-- </ion-page> -->
@@ -215,6 +215,7 @@ export default {
       userPlayers: [],
       userTable: {},
       players: [],
+      standings: [],
       errors: []
     };
   },
@@ -282,14 +283,15 @@ export default {
           let user = authentication.getUser() || {};
           let email = user.email;
           let userPlayers = [];
-          let userTable = [];
+          let userTable = {};
           if (email) {
             userPlayers = tournament.players.filter(i => i.email == email);
             let tablePositions = tournament.tablePositions || [];
-            userTable = this.getTableUser(tablePositions, email) || [];
+            userTable = this.getTableUser(tablePositions, email) || {};
           }
           this.tournament = tournament;
           this.players = tournament.players || [];
+          this.standings = tournament.standings || [];
           this.userPlayers = userPlayers;
           this.userTable = userTable;
         })
