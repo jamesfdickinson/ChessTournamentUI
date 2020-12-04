@@ -4,7 +4,11 @@
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
-          <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
+          <ion-icon
+            name="arrow-round-back"
+            size="large"
+            @click="$router.go(-1)"
+          ></ion-icon>
         </ion-buttons>
         <ion-title>Login</ion-title>
       </ion-toolbar>
@@ -20,10 +24,10 @@
               <div padding>
                 <ion-item>
                   <ion-input
-                    type="text"
-                    placeholder="Username"
+                    type="email"
+                    placeholder="Email"
                     :value="userName"
-                    @input="userName=$event.target.value"
+                    @input="userName = $event.target.value"
                   ></ion-input>
                 </ion-item>
 
@@ -32,16 +36,20 @@
                     type="password"
                     placeholder="Password"
                     :value="password"
-                    @input="password=$event.target.value"
+                    @input="password = $event.target.value"
                   ></ion-input>
                 </ion-item>
               </div>
               <!-- Needs a sumbit button so the form will submit on enter. <input type="submit"> or <button>(defaults to submit) will work. The ion-button is in the shadow dom and the form does not see it !-->
-              <input type="submit" style="display: none">
+              <input type="submit" style="display: none" />
               <div padding>
-                <ion-button type="submit" size="large" expand="block">Login</ion-button>
-                <ul style="color:red;">
-                  <li v-for="error in errors" v-bind:key="error">*{{ error }}</li>
+                <ion-button type="submit" size="large" expand="block"
+                  >Login</ion-button
+                >
+                <ul style="color: red">
+                  <li v-for="error in errors" v-bind:key="error">
+                    *{{ error }}
+                  </li>
                 </ul>
               </div>
             </ion-col>
@@ -49,14 +57,14 @@
         </ion-grid>
       </form>
 
-      <div padding style="text-align:center;margin-top:15px;">
+      <div padding style="text-align: center; margin-top: 15px">
         <p>Need an account?</p>
-        <ion-button type="button" size="large" expand v-on:click="openSignUp()">Sign up</ion-button>
+        <ion-button type="button" size="large" expand v-on:click="openSignUp()"
+          >Sign up</ion-button
+        >
       </div>
-       <div padding style="text-align:center;margin-top:15px;">
-  
-     <p><a v-on:click="openPasswordReset()"> Forgot password?</a></p>
-   
+      <div padding style="text-align: center; margin-top: 15px">
+        <p><a v-on:click="openPasswordReset()"> Forgot password?</a></p>
       </div>
     </ion-content>
     <!-- </ion-page> -->
@@ -82,7 +90,7 @@ export default {
       userName: "",
       password: "",
       redirect: redirect,
-      errors: []
+      errors: [],
     };
   },
   methods: {
@@ -92,10 +100,20 @@ export default {
     openSignUp() {
       this.$router.push({ path: "UserCreate" });
     },
-    openPasswordReset(){
+    openPasswordReset() {
       this.$router.push({ path: "PasswordResetRequest" });
     },
     handleSubmit() {
+      this.errors = [];
+      let userName = this.userName;
+      let password = this.password;
+
+      if (!password) this.errors.push("Password is required.");
+      if (!userName) this.errors.push("Username is required.");
+      if (userName && !userName.includes("@"))
+        this.errors.push("Not a valid email address");
+      if (this.errors.length > 0) return;
+
       this.login();
     },
     login() {
@@ -103,10 +121,10 @@ export default {
       let password = this.password;
       let redirect = this.redirect;
       let tournamentId = this.tournamentId;
-      this.errors = [];
+
       authentication
         .login(userName, password)
-        .then(userData => {
+        .then((userData) => {
           let user = userData;
           console.log("User Logged in: " + user.username, user);
           if (redirect) {
@@ -119,11 +137,16 @@ export default {
           notification.requestNotificationToken();
           notificationSocket.reconnect(user.token);
         })
-        .catch(e => {
-          this.errors.push(e);
+        .catch((e) => {
+          if (e || e.title) {
+            this.errors.push(e.title);
+          } else {
+            this.errors.push("Unauthorized");
+          }
+          console.warn(e);
         });
-    }
+    },
   },
-  created() {}
+  created() {},
 };
 </script>

@@ -30,7 +30,7 @@
         </li>
       </ul>-->
       <ion-list>
-        <ion-item
+        <ion-item button
           detail="true"
           v-for="player of filteredItems"
           :key="player.playerId"

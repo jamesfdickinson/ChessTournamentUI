@@ -22,8 +22,8 @@
       <ion-content>
         <ion-searchbar
           :value="searchInput"
-          @ionInput="searchInput = $event.target.value;"
-          @ionChange="searchInput= $event.target.value;"
+          @ionInput="searchInput = $event.target.value"
+          @ionChange="searchInput = $event.target.value"
         ></ion-searchbar>
 
         <!-- <router-link
@@ -57,24 +57,42 @@
         </router-link>-->
         <ion-list>
           <template v-for="tournament of filteredItems">
-            <router-link
+            <ion-item
               :key="tournament.id"
-              :to="{ name: 'Tournament', params: { tournament: tournament.id }}"
-              style="text-decoration: none;"
+              button
+              detail="true"
+              v-on:click="tournamentDetails(tournament.id)"
             >
-              <ion-card style="max-width:600px;">
-                <img v-if="!tournament.image" src="images/chess-board-thin.jpg" />
+              <ion-thumbnail slot="start">
+                <img
+                  v-if="!tournament.image"
+                  src="images/chess-board-thin.jpg"
+                />
                 <img v-if="tournament.image" :src="tournament.image" />
-                <ion-card-header>
-                  <ion-card-title>{{tournament.name}}</ion-card-title>
-                </ion-card-header>
-                <ion-card-content>
-                  <p>{{tournament.details}}</p>
-                </ion-card-content>
-              </ion-card>
-            </router-link>
+              </ion-thumbnail>
+              <ion-label>
+                <h2>{{ tournament.name }}</h2>
+                <p>
+                  {{ getLocalDate(tournament.startDateTime) }}
+                </p>
+              </ion-label>
+              <ion-badge slot="end">
+                {{ tournament.state }}
+              </ion-badge>
+              <!--                 
+                <ion-button slot="end" color="light" :href="tournament.id" >View </ion-button> -->
+            </ion-item>
           </template>
         </ion-list>
+        <!-- <router-link
+              :key="tournament.id"
+              :to="{
+                name: 'Tournament',
+                params: { tournament: tournament.id },
+              }"
+              style="text-decoration: none"
+            >
+            </router-link> -->
       </ion-content>
     </div>
   </layout-no-menu>
@@ -89,24 +107,44 @@ export default {
     return {
       tournaments: [],
       searchInput: "",
-      errors: []
+      errors: [],
     };
   },
   methods: {
     userDetails() {
       this.$router.push({ name: "User" });
     },
+    getLocalDate(date) {
+      if (!date) return null;
+      let localDate = new Date(date + "Z");
+      if (!localDate) return null;
+      return localDate.toLocaleString();
+    },
+    getStatus(state) {
+      if (state == "setup") return "open";
+      if (state == "registration") return "open";
+      if (state == "check-in") return "open";
+      if (state == "play") return "open";
+      if (state == "end") return "open";
+      return state;
+    },
+    tournamentDetails(tournamentId) {
+      this.$router.push({
+        name: "Tournament",
+        params: { tournament: tournamentId },
+      });
+    },
     loadData() {
       fetch
         .get(`tournament/type/Cribbage`)
-        .then(response => {
+        .then((response) => {
           this.tournaments = response.data;
           if (this.tournaments) this.tournaments.sort((a, b) => b.id - a.id);
         })
-        .catch(e => {
+        .catch((e) => {
           this.errors.push(e);
         });
-    }
+    },
   },
   created() {
     this.loadData();
@@ -117,7 +155,7 @@ export default {
       let searchInput = this.searchInput;
       if (searchInput) {
         searchInput = searchInput.toLowerCase();
-        filteredData = filteredData.filter(p => {
+        filteredData = filteredData.filter((p) => {
           if (p.name && p.name.toLowerCase().startsWith(searchInput))
             return true;
           if (p.details && p.details.toLowerCase().startsWith(searchInput))
@@ -128,7 +166,7 @@ export default {
         });
       }
       return filteredData;
-    }
-  }
+    },
+  },
 };
 </script>

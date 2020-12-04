@@ -4,7 +4,11 @@
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
-          <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
+          <ion-icon
+            name="arrow-round-back"
+            size="large"
+            @click="$router.go(-1)"
+          ></ion-icon>
         </ion-buttons>
         <ion-title>Edit Tournament</ion-title>
       </ion-toolbar>
@@ -13,11 +17,17 @@
       <ion-list>
         <ion-item>
           <ion-label position="stacked">Name</ion-label>
-          <ion-input :value="tournament.name" @input="tournament.name = $event.target.value"></ion-input>
+          <ion-input
+            :value="tournament.name"
+            @input="tournament.name = $event.target.value"
+          ></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Type</ion-label>
-          <ion-input :value="tournament.type" @input="tournament.type = $event.target.value"></ion-input>
+          <ion-input
+            :value="tournament.type"
+            @input="tournament.type = $event.target.value"
+          ></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Details</ion-label>
@@ -28,15 +38,30 @@
           ></ion-textarea>
         </ion-item>
         <ion-item>
+          <ion-label position="stacked">Start Date/Time</ion-label>
+          <ion-datetime
+            display-format="D MMM YYYY H:mm"
+            :value="new Date(tournament.startDateTime).toISOString()"
+            @ionChange="
+              tournament.startDateTime = new Date(
+                $event.target.value
+              ).toISOString()
+            "
+          ></ion-datetime>
+        </ion-item>
+        <ion-item>
           <ion-label position="stacked">Rounds</ion-label>
-          <ion-input :value="tournament.rounds" @input="tournament.rounds = $event.target.value"></ion-input>
+          <ion-input
+            :value="tournament.rounds"
+            @input="tournament.rounds = $event.target.value"
+          ></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Pairing Algorithm</ion-label>
           <ion-select
             placeholder="Select One"
             :value="tournament.pairing"
-            @ionChange="tournament.pairing= $event.target.value;"
+            @ionChange="tournament.pairing = $event.target.value"
           >
             <ion-select-option value="Swiss">Swiss</ion-select-option>
             <!-- <ion-select-option value="SingleElimination">Single Elimination</ion-select-option> -->
@@ -44,7 +69,10 @@
         </ion-item>
         <ion-item>
           <ion-label position="stacked">State</ion-label>
-          <ion-input :value="tournament.state" @input="tournament.state = $event.target.value"></ion-input>
+          <ion-input
+            :value="tournament.state"
+            @input="tournament.state = $event.target.value"
+          ></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Access Code: Basic</ion-label>
@@ -69,7 +97,10 @@
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Image (url)</ion-label>
-          <ion-input :value="tournament.image" @input="tournament.image = $event.target.value"></ion-input>
+          <ion-input
+            :value="tournament.image"
+            @input="tournament.image = $event.target.value"
+          ></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Teams (separated by commas)</ion-label>
@@ -91,7 +122,9 @@
           <ion-checkbox
             slot="start"
             :checked="tournament.autoAdvanceRounds"
-            @ionChange="tournament.autoAdvanceRounds = ($event.target.checked == true);"
+            @ionChange="
+              tournament.autoAdvanceRounds = $event.target.checked == true
+            "
           ></ion-checkbox>
         </ion-item>
         <ion-item>
@@ -99,7 +132,9 @@
           <ion-checkbox
             slot="start"
             :checked="tournament.allowNotifications"
-            @ionChange="tournament.allowNotifications = ($event.target.checked == true);"
+            @ionChange="
+              tournament.allowNotifications = $event.target.checked == true
+            "
           ></ion-checkbox>
         </ion-item>
 
@@ -108,7 +143,7 @@
           <ion-checkbox
             slot="start"
             :checked="tournament.hidden"
-            @ionChange="tournament.hidden = ($event.target.checked == true);"
+            @ionChange="tournament.hidden = $event.target.checked == true"
           ></ion-checkbox>
         </ion-item>
         <ion-item>
@@ -116,7 +151,9 @@
           <ion-checkbox
             slot="start"
             :checked="tournament.showSignUpPage"
-            @ionChange="tournament.showSignUpPage = ($event.target.checked == true);"
+            @ionChange="
+              tournament.showSignUpPage = $event.target.checked == true
+            "
           ></ion-checkbox>
         </ion-item>
         <ion-item>
@@ -124,7 +161,9 @@
           <ion-checkbox
             slot="start"
             :checked="tournament.requireCheckIn"
-            @ionChange="tournament.requireCheckIn = ($event.target.checked == true);"
+            @ionChange="
+              tournament.requireCheckIn = $event.target.checked == true
+            "
           ></ion-checkbox>
         </ion-item>
         <ion-item>
@@ -132,7 +171,7 @@
           <ion-checkbox
             slot="start"
             :checked="tournament.allowCheckIn"
-            @ionChange="tournament.allowCheckIn = ($event.target.checked == true);"
+            @ionChange="tournament.allowCheckIn = $event.target.checked == true"
           ></ion-checkbox>
         </ion-item>
         <!-- <ion-item>
@@ -164,12 +203,14 @@
 
       <ion-button expand="block" v-on:click="save()">Save</ion-button>
       <hr />
-      <ion-button expand="block" color="light" v-on:click="back()">Cancel</ion-button>
+      <ion-button expand="block" color="light" v-on:click="back()"
+        >Cancel</ion-button
+      >
       <hr />
       <!-- <ion-button color="danger" v-on:click="deletePlayer()">Delete</ion-button> -->
       <!-- <ion-button @click="presentAlertConfirm">Show Alert (confirm)</ion-button> -->
       <!-- <ion-button color="danger">Delete</ion-button> -->
-      <div style="color:red;">{{error}}</div>
+      <div style="color: red">{{ error }}</div>
     </ion-content>
     <!-- </ion-page> -->
   </layout-menu>
@@ -184,26 +225,14 @@ export default {
   data() {
     var tournamentId = this.$route.params.tournament;
     var randomInviteCode =
-      Math.random()
-        .toString(36)
-        .substring(2, 5) +
-      Math.random()
-        .toString(36)
-        .substring(2, 5);
+      Math.random().toString(36).substring(2, 5) +
+      Math.random().toString(36).substring(2, 5);
     var randomInviteCodeRecorder =
-      Math.random()
-        .toString(36)
-        .substring(2, 5) +
-      Math.random()
-        .toString(36)
-        .substring(2, 5);
+      Math.random().toString(36).substring(2, 5) +
+      Math.random().toString(36).substring(2, 5);
     var randomInviteCodeAdmin =
-      Math.random()
-        .toString(36)
-        .substring(2, 5) +
-      Math.random()
-        .toString(36)
-        .substring(2, 5);
+      Math.random().toString(36).substring(2, 5) +
+      Math.random().toString(36).substring(2, 5);
     return {
       tournamentId: tournamentId,
       tournament: {
@@ -231,9 +260,10 @@ export default {
         state: "setup",
         maxPlayers: 50,
         requireCheckIn: true,
-        allowCheckIn: false
+        allowCheckIn: false,
+        startDateTime: null,
       },
-      error: ""
+      error: "",
     };
   },
   methods: {
@@ -247,11 +277,11 @@ export default {
       if (tournamentId && tournament) {
         fetch
           .post(`tournament/${tournamentId}`, tournament)
-          .then(response => {
+          .then((response) => {
             console.log(response);
             this.$router.back(); //back
           })
-          .catch(e => {
+          .catch((e) => {
             this.error = "Error: Save failed";
             console.warn(e);
           });
@@ -259,12 +289,12 @@ export default {
         tournament.Id = tournamentId;
         fetch
           .put(`tournament/${tournamentId}`, tournament)
-          .then(response => {
+          .then((response) => {
             console.log(response);
             //back
             this.$router.back();
           })
-          .catch(e => {
+          .catch((e) => {
             this.error = "Error: Save failed";
             console.warn(e);
           });
@@ -291,18 +321,18 @@ export default {
       if (tournamentId) {
         fetch
           .get(`tournament/${tournamentId}`)
-          .then(response => {
+          .then((response) => {
             this.tournament = response.data;
           })
-          .catch(e => {
+          .catch((e) => {
             this.error = "Error: Load failed";
             console.warn(e);
           });
       }
-    }
+    },
   },
   created() {
     this.loadData();
-  }
+  },
 };
 </script>
