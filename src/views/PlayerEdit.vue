@@ -4,7 +4,11 @@
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
-          <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
+          <ion-icon
+            name="arrow-round-back"
+            size="large"
+            @click="$router.go(-1)"
+          ></ion-icon>
         </ion-buttons>
 
         <ion-title>Player Edit</ion-title>
@@ -14,19 +18,31 @@
       <ion-list>
         <ion-item>
           <ion-label position="stacked">First Name</ion-label>
-          <ion-input :value="player.firstName" @input="player.firstName = $event.target.value"></ion-input>
+          <ion-input
+            :value="player.firstName"
+            @input="player.firstName = $event.target.value"
+          ></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Last Name</ion-label>
-          <ion-input :value="player.lastName" @input="player.lastName = $event.target.value"></ion-input>
+          <ion-input
+            :value="player.lastName"
+            @input="player.lastName = $event.target.value"
+          ></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Gamer ID</ion-label>
-          <ion-input :value="player.gamerId" @input="player.gamerId = $event.target.value"></ion-input>
+          <ion-input
+            :value="player.gamerId"
+            @input="player.gamerId = $event.target.value"
+          ></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Team</ion-label>
-          <ion-input :value="player.team" @input="player.team = $event.target.value"></ion-input>
+          <ion-input
+            :value="player.team"
+            @input="player.team = $event.target.value"
+          ></ion-input>
         </ion-item>
         <!--   <ion-item>
           <ion-label position="stacked">Grade</ion-label>
@@ -38,7 +54,10 @@
         </ion-item>-->
         <ion-item>
           <ion-label position="stacked">Division</ion-label>
-          <ion-input :value="player.division" @input="player.division = $event.target.value"></ion-input>
+          <ion-input
+            :value="player.division"
+            @input="player.division = $event.target.value"
+          ></ion-input>
         </ion-item>
 
         <ion-item>
@@ -47,7 +66,7 @@
           <ion-checkbox
             slot="start"
             :checked="player.isPresent"
-            @ionChange="player.isPresent = ($event.target.checked == true);"
+            @ionChange="player.isPresent = $event.target.checked == true"
           ></ion-checkbox>
         </ion-item>
 
@@ -56,7 +75,7 @@
           <ion-checkbox
             slot="start"
             :checked="player.paid"
-            @ionChange="player.paid = ($event.target.checked == true);"
+            @ionChange="player.paid = $event.target.checked == true"
           ></ion-checkbox>
         </ion-item>
         <!-- <ion-item>
@@ -73,7 +92,10 @@
         </ion-item>-->
         <ion-item>
           <ion-label position="stacked">Email</ion-label>
-          <ion-input :value="player.email" @input="player.email = $event.target.value"></ion-input>
+          <ion-input
+            :value="player.email"
+            @input="player.email = $event.target.value"
+          ></ion-input>
         </ion-item>
         <!-- <ion-item>
           <ion-label position="stacked">Phone Number</ion-label>
@@ -83,13 +105,17 @@
       <section>
         <ion-button expand="block" v-on:click="save()">Save</ion-button>
         <hr />
-        <ion-button expand="block" color="light" v-on:click="back()">Cancel</ion-button>
+        <ion-button expand="block" color="light" v-on:click="back()"
+          >Cancel</ion-button
+        >
         <hr />
-        <ion-button color="danger" v-on:click="deletePlayer()">Delete</ion-button>
+        <ion-button color="danger" v-on:click="deletePlayer()"
+          >Delete</ion-button
+        >
         <!-- <ion-button @click="presentAlertConfirm">Show Alert (confirm)</ion-button> -->
         <!-- <ion-button color="danger">Delete</ion-button> -->
       </section>
-      <div style="color:red;">{{error}}</div>
+      <div style="color: red">{{ error }}</div>
     </ion-content>
     <!-- </ion-page> -->
   </layout-no-menu>
@@ -113,9 +139,9 @@ export default {
         allowNotifications: true,
         division: 1,
         team: "",
-        isPresent: true
+        isPresent: true,
       },
-      error: ""
+      error: "",
     };
   },
   methods: {
@@ -136,8 +162,10 @@ export default {
       //if (!player.grade) errors.push("grade is required.");
       //if (isNaN(player.grade)) errors.push("grade is not a number.");
       if (!player.rating) player.rating = 1000;
+      player.rating = parseInt(player.rating) || 1000;
       if (isNaN(player.rating)) errors.push("rating is not a number.");
       if (!player.division) player.division = 1;
+      player.division = parseInt(player.division) || 1;
       if (isNaN(player.division)) errors.push("division is not a number.");
       if (errors.length > 0) {
         this.error = errors;
@@ -147,7 +175,7 @@ export default {
       if (playerId) {
         fetch
           .post(`player/${playerId}`, player)
-          .then(response => {
+          .then((response) => {
             console.log(response);
             //back
             this.$router.back();
@@ -157,20 +185,20 @@ export default {
             //    this.$router.push({ path: `/${tournamentId}/Player/${playerId}` });
             // }
           })
-          .catch(e => {
-            this.error = "Error: Save failed."  + e;
+          .catch((e) => {
+            this.error = "Error: Save failed." + e;
             console.warn(e);
           });
       } else {
         player.tournamentId = tournamentId;
         fetch
           .put(`player`, player)
-          .then(response => {
+          .then((response) => {
             console.log(response);
             //back
             this.$router.back();
           })
-          .catch(e => {
+          .catch((e) => {
             this.error = "Error: Save failed." + e;
             console.warn(e);
           });
@@ -182,16 +210,16 @@ export default {
       if (playerId) {
         fetch
           .delete(`player/${playerId}`)
-          .then(response => {
+          .then((response) => {
             console.log(response);
             //back
             //this.$router.back();
             this.$router.push({
               name: "Players",
-              params: { tournament: tournamentId }
+              params: { tournament: tournamentId },
             });
           })
-          .catch(e => {
+          .catch((e) => {
             this.error = "Error: Delete failed";
             console.warn(e);
           });
@@ -202,18 +230,18 @@ export default {
       if (playerId) {
         fetch
           .get(`player/${playerId}`)
-          .then(response => {
+          .then((response) => {
             this.player = response.data;
           })
-          .catch(e => {
+          .catch((e) => {
             this.error = "Error: Load failed";
             console.warn(e);
           });
       }
-    }
+    },
   },
   created() {
     this.loadData();
-  }
+  },
 };
 </script>

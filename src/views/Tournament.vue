@@ -25,8 +25,8 @@
         </div> -->
         <ion-item>
           <ion-thumbnail slot="start">
-                <img v-if="tournament.image" :src="tournament.image" />
-              </ion-thumbnail>
+            <img v-if="tournament.image" :src="tournament.image" />
+          </ion-thumbnail>
           <ion-label>
             <h1>{{ tournament.name }}</h1>
             <p>{{ tournament.details }}</p>
@@ -115,7 +115,8 @@
         >
           <ion-icon name="clipboard" slot="start"></ion-icon>
           <ion-label>You are not registered</ion-label>
-          <ion-button
+          <ion-button slot="end" @click="signup()">Sign-Up</ion-button>
+          <!-- <ion-button
             slot="end"
             @click="
               $router.push({
@@ -123,8 +124,7 @@
                 params: { tournament: tournamentId },
               })
             "
-            >Sign-Up</ion-button
-          >
+            >Sign-Up</ion-button> -->
         </ion-item>
 
         <template v-for="userPlayer of userPlayers">
@@ -174,6 +174,9 @@
           </div>
         </template>
       </ion-card>
+      <div style="color: red">
+        <div v-for="error in errors" v-bind:key="error">*{{ error }}</div>
+      </div>
       <ion-card>
         <Table :table="userTable"></Table>
       </ion-card>
@@ -225,11 +228,11 @@
         <div v-html="tournament.video"></div>
       </ion-card>
       <ion-card
-        v-if="standings && standings.length > 0"
+        v-if="players && players.length > 0"
         style="xheight: 220px; overflow-y: auto"
       >
         <ion-list-header>Standings</ion-list-header>
-        <Standings :players="standings"></Standings>
+        <Standings :players="players"></Standings>
       </ion-card>
     </ion-content>
     <!-- </ion-page> -->
@@ -264,13 +267,13 @@ export default {
     return {
       tournamentId: tournamentId,
       tournament: {},
+      user: user,
       userName: userName,
       state: "signup1",
       status: { state: "" },
       userPlayers: [],
       userTable: {},
       players: [],
-      standings: [],
       errors: [],
     };
   },
@@ -279,6 +282,43 @@ export default {
       this.$router.push({ name: "User" });
     },
     editPlayer() {},
+    signup() {
+      let user = this.user;
+      let tournamentId = parseInt(this.tournamentId);
+
+      this.errors = [];
+      if (!user)
+        this.errors.push("User is not logged in.  Can't sign up user.");
+
+      var player = {
+        tournamentId: tournamentId,
+        firstName: user.name,
+        lastName: "",
+        grade: 12,
+        team: "",
+        rating: 1000,
+        division: 1,
+        isPresent: false,
+        paid: false,
+        parentName: null,
+        email: user.email,
+        parentPhone: null,
+        emailHelpList: false,
+        allowNotifications: true,
+        gamerId: user.gamerId,
+      };
+      if (this.errors.length > 0) return;
+      fetch
+        .put(`player`, player)
+        .then(() => {
+          this.loadData();
+        })
+        .catch((e) => {
+          //todo: display error
+          console.error(e);
+          this.errors.push("error signing up.");
+        });
+    },
     checkIn(playerId) {
       if (!playerId) return;
       fetch.post(`player/${playerId}/checkin/true`).then(() => {
@@ -346,7 +386,7 @@ export default {
           }
           this.tournament = tournament;
           this.players = tournament.players || [];
-          this.standings = tournament.standings || [];
+ 
           this.userPlayers = userPlayers;
           this.userTable = userTable;
         })
@@ -381,18 +421,18 @@ export default {
     onUpdate(message) {
       console.log("onUpdate: " + message);
       this.loadData();
-    }
+    },
   },
   mounted() {
     this.loadData();
     // this.connectToChat();
     //todo: move data to store and listen to data updates
-    EventBus.$on("updated", this.onUpdate.bind(this));
+    EventBus.$on("updated", this.onUpdate);
   },
   created() {},
   beforeDestroy() {
     //this.disconnectToChat();
-    EventBus.$off("updated", this.onUpdate.bind(this));
+    EventBus.$off("updated", this.onUpdate);
   },
 };
 </script>
