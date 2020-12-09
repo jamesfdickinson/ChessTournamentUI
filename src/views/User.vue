@@ -4,7 +4,11 @@
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
-          <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
+          <ion-icon
+            name="arrow-round-back"
+            size="large"
+            @click="$router.go(-1)"
+          ></ion-icon>
         </ion-buttons>
 
         <ion-title>User</ion-title>
@@ -14,17 +18,20 @@
       <ion-list>
         <ion-item>
           <ion-label position="fixed">Name</ion-label>
-          <ion-label>{{user.name}}</ion-label>
+          <ion-label>{{ user.name }}</ion-label>
         </ion-item>
-        <ion-item>
+        <!-- <ion-item>
           <ion-label position="fixed">User Name</ion-label>
-          <ion-label>{{user.userName}}</ion-label>
-        </ion-item>
+          <ion-label>{{ user.userName }}</ion-label>
+        </ion-item> -->
         <ion-item>
           <ion-label position="fixed">Email</ion-label>
-          <ion-label>{{user.email}}</ion-label>
+          <ion-label>{{ user.email }}</ion-label>
         </ion-item>
-
+        <ion-item>
+          <ion-label position="fixed">GamerId</ion-label>
+          <ion-label>{{ user.gamerId }}</ion-label>
+        </ion-item>
         <ion-item>
           <ion-label position="fixed">Password</ion-label>
           <ion-button v-on:click="PasswordChange()">Change Password</ion-button>
@@ -40,11 +47,13 @@
       </ion-list>
       <hr />
 
-      <div style="text-align: center;">
-        <ion-button type="submit" size="large" v-on:click="logOut()">Log Out</ion-button>
+      <div style="text-align: center">
+        <ion-button type="submit" size="large" v-on:click="logOut()"
+          >Log Out</ion-button
+        >
       </div>
 
-      <div style="color:red;">{{error}}</div>
+      <div style="color: red">{{ error }}</div>
     </ion-content>
     <!-- </ion-page> -->
   </layout-no-menu>
@@ -64,11 +73,12 @@ export default {
         userName: user.userName,
         email: user.email,
         name: user.name,
+        gamerId: user.gamerId,
         password: null,
         passwordVerify: null,
-        allowNotifications: user.allowNotifications
+        allowNotifications: user.allowNotifications,
       },
-      error: ""
+      error: "",
     };
   },
   methods: {
@@ -87,7 +97,7 @@ export default {
       let redirect = this.redirect;
       authentication
         .register(user)
-        .then(userData => {
+        .then((userData) => {
           let user = userData;
           console.log("User Logged in: " + user.username, user);
           //back
@@ -97,11 +107,11 @@ export default {
             this.$router.push({ path: `/` });
           }
         })
-        .catch(e => {
+        .catch((e) => {
           this.error = "Error: Save failed";
           console.warn(e);
         });
-    }
-  }
+    },
+  },
 };
 </script>

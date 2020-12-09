@@ -12,6 +12,7 @@ import CheckIn from './views/CheckIn.vue'
 import SignUp from './views/SignUp.vue'
 import SignUpComplete from './views/SignUpComplete.vue'
 import SignUpEdit from './views/SignUpEdit.vue'
+import PlayGame from './views/PlayGame.vue'
 import Players from './views/Players.vue'
 import Player from './views/Player.vue'
 import PlayerEdit from './views/PlayerEdit.vue'
@@ -19,7 +20,7 @@ import Rounds from './views/Rounds.vue'
 import RoundsEdit from './views/RoundsEdit.vue'
 import Round from './views/Round.vue'
 import RoundEdit from './views/RoundEdit.vue'
-import RoundCreate from './views/RoundCreate.vue'
+//import RoundCreate from './views/RoundCreate.vue'
 import RoundCreateSwiss from './views/RoundCreateSwiss.vue'
 import RoundCreateSingleElimination from './views/RoundCreateSingleElimination.vue'
 import RoundDetails from './views/RoundDetails.vue'
@@ -144,7 +145,13 @@ export default new VueRouter({
       path: '/:tournament/SignUpEdit',
       name: 'SignUpEdit',
       component: SignUpEdit
+    }, 
+    {
+      path: '/:tournament/PlayGame/:id',
+      name: 'PlayGame',
+      component: PlayGame
     },
+    
     {
       path: '/:tournament/Players',
       name: 'Players',

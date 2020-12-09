@@ -28,6 +28,14 @@
               @input="user.username = $event.target.value"
             ></ion-input>
           </ion-item>
+          <ion-item>
+              <ion-label position="stacked">Cribbage ID</ion-label>
+              <ion-input
+                type="number"
+                :value="user.gamerId"
+                @input="user.gamerId = $event.target.value"
+              ></ion-input>
+            </ion-item>
           <!-- <ion-item>
           <ion-label position="stacked">First Name</ion-label>
           <ion-input :value="user.firstName" @input="user.firstName = $event.target.value"></ion-input>
@@ -87,6 +95,7 @@ export default {
         username: null,
         email: null,
         name: null,
+        gamerId: null,
         password: null,
         allowNotifications: true
       },

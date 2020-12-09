@@ -7,10 +7,15 @@
           <ion-icon
             name="arrow-round-back"
             size="large"
-            @click="$router.push({ name: 'Rounds', params: { tournament:tournamentId } })"
+            @click="
+              $router.push({
+                name: 'Rounds',
+                params: { tournament: tournamentId },
+              })
+            "
           ></ion-icon>
         </ion-buttons>
-        <ion-title>Round {{roundId}}</ion-title>
+        <ion-title>Round {{ roundId }}</ion-title>
         <ion-buttons slot="end">
           <ion-button @click="details()">
             <ion-icon name="paper" size="large"></ion-icon>
@@ -22,15 +27,15 @@
       <ion-searchbar
         placeholder="Table #, First, or Last Name"
         :value="searchInput"
-        @ionInput="searchInput = $event.target.value;"
-        @ionChange="searchInput= $event.target.value;"
+        @ionInput="searchInput = $event.target.value"
+        @ionChange="searchInput = $event.target.value"
       ></ion-searchbar>
       <ion-item>
         <ion-label>Hide Completed Games</ion-label>
         <ion-toggle
           :checked="hideCompletedGames"
-          @ionInput="hideCompletedGames = $event.target.checked;"
-          @ionChange="hideCompletedGames= $event.target.checked;"
+          @ionInput="hideCompletedGames = $event.target.checked"
+          @ionChange="hideCompletedGames = $event.target.checked"
         ></ion-toggle>
       </ion-item>
 
@@ -40,16 +45,26 @@
             <ion-item color="primary">
               <!-- <ion-label slot="start">Table {{table.id}}</ion-label> -->
 
-              <ion-label slot="start">Room {{table.id}}</ion-label>
+              <ion-label slot="start">Room {{ table.id }}</ion-label>
 
               <ion-button
-                slot="start"
+                v-if="table.positions.some((p) => p.playerEmail == user.email)"
+                slot="end"
                 color="light"
                 fill="outline"
-                :href="getRoomLink(table.id)"
+                @click="openGame(table.id)"
                 target="_blank"
-              >Join</ion-button>
-
+                >Join</ion-button
+              >
+              <ion-button
+                v-else
+                slot="end"
+                color="light"
+                fill="outline"
+                @click="watchGame(table.id)"
+                target="_blank"
+                >Watch</ion-button
+              >
               <!-- <ion-button slot="start" v-on:click="openTable(table.id)">
                   <ion-icon name="open"></ion-icon>
                 </ion-button>
@@ -123,10 +138,18 @@
             <ion-icon v-else name="contact" slot="start"></ion-icon>
               -->
               <!-- <TeamIcon :title="position.playerTeam" style="margin-right: 10px;"></TeamIcon> -->
-              <TeamIcon :title="position.playerFirstName" style="margin-right: 10px;"></TeamIcon>
+              <TeamIcon
+                :title="position.playerFirstName"
+                style="margin-right: 10px"
+              ></TeamIcon>
 
-              <ion-label>{{position.playerFirstName}} {{position.playerLastName}}</ion-label>
-              <ion-badge slot="end" color="light">{{position.points}}</ion-badge>
+              <ion-label
+                >{{ position.playerFirstName }}
+                {{ position.playerLastName }}</ion-label
+              >
+              <ion-badge slot="end" color="light">{{
+                position.points
+              }}</ion-badge>
             </ion-item>
             <!-- <ion-item>
               <ion-label slot="start">Room {{getRoom(table.id)}}</ion-label>
@@ -172,6 +195,7 @@ export default {
   data() {
     var roundId = this.$route.params.id;
     var tournamentId = this.$route.params.tournament;
+    let user = authentication.getUser();
     //todo: save app wide settings
     var hideCompletedGames = localStorage.getItem("hideCompletedGames");
     if (hideCompletedGames == null) hideCompletedGames = false;
@@ -180,10 +204,11 @@ export default {
     return {
       tournamentId: tournamentId,
       roundId: roundId,
+      user: user,
       hideCompletedGames: hideCompletedGames,
       searchInput: "",
       round: [],
-      errors: []
+      errors: [],
     };
   },
   methods: {
@@ -205,110 +230,27 @@ export default {
       let tournamentId = this.tournamentId;
       this.$router.push({
         name: "RoundDetails",
-        params: { id: roundId, tournament: tournamentId }
+        params: { id: roundId, tournament: tournamentId },
       });
     },
-    getRoomName(table, round, tournament) {
-      //todo: pass template in from tournament settings or position
-      let tableNameTemplate = "Room [table]r[round]t[tournament]";
-
-      if (!tableNameTemplate) tableNameTemplate = "Table [table]";
-      let tableName = tableNameTemplate
-        .replace("[tournament]", tournament)
-        .replace("[round]", round)
-        .replace("[table]", table);
-      return tableName;
+    openGame(id) {
+      this.$router.push({
+        name: "PlayGame",
+        params: { id: id },
+      });
     },
-    getRoomLink(room) {
-      //todo: pass template in from tournament settings or position
-      let linkTemplate =
-        "https://cardgames.app/cribbage/game/?room=[room]&name=[name]&email=[email]&id=[id]";
-
-      if (!linkTemplate) return "";
-      let user = authentication.getUser();
-      var userName = user && user.name ? user.name : "unknown";
-      let email = user && user.email ? user.email : "";
-      let name = user && user.name ? user.name : "";
-      let gamerId = user && user.gamerId ? user.gamerId : "";
-
-      let url = linkTemplate;
-
-      // //get gamerId from player if user is player
-      // let round = this.round;
-      // if (round && round.positions) {
-      //   let position = round.positions.filter(
-      //     p => p.room === room && p.playerEmail === email && email
-      //   );
-      //   if (position.length > 0) {
-      //     gamerId = position.playerGamerId;
-      //   }
-      // }
-
-      url = url.replace("[room]", room);
-      url = url.replace("[email]", email);
-      url = url.replace("[name]", name);
-      url = url.replace("[id]", gamerId);
-
-      // url = url.replace("[tournament]", tournament);
-      // url = url.replace("[round]", round);
-      // url = url.replace("[table]", table);
-
-      return url;
+    watchGame(id) {
+      this.$router.push({
+        name: "PlayGame",
+        params: { id: id, spectate: true },
+      });
     },
-    numToSSColumn(num) {
-      let s = "";
-      let t = "";
-      while (num > 0) {
-        t = (num - 1) % 26;
-        s = String.fromCharCode(65 + t) + s;
-        num = ((num - t) / 26) | 0;
-      }
-      return s || undefined;
-    },
-    getRoom2(table) {
-      let tournamentId = this.tournamentId;
-      let roundId = this.roundId;
-      let tournamentCode = this.numToSSColumn(tournamentId);
-      let room = `${tournamentCode}${roundId}${table}`;
-      return room;
-    },
-    getRoom(table) {
-      let tournamentId = this.tournamentId;
-      let roundId = this.roundId;
-      let room = `${tournamentId}r${roundId}t${table}`;
-      return room;
-    },
-    play(table) {
-      let room = this.getRoom(table);
-      let parameters = `room=${room}`;
-      let urlBase = "https://cardgames.app/cribbage/game/?";
-      let url = urlBase + parameters;
-      window.open(url, "_blank");
-      return false;
-    },
-    // play2(table, id, name, avatar, email) {
-    //   let roundId = this.roundId;
-    //   let tournamentId = this.tournamentId;
-    //   let room = "tournament-" + tournamentId + "-" + roundId + "-" + table;
-    //   name = name ? window.encodeURI(name) : "";
-    //   avatar = avatar ? window.encodeURI(avatar) : "";
-    //   email = email ? window.encodeURI(email) : "";
-    //   //todo: make this work for apps if installed - deep link
-    //   //let parameters = `room=${room}&id=t-${id}&name=${name}&avatar=${avatar}&email=${email}`;
-
-    //   let parameters = `room=${room}`;
-    //   //let urlBase = "http://192.168.1.28:8081/CribbageUI/www/?";
-    //   let urlBase = "https://cardgames.app/cribbage/game/?";
-    //   let url = urlBase + parameters;
-    //   window.open(url, "_blank");
-    //   return false;
-    // },
     openTable(id) {
       let roundId = this.roundId;
       let tournamentId = this.tournamentId;
       this.$router.push({
         name: "TableEdit",
-        params: { id: id, round: roundId, tournament: tournamentId }
+        params: { id: id, round: roundId, tournament: tournamentId },
       });
     },
     openPlayer(id) {
@@ -322,13 +264,13 @@ export default {
       var roundId = this.roundId;
       fetch
         .get(`round/Grouped/${roundId}?tournament=${tournamentId}`)
-        .then(response => {
+        .then((response) => {
           this.round = response.data;
         })
-        .catch(e => {
+        .catch((e) => {
           this.errors.push(e);
         });
-    }
+    },
   },
   computed: {
     filteredItems() {
@@ -339,7 +281,7 @@ export default {
       let searchInput = this.searchInput;
 
       if (hideCompletedGames) {
-        filteredRound = filteredRound.filter(t => {
+        filteredRound = filteredRound.filter((t) => {
           let totalPoints = t.positions.reduce(
             (a, p) => a + (p.points || 0),
             0
@@ -349,8 +291,8 @@ export default {
       }
       if (searchInput) {
         searchInput = searchInput.toLowerCase();
-        filteredRound = filteredRound.filter(t => {
-          let anyMatched = t.positions.find(p => {
+        filteredRound = filteredRound.filter((t) => {
+          let anyMatched = t.positions.find((p) => {
             if (p.table && p.table == searchInput) return true;
             if (
               p.table &&
@@ -379,10 +321,10 @@ export default {
       //  return this.items.filter(item => {
       //     return item.type.toLowerCase().indexOf(this.search.toLowerCase()) > -1
       //  })
-    }
+    },
   },
   created() {
     this.loadData();
-  }
+  },
 };
 </script>

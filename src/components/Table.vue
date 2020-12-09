@@ -2,14 +2,24 @@
   <div v-if="table.positions">
     <!-- <ion-list-header>Round {{table.round}} - Table {{table.table}}</ion-list-header>  -->
     <ion-item color="primary">
-      <ion-label slot="start">Table {{table.table}}</ion-label>
-      <ion-button
+      <!-- <ion-label slot="start">Table {{ table.table }} - "{{ table.id }}"</ion-label> -->
+      <ion-label slot="start">Room "{{ table.id }}"</ion-label>
+      <ion-button v-if="table.positions.some(p=>p.playerEmail == user.email)"
         slot="end"
         color="light"
         fill="outline"
-        :href="getRoomLink(table.id)"
+        @click="openGame(table.id)"
         target="_blank"
-      >Room {{table.id}}</ion-button>
+        >Play</ion-button
+      >
+      <ion-button v-else
+        slot="end"
+        color="light"
+        fill="outline"
+        @click="watchGame(table.id)"
+        target="_blank"
+        >Watch</ion-button
+      >
       <!-- <ion-buttons slot="end">
         <ion-button v-on:click="openTable(table.id)">
           <ion-icon name="create"></ion-icon>
@@ -23,8 +33,10 @@
       v-on:click="openPlayer(position.playerId)"
     >
       <ion-icon slot="start" name="contact"></ion-icon>
-      <ion-label>{{position.playerFirstName}} {{position.playerLastName}}</ion-label>
-      <ion-badge slot="end" color="light">{{position.points}}</ion-badge>
+      <ion-label
+        >{{ position.playerFirstName }} {{ position.playerLastName }}</ion-label
+      >
+      <ion-badge slot="end" color="light">{{ position.points }}</ion-badge>
     </ion-item>
     <!-- <ion-grid>
       <ion-row>
@@ -46,15 +58,17 @@ export default {
   props: {
     table: {
       type: Object,
-      default: () => ({})
-    }
+      default: () => ({}),
+    },
   },
   data() {
-    var tournamentId = this.$route.params.tournament || 118;
+    let tournamentId = this.$route.params.tournament || 118;
+    let user = authentication.getUser();
     return {
       tournamentId: tournamentId,
+      user: user,
       isLoaded: false,
-      errors: []
+      errors: [],
     };
   },
   methods: {
@@ -64,7 +78,19 @@ export default {
     openTable(id) {
       this.$router.push({
         name: "TableEdit",
-        params: { id: id }
+        params: { id: id },
+      });
+    },
+    openGame(id) {
+      this.$router.push({
+        name: "PlayGame",
+        params: {  id: id },
+      });
+    },
+    watchGame(id) {
+      this.$router.push({
+        name: "PlayGame",
+        params: {  id: id, spectate: true },
       });
     },
     getRoomLink(room) {
@@ -73,7 +99,7 @@ export default {
         "https://cardgames.app/cribbage/game/?room=[room]&name=[name]&email=[email]&id=[id]";
 
       if (!linkTemplate) return "";
-      let user = authentication.getUser();
+      let user = this.user;
       var userName = user && user.name ? user.name : "unknown";
       let email = user && user.email ? user.email : "";
       let name = user && user.name ? user.name : "";
@@ -115,21 +141,21 @@ export default {
           {
             playerId: 123,
             playerFirstName: "Jimmy",
-            playerLastName: "D"
+            playerLastName: "D",
           },
           {
             playerId: 123,
             playerFirstName: "Mark",
-            playerLastName: "Moomoo"
-          }
-        ]
+            playerLastName: "Moomoo",
+          },
+        ],
       };
       this.isLoaded = true;
       this.table = table;
-    }
+    },
   },
   created() {
     //this.loadData();
-  }
+  },
 };
 </script>

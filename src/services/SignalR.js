@@ -20,7 +20,7 @@ export default class SignalR {
         this.connection.on("Update", this.update.bind(this));
         this.connection.on("ReceiveMessage", this.receiveMessage.bind(this));
         this.connection.on("ReceiveMessages", this.receiveMessages.bind(this));
-         this.connection.on("Notification", this.notification.bind(this));
+        this.connection.on("Notification", this.notification.bind(this));
         return this.connection.start();
     }
     close() {

@@ -20,10 +20,13 @@
     </ion-header>
     <ion-content>
       <ion-card>
-        <div class="title">
+        <!-- <div class="title">
           <img v-if="tournament.image" :src="tournament.image" />
-        </div>
+        </div> -->
         <ion-item>
+          <ion-thumbnail slot="start">
+                <img v-if="tournament.image" :src="tournament.image" />
+              </ion-thumbnail>
           <ion-label>
             <h1>{{ tournament.name }}</h1>
             <p>{{ tournament.details }}</p>
@@ -47,6 +50,20 @@
             >FAQ</ion-button
           >
         </ion-item>
+        <!-- <ion-item>
+          <ion-icon slot="start" name="alarm"></ion-icon>
+          <ion-label> Open Game </ion-label>
+          <ion-button
+            slot="end"
+            @click="
+              $router.push({
+                name: 'PlayGame',
+                params: { tournament: tournamentId, id: '1234' },
+              })
+            "
+            >Play</ion-button
+          >
+        </ion-item> -->
 
         <!-- <ion-card>
         <ion-item>
@@ -231,8 +248,6 @@ import EventBus from "@/services/EventBus.js";
 //import LayoutMenu from "@/components/LayoutMenu.vue";
 const authentication = new Authentication();
 
-import SignalR from "@/services/SignalR.js";
-const signalR = new SignalR();
 export default {
   name: "home",
   components: {
@@ -366,10 +381,7 @@ export default {
     onUpdate(message) {
       console.log("onUpdate: " + message);
       this.loadData();
-    },
-    disconnectToChat() {
-      if (signalR) signalR.close();
-    },
+    }
   },
   mounted() {
     this.loadData();
