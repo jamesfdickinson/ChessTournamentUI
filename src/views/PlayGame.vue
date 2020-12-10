@@ -10,8 +10,18 @@
           ></ion-icon>
         </ion-buttons>
         <ion-title>Play Game</ion-title>
+
         <ion-buttons slot="end">
-          <ion-button @click="fullScreen()"> Full Screen </ion-button>
+          <ion-button
+            fill="outline"
+            :href="getRoomLink(id, spectate)"
+            target="_blank"
+            @click="$router.go(-1)"
+            >Open in App</ion-button
+          >
+          <ion-button fill="outline" @click="fullScreen()">
+            Full Screen
+          </ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
@@ -45,7 +55,8 @@ export default {
   methods: {
     getRoomLink(room, spectate) {
       //todo: pass template in from tournament settings or position
-      let linkTemplate = "https://cardgames.app/cribbage/game/?room=[room]&name=[name]&email=[email]&id=[id]&spectate=[spectate]";
+      let linkTemplate =
+        "https://cardgames.app/cribbage/game/?room=[room]&name=[name]&email=[email]&id=[id]&spectate=[spectate]";
       //let linkTemplate = "http://192.168.1.5:8081/CribbageUI/www/?room=[room]&name=[name]&email=[email]&id=[id]&spectate=[spectate]";
 
       if (!linkTemplate) return "";

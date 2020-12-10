@@ -174,6 +174,16 @@
             @ionChange="tournament.allowCheckIn = $event.target.checked == true"
           ></ion-checkbox>
         </ion-item>
+        <ion-item>
+          <ion-label>Allow Registration</ion-label>
+          <ion-checkbox
+            slot="start"
+            :checked="tournament.allowRegistration"
+            @ionChange="tournament.allowRegistration = $event.target.checked == true"
+          ></ion-checkbox>
+        </ion-item>
+
+        
         <!-- <ion-item>
           <ion-label>Is Public</ion-label>
           <ion-checkbox

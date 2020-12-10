@@ -41,3 +41,11 @@ npm run test
 npm run lint
 ```
 
+## Change Log
+### 2.12 "Embed game / Round Check in"
+- Play the game directly through the tournament software
+- Spectate other players' games
+- Online status indicator.  This will help with the no-shows
+- Live player status and score updates
+- Cribbage Id no longer needed to play games
+- One Click sign up
