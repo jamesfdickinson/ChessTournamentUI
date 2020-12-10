@@ -30,6 +30,7 @@
           <ion-label>
             <h1>{{ tournament.name }}</h1>
             <p>{{ tournament.details }}</p>
+            <p> {{ getLocalDate(tournament.startDateTime) }}</p>
           </ion-label>
         </ion-item>
 
@@ -314,9 +315,10 @@ export default {
           this.loadData();
         })
         .catch((e) => {
-          //todo: display error
-          console.error(e);
-          this.errors.push("error signing up.");
+          console.error(e.response);
+          let errorMessage = "error signing up.";
+          if(e && e.response && e.response.data) errorMessage = e.response.data
+          this.errors.push(errorMessage);
         });
     },
     checkIn(playerId) {
@@ -330,6 +332,12 @@ export default {
       fetch.post(`player/${playerId}/checkin/false`).then(() => {
         this.loadData();
       });
+    },
+    getLocalDate(date) {
+      if (!date) return null;
+      let localDate = new Date(date + "Z");
+      if (!localDate) return null;
+      return localDate.toLocaleString();
     },
     loadData() {
       var tournamentId = this.tournamentId;
