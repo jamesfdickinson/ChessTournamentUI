@@ -41,12 +41,7 @@
           <ion-label position="stacked">Start Date/Time</ion-label>
           <ion-datetime
             display-format="D MMM YYYY H:mm"
-            :value="new Date(tournament.startDateTime).toISOString()"
-            @ionChange="
-              tournament.startDateTime = new Date(
-                $event.target.value
-              ).toISOString()
-            "
+            :value="new Date(tournament.startDateTime+'Z').toISOString()"
           ></ion-datetime>
         </ion-item>
         <ion-item>

@@ -9,7 +9,7 @@
             @click="$router.go(-1)"
           ></ion-icon>
         </ion-buttons>
-        <ion-title>Play Game</ion-title>
+        <ion-title>{{id}}</ion-title>
 
         <ion-buttons slot="end">
           <ion-button

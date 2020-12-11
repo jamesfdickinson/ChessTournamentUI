@@ -270,7 +270,7 @@ export default {
       tournament: {},
       user: user,
       userName: userName,
-      state: "signup1",
+      state: "signup",
       status: { state: "" },
       userPlayers: [],
       userTable: {},

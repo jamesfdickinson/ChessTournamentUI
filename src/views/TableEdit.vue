@@ -4,7 +4,11 @@
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
-          <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
+          <ion-icon
+            name="arrow-round-back"
+            size="large"
+            @click="$router.go(-1)"
+          ></ion-icon>
         </ion-buttons>
         <ion-title>Table</ion-title>
       </ion-toolbar>
@@ -18,21 +22,41 @@
         </ion-item>-->
         <ion-item>
           <ion-label>Room</ion-label>
-          <ion-label slot="end">{{table.id}}</ion-label>
-          <ion-button slot="end" color="light" :href="getRoomLink(table.id)" target="_blank">Join</ion-button>
+          <ion-label slot="end">{{ table.id }}</ion-label>
+          <ion-button
+            slot="end"
+            color="light"
+            :href="getRoomLink(table.id)"
+            target="_blank"
+            >Join</ion-button
+          >
         </ion-item>
       </ion-list>
       <ion-list>
         <ion-list-header>
           <h3>Verify the winner</h3>
         </ion-list-header>
-        <ion-radio-group :value="winner" @ionChange="selectWinner($event.target.value)">
+        <ion-radio-group
+          :value="winner"
+          @ionChange="selectWinner($event.target.value)"
+        >
           <template v-for="position of table.positions">
             <ion-item :key="position.id">
               <ion-radio slot="start" :value="position.playerId"></ion-radio>
-              <ion-icon v-if="position.color=='Black'" src="/images/chess_pawn_black.svg" slot></ion-icon>
-              <ion-icon v-else-if="position.color=='White'" src="/images/chess_pawn_white.svg" slot></ion-icon>
-              <ion-label>{{position.playerFirstName}} {{position.playerLastName}}</ion-label>
+              <ion-icon
+                v-if="position.color == 'Black'"
+                src="/images/chess_pawn_black.svg"
+                slot
+              ></ion-icon>
+              <ion-icon
+                v-else-if="position.color == 'White'"
+                src="/images/chess_pawn_white.svg"
+                slot
+              ></ion-icon>
+              <ion-label
+                >{{ position.playerFirstName }}
+                {{ position.playerLastName }}</ion-label
+              >
             </ion-item>
           </template>
           <ion-item>
@@ -48,12 +72,15 @@
         </ion-list-header>
         <template v-for="position of table.positions">
           <ion-item :key="position.id">
-            <ion-label slot>{{position.playerFirstName}} {{position.playerLastName}}</ion-label>
+            <ion-label slot
+              >{{ position.playerFirstName }}
+              {{ position.playerLastName }}</ion-label
+            >
             <ion-input
               slot="end"
               type="number"
               :value="position.points"
-              @input="position.points = $event.target.value"
+              @input="position.points = parseInt($event.target.value) || 0"
             ></ion-input>
           </ion-item>
         </template>
@@ -91,7 +118,7 @@ export default {
       tableId: tableId,
       winner: "",
       table: {},
-      errors: []
+      errors: [],
     };
   },
   methods: {
@@ -131,11 +158,11 @@ export default {
         promises.push(promise);
       }
       Promise.all(promises)
-        .then(values => {
+        .then((values) => {
           console.log(values);
           this.$router.go(-1);
         })
-        .catch(e => {
+        .catch((e) => {
           this.errors.push(e);
         });
     },
@@ -210,17 +237,17 @@ export default {
       let tournamentId = this.tournamentId;
       tournamentAPI
         .tableGet(tournamentId, round, tableId)
-        .then(data => {
+        .then((data) => {
           this.table = data;
           //this.checkAccess(this.table);
         })
-        .catch(e => {
+        .catch((e) => {
           this.errors.push(e);
         });
-    }
+    },
   },
   created() {
     this.loadData();
-  }
+  },
 };
 </script>
