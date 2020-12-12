@@ -37,7 +37,7 @@ export default class Authorization {
     isPageAllowed(toPage,tournamentId, roles) {
         if(!roles) roles = [];
         //redirect to login page if not logged in and trying to access a restricted page
-        const pagesAdmin = ['Admin'];
+        const pagesAdmin = ['Admin','RoundEditRaw'];
         const authRequiredAdmin = pagesAdmin.includes(toPage);
 
         const pagesRecorder = ['CheckIn', 'PlayerEdit', 'PlayerNew', 'TableEdit'];

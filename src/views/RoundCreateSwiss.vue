@@ -230,7 +230,7 @@ export default {
       let sendNotifications = this.sendNotifications;
 
       tournamentAPI
-        .saveMatches(tournamentId, matches)
+        .matchesSave(tournamentId, matches)
         .then(data => {
           console.log(`Round ${round} created : ${data}`);
           //send notifications

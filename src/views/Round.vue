@@ -20,6 +20,9 @@
           <ion-button @click="details()">
             <ion-icon name="paper" size="large"></ion-icon>
           </ion-button>
+          <ion-button @click="edit()">
+            <ion-icon name="create" size=""></ion-icon>
+          </ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
@@ -230,6 +233,14 @@ export default {
       let tournamentId = this.tournamentId;
       this.$router.push({
         name: "RoundDetails",
+        params: { id: roundId, tournament: tournamentId },
+      });
+    },
+    edit() {
+      let roundId = this.roundId;
+      let tournamentId = this.tournamentId;
+      this.$router.push({
+        name: "RoundEditRaw",
         params: { id: roundId, tournament: tournamentId },
       });
     },

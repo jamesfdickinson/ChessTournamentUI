@@ -13,6 +13,15 @@ export default class TournamentAPI {
                 return data
             })
     }
+    roundRaw(tournamentId,roundId){
+        //api/round/5?tournament=27
+        return fetch
+            .get(`round/${roundId}?tournament=${tournamentId}`)
+            .then(response => {
+                let data = response.data;
+                return data;
+            });
+    }
     tableGet(tournamentId, round, tableId) {
         //api/table/1?round=2&tournament=117
         return fetch
@@ -20,6 +29,15 @@ export default class TournamentAPI {
             .then(response => {
                 let table = response.data;
                 return table;
+            });
+    }
+    players(tournamentId){
+        //api/players/27
+        return fetch
+            .get(`players/${tournamentId}`)
+            .then(response => {
+                let data = response.data;
+                return data;
             });
     }
     generateTopDownRound(tournamentId, round, filter) {
@@ -33,7 +51,15 @@ export default class TournamentAPI {
                 return matches;
             })
     }
-    saveMatches(tournamentId, matches) {
+    matchDelete(matchId) {
+        return fetch
+            .delete(`match/${matchId}`)
+            .then(response => {
+                let data = response.data;
+                return data;
+            });
+    }
+    matchesSave(tournamentId, matches) {
         return fetch
             .put(`match/${tournamentId}`, matches)
             .then(response => {
