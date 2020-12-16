@@ -9,18 +9,31 @@
             @click="$router.go(-1)"
           ></ion-icon>
         </ion-buttons>
-        <ion-title>{{id}}</ion-title>
+        <ion-title>{{ id }}</ion-title>
 
         <ion-buttons slot="end">
-          <ion-button
+          <!-- <ion-button         
             fill="outline"
             :href="getRoomLink(id, spectate)"
             target="_blank"
             @click="$router.go(-1)"
             >Open in App</ion-button
           >
+          <ion-icon name="scan" @click="fullScreen()"></ion-icon>
           <ion-button fill="outline" @click="fullScreen()">
             Full Screen
+          </ion-button> -->
+
+          <ion-button @click="fullScreen()">
+            <ion-icon name="expand" size="large"></ion-icon>
+          </ion-button>
+          <ion-button
+            :href="getRoomLink(id, spectate)"   target="_blank"  @click="$router.go(-1)"
+          >
+            <ion-icon name="open" size="large"></ion-icon>
+          </ion-button>
+          <ion-button @click="openTable(id)">
+            <ion-icon name="create" size="large"></ion-icon>
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
@@ -125,6 +138,14 @@ export default {
           document.webkitExitFullscreen();
         }
       }
+    },
+    openTable(id) {
+      let roundId = this.roundId;
+      let tournamentId = this.tournamentId;
+      this.$router.push({
+        name: "TableEdit",
+        params: { id: id, round: roundId, tournament: tournamentId },
+      });
     },
     loadData() {},
     onChildWindowMessage(event) {

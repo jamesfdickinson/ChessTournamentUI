@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import fetch from "@/fetch.js";
+import fetch from "@/services/fetch";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 export default {

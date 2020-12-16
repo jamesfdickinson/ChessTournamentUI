@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import fetch from "@/fetch.js";
+import fetch from "@/services/fetch";
 import LayoutMenu from "@/components/LayoutMenu.vue";
 export default {
   name: "home",

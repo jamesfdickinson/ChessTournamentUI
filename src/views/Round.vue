@@ -188,7 +188,7 @@
 </template>
 
 <script>
-import fetch from "@/fetch.js";
+import fetch from "@/services/fetch";
 import TeamIcon from "@/components/TeamIcon.vue";
 import Authentication from "@/services/Authentication";
 const authentication = new Authentication();

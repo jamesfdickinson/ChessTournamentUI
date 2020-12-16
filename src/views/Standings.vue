@@ -37,7 +37,7 @@
 
 <script>
 // @ is an alias to /src
-import fetch from "@/fetch.js";
+import fetch from "@/services/fetch";
 
 export default {
   name: "ReportScoreByDivision",

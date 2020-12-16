@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import fetch from "@/fetch.js";
+import fetch from "@/services/fetch";
 import TeamIcon from "@/components/TeamIcon.vue";
 export default {
   name: "home",

@@ -80,7 +80,7 @@
 </template>
 
 <script>
-import fetch from "@/fetch.js";
+import fetch from "@/services/fetch";
 import Authentication from "@/services/Authentication";
 const authentication = new Authentication();
 export default {

@@ -30,7 +30,7 @@
           <ion-label>
             <h1>{{ tournament.name }}</h1>
             <p>{{ tournament.details }}</p>
-            <p> {{ getLocalDate(tournament.startDateTime) }}</p>
+            <p>{{ getLocalDate(tournament.startDateTime) }}</p>
           </ion-label>
         </ion-item>
 
@@ -232,7 +232,7 @@
         v-if="players && players.length > 0"
         style="xheight: 220px; overflow-y: auto"
       >
-        <ion-list-header>Standings</ion-list-header>
+        <ion-list-header>Players</ion-list-header>
         <Standings :players="players"></Standings>
       </ion-card>
     </ion-content>
@@ -243,7 +243,7 @@
 <script>
 // @ is an alias to /src
 //import HelloWorld from "@/components/HelloWorld.vue";
-import fetch from "@/fetch.js";
+import fetch from "@/services/fetch";
 import Chat from "@/components/Chat.vue";
 import Standings from "@/components/Standings.vue";
 import Table from "@/components/Table.vue";
@@ -251,7 +251,6 @@ import Authentication from "@/services/Authentication";
 import EventBus from "@/services/EventBus.js";
 //import LayoutMenu from "@/components/LayoutMenu.vue";
 const authentication = new Authentication();
-
 export default {
   name: "home",
   components: {
@@ -317,7 +316,8 @@ export default {
         .catch((e) => {
           console.error(e.response);
           let errorMessage = "error signing up.";
-          if(e && e.response && e.response.data) errorMessage = e.response.data
+          if (e && e.response && e.response.data)
+            errorMessage = e.response.data;
           this.errors.push(errorMessage);
         });
     },
@@ -394,9 +394,27 @@ export default {
           }
           this.tournament = tournament;
           this.players = tournament.players || [];
- 
+
           this.userPlayers = userPlayers;
           this.userTable = userTable;
+          // cribbageServer.users().then((onlineUsers) => {
+          //   //merge players with online status
+          //   let players = this.players;
+          //   for (let i = 0; i < players.length; i++) {
+          //     let player = players[i];
+          //     player.room = null;
+          //     for (let j = 0; j < onlineUsers.length; j++) {
+          //       let onlineUser = onlineUsers[j];
+          //       if (
+          //         onlineUser.id == player.gamerId ||
+          //         onlineUser.id == player.email
+          //       ) {
+          //         player.room = onlineUser.room;
+          //         break;
+          //       }
+          //     }
+          //   }
+          //});
         })
         .catch((e) => {
           this.errors.push(e);

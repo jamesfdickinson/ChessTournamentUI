@@ -30,7 +30,7 @@
 
 <script>
 // @ is an alias to /src
-import fetch from "@/fetch.js";
+import fetch from "@/services/fetch";
 import GridSort from "@/components/GridSort.vue";
 export default {
   name: "ReportScoreDetailed",

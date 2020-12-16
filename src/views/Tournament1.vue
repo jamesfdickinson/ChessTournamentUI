@@ -246,7 +246,7 @@
 <script>
 // @ is an alias to /src
 //import HelloWorld from "@/components/HelloWorld.vue";
-import fetch from "@/fetch.js";
+import fetch from "@/services/fetch";
 import Menu from "@/components/Menu.vue";
 import Chat from "@/components/Chat.vue";
 import Authentication from "@/services/Authentication";
