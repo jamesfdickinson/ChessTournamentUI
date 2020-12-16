@@ -190,6 +190,7 @@
 <script>
 import fetch from "@/services/fetch";
 import TeamIcon from "@/components/TeamIcon.vue";
+import EventBus from "@/services/EventBus.js";
 import Authentication from "@/services/Authentication";
 const authentication = new Authentication();
 export default {
@@ -282,6 +283,10 @@ export default {
           this.errors.push(e);
         });
     },
+    onUpdate(message) {
+      console.log("onUpdate: " + message);
+      this.loadData();
+    },
   },
   computed: {
     filteredItems() {
@@ -334,8 +339,13 @@ export default {
       //  })
     },
   },
-  created() {
+  mounted() {
     this.loadData();
+    EventBus.$on("updated", this.onUpdate);
+  },
+  created() {},
+  beforeDestroy() {
+    EventBus.$off("updated", this.onUpdate);
   },
 };
 </script>

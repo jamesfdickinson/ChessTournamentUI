@@ -22,6 +22,7 @@ import LayoutTabs from "@/components/LayoutTabs.vue";
 import Toast from "@/components/Toast.js";
 import JsonCSV from 'vue-json-csv'
 import NotificationSocket from "@/services/NotificationSocket.js";
+//import TournamentSocket from "@/services/TournamentSocket.js";
 import EventBus from "@/services/EventBus.js";
 
 //install ionic vue - https://www.youtube.com/watch?v=k6LH1L61E0Q
@@ -41,18 +42,22 @@ notification.init();
 notification.onTokenRefresh = function (token) {
   authentication.sendNotificationToken(token);
 };
-notification.onMessage = function (payload) {
-  // //show toast message
-  // if (!payload) return false;
-  // if (!payload.notification) return false;
+// notification.onMessage = function (payload) {
+//   // //show toast message
+//   // if (!payload) return false;
+//   // if (!payload.notification) return false;
 
-  // let notification = payload.notification;
-  // let message = notification.title;
-  // let url = (payload.fcmOptions) ? payload.fcmOptions.link : null;
-  // toast.show(message, 15000, "/audio/arpeggio.mp3", url, "_self");
-};
+//   // let notification = payload.notification;
+//   // let message = notification.title;
+//   // let url = (payload.fcmOptions) ? payload.fcmOptions.link : null;
+//   // toast.show(message, 15000, "/audio/arpeggio.mp3", url, "_self");
+// };
 
 const token = authentication.getToken();
+
+
+// const tournamentSocket = new TournamentSocket();
+// tournamentSocket.connect(token);
 
 const notificationSocket = new NotificationSocket();
 notificationSocket.connect(token);
@@ -127,6 +132,10 @@ router.beforeEach((to, from, next) => {
         return next(`/${tournamentId}/AccessDenied?redirect=${to.path}`);
       });
   }
+});
+router.afterEach((to) => {
+  let tournamentId = to.params.tournament;
+  notificationSocket.joinTournament(tournamentId);
 });
 
 Vue.component('downloadCsv', JsonCSV)

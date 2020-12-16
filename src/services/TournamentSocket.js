@@ -25,7 +25,7 @@ export default class NotificationSocket {
             .build();
         this.connection.on("Update", this.update.bind(this));
         this.connection.on("Notification", this.notification.bind(this));
-        return this.connection.start().then(()=>this.onConnected());
+        return this.connection.start();
     }
     close() {
         if (this.connection)
@@ -39,10 +39,6 @@ export default class NotificationSocket {
                 this.connect(bearerToken);
             });
     }
-    onConnected() {
-        if (this.tournamentId)
-            this.joinTournament(this.tournamentId)
-    }
     update(messages) {
         if (this.onUpdate)
             this.onUpdate(messages);
@@ -52,8 +48,7 @@ export default class NotificationSocket {
             this.onNotification(notification);
     }
     joinTournament(tournamentId) {
-        if(!tournamentId) return
-        this.tournamentId = tournamentId; //set to be called onConnected if needed
+        this.tournamentId = tournamentId; //set to be called on connect if needed
         if (this.connection && this.connection.connectionState == "Connected")
             this.connection.invoke("JoinTournament", tournamentId);
     }
