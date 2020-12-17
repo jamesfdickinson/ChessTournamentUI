@@ -33,7 +33,7 @@ export default class Authentication {
             });
     }
     update(user) {
-        return fetch.post(`user`, user)
+        return fetch.post(`authentication/UpdateUser`, user)
             .then(response => {
                 var user = response.data;
                 localStorage.setItem("user", JSON.stringify(user));

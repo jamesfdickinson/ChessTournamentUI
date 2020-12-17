@@ -12,6 +12,11 @@
         </ion-buttons>
 
         <ion-title>User</ion-title>
+        <ion-buttons slot="end">
+          <ion-button @click="$router.push({ name: 'UserEdit', params: { id: id} })">
+            <ion-icon name="create"></ion-icon>
+          </ion-button>
+        </ion-buttons>
       </ion-toolbar>
     </ion-header>
     <ion-content>

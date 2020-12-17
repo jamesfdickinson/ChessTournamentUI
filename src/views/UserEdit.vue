@@ -4,14 +4,27 @@
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
-          <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
+          <ion-icon
+            name="arrow-round-back"
+            size="large"
+            @click="$router.go(-1)"
+          ></ion-icon>
         </ion-buttons>
         <ion-title>User</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content>
       <ion-list>
-         <ion-item>
+        <ion-item>
+          <ion-label position="stacked">Email</ion-label>
+          <ion-input
+            type="email"
+            :value="user.email"
+            @input="user.email = $event.target.value"
+            readonly
+          ></ion-input>
+        </ion-item>
+        <ion-item>
           <ion-label position="stacked">Name</ion-label>
           <ion-input
             :value="user.name"
@@ -19,23 +32,15 @@
             required
           ></ion-input>
         </ion-item>
+
         <ion-item>
-          <ion-label position="stacked">Email</ion-label>
+          <ion-label position="stacked">Cribbage ID</ion-label>
           <ion-input
-            type="email"
-            :value="user.email"
-            @input="user.email = $event.target.value"
-            required
+            type="number"
+            :value="user.gamerId"
+            @input="user.gamerId = $event.target.value"
           ></ion-input>
         </ion-item>
-         <ion-item>
-              <ion-label position="stacked">Cribbage ID</ion-label>
-              <ion-input
-                type="number"
-                :value="user.gamerId"
-                @input="user.gamerId = $event.target.value"
-              ></ion-input>
-            </ion-item>
         <!-- <ion-item>
           <ion-label position="stacked">First Name</ion-label>
           <ion-input :value="user.firstName" @input="user.firstName = $event.target.value"></ion-input>
@@ -44,7 +49,7 @@
           <ion-label position="stacked">Last Name</ion-label>
           <ion-input :value="user.lastName" @input="user.lastName = $event.target.value"></ion-input>
         </ion-item>-->
-        <ion-item>
+        <!-- <ion-item>
           <ion-label position="stacked">Password</ion-label>
           <ion-input
             type="password"
@@ -67,14 +72,18 @@
           <ion-checkbox
             slot="start"
             :checked="user.allowNotifications"
-            @ionChange="user.allowNotifications = ($event.target.checked == true);"
+            @ionChange="user.allowNotifications = $event.target.checked == true"
           ></ion-checkbox>
+        </ion-item> -->
+        <ion-item>
+          <ion-label position="fixed">Password</ion-label>
+          <ion-button v-on:click="PasswordChange()">Change Password</ion-button>
         </ion-item>
       </ion-list>
 
       <ion-button expand="block" v-on:click="save()">Sumbit</ion-button>
       <hr />
-      <div style="color:red;">{{error}}</div>
+      <div style="color: red">{{ error }}</div>
     </ion-content>
     <!-- </ion-page> -->
   </layout-no-menu>
@@ -87,17 +96,19 @@ export default {
   name: "home",
   components: {},
   data() {
-    var userName = this.$route.params.id;
+    var user = authentication.getUser() || {};
     return {
       user: {
-        username: userName,
-        email: null,
-        name: null,
+        id: user.id,
+        userName: user.userName,
+        email: user.email,
+        name: user.name,
+        gamerId: user.gamerId,
         password: null,
         passwordVerify: null,
-        allowNotifications: true
+        allowNotifications: user.allowNotifications,
       },
-      error: ""
+      error: "",
     };
   },
   methods: {
@@ -106,24 +117,19 @@ export default {
     },
     save() {
       let user = this.user;
-      let redirect = this.redirect;
       authentication
-        .register(user)
-        .then(userData => {
+        .update(user)
+        .then((userData) => {
           let user = userData;
           console.log("User Logged in: " + user.username, user);
           //back
-          if (redirect) {
-            this.$router.push({ path: redirect });
-          } else {
-            this.$router.push({ path: `/` });
-          }
+          this.$router.back();
         })
-        .catch(e => {
+        .catch((e) => {
           this.error = "Error: Save failed";
           console.warn(e);
         });
-    }
-  }
+    },
+  },
 };
 </script>
