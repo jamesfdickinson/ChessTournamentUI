@@ -37,11 +37,19 @@
             @input="tournament.details = $event.target.value"
           ></ion-textarea>
         </ion-item>
-        <ion-item>
+        <!-- <ion-item>
           <ion-label position="stacked">Start Date/Time</ion-label>
           <ion-datetime
             display-format="D MMM YYYY H:mm"
             :value="new Date(tournament.startDateTime+'Z').toISOString()"
+          ></ion-datetime>
+        </ion-item> -->
+        <ion-item>
+          <ion-label position="stacked">Start Date/Time</ion-label>
+          <ion-datetime
+            display-format="D MMM YYYY H:mm"
+            :value="tournament.startDateTime"
+            @ionChange="tournament.startDateTime = $event.target.value"
           ></ion-datetime>
         </ion-item>
         <ion-item>
@@ -174,11 +182,12 @@
           <ion-checkbox
             slot="start"
             :checked="tournament.allowRegistration"
-            @ionChange="tournament.allowRegistration = $event.target.checked == true"
+            @ionChange="
+              tournament.allowRegistration = $event.target.checked == true
+            "
           ></ion-checkbox>
         </ion-item>
 
-        
         <!-- <ion-item>
           <ion-label>Is Public</ion-label>
           <ion-checkbox
@@ -328,6 +337,7 @@ export default {
           .get(`tournament/${tournamentId}`)
           .then((response) => {
             this.tournament = response.data;
+            //this.tournament.startDateTime = new Date(tournament.startDateTime+'Z').toISOString()
           })
           .catch((e) => {
             this.error = "Error: Load failed";

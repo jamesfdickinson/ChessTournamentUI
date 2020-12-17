@@ -335,7 +335,7 @@ export default {
     },
     getLocalDate(date) {
       if (!date) return null;
-      let localDate = new Date(date + "Z");
+      let localDate = new Date(date);
       if (!localDate) return null;
       return localDate.toLocaleString();
     },
