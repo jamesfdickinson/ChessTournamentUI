@@ -66,7 +66,7 @@ notificationSocket.connect(token);
 //   if (user) signalR.send("Login", user.userName);
 // });
 notificationSocket.onUpdate = function (data) {
-   EventBus.$emit('updated', data);
+  EventBus.$emit('updated', data);
 };
 notificationSocket.onNotification = function (notification) {
   //show toast message
@@ -134,8 +134,10 @@ router.beforeEach((to, from, next) => {
   }
 });
 router.afterEach((to) => {
-  let tournamentId = to.params.tournament;
-  notificationSocket.joinTournament(tournamentId);
+  let tournamentIdParameter = to.params.tournament;
+  let tournamentId = parseInt(tournamentIdParameter);
+  if (!isNaN(tournamentId))
+    notificationSocket.joinTournament(tournamentId);
 });
 
 Vue.component('downloadCsv', JsonCSV)

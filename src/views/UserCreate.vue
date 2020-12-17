@@ -14,7 +14,7 @@
       <form @submit.prevent="handleSubmit">
         <ion-list>
           <ion-item>
-            <ion-label position="stacked">Name</ion-label>
+            <ion-label position="stacked">Display Name</ion-label>
             <ion-input
               :value="user.name"
               @input="user.name = $event.target.value"

@@ -13,7 +13,9 @@
 
         <ion-title>User</ion-title>
         <ion-buttons slot="end">
-          <ion-button @click="$router.push({ name: 'UserEdit', params: { id: id} })">
+          <ion-button
+            @click="$router.push({ name: 'UserEdit' })"
+          >
             <ion-icon name="create"></ion-icon>
           </ion-button>
         </ion-buttons>
@@ -21,10 +23,6 @@
     </ion-header>
     <ion-content>
       <ion-list>
-        <ion-item>
-          <ion-label position="fixed">Name</ion-label>
-          <ion-label>{{ user.name }}</ion-label>
-        </ion-item>
         <!-- <ion-item>
           <ion-label position="fixed">User Name</ion-label>
           <ion-label>{{ user.userName }}</ion-label>
@@ -32,6 +30,10 @@
         <ion-item>
           <ion-label position="fixed">Email</ion-label>
           <ion-label>{{ user.email }}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label position="fixed">Name</ion-label>
+          <ion-label>{{ user.name }}</ion-label>
         </ion-item>
         <ion-item>
           <ion-label position="fixed">GamerId</ion-label>
