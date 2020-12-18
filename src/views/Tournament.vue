@@ -337,7 +337,8 @@ export default {
       if (!date) return null;
       let localDate = new Date(date);
       if (!localDate) return null;
-      return localDate.toLocaleString();
+      let options = { dateStyle: "medium", timeStyle: "short" };
+      return localDate.toLocaleString(undefined, options);
     },
     loadData() {
       var tournamentId = this.tournamentId;
