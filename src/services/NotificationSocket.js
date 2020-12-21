@@ -43,9 +43,9 @@ export default class NotificationSocket {
         if (this.tournamentId)
             this.joinTournament(this.tournamentId)
     }
-    update(messages) {
+    update(data) {
         if (this.onUpdate)
-            this.onUpdate(messages);
+            this.onUpdate(data);
     }
     notification(notification) {
         if (this.onNotification)

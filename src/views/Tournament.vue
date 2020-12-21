@@ -37,8 +37,10 @@
         <ion-item>
           <ion-icon slot="start" name="alarm"></ion-icon>
           <ion-label>
-            <div>{{ status.state }} - {{ status.status }}</div>
-            <ion-progress-bar :value="status.percentage"></ion-progress-bar>
+            <div>{{ tournament.status }}</div>
+            <ion-progress-bar
+              :value="tournament.statusPercentage"
+            ></ion-progress-bar>
           </ion-label>
           <ion-button
             slot="end"
@@ -178,10 +180,11 @@
       <div style="color: red">
         <div v-for="error in errors" v-bind:key="error">*{{ error }}</div>
       </div>
-      <ion-card>
-        <Table :table="userTable"></Table>
-      </ion-card>
-
+      <template v-for="userTable of userTables">
+        <ion-card :key="userTable.id">
+          <Table :table="userTable"></Table>
+        </ion-card>
+      </template>
       <!-- </ion-card> -->
 
       <!-- <ion-card style="height:200px;  overflow-y: scroll;">
@@ -272,7 +275,7 @@ export default {
       state: "signup",
       status: { state: "" },
       userPlayers: [],
-      userTable: {},
+      userTables: [],
       players: [],
       errors: [],
     };
@@ -351,14 +354,14 @@ export default {
       //     this.errors.push(e);
       //   });
 
-      fetch
-        .get(`status/${tournamentId}`)
-        .then((response) => {
-          this.status = response.data;
-        })
-        .catch((e) => {
-          this.errors.push(e);
-        });
+      // fetch
+      //   .get(`status/${tournamentId}`)
+      //   .then((response) => {
+      //     this.status = response.data;
+      //   })
+      //   .catch((e) => {
+      //     this.errors.push(e);
+      //   });
       // let user = authentication.getUser();
       // if (user && user.email) {
       //   fetch
@@ -382,40 +385,8 @@ export default {
       fetch
         .get(`TournamentView/${tournamentId}`)
         .then((response) => {
-          //this.players = response.data || [];
           let tournament = response.data || {};
-          let user = authentication.getUser() || {};
-          let email = user.email;
-          let userPlayers = [];
-          let userTable = {};
-          if (email) {
-            userPlayers = tournament.players.filter((i) => i.email == email);
-            let tablePositions = tournament.tablePositions || [];
-            userTable = this.getTableUser(tablePositions, email) || {};
-          }
-          this.tournament = tournament;
-          this.players = tournament.players || [];
-
-          this.userPlayers = userPlayers;
-          this.userTable = userTable;
-          // cribbageServer.users().then((onlineUsers) => {
-          //   //merge players with online status
-          //   let players = this.players;
-          //   for (let i = 0; i < players.length; i++) {
-          //     let player = players[i];
-          //     player.room = null;
-          //     for (let j = 0; j < onlineUsers.length; j++) {
-          //       let onlineUser = onlineUsers[j];
-          //       if (
-          //         onlineUser.id == player.gamerId ||
-          //         onlineUser.id == player.email
-          //       ) {
-          //         player.room = onlineUser.room;
-          //         break;
-          //       }
-          //     }
-          //   }
-          //});
+          this.populate(tournament);
         })
         .catch((e) => {
           this.errors.push(e);
@@ -431,23 +402,43 @@ export default {
       );
       if (tablePositionsUser.length === 0) return null;
 
-      let userPosition = tablePositionsUser[0];
-      let tablePositions = allPositions.filter(
-        (t) => t.table === userPosition.table && t.round === round
-      );
-      let table = {
-        id: userPosition.room,
-        round: userPosition.round,
-        table: userPosition.table,
-        room: userPosition.room,
-        positions: tablePositions,
-      };
-
-      return table;
+      let tables = [];
+      for (let i = 0; i < tablePositionsUser.length; i++) {
+        let userPosition = tablePositionsUser[i];
+        let tablePositions = allPositions.filter(
+          (t) => t.table === userPosition.table && t.round === round
+        );
+        let table = {
+          id: userPosition.room,
+          round: userPosition.round,
+          table: userPosition.table,
+          room: userPosition.room,
+          positions: tablePositions,
+        };
+        tables.push(table);
+      }
+      return tables;
     },
-    onUpdate(message) {
-      console.log("onUpdate: " + message);
-      this.loadData();
+    populate(data) {
+      let tournament = data || {};
+      let user = authentication.getUser() || {};
+      let email = user.email;
+      let userPlayers = [];
+      let userTables = [];
+      if (email) {
+        userPlayers = tournament.players.filter((i) => i.email == email);
+        let tablePositions = tournament.tablePositions || [];
+        userTables = this.getTableUser(tablePositions, email) || {};
+      }
+      this.tournament = tournament;
+      this.players = tournament.players || [];
+
+      this.userPlayers = userPlayers;
+      this.userTables = userTables;
+    },
+    onUpdate(data) {
+      console.log("onUpdate", data);
+      this.populate(data);
     },
   },
   mounted() {
