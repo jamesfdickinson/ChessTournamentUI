@@ -287,6 +287,16 @@ export default {
     save() {
       let tournamentId = this.tournamentId;
       let tournament = this.tournament;
+      tournament.rounds = parseInt(tournament.rounds);
+      if (isNaN(tournament.rounds)) {
+         this.error = "Error: rounds is not a number";
+         return;
+      }
+      tournament.maxPlayers = parseInt(tournament.maxPlayers);
+      if (isNaN(tournament.maxPlayers)) {
+         this.error = "Error: maxPlayers is not a number";
+         return;
+      }
 
       if (tournamentId && tournament) {
         fetch
