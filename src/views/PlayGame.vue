@@ -9,7 +9,7 @@
             @click="$router.go(-1)"
           ></ion-icon>
         </ion-buttons>
-        <ion-title>{{ id }}</ion-title>
+        <ion-title text-left>{{ id }}</ion-title>
 
         <ion-buttons slot="end">
           <!-- <ion-button         
@@ -28,9 +28,13 @@
             <ion-icon name="expand" size="large"></ion-icon>
           </ion-button>
           <ion-button
-            :href="getRoomLink(id, spectate)"   target="_blank"  @click="$router.go(-1)"
+            :href="getRoomLink(id, spectate)"
+            target="_blank"
+            @click="$router.go(-1)"
           >
-            <ion-icon name="open" size="large"></ion-icon>
+            <!-- <ion-icon name="globe" size="large"></ion-icon> -->
+            <ion-icon name="browsers" size="large"></ion-icon>
+            <!-- <ion-icon name="tv" size="large"></ion-icon>  -->
           </ion-button>
           <ion-button @click="openTable(id)">
             <ion-icon name="create" size="large"></ion-icon>
@@ -40,6 +44,7 @@
     </ion-header>
     <ion-content id="gameFrame">
       <iframe
+        id="iframe-game"
         :src="getRoomLink(id, spectate)"
         style="width: 100%; min-height: 100%"
       >
@@ -70,7 +75,7 @@ export default {
       //todo: pass template in from tournament settings or position
       let linkTemplate =
         "https://cardgames.app/cribbage/game/?room=[room]&name=[name]&email=[email]&id=[id]&spectate=[spectate]";
-      //let linkTemplate = "http://192.168.1.5:8081/CribbageUI/www/?room=[room]&name=[name]&email=[email]&id=[id]&spectate=[spectate]";
+      //let linkTemplate = "http://192.168.1.25:8081/CribbageUI/www/?room=[room]&name=[name]&email=[email]&id=[id]&spectate=[spectate]";
 
       if (!linkTemplate) return "";
       let user = authentication.getUser();

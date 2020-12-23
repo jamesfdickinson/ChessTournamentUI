@@ -235,7 +235,7 @@
         v-if="players && players.length > 0"
         style="xheight: 220px; overflow-y: auto"
       >
-        <ion-list-header>Players</ion-list-header>
+        <ion-list-header>Players {{players.length}}</ion-list-header>
         <Standings :players="players"></Standings>
       </ion-card>
     </ion-content>
