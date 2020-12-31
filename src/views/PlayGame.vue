@@ -73,8 +73,8 @@ export default {
   methods: {
     getRoomLink(room, spectate) {
       //todo: pass template in from tournament settings or position
-      let linkTemplate =
-        "https://cardgames.app/cribbage/game/?room=[room]&name=[name]&email=[email]&id=[id]&spectate=[spectate]";
+
+      let linkTemplate =  "https://cardgames.app/cribbage/game/?room=[room]&name=[name]&email=[email]&id=[id]&spectate=[spectate]";
       //let linkTemplate = "http://192.168.1.25:8081/CribbageUI/www/?room=[room]&name=[name]&email=[email]&id=[id]&spectate=[spectate]";
 
       if (!linkTemplate) return "";
@@ -168,6 +168,8 @@ export default {
   created() {},
   beforeDestroy() {
     window.removeEventListener("message", this.onChildWindowMessage);
+    // //close window to clean up
+    // document.getElementById("iframe-game").src = "about:blank";
   },
 };
 </script>

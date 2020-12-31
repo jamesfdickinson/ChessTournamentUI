@@ -4,7 +4,8 @@
     <ion-item color="primary">
       <!-- <ion-label slot="start">Table {{ table.table }} - "{{ table.id }}"</ion-label> -->
       <ion-label slot="start">Room "{{ table.id }}"</ion-label>
-      <ion-button v-if="table.positions.some(p=>p.playerEmail == user.email)"
+      <ion-button
+        v-if="table.positions.some((p) => p.playerEmail == user.email)"
         slot="end"
         color="light"
         fill="outline"
@@ -12,7 +13,8 @@
         target="_blank"
         >Play</ion-button
       >
-      <ion-button v-else
+      <ion-button
+        v-else
         slot="end"
         color="light"
         fill="outline"
@@ -32,7 +34,14 @@
       :key="position.id"
       v-on:click="openPlayer(position.playerId)"
     >
-      <ion-icon slot="start" name="contact"></ion-icon>
+      <!-- <ion-icon slot="start" name="contact"></ion-icon> -->
+      <ion-avatar slot="start">
+        <AvatarIcon
+          :name="position.playerFirstName"
+          :image="position.avatar"
+        ></AvatarIcon>
+      </ion-avatar>
+
       <ion-label
         >{{ position.playerFirstName }} {{ position.playerLastName }}</ion-label
       >
@@ -50,11 +59,12 @@
 
 <script>
 // @ is an alias to /src
+import AvatarIcon from "@/components/AvatarIcon.vue";
 import Authentication from "@/services/Authentication";
 const authentication = new Authentication();
 export default {
   name: "Table",
-  components: {},
+  components: { AvatarIcon },
   props: {
     table: {
       type: Object,
@@ -84,13 +94,13 @@ export default {
     openGame(id) {
       this.$router.push({
         name: "PlayGame",
-        params: {  id: id },
+        params: { id: id },
       });
     },
     watchGame(id) {
       this.$router.push({
         name: "PlayGame",
-        params: {  id: id, spectate: true },
+        params: { id: id, spectate: true },
       });
     },
     getRoomLink(room) {

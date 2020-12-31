@@ -4,7 +4,11 @@
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
-          <ion-icon name="arrow-round-back" size="large" @click="$router.push('./')"></ion-icon>
+          <ion-icon
+            name="arrow-round-back"
+            size="large"
+            @click="$router.push('./')"
+          ></ion-icon>
         </ion-buttons>
         <ion-title>Players</ion-title>
         <ion-buttons slot="end">
@@ -18,8 +22,8 @@
       <ion-searchbar
         placeholder="First Name, Last Name, or Team"
         :value="searchInput"
-        @ionInput="searchInput = $event.target.value;"
-        @ionChange="searchInput= $event.target.value;"
+        @ionInput="searchInput = $event.target.value"
+        @ionChange="searchInput = $event.target.value"
       ></ion-searchbar>
       <!-- <ul>
         <li v-for="tournament of tournaments" :key="tournament.id">
@@ -30,7 +34,8 @@
         </li>
       </ul>-->
       <ion-list>
-        <ion-item button
+        <ion-item
+          button
           detail="true"
           v-for="player of filteredItems"
           :key="player.playerId"
@@ -39,9 +44,13 @@
         >
           <!-- <ion-icon name="contact" slot="start"></ion-icon>  -->
           <!-- <TeamIcon :title="player.team" :image="player.image" slot="start"></TeamIcon> -->
-          <TeamIcon :title="player.firstName" :image="player.image" slot="start"></TeamIcon>
-
-          <ion-label>{{player.firstName}} {{player.lastName}}</ion-label>
+          <ion-avatar slot="start">
+            <AvatarIcon
+              :name="player.firstName"
+              :image="player.avatar"
+            ></AvatarIcon>
+          </ion-avatar>
+          <ion-label>{{ player.firstName }} {{ player.lastName }}</ion-label>
         </ion-item>
       </ion-list>
     </ion-content>
@@ -51,15 +60,16 @@
 
 <script>
 import fetch from "@/services/fetch";
-import TeamIcon from "@/components/TeamIcon.vue";
+//import TeamIcon from "@/components/TeamIcon.vue";
+import AvatarIcon from "@/components/AvatarIcon.vue";
 export default {
   name: "home",
-  components: { TeamIcon },
+  components: { AvatarIcon },
   data() {
     return {
       searchInput: "",
       players: [],
-      errors: []
+      errors: [],
     };
   },
   methods: {
@@ -80,7 +90,7 @@ export default {
       var tournamentId = this.$route.params.tournament;
       this.$router.push({
         name: "PlayerNew",
-        params: { tournament: tournamentId }
+        params: { tournament: tournamentId },
       });
     },
     openPlayer(id) {
@@ -93,13 +103,13 @@ export default {
       var tournamentId = this.$route.params.tournament;
       fetch
         .get(`players/${tournamentId}`)
-        .then(response => {
+        .then((response) => {
           this.players = response.data;
         })
-        .catch(e => {
+        .catch((e) => {
           this.errors.push(e);
         });
-    }
+    },
   },
   computed: {
     filteredItems() {
@@ -107,7 +117,7 @@ export default {
       let searchInput = this.searchInput;
       if (searchInput) {
         searchInput = searchInput.toLowerCase();
-        filteredRound = filteredRound.filter(p => {
+        filteredRound = filteredRound.filter((p) => {
           if (p.firstName && p.firstName.toLowerCase().startsWith(searchInput))
             return true;
           if (p.lastName && p.lastName.toLowerCase().startsWith(searchInput))
@@ -118,10 +128,10 @@ export default {
         });
       }
       return filteredRound;
-    }
+    },
   },
   created() {
     this.loadData();
-  }
+  },
 };
 </script>

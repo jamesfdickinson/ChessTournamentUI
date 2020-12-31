@@ -31,6 +31,13 @@
           ></ion-input>
         </ion-item>
         <ion-item>
+          <ion-label position="stacked">Avatar</ion-label>
+          <ion-input
+            :value="player.avatar"
+            @input="player.avatar = $event.target.value"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
           <ion-label position="stacked">Gamer ID</ion-label>
           <ion-input
             :value="player.gamerId"

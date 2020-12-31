@@ -42,6 +42,10 @@
           <ion-icon slot="start" name="trash"></ion-icon>
           <ion-label>Delete all players</ion-label>
         </ion-item>
+         <ion-item button detail="true" v-on:click="updateAllAvatars()">
+          <ion-icon slot="start" name="contact"></ion-icon>
+          <ion-label>Update all avatars from JD</ion-label>
+        </ion-item>
         <ion-item button detail="true" v-on:click="showToast()">
           <ion-icon slot="start" name="contact"></ion-icon>
           <ion-label>Test Show Toast</ion-label>
@@ -146,6 +150,19 @@ export default {
         var tournamentId = this.tournamentId;
         fetch
           .get(`tools/DeleteAllPlayers/${tournamentId}`)
+          .then(response => {
+            this.message = response.data;
+          })
+          .catch(e => {
+            this.error = e;
+          });
+      });
+    },
+    updateAllAvatars() {
+      this.$confirm(`Do you want to update all Avatars?`).then(() => {
+        var tournamentId = this.tournamentId;
+        fetch
+          .get(`tools/UpdateAllAvatars/${tournamentId}`)
           .then(response => {
             this.message = response.data;
           })

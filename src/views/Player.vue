@@ -3,11 +3,17 @@
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
-          <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
+          <ion-icon
+            name="arrow-round-back"
+            size="large"
+            @click="$router.go(-1)"
+          ></ion-icon>
         </ion-buttons>
         <ion-title>Player</ion-title>
         <ion-buttons slot="end">
-          <ion-button @click="$router.push({ name: 'PlayerEdit', params: { id: id} })">
+          <ion-button
+            @click="$router.push({ name: 'PlayerEdit', params: { id: id } })"
+          >
             <ion-icon name="create"></ion-icon>
           </ion-button>
         </ion-buttons>
@@ -21,18 +27,25 @@
       <ion-card-content>-->
       <!-- </ion-card-content>
       </ion-card>-->
+      <ion-avatar style="margin: 15px auto; width: 100px; height: 100px">
+        <img
+          :src="player.avatar ? player.avatar : '/images/avatars/agent.png'"
+        />
+      </ion-avatar>
       <ion-list>
         <ion-item>
           <ion-label position="fixed">Name</ion-label>
-          <ion-label slot>{{player.firstName}} {{player.lastName}}</ion-label>
+          <ion-label slot
+            >{{ player.firstName }} {{ player.lastName }}</ion-label
+          >
         </ion-item>
         <ion-item>
           <ion-label position="fixed">Gamer ID</ion-label>
-          <ion-label slot>{{player.gamerId}}</ion-label>
+          <ion-label slot>{{ player.gamerId }}</ion-label>
         </ion-item>
         <ion-item>
           <ion-label position="fixed">Team</ion-label>
-          <ion-label slot>{{player.team}}</ion-label>
+          <ion-label slot>{{ player.team }}</ion-label>
         </ion-item>
         <!--  <ion-item>
           <ion-label position="fixed">Grade</ion-label>
@@ -44,7 +57,7 @@
         </ion-item>-->
         <ion-item>
           <ion-label position="fixed">Division</ion-label>
-          <ion-label slot>{{player.division}}</ion-label>
+          <ion-label slot>{{ player.division }}</ion-label>
         </ion-item>
         <!-- </ion-list>
      
@@ -52,25 +65,35 @@
         <ion-list-header color="primary">Score</ion-list-header>
         <ion-item>
           <ion-label position="fixed">Score</ion-label>
-          <ion-label slot>{{player.points}}</ion-label>
+          <ion-label slot>{{ player.points }}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label position="fixed">Tie Breaker</ion-label>
+          <ion-label slot>{{ player.tieBreaker }}</ion-label>
         </ion-item>
         <!-- </ion-list>
 
         <ion-list>-->
         <ion-list-header color="primary">Games</ion-list-header>
         <ion-item
-          detail="true"
+          xdetail="true"
           v-for="playerGame of playerGames"
           :key="playerGame.Id"
-          v-on:click="openPlayer(playerGame.playerId)"
+          v-on:click="openRound(playerGame.round)"
         >
-          <ion-label slot>{{playerGame.fullName}}</ion-label>
-          <ion-badge>{{1-playerGame.points}}</ion-badge>
+          <!-- <ion-note slot="start" >{{  playerGame.round }}</ion-note> -->
+          <ion-label>{{ playerGame.opponets }}</ion-label>
+          <ion-badge slot="end">{{ playerGame.points }}</ion-badge>
+          <ion-note slot="end">{{ playerGame.tieBreaker }}</ion-note>
         </ion-item>
-        <ion-list-header v-if="achievements && achievements.length > 0" color="primary">Achievements</ion-list-header>
+        <ion-list-header
+          v-if="achievements && achievements.length > 0"
+          color="primary"
+          >Achievements</ion-list-header
+        >
         <ion-item v-for="achievement of achievements" :key="achievement">
           <ion-icon slot="start" name="trophy"></ion-icon>
-          <ion-label>{{achievement}}</ion-label>
+          <ion-label>{{ achievement }}</ion-label>
         </ion-item>
       </ion-list>
     </ion-content>
@@ -94,10 +117,13 @@ export default {
       player: {},
       playerGames: {},
       achievements: [],
-      errors: []
+      errors: [],
     };
   },
   methods: {
+    openRound(id) {
+      this.$router.push({ name: "Round", params: { id: id } });
+    },
     openPlayer(id) {
       this.$router.push({ name: "Player", params: { id: id } });
     },
@@ -106,7 +132,7 @@ export default {
       let tournamentId = this.tournamentId;
       this.$router.push({
         name: "PlayerEdit",
-        params: { id: id, tournament: tournamentId }
+        params: { id: id, tournament: tournamentId },
       });
     },
     loadData() {
@@ -114,34 +140,34 @@ export default {
 
       fetch
         .get(`player/${id}`)
-        .then(response => {
+        .then((response) => {
           this.player = response.data;
         })
-        .catch(e => {
+        .catch((e) => {
           this.errors.push(e);
         });
 
       fetch
         .get(`player/games/${id}`)
-        .then(response => {
+        .then((response) => {
           this.playerGames = response.data;
         })
-        .catch(e => {
+        .catch((e) => {
           this.errors.push(e);
         });
 
       fetch
         .get(`achievement/${id}`)
-        .then(response => {
+        .then((response) => {
           this.achievements = response.data;
         })
-        .catch(e => {
+        .catch((e) => {
           this.errors.push(e);
         });
-    }
+    },
   },
   created() {
     this.loadData();
-  }
+  },
 };
 </script>
