@@ -26,8 +26,10 @@
         ></ion-icon>
         <!-- <ion-badge slot="end" color="light">{{ player.points }} {{ player.tieBreaker }}</ion-badge>
        -->
-        <div slot="end">{{ player.tieBreaker }}</div>
+          <!-- <ion-note slot="end" >{{ player.tieBreaker }}</ion-note >
+        -->
         <ion-badge slot="end" color="light">{{ player.points }} </ion-badge>
+      
       </ion-item>
     </template>
   </ion-list>
