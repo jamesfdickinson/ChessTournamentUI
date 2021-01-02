@@ -113,7 +113,10 @@ export default {
       var userName = user && user.name ? user.name : "unknown";
       let email = user && user.email ? user.email : "";
       let name = user && user.name ? user.name : "";
-      let gamerId = user && user.gamerId ? user.gamerId : "";
+      //note: can't trust players to supply their own cribbage id.  Had an issue with many with the same number
+      //note: now link the systems using their email
+      //let gamerId = user && user.gamerId ? user.gamerId : "";
+      let gamerId = null;
 
       let url = linkTemplate;
 

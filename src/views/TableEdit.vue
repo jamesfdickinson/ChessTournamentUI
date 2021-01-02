@@ -82,6 +82,12 @@
               :value="position.points"
               @input="position.points = parseInt($event.target.value) || 0"
             ></ion-input>
+             <ion-input
+              slot="end"
+              type="number"
+              :value="position.tieBreaker"
+              @input="position.tieBreaker = parseInt($event.target.value) || 0"
+            ></ion-input>
           </ion-item>
         </template>
       </ion-list>
@@ -173,13 +179,13 @@ export default {
         let position = positions[i];
         //todo: give point to player and zero to all others
         if (winner == position.playerId) {
-          position.points = 1;
+          position.points = 2;
         } else {
           position.points = 0;
         }
         //tie
         if (winner === "tie") {
-          position.points = 0.5;
+          position.points = 1;
         }
       }
     },

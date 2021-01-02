@@ -74,7 +74,8 @@ export default {
     getRoomLink(room, spectate) {
       //todo: pass template in from tournament settings or position
 
-      let linkTemplate =  "https://cardgames.app/cribbage/game/?room=[room]&name=[name]&email=[email]&id=[id]&spectate=[spectate]";
+      let linkTemplate =
+        "https://cardgames.app/cribbage/game/?room=[room]&name=[name]&email=[email]&id=[id]&spectate=[spectate]";
       //let linkTemplate = "http://192.168.1.25:8081/CribbageUI/www/?room=[room]&name=[name]&email=[email]&id=[id]&spectate=[spectate]";
 
       if (!linkTemplate) return "";
@@ -82,7 +83,10 @@ export default {
       var userName = user && user.name ? user.name : "unknown";
       let email = user && user.email ? user.email : "";
       let name = user && user.name ? user.name : "";
-      let gamerId = user && user.gamerId ? user.gamerId : user.email;
+      //note: can't trust players to supply their own cribbage id.  Had an issue with many with the same number
+      //note: now link the systems using their email
+      //let gamerId = user && user.gamerId ? user.gamerId : user.email;
+      let gamerId = null;
 
       let url = linkTemplate;
 

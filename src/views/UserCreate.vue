@@ -28,14 +28,14 @@
               @input="user.username = $event.target.value"
             ></ion-input>
           </ion-item>
-          <ion-item>
+          <!-- <ion-item>
               <ion-label position="stacked">Cribbage ID</ion-label>
               <ion-input
                 type="number"
                 :value="user.gamerId"
                 @input="user.gamerId = $event.target.value"
               ></ion-input>
-            </ion-item>
+            </ion-item> -->
           <!-- <ion-item>
           <ion-label position="stacked">First Name</ion-label>
           <ion-input :value="user.firstName" @input="user.firstName = $event.target.value"></ion-input>
@@ -60,14 +60,14 @@
               @input="passwordVerify = $event.target.value"
             ></ion-input>
           </ion-item>
-          <ion-item>
+          <!-- <ion-item>
             <ion-label>Allow Notifications</ion-label>
             <ion-checkbox
               slot="start"
               :checked="user.allowNotifications"
               @ionChange="user.allowNotifications = ($event.target.checked == true);"
             ></ion-checkbox>
-          </ion-item>
+          </ion-item> -->
         </ion-list>
 
         <ion-button type="submit" expand="block">Submit</ion-button>
@@ -114,7 +114,11 @@ export default {
 
       //validation
       this.errors = [];
+      if (!user.name) this.errors.push("Display Name is required");
+      if (!user.email) this.errors.push("Email is required");
       if (!user.username) this.errors.push("Username is required");
+      if (!user.gamerId) this.errors.push("Username is required");
+
       if (!passwordVerify || user.password != passwordVerify)
         this.errors.push("Passwords does not match");
       if (this.errors.length > 0) return;
