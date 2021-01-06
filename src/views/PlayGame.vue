@@ -75,7 +75,7 @@ export default {
       //todo: pass template in from tournament settings or position
 
       let linkTemplate =
-        "https://cardgames.app/cribbage/game/?room=[room]&name=[name]&email=[email]&id=[id]&spectate=[spectate]";
+        "https://cardgames.app/cribbage/game/?room=[room]&name=[name]&email=[email]&id=[id]&spectate=[spectate]&avatar=[avatar]";
       //let linkTemplate = "http://192.168.1.25:8081/CribbageUI/www/?room=[room]&name=[name]&email=[email]&id=[id]&spectate=[spectate]";
 
       if (!linkTemplate) return "";
@@ -83,10 +83,11 @@ export default {
       var userName = user && user.name ? user.name : "unknown";
       let email = user && user.email ? user.email : "";
       let name = user && user.name ? user.name : "";
+      let avatar = user && user.avatar ? user.avatar : "";
       //note: can't trust players to supply their own cribbage id.  Had an issue with many with the same number
       //note: now link the systems using their email
       //let gamerId = user && user.gamerId ? user.gamerId : user.email;
-      let gamerId = null;
+      let gamerId = user.email;
 
       let url = linkTemplate;
 
@@ -107,6 +108,7 @@ export default {
       url = url.replace("[name]", name);
       url = url.replace("[id]", gamerId);
       url = url.replace("[spectate]", spectate);
+      url = url.replace("[avatar]", avatar);
 
       // url = url.replace("[tournament]", tournament);
       // url = url.replace("[round]", round);

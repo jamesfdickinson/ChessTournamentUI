@@ -39,6 +39,10 @@
           <ion-label position="fixed">GamerId</ion-label>
           <ion-label>{{ user.gamerId }}</ion-label>
         </ion-item>
+         <ion-item>
+          <ion-label position="fixed">Avatar</ion-label>
+          <ion-avatar><img :src="user.avatar"  /></ion-avatar>
+        </ion-item>
         <ion-item>
           <ion-label position="fixed">Password</ion-label>
           <ion-button v-on:click="PasswordChange()">Change Password</ion-button>
@@ -81,6 +85,7 @@ export default {
         email: user.email,
         name: user.name,
         gamerId: user.gamerId,
+        avatar: user.avatar,
         password: null,
         passwordVerify: null,
         allowNotifications: user.allowNotifications,

@@ -15,7 +15,7 @@
     </ion-header>
     <ion-content>
       <ion-list>
-        <ion-item>
+        <!-- <ion-item>
           <ion-label position="stacked">Email</ion-label>
           <ion-input
             type="email"
@@ -23,7 +23,7 @@
             @input="user.email = $event.target.value"
             readonly
           ></ion-input>
-        </ion-item>
+        </ion-item> -->
         <ion-item>
           <ion-label position="stacked">Display Name</ion-label>
           <ion-input
@@ -39,8 +39,44 @@
             type="number"
             :value="user.gamerId"
             @input="user.gamerId = $event.target.value"
+            @change="gameIdChange(user.gamerId)"
           ></ion-input>
         </ion-item>
+        <ion-item>
+          <div>
+            <template v-for="avatar in avatars">
+              <label :for="avatar.name" :key="avatar.url">
+                <input
+                  :value="avatar.url"
+                  type="radio"
+                  :id="avatar.name"
+                  name="avatar"
+                  v-model="user.avatar"
+                />
+                <img
+                  style="width: 60px; height: 60px; max-width: 60px"
+                  :src="avatar.url"
+                />
+              </label>
+            </template>
+            <template v-if="gamificationAvatar">
+              <label for="gamification">
+                <input
+                  :value="gamificationAvatar"
+                  type="radio"
+                  id="gamification"
+                  name="avatar"
+                  v-model="user.avatar"
+                />
+                <img
+                  style="width: 60px; height: 60px; max-width: 60px"
+                  :src="gamificationAvatar"
+                />
+              </label>
+            </template>
+          </div>
+        </ion-item>
+
         <!-- <ion-item>
           <ion-label position="stacked">First Name</ion-label>
           <ion-input :value="user.firstName" @input="user.firstName = $event.target.value"></ion-input>
@@ -88,15 +124,35 @@
     <!-- </ion-page> -->
   </layout-no-menu>
 </template>
-
+<style scoped>
+div.radio img {
+  border: solid 4px #bbb;
+  padding: 2px;
+}
+div.radio label {
+  font-family: arial;
+}
+input[type="radio"] {
+  display: none;
+}
+input[type="radio"]:checked + img {
+  border: solid 4px #ff0000;
+}
+</style>
 <script>
 import Authentication from "@/services/Authentication.js";
 const authentication = new Authentication();
+import Avatar from "@/services/Avatar.js";
+const avatar = new Avatar();
+import Gamification from "@/services/Gamification.js";
+const gamification = new Gamification();
 export default {
   name: "home",
   components: {},
   data() {
     var user = authentication.getUser() || {};
+    let avatars = avatar.getAll();
+    this.gameIdChange(user.gamerId);
     return {
       user: {
         id: user.id,
@@ -104,10 +160,13 @@ export default {
         email: user.email,
         name: user.name,
         gamerId: user.gamerId,
+        avatar: user.avatar,
         password: null,
         passwordVerify: null,
         allowNotifications: user.allowNotifications,
       },
+      avatars: avatars,
+      gamificationAvatar: null,
       error: "",
     };
   },
@@ -122,6 +181,9 @@ export default {
         .then((userData) => {
           let user = userData;
           console.log("User Logged in: " + user.username, user);
+
+          //todo: update player's avatar
+
           //back
           this.$router.back();
         })
@@ -129,6 +191,13 @@ export default {
           this.error = "Error: Save failed";
           console.warn(e);
         });
+    },
+    gameIdChange(gamerId) {
+      gamification.GetUser(gamerId).then((userData) => {
+        if (!userData) return;
+        let avatar = userData.Avatar;
+        this.gamificationAvatar = avatar;
+      });
     },
   },
 };

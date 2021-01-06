@@ -1,8 +1,8 @@
 import fetch from "@/services/fetch";
 export default class CribbageServer {
     constructor() {
-       // this.baseURL = "https://cribbageserver.jimmyinteractive.com";
-        this.baseURL = "http://localhost";
+       this.baseURL = "https://cribbageserver.jimmyinteractive.com";
+        //this.baseURL = "http://localhost";
     }
     users() {
         return fetch.get(`${this.baseURL}/users`)

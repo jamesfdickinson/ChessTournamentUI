@@ -103,46 +103,6 @@ export default {
         params: { id: id, spectate: true },
       });
     },
-    getRoomLink(room) {
-      //todo: pass template in from tournament settings or position
-      let linkTemplate =
-        "https://cardgames.app/cribbage/game/?room=[room]&name=[name]&email=[email]&id=[id]";
-
-      if (!linkTemplate) return "";
-      let user = this.user;
-      var userName = user && user.name ? user.name : "unknown";
-      let email = user && user.email ? user.email : "";
-      let name = user && user.name ? user.name : "";
-      //note: can't trust players to supply their own cribbage id.  Had an issue with many with the same number
-      //note: now link the systems using their email
-      //let gamerId = user && user.gamerId ? user.gamerId : "";
-      let gamerId = null;
-
-      let url = linkTemplate;
-
-      // //get gamerId from player if user is player
-      // let round = this.round;
-      // if (round && round.positions) {
-      //   let position = round.positions.filter(
-      //     p => p.room === room && p.playerEmail === email && email
-      //   );
-      //   if (position.length > 0) {
-      //     gamerId = position.playerGamerId;
-      //   }
-      // }
-
-      url = url.replace("[room]", room);
-      url = url.replace("[email]", email);
-      url = url.replace("[userName]", userName);
-      url = url.replace("[name]", name);
-      url = url.replace("[id]", gamerId);
-
-      // url = url.replace("[tournament]", tournament);
-      // url = url.replace("[round]", round);
-      // url = url.replace("[table]", table);
-
-      return url;
-    },
     loadData() {
       //var tournamentId = this.tournamentId;
       let table = {
