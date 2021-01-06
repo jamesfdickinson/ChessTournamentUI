@@ -113,6 +113,11 @@ export default new VueRouter({
       component: Tournaments
     },
     {
+      path: '/TournamentCreate',
+      name: 'TournamentCreate',
+      component: TournamentEdit
+    },
+    {
       path: '/:tournament',
       name: 'Tournament',
       component: Tournament
@@ -146,13 +151,13 @@ export default new VueRouter({
       path: '/:tournament/SignUpEdit',
       name: 'SignUpEdit',
       component: SignUpEdit
-    }, 
+    },
     {
       path: '/:tournament/PlayGame/:id',
       name: 'PlayGame',
       component: PlayGame
     },
-    
+
     {
       path: '/:tournament/Players',
       name: 'Players',

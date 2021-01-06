@@ -148,7 +148,7 @@ export default {
       if (this.errors.length > 0) return;
 
       fetch
-        .put(`player`, player)
+        .post(`player`, player)
         .then(response => {
           console.log(response);
           //back

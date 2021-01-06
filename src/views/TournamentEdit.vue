@@ -257,7 +257,7 @@ export default {
         details: "",
         faqcontent: "",
         hidden: false,
-        id: null,
+        id: 0,
         image: null,
         isPublic: true,
         owner: null,
@@ -276,6 +276,7 @@ export default {
         requireCheckIn: true,
         allowCheckIn: false,
         startDateTime: null,
+        video: ""
       },
       error: "",
     };
@@ -300,7 +301,7 @@ export default {
 
       if (tournamentId && tournament) {
         fetch
-          .post(`tournament/${tournamentId}`, tournament)
+          .put(`tournament/${tournamentId}`, tournament)
           .then((response) => {
             console.log(response);
             this.$router.back(); //back
@@ -310,9 +311,8 @@ export default {
             console.warn(e);
           });
       } else {
-        tournament.Id = tournamentId;
         fetch
-          .put(`tournament/${tournamentId}`, tournament)
+          .post(`tournament`, tournament)
           .then((response) => {
             console.log(response);
             //back

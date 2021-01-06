@@ -315,7 +315,7 @@ export default {
       };
       if (this.errors.length > 0) return;
       fetch
-        .put(`player`, player)
+        .post(`player`, player)
         .then(() => {
           this.loadData();
         })
@@ -329,13 +329,13 @@ export default {
     },
     checkIn(playerId) {
       if (!playerId) return;
-      fetch.post(`player/${playerId}/checkin/true`).then(() => {
+      fetch.put(`player/${playerId}/checkin/true`).then(() => {
         this.loadData();
       });
     },
     checkOut(playerId) {
       if (!playerId) return;
-      fetch.post(`player/${playerId}/checkin/false`).then(() => {
+      fetch.put(`player/${playerId}/checkin/false`).then(() => {
         this.loadData();
       });
     },

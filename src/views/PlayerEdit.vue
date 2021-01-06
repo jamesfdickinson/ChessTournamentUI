@@ -181,7 +181,7 @@ export default {
 
       if (playerId) {
         fetch
-          .post(`player/${playerId}`, player)
+          .put(`player/${playerId}`, player)
           .then((response) => {
             console.log(response);
             //back
@@ -199,7 +199,7 @@ export default {
       } else {
         player.tournamentId = tournamentId;
         fetch
-          .put(`player`, player)
+          .post(`player`, player)
           .then((response) => {
             console.log(response);
             //back
