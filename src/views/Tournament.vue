@@ -452,8 +452,7 @@ export default {
 
       //todo: bind in markup
       //this.countDown
-      //this.updateCountDown(new Date("Jan 7, 2021 14:23:25"));
-
+      //this.updateCountDown(new Date("Jan 7, 2021 14:51:25"));
       this.updateCountDown(new Date(tournament.startDateTime));
     },
     onUpdate(data) {
