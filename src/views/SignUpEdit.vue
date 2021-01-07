@@ -81,47 +81,17 @@ export default {
       let tournamentId = this.tournamentId;
       let tournament = this.tournament;
 
-      if (tournamentId && tournament) {
-        fetch
-          .post(`tournament/${tournamentId}`, tournament)
-          .then(response => {
-            console.log(response);
-            this.$router.back(); //back
-          })
-          .catch(e => {
-            this.error = "Error: Save failed";
-            console.warn(e);
-          });
-      } else {
-        tournament.Id = tournamentId;
-        fetch
-          .put(`tournament/${tournamentId}`, tournament)
-          .then(response => {
-            console.log(response);
-            //back
-            this.$router.back();
-          })
-          .catch(e => {
-            this.error = "Error: Save failed";
-            console.warn(e);
-          });
-      }
-    },
-    deletePlayer() {
-      //  let tournamentId = this.tournamentId;
-      // if (tournamentId) {
-      //   fetch
-      //     .delete(`tournament/${tournamentId}`)
-      //     .then(response => {
-      //       console.log(response);
-      //       //back
-      //       this.$router.back();
-      //     })
-      //     .catch(e => {
-      //       this.error = "Error: Delete failed";
-      //       console.warn(e);
-      //     });
-      // }
+      fetch
+        .put(`tournament/${tournamentId}`, tournament)
+        .then((response) => {
+          console.log(response);
+          //back
+          this.$router.back();
+        })
+        .catch((e) => {
+          this.error = "Error: Save failed";
+          console.warn(e);
+        });
     },
     loadData() {
       let tournamentId = this.tournamentId;

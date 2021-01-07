@@ -29,7 +29,6 @@
           </ion-thumbnail>
           <ion-label>
             <h1>{{ tournament.name }}</h1>
-            <p>{{ tournament.details }}</p>
             <p>{{ getLocalDate(tournament.startDateTime) }}</p>
           </ion-label>
         </ion-item>
@@ -38,6 +37,7 @@
           <ion-icon slot="start" name="alarm"></ion-icon>
           <ion-label>
             <div>{{ tournament.status }}</div>
+            <div>{{ countDownDisplay }}</div>
             <ion-progress-bar
               :value="tournament.statusPercentage"
             ></ion-progress-bar>
@@ -279,6 +279,7 @@ export default {
       userPlayers: [],
       userTables: [],
       players: [],
+      countDownDisplay: null,
       errors: [],
     };
   },
@@ -311,7 +312,7 @@ export default {
         emailHelpList: false,
         allowNotifications: true,
         gamerId: user.gamerId,
-        avatar: user.avatar
+        avatar: user.avatar,
       };
       if (this.errors.length > 0) return;
       fetch
@@ -346,45 +347,55 @@ export default {
       let options = { dateStyle: "medium", timeStyle: "short" };
       return localDate.toLocaleString(undefined, options);
     },
+    updateCountDown(countDownToTime) {
+      // Set the date we're counting down to
+      this.countDownDisplay = this.getCountDownDisplay(countDownToTime);
+
+      // Update the count down every 1 second
+      clearInterval(this.timer);
+
+      if (countDownToTime - new Date() < 0) return;
+      this.timer = setTimeout(
+        function () {
+          this.updateCountDown(countDownToTime);
+        }.bind(this),
+        1000
+      );
+    },
+    getCountDownDisplay(countDownDate) {
+      if (!countDownDate) return null;
+
+      let countDownDateTime = countDownDate.getTime();
+      // Get today's date and time
+      //var now = new Date().getTime();
+      //utc time
+      var now = new Date();
+      var nowTime = now.getTime();
+      // Find the distance between now and the count down date
+      var distance = countDownDateTime - nowTime;
+      if (distance < 0) return null;
+
+      // Time calculations for days, hours, minutes and seconds
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      // Output the result in an element with id="demo"
+      let displayTime = "";
+
+      if (days > 0) displayTime += days + "d ";
+
+      if (hours > 0 || days > 0) displayTime += hours + "h ";
+
+      displayTime += minutes + "m " + seconds + "s ";
+
+      return displayTime;
+    },
     loadData() {
       var tournamentId = this.tournamentId;
-      // fetch
-      //   .get(`tournament/${tournamentId}`)
-      //   .then(response => {
-      //     this.tournament = response.data;
-      //   })
-      //   .catch(e => {
-      //     this.errors.push(e);
-      //   });
-
-      // fetch
-      //   .get(`status/${tournamentId}`)
-      //   .then((response) => {
-      //     this.status = response.data;
-      //   })
-      //   .catch((e) => {
-      //     this.errors.push(e);
-      //   });
-      // let user = authentication.getUser();
-      // if (user && user.email) {
-      //   fetch
-      //     .get(`players/${tournamentId}?email=${user.email}`)
-      //     .then(response => {
-      //       this.userPlayers = response.data || [];
-      //     })
-      //     .catch(e => {
-      //       this.errors.push(e);
-      //     });
-      //}
-      //   fetch
-      //     .get(`report/AllPlayers/${tournamentId}`)
-      //     .then(response => {
-      //       this.players = response.data || [];
-      //     })
-      //     .catch(e => {
-      //       this.errors.push(e);
-      //     });
-
       fetch
         .get(`TournamentView/${tournamentId}`)
         .then((response) => {
@@ -438,6 +449,12 @@ export default {
 
       this.userPlayers = userPlayers;
       this.userTables = userTables;
+
+      //todo: bind in markup
+      //this.countDown
+      //this.updateCountDown(new Date("Jan 7, 2021 14:23:25"));
+
+      this.updateCountDown(new Date(tournament.startDateTime));
     },
     onUpdate(data) {
       console.log("onUpdate", data);
