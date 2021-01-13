@@ -74,7 +74,11 @@ notificationSocket.onNotification = function (notification) {
 
   let message = notification.title;
   let url = notification.link;
-  toast.show(message, 15000, "/audio/arpeggio.mp3", url, "_self");
+  let audio = notification.audio || "/audio/arpeggio.mp3";
+  if(message.startsWith("Please check in")){
+    audio  = "/audio/alert1.mp3";
+  }
+  toast.show(message, 15000, audio, url, "_self");
 };
 
 

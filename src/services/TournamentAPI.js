@@ -40,6 +40,22 @@ export default class TournamentAPI {
                 return data;
             });
     }
+    flowGet(tournamentId) {
+        return fetch
+            .get(`TournamentFlow/${tournamentId}`)
+            .then(response => {
+                let data = response.data;
+                return data;
+            })
+    }
+    flowAction(tournamentId,action) {
+        return fetch
+            .post(`TournamentFlow/${tournamentId}?action=${action}`)
+            .then(response => {
+                let data = response.data;
+                return data;
+            })
+    }
     generateTopDownRound(tournamentId, round, filter) {
         return fetch
             .post(

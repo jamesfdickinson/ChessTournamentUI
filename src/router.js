@@ -8,6 +8,7 @@ import AccessDenied from './views/AccessDenied.vue'
 import Tournament from './views/Tournament.vue'
 import TournamentEdit from './views/TournamentEdit.vue'
 import Tournaments from './views/Tournaments.vue'
+import TournamentVideoEdit from './views/TournamentVideoEdit.vue'
 import CheckIn from './views/CheckIn.vue'
 import SignUp from './views/SignUp.vue'
 import SignUpComplete from './views/SignUpComplete.vue'
@@ -131,6 +132,11 @@ export default new VueRouter({
       path: '/:tournament/TournamentEdit',
       name: 'TournamentEdit',
       component: TournamentEdit
+    },
+    {
+      path: '/:tournament/TournamentVideoEdit',
+      name: 'TournamentVideoEdit',
+      component: TournamentVideoEdit 
     },
     {
       path: '/:tournament/CheckIn',

@@ -20,7 +20,7 @@
         <ion-icon
           slot="end"
           v-if="player.room"
-          :color="[player.points == null ? 'success' : 'light']"
+          :color="[player.roundPoints == null ? 'success' : 'light']"
           name="eye"
           @click="watchGame(player.room)"
         ></ion-icon>
