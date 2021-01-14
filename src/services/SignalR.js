@@ -4,6 +4,7 @@ export default class SignalR {
         this.connection = null;
         this.onUpdate = function () { };
         this.onNotification = function () { };
+        this.onReconnect = function () { };
         this.onReceiveMessage = function () { };
         this.onReceiveMessages = function () { };
         this.baseURL = process.env.VUE_APP_API_URL || 'https://chesstournamentapi.azurewebsites.net/api/' || 'https://localhost:5001/api/';
@@ -15,12 +16,15 @@ export default class SignalR {
         this.connection = new HubConnectionBuilder()
             .withUrl(url, { accessTokenFactory: () => bearerToken })
             .configureLogging(LogLevel.Information)
-            .withAutomaticReconnect()
+            .withAutomaticReconnect([0, 3000, 5000, 10000, 15000, 30000, 60000, 60000 * 2, 60000 * 4])
             .build();
         this.connection.on("Update", this.update.bind(this));
         this.connection.on("ReceiveMessage", this.receiveMessage.bind(this));
         this.connection.on("ReceiveMessages", this.receiveMessages.bind(this));
         this.connection.on("Notification", this.notification.bind(this));
+        this.connection.onreconnected(() => {
+            if (this.onReconnect) this.onReconnect();
+        });
         return this.connection.start();
     }
     close() {

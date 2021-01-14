@@ -138,9 +138,16 @@ export default {
         console.log(r);
         signalR.onReceiveMessage = this.onMessage.bind(this);
         signalR.onReceiveMessages = this.onMessages.bind(this);
+         signalR.onReconnect = this.onReconnect.bind(this);
         //signalR.send("SendMessage",tournamentId, userName,"mooo");
         signalR.send("JoinRoom", channel, userName);
+
       });
+    },
+    onReconnect(){
+      var channel = this.channel.toString();
+      let userName = this.userName || "Unknown";
+      signalR.send("JoinRoom", channel, userName);
     },
     disconnectToChat() {
       signalR.close();

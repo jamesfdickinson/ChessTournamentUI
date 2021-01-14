@@ -21,7 +21,7 @@ export default class NotificationSocket {
         this.connection = new HubConnectionBuilder()
             .withUrl(url, { accessTokenFactory: () => bearerToken })
             .configureLogging(LogLevel.Information)
-            .withAutomaticReconnect()
+            .withAutomaticReconnect([0, 3000, 5000, 10000, 15000, 30000, 60000, 60000 * 2, 60000 * 4])
             .build();
         this.connection.on("Update", this.update.bind(this));
         this.connection.on("Notification", this.notification.bind(this));

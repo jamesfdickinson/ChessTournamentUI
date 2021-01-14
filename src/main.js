@@ -75,11 +75,22 @@ notificationSocket.onNotification = function (notification) {
   let message = notification.title;
   let url = notification.link;
   let audio = notification.audio || "/audio/arpeggio.mp3";
-  if(message.startsWith("Please check in")){
-    audio  = "/audio/alert1.mp3";
+  if (message.startsWith("Please check in")) {
+    audio = "/audio/alert1.mp3";
   }
   toast.show(message, 15000, audio, url, "_self");
 };
+//auto reconnect socket 
+document.addEventListener("visibilitychange", function () {
+  if (document.visibilityState === 'visible') {
+    console.log("visibilitychange " + document.visibilityState);
+    if (!notificationSocket.isConnected()) {
+      notificationSocket.connect(token);
+      toast.show("reconnected", 5000, null, null, "_self");
+    }
+  }
+});
+//document.addEventListener(visibilityChange, handleVisibilityChange, false);
 
 
 Vue.config.productionTip = true;
