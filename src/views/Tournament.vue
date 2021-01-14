@@ -180,11 +180,13 @@
       <div style="color: red">
         <div v-for="error in errors" v-bind:key="error">*{{ error }}</div>
       </div>
-      <template v-for="userTable of userTables">
+      <div v-if="tournament.state == 'play'">
+      <template  v-for="userTable of userTables">
         <ion-card :key="userTable.id">
           <Table :table="userTable"></Table>
         </ion-card>
       </template>
+      </div>
       <!-- </ion-card> -->
 
       <!-- <ion-card style="height:200px;  overflow-y: scroll;">
@@ -274,8 +276,6 @@ export default {
       tournament: {},
       user: user,
       userName: userName,
-      state: "signup",
-      status: { state: "" },
       userPlayers: [],
       userTables: [],
       players: [],

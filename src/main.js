@@ -85,8 +85,13 @@ document.addEventListener("visibilitychange", function () {
   if (document.visibilityState === 'visible') {
     console.log("visibilitychange " + document.visibilityState);
     if (!notificationSocket.isConnected()) {
-      notificationSocket.connect(token);
-      toast.show("reconnected", 5000, null, null, "_self");
+      notificationSocket.connect(token).then(()=>{
+        toast.show("Reconnected", 5000, null, null, "_self");
+      })
+      .catch(() => {
+        toast.show("Failed reconnecting", 4000, null, null, "_self");
+      });
+      toast.show("Reconnecting", 4000, null, null, "_self");
     }
   }
 });
