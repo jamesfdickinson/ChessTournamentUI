@@ -278,6 +278,13 @@ export default {
         .get(`round/Grouped/${roundId}?tournament=${tournamentId}`)
         .then((response) => {
           this.round = response.data;
+          var collator = new Intl.Collator(undefined, {
+            numeric: true,
+            sensitivity: "base",
+          });
+          this.round.sort(function (a, b) {
+            return collator.compare(a.id, b.id);
+          });
         })
         .catch((e) => {
           this.errors.push(e);

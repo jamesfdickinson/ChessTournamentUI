@@ -238,7 +238,7 @@
         style="xheight: 220px; overflow-y: auto"
       >
         <ion-list-header lines="inset">
-          <ion-label>Players {{ players.length }}</ion-label>
+          <ion-label>Players {{ players.length }} ({{ playersCheckedIn }})</ion-label>
         </ion-list-header>
         <Standings :players="players"></Standings>
       </ion-card>
@@ -447,6 +447,7 @@ export default {
       this.tournament = tournament;
       this.players = tournament.players || [];
 
+      this.playersCheckedIn = this.players.filter(p => p.isPresent).length;
       this.userPlayers = userPlayers;
       this.userTables = userTables;
 
