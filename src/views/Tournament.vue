@@ -181,11 +181,11 @@
         <div v-for="error in errors" v-bind:key="error">*{{ error }}</div>
       </div>
       <div v-if="tournament.state == 'play'">
-      <template  v-for="userTable of userTables">
-        <ion-card :key="userTable.id">
-          <Table :table="userTable"></Table>
-        </ion-card>
-      </template>
+        <template v-for="userTable of userTables">
+          <ion-card :key="userTable.id">
+            <Table :table="userTable"></Table>
+          </ion-card>
+        </template>
       </div>
       <!-- </ion-card> -->
 
@@ -238,7 +238,9 @@
         style="xheight: 220px; overflow-y: auto"
       >
         <ion-list-header lines="inset">
-          <ion-label>Players {{ players.length }} ({{ playersCheckedIn }})</ion-label>
+          <ion-label
+            >Players {{ players.length }} ({{ playersCheckedIn }})</ion-label
+          >
         </ion-list-header>
         <Standings :players="players"></Standings>
       </ion-card>
@@ -406,7 +408,7 @@ export default {
           this.errors.push(e);
         });
     },
-    getTableUser(allPositions, email) {
+    getTableUserOld(allPositions, email) {
       let round = allPositions.reduce(
         (max, p) => (p.round > max ? p.round : max),
         0
@@ -433,28 +435,68 @@ export default {
       }
       return tables;
     },
+    getTableUser(allPositions, email) {
+      let tablePositionsUser = allPositions.filter((t) => t.email === email);
+      if (tablePositionsUser.length === 0) return null;
+
+      let tables = [];
+      for (let i = 0; i < tablePositionsUser.length; i++) {
+        let userPosition = tablePositionsUser[i];
+        let tablePositions = allPositions
+          .filter((t) => t.room === userPosition.room)
+          .map((p) => {
+            return {
+              playerId: p.playerId,
+              playerName: p.name,
+              playerFirstName: p.firstName,
+              playerLastName: p.lastName,
+              playerEmail: p.email,
+              avatar: p.avatar,
+              points: p.roundPoints,
+            };
+          });
+        let table = {
+          id: userPosition.room,
+          round: userPosition.round,
+          table: userPosition.table,
+          room: userPosition.room,
+          positions: tablePositions,
+        };
+        tables.push(table);
+      }
+      return tables;
+    },
     populate(data) {
       let tournament = data || {};
       let user = authentication.getUser() || {};
       let email = user.email;
       let userPlayers = [];
       let userTables = [];
+      // if (email) {
+      //   userPlayers = tournament.players.filter((i) => i.email == email);
+      //   let tablePositions = tournament.tablePositions || [];
+      //   userTables = this.getTableUser(tablePositions, email) || {};
+      // }
       if (email) {
         userPlayers = tournament.players.filter((i) => i.email == email);
-        let tablePositions = tournament.tablePositions || [];
-        userTables = this.getTableUser(tablePositions, email) || {};
+        userTables = this.getTableUser(tournament.players, email) || {};
       }
       this.tournament = tournament;
       this.players = tournament.players || [];
 
-      this.playersCheckedIn = this.players.filter(p => p.isPresent).length;
+      this.playersCheckedIn = this.players.filter((p) => p.isPresent).length;
       this.userPlayers = userPlayers;
       this.userTables = userTables;
 
       //todo: bind in markup
       //this.countDown
       //this.updateCountDown(new Date("Jan 7, 2021 14:51:25"));
-      let timerDateTime = new Date(Math.max(new Date(tournament.startDateTime),new Date(tournament.timerDateTime)));
+      let timerDateTime = new Date(
+        Math.max(
+          new Date(tournament.startDateTime),
+          new Date(tournament.timerDateTime)
+        )
+      );
       this.updateCountDown(timerDateTime);
     },
     onUpdate(data) {

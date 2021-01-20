@@ -30,8 +30,13 @@ export default class SignalR {
     close() {
         this.connection.stop();
     }
+    isConnected() {
+        let connected = this.connection && this.connection.connectionState == "Connected";
+        return connected;
+    }
     send(action, ...args) {
         // this.connection.invoke("SendMessage","jh", "user","message");
+        if (this.connection && this.connection.connectionState == "Connected")
         this.connection.invoke(action, ...args);
     }
     notification(notification) {

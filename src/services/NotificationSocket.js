@@ -25,6 +25,7 @@ export default class NotificationSocket {
             .configureLogging(LogLevel.Information)
             .withAutomaticReconnect([0, 3000, 5000, 10000, 15000, 30000, 60000, 60000 * 2, 60000 * 4])
             .build();
+        this.connection.onreconnected(() => this.onConnected());
         this.connection.on("Update", this.update.bind(this));
         this.connection.on("Notification", this.notification.bind(this));
         return this.connection.start().then(() => this.onConnected());

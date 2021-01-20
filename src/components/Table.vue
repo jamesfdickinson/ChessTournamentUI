@@ -37,7 +37,7 @@
       <!-- <ion-icon slot="start" name="contact"></ion-icon> -->
       <ion-avatar slot="start">
         <AvatarIcon
-          :name="position.playerFirstName"
+          :name="position.playerName"
           :image="position.avatar"
         ></AvatarIcon>
       </ion-avatar>
