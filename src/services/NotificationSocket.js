@@ -1,6 +1,7 @@
 
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
-
+import {  DiffPatcher} from 'jsondiffpatch';
+//import { diff, Config, DiffPatcher, formatters } from 'jsondiffpatch';
 let instance = null;
 export default class NotificationSocket {
     constructor() {
@@ -12,6 +13,8 @@ export default class NotificationSocket {
         this.onNotification = function () { };
         this.baseURL = process.env.VUE_APP_API_URL || 'https://chesstournamentapi.azurewebsites.net/api/' || 'https://localhost:5001/api/';
         this.hub = "notificationhub"
+        this.tournamentView = null;
+        this.jsondiffpatch = new DiffPatcher();
 
         instance = this;
 
@@ -28,6 +31,7 @@ export default class NotificationSocket {
         this.connection.onreconnected(() => this.onConnected());
         this.connection.on("Update", this.update.bind(this));
         this.connection.on("Notification", this.notification.bind(this));
+        this.connection.on("Patch", this.patch.bind(this));
         return this.connection.start().then(() => this.onConnected());
     }
     close() {
@@ -53,8 +57,18 @@ export default class NotificationSocket {
         }
     }
     update(data) {
+        this.tournamentView = data;
         if (this.onUpdate)
             this.onUpdate(data);
+    } 
+    patch(data) {
+       if(!data) return;
+        let tournamentView = this.tournamentView;
+        let patch = JSON.parse(data);
+        this.jsondiffpatch.patch(tournamentView,patch);
+        console.log("patch",patch);
+        if (this.onUpdate)
+            this.onUpdate(tournamentView);
     }
     notification(notification) {
         if (this.onNotification)

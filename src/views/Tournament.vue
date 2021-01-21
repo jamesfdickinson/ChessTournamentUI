@@ -436,14 +436,14 @@ export default {
       return tables;
     },
     getTableUser(allPositions, email) {
-      let tablePositionsUser = allPositions.filter((t) => t.email === email);
+      let tablePositionsUser = allPositions.filter((t) => t.email === email && t.room );
       if (tablePositionsUser.length === 0) return null;
 
       let tables = [];
       for (let i = 0; i < tablePositionsUser.length; i++) {
         let userPosition = tablePositionsUser[i];
         let tablePositions = allPositions
-          .filter((t) => t.room === userPosition.room)
+          .filter((t) => t.room === userPosition.room )
           .map((p) => {
             return {
               playerId: p.playerId,
@@ -500,7 +500,7 @@ export default {
       this.updateCountDown(timerDateTime);
     },
     onUpdate(data) {
-      console.log("onUpdate", data);
+      //console.log("onUpdate", data);
       this.populate(data);
     },
   },
