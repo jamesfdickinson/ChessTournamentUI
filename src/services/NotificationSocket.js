@@ -1,6 +1,6 @@
 
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
-import {  DiffPatcher} from 'jsondiffpatch';
+import { DiffPatcher } from 'jsondiffpatch';
 //import { diff, Config, DiffPatcher, formatters } from 'jsondiffpatch';
 let instance = null;
 export default class NotificationSocket {
@@ -60,13 +60,13 @@ export default class NotificationSocket {
         this.tournamentView = data;
         if (this.onUpdate)
             this.onUpdate(data);
-    } 
+    }
     patch(data) {
-       if(!data) return;
         let tournamentView = this.tournamentView;
-        let patch = JSON.parse(data);
-        this.jsondiffpatch.patch(tournamentView,patch);
-        console.log("patch",patch);
+        if (!data) return;
+        if (!tournamentView) return; 
+        this.jsondiffpatch.patch(tournamentView, data);
+        console.log("patch", data);
         if (this.onUpdate)
             this.onUpdate(tournamentView);
     }
