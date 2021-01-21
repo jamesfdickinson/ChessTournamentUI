@@ -180,9 +180,10 @@
       <div style="color: red">
         <div v-for="error in errors" v-bind:key="error">*{{ error }}</div>
       </div>
+
       <div v-if="tournament.state == 'play'">
         <template v-for="userTable of userTables">
-          <ion-card :key="userTable.id">
+          <ion-card :key="userTable.id"  >
             <Table :table="userTable"></Table>
           </ion-card>
         </template>
@@ -455,12 +456,14 @@ export default {
               points: p.roundPoints,
             };
           });
+        let isCompleted = tablePositions.some(x => x.points > 0);
         let table = {
           id: userPosition.room,
           round: userPosition.round,
           table: userPosition.table,
           room: userPosition.room,
           positions: tablePositions,
+          isCompleted: isCompleted
         };
         tables.push(table);
       }
