@@ -250,8 +250,8 @@ export default {
           tournamentAPI.flowAction(tournamentId, "play");
           //send notifications
           if (sendNotifications) {
-            this.sendRoundNotifications(tournamentId, round);
-            this.sendRoundGameInvites(tournamentId, round);
+            //this.sendRoundNotifications(tournamentId, round);
+            //this.sendRoundGameInvites(tournamentId, round);
           }
           //go to round page
           this.$router.push({

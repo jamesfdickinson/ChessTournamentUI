@@ -50,9 +50,8 @@ export default {
       var tournamentId = this.tournamentId;
       tournamentAPI
         .flowAction(tournamentId, action)
-        .then(() => {
+        .then((message) => {
           this.loadData();
-          const message = action + " applied";
           toast.show(message);
         })
         .catch((e) => {
