@@ -1,10 +1,11 @@
 <template>
   <div class="grid-container">
+    
     <div id="chat-log" class="chat-log">
       <template v-for="chatItem of chatLog">
         <div :key="chatItem.id">
-          <strong style="color:green;">{{chatItem.name}}:</strong>
-          {{chatItem.message}}
+          <strong style="color: green">{{ chatItem.name }}:</strong>
+          {{ chatItem.message }}
         </div>
       </template>
     </div>
@@ -50,23 +51,28 @@ import SignalR from "@/services/SignalR.js";
 const signalR = new SignalR();
 import Authentication from "@/services/Authentication";
 const authentication = new Authentication();
+import { Howl } from "howler";
+
 export default {
   name: "Chat",
   props: {
     chatLog: {
       type: Array,
-      default: function() {
+      default: function () {
         return [];
-      }
+      },
     },
     users: Array,
     channel: String,
-    userName: String
+    userName: String,
   },
-  data: function() {
+  data: function () {
+    this.soundAlert = new Howl({
+      src: ["/audio/for-sure.mp3"],
+    });
     return {
       api: null,
-      message: ""
+      message: "",
     };
   },
   methods: {
@@ -86,13 +92,13 @@ export default {
     },
     onMessages(messages) {
       //clear array
-      this.chatLog.splice(0,this.chatLog.length);
+      this.chatLog.splice(0, this.chatLog.length);
       let chatLog = this.chatLog;
       for (let i = 0; i < messages.length; i++) {
         let message = messages[i];
         chatLog.push({
           name: message.user,
-          message: message.message
+          message: message.message,
         });
       }
       this.$nextTick(() => this.scrollToEnd());
@@ -101,11 +107,10 @@ export default {
       let chatLog = this.chatLog;
       chatLog.push({
         name: user,
-        message: message
+        message: message,
       });
 
-      let audio = new Audio("/audio/for-sure.mp3");
-      audio.play();
+      this.soundAlert.play();
 
       let shouldScroll = this.shouldScroll();
       if (shouldScroll) this.$nextTick(() => this.scrollToEnd());
@@ -125,7 +130,8 @@ export default {
         this.chatLog.push({
           id: i,
           name: "Jimmy",
-          message: i + " At w3schools.com you will learn how to make a website."
+          message:
+            i + " At w3schools.com you will learn how to make a website.",
         });
       }
     },
@@ -134,24 +140,23 @@ export default {
       let userName = this.userName || "Unknown";
       let token = authentication.getToken();
 
-      signalR.connect(token,"chathub").then(r => {
+      signalR.connect(token, "chathub").then((r) => {
         console.log(r);
         signalR.onReceiveMessage = this.onMessage.bind(this);
         signalR.onReceiveMessages = this.onMessages.bind(this);
-         signalR.onReconnect = this.onReconnect.bind(this);
+        signalR.onReconnect = this.onReconnect.bind(this);
         //signalR.send("SendMessage",tournamentId, userName,"mooo");
         signalR.send("JoinRoom", channel, userName);
-
       });
     },
-    onReconnect(){
+    onReconnect() {
       var channel = this.channel.toString();
       let userName = this.userName || "Unknown";
       signalR.send("JoinRoom", channel, userName);
     },
     disconnectToChat() {
       signalR.close();
-    }
+    },
   },
   updated() {},
   created() {
@@ -160,7 +165,7 @@ export default {
   },
   beforeDestroy() {
     this.disconnectToChat();
-  }
+  },
 };
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->

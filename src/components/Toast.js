@@ -1,5 +1,12 @@
+import { Howl } from 'howler';
 export default class Toast {
     constructor() {
+        this.soundArpeggio = new Howl({
+            src: ['/audio/arpeggio.mp3']
+        });
+        this.soundAlert = new Howl({
+            src: ['/audio/alert1.mp3']
+        });
     }
     async show(message, duration, audioUrl, url, target) {
         const toast = document.createElement('ion-toast');
@@ -36,8 +43,13 @@ export default class Toast {
         }
         if (audioUrl) {
             try {
-                let audio = new Audio(audioUrl);
-                audio.play();
+                if (audioUrl == "/audio/arpeggio.mp3")
+                    this.soundArpeggio.play();
+                else if (audioUrl == "/audio/alert1.mp3")
+                    this.soundAlert.play();
+                else
+                    this.soundArpeggio.play();
+
             } catch (ex) {
                 console.warn(ex);
             }

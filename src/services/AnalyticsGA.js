@@ -90,7 +90,8 @@ export default class AnalyticsGA {
 
         //get device id, if none found
         var uuid = this.GetUserID();
-
+        //silently fail if no ga
+        if(!ga) return;
         ga('create', property, { 'storage': 'none', 'clientId': uuid });
         ga('set', 'checkProtocolTask', null);
         ga('set', 'checkStorageTask', null);
