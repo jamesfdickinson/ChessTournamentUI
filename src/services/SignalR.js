@@ -7,7 +7,7 @@ export default class SignalR {
         this.onReconnect = function () { };
         this.onReceiveMessage = function () { };
         this.onReceiveMessages = function () { };
-        this.baseURL = process.env.VUE_APP_API_URL || 'https://chesstournamentapi.azurewebsites.net/api/' || 'https://localhost:5001/api/';
+        this.baseURL = process.env.VUE_APP_API_URL || 'https://bracketjd-api.azurewebsites.net/api/' || 'https://localhost:5001/api/';
 
     }
     connect(bearerToken,hub) {

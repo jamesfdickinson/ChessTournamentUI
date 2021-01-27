@@ -399,6 +399,7 @@ export default {
     },
     loadData() {
       var tournamentId = this.tournamentId;
+      //loadData may be pulling old cached data
       fetch
         .get(`TournamentView/${tournamentId}`)
         .then((response) => {

@@ -11,7 +11,7 @@ export default class NotificationSocket {
 
         this.onUpdate = function () { };
         this.onNotification = function () { };
-        this.baseURL = process.env.VUE_APP_API_URL || 'https://chesstournamentapi.azurewebsites.net/api/' || 'https://localhost:5001/api/';
+        this.baseURL = process.env.VUE_APP_API_URL || 'https://bracketjd-api.azurewebsites.net/api/' || 'https://localhost:5001/api/';
         this.hub = "notificationhub"
         this.tournamentView = null;
         this.jsondiffpatch = new DiffPatcher();
