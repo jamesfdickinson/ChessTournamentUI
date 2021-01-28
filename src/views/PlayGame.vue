@@ -1,5 +1,5 @@
 <template>
-  <layout-menu>
+  <layout-no-menu>
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
@@ -50,7 +50,7 @@
       >
       </iframe>
     </ion-content>
-  </layout-menu>
+  </layout-no-menu>
 </template>
 
 <script>

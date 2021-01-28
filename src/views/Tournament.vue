@@ -10,7 +10,10 @@
             </ion-button>
           </ion-menu-toggle>
         </ion-buttons>
-        <ion-title>Tournament</ion-title>
+
+        <ion-title @click="$router.push({ name: 'Tournaments' })">
+          Tournament
+        </ion-title>
         <ion-buttons slot="end">
           <ion-button v-on:click="userDetails()">
             <ion-icon name="contact"></ion-icon>
@@ -19,107 +22,62 @@
       </ion-toolbar>
     </ion-header>
     <ion-content>
-      <ion-card>
-        <!-- <div class="title">
+      <div class="flex-container">
+        <div class="flex-item-full">
+          <ion-card>
+            <!-- <div class="title">
           <img v-if="tournament.image" :src="tournament.image" />
         </div> -->
-        <ion-item>
-          <ion-thumbnail slot="start">
-            <img v-if="tournament.image" :src="tournament.image" />
-          </ion-thumbnail>
-          <ion-label>
-            <h1>{{ tournament.name }}</h1>
-            <p>{{ getLocalDate(tournament.startDateTime) }}</p>
-          </ion-label>
-        </ion-item>
-
-        <ion-item>
-          <ion-icon slot="start" name="alarm"></ion-icon>
-          <ion-label>
-            <div>{{ tournament.status }}</div>
-            <div>{{ countDownDisplay }}</div>
-            <ion-progress-bar
-              :value="tournament.statusPercentage"
-            ></ion-progress-bar>
-          </ion-label>
-          <ion-button
-            slot="end"
-            @click="
-              $router.push({
-                name: 'FAQ',
-                params: { tournament: tournamentId },
-              })
-            "
-            >FAQ</ion-button
-          >
-        </ion-item>
-        <!-- <ion-item>
-          <ion-icon slot="start" name="alarm"></ion-icon>
-          <ion-label> Open Game </ion-label>
-          <ion-button
-            slot="end"
-            @click="
-              $router.push({
-                name: 'PlayGame',
-                params: { tournament: tournamentId, id: '1234' },
-              })
-            "
-            >Play</ion-button
-          >
-        </ion-item> -->
-
-        <!-- <ion-card>
-        <ion-item>
-          <ion-thumbnail v-if="tournament.image" slot="start">
-            <img :src="tournament.image" />
-          </ion-thumbnail>
-          <ion-label>
-            <h1>{{tournament.name}}</h1>
-            <p>{{tournament.details}}</p>
-          </ion-label>
-        </ion-item>
-
-        <ion-item>
-          <ion-icon slot="start" name="alarm"></ion-icon>
-          <ion-label>
-            <div>{{status.state}} - {{status.status}}</div>
-            <ion-progress-bar :value="status.percentage"></ion-progress-bar>
-          </ion-label>
-          <ion-button
-            slot="end"
-            @click="$router.push({ name: 'FAQ', params: { tournament:tournamentId } })"
-          >FAQ</ion-button>
-        </ion-item>
-        </ion-card>-->
-
-        <!-- </ion-card> -->
-        <!-- <ion-item>
-        <ion-icon slot="start" name="information-circle-outline"></ion-icon>
-        <ion-label>{{tournament.details}}</ion-label>
-        </ion-item>-->
-
-        <!-- <ion-card> -->
-        <!-- <ion-item v-if="status != null">
-        <ion-icon slot="start" name="alarm"></ion-icon>
-        <ion-label>
-          <div>{{status.state}} - {{status.status}}</div>
-          <ion-progress-bar :value="status.percentage"></ion-progress-bar>
-        </ion-label>
-        <ion-button
-          slot="end"
-          @click="$router.push({ name: 'SignUp', params: { tournament:tournamentId } })"
-        >View</ion-button>
-        </ion-item>-->
-
-        <ion-item
-          v-if="
-            tournament.allowRegistration === true && userPlayers.length === 0
-          "
-        >
-          <ion-icon name="clipboard" slot="start"></ion-icon>
-          <ion-label>You are not registered</ion-label>
-          <ion-button slot="end" @click="signup()">Sign-Up</ion-button>
-          <!-- <ion-button
+            <ion-item>
+              <ion-thumbnail slot="start">
+                <img v-if="tournament.image" :src="tournament.image" />
+              </ion-thumbnail>
+              <ion-label>
+                <h1>{{ tournament.name }}</h1>
+                <p>{{ getLocalDate(tournament.startDateTime) }}</p>
+              </ion-label>
+              <ion-icon
+                name="settings"
+                slot="end"
+                @click="
+                  $router.push({
+                    name: 'Admin',
+                    params: { tournament: tournamentId },
+                  })
+                "
+              >
+              </ion-icon>
+            </ion-item>
+            <ion-item>
+              <ion-icon slot="start" name="alarm"></ion-icon>
+              <ion-label>
+                <div>{{ tournament.status }}</div>
+                <div>{{ countDownDisplay }}</div>
+                <ion-progress-bar
+                  :value="tournament.statusPercentage"
+                ></ion-progress-bar>
+              </ion-label>
+              <ion-button
+                slot="end"
+                @click="
+                  $router.push({
+                    name: 'FAQ',
+                    params: { tournament: tournamentId },
+                  })
+                "
+                >FAQ</ion-button
+              >
+            </ion-item>
+            <ion-item
+              v-if="
+                tournament.allowRegistration === true &&
+                userPlayers.length === 0
+              "
+            >
+              <ion-icon name="clipboard" slot="start"></ion-icon>
+              <ion-label>You are not registered</ion-label>
+              <ion-button slot="end" @click="signup()">Sign-Up</ion-button>
+              <!-- <ion-button
             slot="end"
             @click="
               $router.push({
@@ -128,123 +86,115 @@
               })
             "
             >Sign-Up</ion-button> -->
-        </ion-item>
-
-        <template v-for="userPlayer of userPlayers">
-          <div :key="userPlayer.playerId">
-            <ion-item v-if="!tournament.allowCheckIn">
-              <ion-icon name="clipboard" slot="start"></ion-icon>
-              <ion-label>Registered</ion-label>
-              <ion-button
-                slot="end"
-                @click="
-                  $router.push({
-                    name: 'Player',
-                    params: { id: userPlayer.playerId },
-                  })
-                "
-                >View</ion-button
-              >
             </ion-item>
 
-            <ion-item
-              v-if="tournament.allowCheckIn && userPlayer.isPresent === false"
-            >
-              <ion-icon
-                name="close-circle-outline"
-                slot="start"
-                color="danger"
-              ></ion-icon>
-              <ion-label color="danger">NOT checked-in</ion-label>
-              <ion-button
-                slot="end"
-                :disabled="!tournament.allowCheckIn"
-                @click="checkIn(userPlayer.playerId)"
-                >Check-in</ion-button
-              >
-            </ion-item>
-            <ion-item v-if="userPlayer.isPresent === true">
-              <ion-icon
-                name="checkmark"
-                slot="start"
-                color="success"
-              ></ion-icon>
-              <ion-label>Ready to play</ion-label>
-              <ion-button slot="end" @click="checkOut(userPlayer.playerId)"
-                >Leave</ion-button
-              >
-            </ion-item>
-          </div>
-        </template>
-      </ion-card>
-      <div style="color: red">
-        <div v-for="error in errors" v-bind:key="error">*{{ error }}</div>
-      </div>
+            <template v-for="userPlayer of userPlayers">
+              <div :key="userPlayer.playerId">
+                <ion-item v-if="!tournament.allowCheckIn">
+                  <ion-icon name="clipboard" slot="start"></ion-icon>
+                  <ion-label>Registered</ion-label>
+                  <ion-button
+                    slot="end"
+                    @click="
+                      $router.push({
+                        name: 'Player',
+                        params: { id: userPlayer.playerId },
+                      })
+                    "
+                    >View</ion-button
+                  >
+                </ion-item>
 
-      <div v-if="tournament.state == 'play'">
-        <template v-for="userTable of userTables">
-          <ion-card :key="userTable.id"  >
-            <Table :table="userTable"></Table>
+                <ion-item
+                  v-if="
+                    tournament.allowCheckIn && userPlayer.isPresent === false
+                  "
+                >
+                  <ion-icon
+                    name="close-circle-outline"
+                    slot="start"
+                    color="danger"
+                  ></ion-icon>
+                  <ion-label color="danger">NOT checked-in</ion-label>
+                  <ion-button
+                    slot="end"
+                    :disabled="!tournament.allowCheckIn"
+                    @click="checkIn(userPlayer.playerId)"
+                    >Check-in</ion-button
+                  >
+                </ion-item>
+                <ion-item v-if="userPlayer.isPresent === true">
+                  <ion-icon
+                    name="checkmark"
+                    slot="start"
+                    color="success"
+                  ></ion-icon>
+                  <ion-label>Ready to play</ion-label>
+                  <ion-button slot="end" @click="checkOut(userPlayer.playerId)"
+                    >Leave</ion-button
+                  >
+                </ion-item>
+              </div>
+            </template>
           </ion-card>
-        </template>
-      </div>
-      <!-- </ion-card> -->
 
-      <!-- <ion-card style="height:200px;  overflow-y: scroll;">
-        <ion-card-header>
-          <ion-card-subtitle>Standings</ion-card-subtitle>
-        </ion-card-header>
-        <Standings></Standings>
-      </ion-card>
-      <ion-item-header>Standings</ion-item-header>-->
-
-      <!-- <ion-list-header >
-        <ion-item>
-          <ion-label>Standings</ion-label>
-          <ion-icon slot="end" name="add" ></ion-icon>
-        </ion-item>
-      </ion-list-header>-->
-      <!-- <ion-list-header>Standings</ion-list-header> -->
-
-      <!-- <ion-card>
-        <Standings style="height:200px;  overflow-y: scroll;"></Standings>
-        <div class="pagination">
-          <a href="#">&laquo;</a>
-          <a href="#">1</a>
-          <a href="#">2</a>
-          <a href="#">3</a>
-          <a href="#">4</a>
-          <a href="#">5</a>
-          <a href="#">6</a>
-          <a href="#">&raquo;</a>
+          <div style="color: red">
+            <div v-for="error in errors" v-bind:key="error">*{{ error }}</div>
+          </div>
         </div>
-      </ion-card>-->
-      <!-- <div style="height:200px;  overflow-y: scroll;">
-        <Standings></Standings>
-      </div>-->
-      <ion-card style="height: 200px">
-        <Chat :channel="tournamentId.toString()" :userName="userName"></Chat>
-      </ion-card>
-      <!-- <div style="height:200px;">
-        <Chat :channel="tournamentId.toString()" :userName="userName"></Chat>
-      </div>-->
-
-      <!-- <ion-list-header>Players</ion-list-header>
-      <Standings></Standings>-->
-      <ion-card v-if="tournament.video">
-        <div v-html="tournament.video"></div>
-      </ion-card>
-      <ion-card
-        v-if="players && players.length > 0"
-        style="xheight: 220px; overflow-y: auto"
-      >
-        <ion-list-header lines="inset">
-          <ion-label
-            >Players {{ players.length }} ({{ playersCheckedIn }})</ion-label
+        <div class="flex-item">
+          <div v-if="tournament.state == 'play'">
+            <template v-for="userTable of userTables">
+              <ion-card :key="userTable.id">
+                <Table :table="userTable"></Table>
+                <ion-item>
+                  <ion-button
+                    slot="end"
+                    @click="
+                      $router.push({
+                        name: 'Round',
+                        params: {
+                          tournament: tournamentId,
+                          id: tournament.round,
+                        },
+                      })
+                    "
+                    >View All</ion-button
+                  >
+                </ion-item>
+              </ion-card>
+            </template>
+          </div>
+        </div>
+        <div class="flex-item">
+          <ion-card style="height: 200px">
+            <Chat
+              :channel="tournamentId.toString()"
+              :userName="userName"
+            ></Chat>
+          </ion-card>
+        </div>
+        <div class="flex-item">
+          <ion-card v-if="tournament.video">
+            <div v-html="tournament.video"></div>
+          </ion-card>
+        </div>
+        <div class="flex-item">
+          <ion-card
+            v-if="players && players.length > 0"
+            style="xheight: 220px; overflow-y: auto"
           >
-        </ion-list-header>
-        <Standings :players="players"></Standings>
-      </ion-card>
+            <ion-list-header lines="inset">
+              <ion-label
+                >Players {{ players.length }} ({{
+                  playersCheckedIn
+                }})</ion-label
+              >
+            </ion-list-header>
+            <Standings :players="players"></Standings>
+          </ion-card>
+        </div>
+      </div>
     </ion-content>
     <!-- </ion-page> -->
   </layout-menu>
@@ -402,7 +352,8 @@ export default {
     },
     loadData() {
       var tournamentId = this.tournamentId;
-      tournamentAPI.tournamentView(tournamentId)
+      tournamentAPI
+        .tournamentView(tournamentId)
         .then((data) => {
           this.populate(data);
         })
@@ -438,14 +389,16 @@ export default {
       return tables;
     },
     getTableUser(allPositions, email) {
-      let tablePositionsUser = allPositions.filter((t) => t.email === email && t.room );
+      let tablePositionsUser = allPositions.filter(
+        (t) => t.email === email && t.room
+      );
       if (tablePositionsUser.length === 0) return null;
 
       let tables = [];
       for (let i = 0; i < tablePositionsUser.length; i++) {
         let userPosition = tablePositionsUser[i];
         let tablePositions = allPositions
-          .filter((t) => t.room === userPosition.room )
+          .filter((t) => t.room === userPosition.room)
           .map((p) => {
             return {
               playerId: p.playerId,
@@ -457,14 +410,14 @@ export default {
               points: p.roundPoints,
             };
           });
-        let isCompleted = tablePositions.some(x => x.points > 0);
+        let isCompleted = tablePositions.some((x) => x.points > 0);
         let table = {
           id: userPosition.room,
           round: userPosition.round,
           table: userPosition.table,
           room: userPosition.room,
           positions: tablePositions,
-          isCompleted: isCompleted
+          isCompleted: isCompleted,
         };
         tables.push(table);
       }
@@ -516,7 +469,6 @@ export default {
 
     tournamentSocket.onUpdate = this.onUpdate.bind(this);
     tournamentSocket.connect(this.tournamentId);
-
   },
   created() {},
   beforeDestroy() {
@@ -564,5 +516,26 @@ export default {
 
 a {
   text-decoration: none;
+}
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #f1f1f1;
+}
+.flex-item-full {
+  flex: 100%;
+}
+.flex-item {
+  flex: 50%;
+}
+.flex-item:empty {
+  flex: 0%;
+}
+
+/* Responsive layout - makes a one column-layout instead of a two-column layout */
+@media (max-width: 800px) {
+  .flex-item {
+    flex: 100%;
+  }
 }
 </style>

@@ -51,10 +51,10 @@ export default class NotificationSocket {
             });
     }
     onConnected() {
-        if (this.tournamentId) {
-            this.joinTournament(this.tournamentId);
-            this.getTournament(this.tournamentId);
-        }
+        // if (this.tournamentId) {
+        //     this.joinTournament(this.tournamentId);
+        //     this.getTournament(this.tournamentId);
+        // }
     }
     notification(notification) {
         if (this.onNotification)

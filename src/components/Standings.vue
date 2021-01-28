@@ -22,9 +22,9 @@
           :color="[
             player.location && player.location.includes('PlayGame')
               ? 'success'
-              : player.roundPoints == null
+              : (player.roundPoints == null
               ? 'medium'
-              : 'light',
+              : 'light')
           ]"
           name="eye"
           @click="watchGame(player.room)"

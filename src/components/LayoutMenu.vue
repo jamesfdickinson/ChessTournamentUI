@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <ion-app>
-      <ion-split-pane when="md" >
+      <ion-split-pane when="xl" >
         <ion-menu>
           <ion-header>
             <ion-toolbar color="primary">

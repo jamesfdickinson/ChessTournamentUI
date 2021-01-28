@@ -113,7 +113,14 @@
             <ion-label>Check-In</ion-label>
           </ion-item>
         </router-link>
-
+        <router-link
+          :to="{ name: 'Players', params: { tournament: tournamentId } }"
+        >
+          <ion-item button detail="true">
+            <ion-icon slot="start" name="person"></ion-icon>
+            <ion-label>Players</ion-label>
+          </ion-item>
+        </router-link>
         <ion-list-header>
           <ion-label>Manage Rounds</ion-label>
         </ion-list-header>
