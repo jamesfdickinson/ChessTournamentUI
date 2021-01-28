@@ -23,8 +23,8 @@
             player.location && player.location.includes('PlayGame')
               ? 'success'
               : player.roundPoints == null
-              ? 'light'
-              : 'medium',
+              ? 'medium'
+              : 'light',
           ]"
           name="eye"
           @click="watchGame(player.room)"
