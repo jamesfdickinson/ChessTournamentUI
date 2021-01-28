@@ -85,12 +85,12 @@ document.addEventListener("visibilitychange", function () {
   if (document.visibilityState === 'visible') {
     console.log("visibilitychange " + document.visibilityState);
     if (!notificationSocket.isConnected()) {
-      notificationSocket.connect(token).then(()=>{
+      notificationSocket.connect(token).then(() => {
         toast.show("Reconnected", 5000, null, null, "_self");
       })
-      .catch(() => {
-        toast.show("Failed reconnecting", 4000, null, null, "_self");
-      });
+        .catch(() => {
+          toast.show("Failed reconnecting", 4000, null, null, "_self");
+        });
       toast.show("Reconnecting", 4000, null, null, "_self");
     }
   }
@@ -154,10 +154,7 @@ router.beforeEach((to, from, next) => {
   }
 });
 router.afterEach((to) => {
-  let tournamentIdParameter = to.params.tournament;
-  let tournamentId = parseInt(tournamentIdParameter);
-  if (!isNaN(tournamentId))
-    notificationSocket.joinTournament(tournamentId);
+  if (to)  notificationSocket.track(to.fullPath);
 });
 
 Vue.component('downloadCsv', JsonCSV)

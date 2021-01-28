@@ -29,9 +29,9 @@ export default class NotificationSocket {
             .withAutomaticReconnect([0, 3000, 5000, 10000, 15000, 30000, 60000, 60000 * 2, 60000 * 4])
             .build();
         this.connection.onreconnected(() => this.onConnected());
-        this.connection.on("Update", this.update.bind(this));
         this.connection.on("Notification", this.notification.bind(this));
-        this.connection.on("Patch", this.patch.bind(this));
+        // this.connection.on("Update", this.update.bind(this));
+        // this.connection.on("Patch", this.patch.bind(this));
         return this.connection.start().then(() => this.onConnected());
     }
     close() {
@@ -56,32 +56,36 @@ export default class NotificationSocket {
             this.getTournament(this.tournamentId);
         }
     }
-    update(data) {
-        this.tournamentView = data;
-        if (this.onUpdate)
-            this.onUpdate(data);
-    }
-    patch(data) {
-        let tournamentView = this.tournamentView;
-        if (!data) return;
-        if (!tournamentView) return; 
-        this.jsondiffpatch.patch(tournamentView, data);
-        console.log("patch", data);
-        if (this.onUpdate)
-            this.onUpdate(tournamentView);
-    }
     notification(notification) {
         if (this.onNotification)
             this.onNotification(notification);
     }
-    joinTournament(tournamentId) {
-        if (!tournamentId) return
-        this.tournamentId = tournamentId; //set to be called onConnected if needed
+    track(location) {
         if (this.connection && this.connection.connectionState == "Connected")
-            this.connection.invoke("JoinTournament", tournamentId);
+            this.connection.invoke("Track", location);
     }
-    getTournament(tournamentId) {
-        if (this.connection && this.connection.connectionState == "Connected")
-            this.connection.invoke("GetTournament", tournamentId);
-    }
+    // update(data) {
+    //     this.tournamentView = data;
+    //     if (this.onUpdate)
+    //         this.onUpdate(data);
+    // }
+    // patch(data) {
+    //     let tournamentView = this.tournamentView;
+    //     if (!data) return;
+    //     if (!tournamentView) return; 
+    //     this.jsondiffpatch.patch(tournamentView, data);
+    //     console.log("patch", data);
+    //     if (this.onUpdate)
+    //         this.onUpdate(tournamentView);
+    // }
+    // joinTournament(tournamentId) {
+    //     if (!tournamentId) return
+    //     this.tournamentId = tournamentId; //set to be called onConnected if needed
+    //     if (this.connection && this.connection.connectionState == "Connected")
+    //         this.connection.invoke("JoinTournament", tournamentId);
+    // }
+    // getTournament(tournamentId) {
+    //     if (this.connection && this.connection.connectionState == "Connected")
+    //         this.connection.invoke("GetTournament", tournamentId);
+    // }
 }

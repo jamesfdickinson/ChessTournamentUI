@@ -2,15 +2,14 @@
   <ion-list>
     <template v-for="player of players">
       <ion-item :key="player.playerId">
-         <ion-avatar slot="start">
+        <ion-avatar slot="start">
           <AvatarIcon
             :name="player.name"
             :image="player.avatar"
             :disabled="!player.isOnline"
           ></AvatarIcon>
           <div v-if="player.isPresent" class="checkMark">✔</div>
-        </ion-avatar >
-      
+        </ion-avatar>
 
         <ion-label
           style="cursor: pointer"
@@ -20,16 +19,21 @@
         <ion-icon
           slot="end"
           v-if="player.room"
-          :color="[player.roundPoints == null ? 'success' : 'light']"
+          :color="[
+            player.location && player.location.includes('PlayGame')
+              ? 'success'
+              : player.roundPoints == null
+              ? 'light'
+              : 'medium',
+          ]"
           name="eye"
           @click="watchGame(player.room)"
         ></ion-icon>
         <!-- <ion-badge slot="end" color="light">{{ player.points }} {{ player.tieBreaker }}</ion-badge>
        -->
-          <!-- <ion-note slot="end" >{{ player.tieBreaker }}</ion-note >
+        <!-- <ion-note slot="end" >{{ player.tieBreaker }}</ion-note >
         -->
         <ion-badge slot="end" color="light">{{ player.points }} </ion-badge>
-      
       </ion-item>
     </template>
   </ion-list>

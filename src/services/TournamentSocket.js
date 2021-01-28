@@ -1,8 +1,9 @@
 
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
-
+import { DiffPatcher } from 'jsondiffpatch';
+//import { diff, Config, DiffPatcher, formatters } from 'jsondiffpatch';
 let instance = null;
-export default class NotificationSocket {
+export default class TournamentSocket {
     constructor() {
         if (instance) {
             return instance;
@@ -11,21 +12,28 @@ export default class NotificationSocket {
         this.onUpdate = function () { };
         this.onNotification = function () { };
         this.baseURL = process.env.VUE_APP_API_URL || 'https://bracketjd-api.azurewebsites.net/api/' || 'https://localhost:5001/api/';
-        this.hub = "notificationhub"
+        this.hub = "tournamenthub"
+        this.tournamentId = null;
+        this.tournamentView = null;
+        this.jsondiffpatch = new DiffPatcher();
 
         instance = this;
+
     }
-    connect(bearerToken) {
+    connect(tournamentId) {
+        this.tournamentId = tournamentId;
         let hub = this.hub;
-        let url = this.baseURL + hub;
+        let url = this.baseURL + hub + "?tournamentId=" + tournamentId;
+        if (this.connection) this.connection.stop();
         this.connection = new HubConnectionBuilder()
-            .withUrl(url, { accessTokenFactory: () => bearerToken })
+            .withUrl(url)
             .configureLogging(LogLevel.Information)
             .withAutomaticReconnect([0, 3000, 5000, 10000, 15000, 30000, 60000, 60000 * 2, 60000 * 4])
             .build();
+        this.connection.onreconnected(() => this.onConnected());
         this.connection.on("Update", this.update.bind(this));
-        this.connection.on("Notification", this.notification.bind(this));
-        return this.connection.start();
+        this.connection.on("Patch", this.patch.bind(this));
+        return this.connection.start().then(() => this.onConnected());
     }
     close() {
         if (this.connection)
@@ -33,23 +41,34 @@ export default class NotificationSocket {
         else
             return Promise.resolve();
     }
-    reconnect(bearerToken) {
-        return this.close()
-            .then(() => {
-                this.connect(bearerToken);
-            });
+    isConnected() {
+        let connected = this.connection && this.connection.connectionState == "Connected";
+        return connected;
     }
-    update(messages) {
+    onConnected() {
+            this.getTournament();
+    }
+    update(data) {
+        this.tournamentView = data;
         if (this.onUpdate)
-            this.onUpdate(messages);
+            this.onUpdate(data);
     }
-    notification(notification) {
-        if (this.onNotification)
-            this.onNotification(notification);
+    patch(data) {
+        let tournamentView = this.tournamentView;
+        if (!data) return;
+        if (!tournamentView){
+            //request full data
+            //this.getTournament();
+            return;
+        } 
+        this.jsondiffpatch.patch(tournamentView, data);
+        console.log("patch", data);
+        if (this.onUpdate)
+            this.onUpdate(tournamentView);
     }
-    joinTournament(tournamentId) {
-        this.tournamentId = tournamentId; //set to be called on connect if needed
+    getTournament() {
+        let tournamentId = this.tournamentId;
         if (this.connection && this.connection.connectionState == "Connected")
-            this.connection.invoke("JoinTournament", tournamentId);
+            this.connection.invoke("GetTournament", tournamentId);
     }
 }

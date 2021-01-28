@@ -2,8 +2,24 @@ import fetch from "@/services/fetch";
 export default class TournamentAPI {
     constructor() {
     }
+    tournamentView(tournamentId) {
+        return fetch
+            .get(`TournamentView/${tournamentId}`)
+            .then((response) => {
+                let data = response.data;
+                return data
+            })
+    }
     matchUpdate(match) {
         return fetch.post(`match/${match.id}`, match);
+    }
+    round(tournamentId, roundId) {
+        return fetch
+            .get(`round/Grouped/${roundId}?tournament=${tournamentId}`)
+            .then(response => {
+                let data = response.data;
+                return data
+            })
     }
     rounds(tournamentId) {
         return fetch
@@ -13,7 +29,7 @@ export default class TournamentAPI {
                 return data
             })
     }
-    roundRaw(tournamentId,roundId){
+    roundRaw(tournamentId, roundId) {
         //api/round/5?tournament=27
         return fetch
             .get(`round/${roundId}?tournament=${tournamentId}`)
@@ -31,7 +47,7 @@ export default class TournamentAPI {
                 return table;
             });
     }
-    players(tournamentId){
+    players(tournamentId) {
         //api/players/27
         return fetch
             .get(`players/${tournamentId}`)
@@ -48,7 +64,7 @@ export default class TournamentAPI {
                 return data;
             })
     }
-    flowAction(tournamentId,action) {
+    flowAction(tournamentId, action) {
         return fetch
             .post(`TournamentFlow/${tournamentId}?action=${action}`)
             .then(response => {

@@ -51,7 +51,7 @@
               <ion-label slot="start">Room {{ table.id }}</ion-label>
 
               <ion-button
-                v-if="table.positions.some((p) => p.playerEmail == user.email)"
+                v-if="table.positions.some((p) => p.email == user.email)"
                 slot="end"
                 color="light"
                 fill="outline"
@@ -68,52 +68,8 @@
                 target="_blank"
                 >Watch</ion-button
               >
-              <!-- <ion-button slot="start" v-on:click="openTable(table.id)">
-                  <ion-icon name="open"></ion-icon>
-                </ion-button>
-              -->
-              <!-- <ion-icon slot="start" name="open"></ion-icon> -->
-
-              <!--              
-                <ion-icon slot="end" name="open"></ion-icon>
-          
-                <ion-icon slot="end" name="eye"></ion-icon>
-              <ion-icon  slot="end" name="logo-game-controller-b"></ion-icon>-->
-              <!--  -->
-              <!-- <ion-buttons slot="start">
-                <ion-button v-on:click="openTable(table.id)">
-                <ion-icon name="add-circle-outline"></ion-icon>
-                </ion-button>
-              </ion-buttons>-->
-              <!-- <ion-icon name="logo-game-controller-b"></ion-icon>
-              <ion-icon name="open"></ion-icon>
-              <ion-button v-on:click="openTable(table.id)">
-                <ion-icon name="open"></ion-icon>
-              </ion-button>-->
-
-              <!-- <ion-icon name="open"></ion-icon>
-              -->
-
-              <!-- <ion-button
-                slot="start"
-                color="light"
-                fill="outline"
-                v-on:click="play(table.id);$event.stopPropagation();"
-              >{{getRoomName(table.id,table.round,table.tournamentId)}}</ion-button>-->
-
-              <!-- <ion-button slot="start" color="light" v-on:click="openTable(table.id)">🔊</ion-button> -->
-              <!-- <ion-button slot="end" color="light" v-on:click="openTable(table.id)">Record</ion-button> -->
 
               <ion-buttons slot="end">
-                <!-- <ion-button :href="getRoomLink(table.id,table.round,table.tournamentId)">
-                  <ion-icon name="logo-game-controller-b"></ion-icon>
-                </ion-button>-->
-                <!-- <ion-button
-                  :href="getRoomLink(table.id,table.round,table.tournamentId)"
-                  target="_blank"
-                >
-                  <ion-icon name="open"></ion-icon>
-                </ion-button>-->
                 <ion-button v-on:click="openTable(table.id)">
                   <ion-icon name="create"></ion-icon>
                 </ion-button>
@@ -129,47 +85,21 @@
                 name="radio-button-on"
                 slot="start"
                 :color="[
-                  isInRoom(position.playerEmail, position.room) ? 'success' : 'light',
+                  isInRoom(position.email, position.room) ? 'success' : 'light',
                 ]"
               ></ion-icon>
               <TeamIcon
-                :title="position.playerFirstName"
+                :title="position.firstName"
                 style="margin-right: 10px"
               ></TeamIcon>
 
               <ion-label
-                >{{ position.playerFirstName }}
-                {{ position.playerLastName }}</ion-label
+                >{{ position.firstName }} {{ position.lastName }}</ion-label
               >
               <ion-badge slot="end" color="light">{{
                 position.points
               }}</ion-badge>
             </ion-item>
-            <!-- <ion-item>
-              <ion-label slot="start">Room {{getRoom(table.id)}}</ion-label>
-              <ion-button slot="end" expand="block" v-on:click="play(table.id)">Join</ion-button>
-            </ion-item>
-            <ion-item text-center>
-              <ion-label>
-                <ion-button v-on:click="play(table.id)" color="light">Join: {{getRoom(table.id)}}</ion-button>
-              </ion-label>
-            </ion-item>-->
-
-            <!-- <ion-item>
-              <ion-grid>
-                <ion-row>
-                  <ion-col class="ion-text-center">
-                    <ion-button
-                      expand="block"
-                      v-on:click="play(table.id)"
-                    >Join {{getRoom(table.id)}}</ion-button>
-                  </ion-col>
-                  <ion-col class="ion-text-center">
-                    <ion-button expand="block" color="light" v-on:click="play(table.id)">Spectate</ion-button>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-item>-->
           </div>
         </template>
       </ion-list>
@@ -201,7 +131,6 @@ export default {
     return {
       tournamentId: tournamentId,
       roundId: roundId,
-      tournament: null,
       user: user,
       hideCompletedGames: hideCompletedGames,
       searchInput: "",
@@ -266,7 +195,6 @@ export default {
       this.players = [];
     },
     isInRoom(email, room) {
-      if(!this.tournament) return;
       let players = this.tournament.players || [];
       let isInRoom = players.some(
         (p) =>
@@ -274,31 +202,47 @@ export default {
       );
       return isInRoom;
     },
+    getUsersInRoom(room) {
+      let tournament = this.tournament;
+      let players = tournament.players || [];
+      let playersInRoom = players
+        .filter((p) => p.location == room)
+        .map((p) => p.firstName);
+      let playersInRoomString = playersInRoom.join(",");
+      return playersInRoomString;
+    },
     loadData() {
       var tournamentId = this.tournamentId;
-      var roundId = this.roundId;
-      tournamentAPI.round(tournamentId,roundId)
-        .then((data) => {
-          this.populate(data);
-        })
-        .catch((e) => {
-          this.errors.push(e);
-        });
+      tournamentAPI.tournamentView(tournamentId).then((data) => {
+        this.populate(data);
+      });
+    },
+    groupBy(xs, key) {
+      return xs.reduce(function (rv, x) {
+        (rv[x[key]] = rv[x[key]] || []).push(x);
+        return rv;
+      }, {});
     },
     populate(data) {
-      this.round = data;
-      var collator = new Intl.Collator(undefined, {
-        numeric: true,
-        sensitivity: "base",
+      let tournament = data || {};
+      let players = tournament.players || [];
+      this.tournament = data;
+      this.roundId = tournament.roundId;
+      //let rooms = this.groupBy(players, "room");
+      //this.round = rooms;
+      let playerWithTables = players.filter((p) => p.room != null);
+      var group_to_values = playerWithTables.reduce(function (obj, item) {
+        obj[item.room] = obj[item.room] || [];
+        obj[item.room].push(item);
+        return obj;
+      }, {});
+      var groups = Object.keys(group_to_values).map(function (key) {
+        return { id: key, positions: group_to_values[key] };
       });
-      this.round.sort(function (a, b) {
-        return collator.compare(a.id, b.id);
-      });
+      this.round = groups;
     },
-    onUpdate(tournament) {
-      this.tournament = tournament;
-      //todo pull round data from tournament data
-      this.loadData();
+    onUpdate(data) {
+      this.populate(data);
     },
   },
   computed: {
@@ -322,22 +266,19 @@ export default {
         searchInput = searchInput.toLowerCase();
         filteredRound = filteredRound.filter((t) => {
           let anyMatched = t.positions.find((p) => {
-            if (p.table && p.table == searchInput) return true;
+            if (p.room && p.room == searchInput) return true;
             if (
-              p.table &&
-              typeof p.table === "string" &&
-              p.table.startsWith(searchInput)
+              p.room &&
+              typeof p.room === "string" &&
+              p.room.startsWith(searchInput)
             )
               return true;
             if (
-              p.playerFirstName &&
-              p.playerFirstName.toLowerCase().startsWith(searchInput)
+              p.firstName &&
+              p.firstName.toLowerCase().startsWith(searchInput)
             )
               return true;
-            if (
-              p.playerLastName &&
-              p.playerLastName.toLowerCase().startsWith(searchInput)
-            )
+            if (p.lastName && p.lastName.toLowerCase().startsWith(searchInput))
               return true;
             if (p.team && p.team.toLowerCase().startsWith(searchInput))
               return true;

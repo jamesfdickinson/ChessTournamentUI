@@ -252,15 +252,18 @@
 
 <script>
 // @ is an alias to /src
-//import HelloWorld from "@/components/HelloWorld.vue";
+import TournamentAPI from "@/services/TournamentAPI";
 import fetch from "@/services/fetch";
 import Chat from "@/components/Chat.vue";
 import Standings from "@/components/Standings.vue";
 import Table from "@/components/Table.vue";
 import Authentication from "@/services/Authentication";
-import EventBus from "@/services/EventBus.js";
+//import EventBus from "@/services/EventBus.js";
+import TournamentSocket from "@/services/TournamentSocket.js";
 //import LayoutMenu from "@/components/LayoutMenu.vue";
+const tournamentAPI = new TournamentAPI();
 const authentication = new Authentication();
+const tournamentSocket = new TournamentSocket();
 export default {
   name: "home",
   components: {
@@ -399,12 +402,9 @@ export default {
     },
     loadData() {
       var tournamentId = this.tournamentId;
-      //loadData may be pulling old cached data
-      fetch
-        .get(`TournamentView/${tournamentId}`)
-        .then((response) => {
-          let tournament = response.data || {};
-          this.populate(tournament);
+      tournamentAPI.tournamentView(tournamentId)
+        .then((data) => {
+          this.populate(data);
         })
         .catch((e) => {
           this.errors.push(e);
@@ -512,12 +512,18 @@ export default {
     this.loadData();
     // this.connectToChat();
     //todo: move data to store and listen to data updates
-    EventBus.$on("updated", this.onUpdate);
+    //EventBus.$on("updated", this.onUpdate);
+
+    tournamentSocket.onUpdate = this.onUpdate.bind(this);
+    tournamentSocket.connect(this.tournamentId);
+
   },
   created() {},
   beforeDestroy() {
     //this.disconnectToChat();
-    EventBus.$off("updated", this.onUpdate);
+    //EventBus.$off("updated", this.onUpdate);
+
+    tournamentSocket.close();
   },
 };
 </script>
