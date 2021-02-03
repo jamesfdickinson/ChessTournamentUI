@@ -58,7 +58,7 @@ export default class TournamentSocket {
         if (!data) return;
         if (!tournamentView){
             //request full data
-            //this.getTournament();
+            this.getTournament();
             return;
         } 
         this.jsondiffpatch.patch(tournamentView, data);

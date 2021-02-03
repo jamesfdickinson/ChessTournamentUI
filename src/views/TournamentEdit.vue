@@ -268,7 +268,7 @@ export default {
         rounds: 5,
         pairing: "Swiss",
         gameRoomLink: null,
-        autoAdvanceRounds: true,
+        autoAdvanceRounds: false,
         allowNotifications: true,
         allowRegistration: true,
         state: "setup",
