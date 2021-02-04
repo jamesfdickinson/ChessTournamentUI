@@ -287,13 +287,13 @@ export default {
     checkIn(playerId) {
       if (!playerId) return;
       fetch.put(`player/${playerId}/checkin/true`).then(() => {
-        this.loadData();
+        //this.loadData();
       });
     },
     checkOut(playerId) {
       if (!playerId) return;
       fetch.put(`player/${playerId}/checkin/false`).then(() => {
-        this.loadData();
+        //this.loadData();
       });
     },
     getLocalDate(date) {
