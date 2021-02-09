@@ -10,7 +10,6 @@ export default class TournamentSocket {
         }
 
         this.onUpdate = function () { };
-        this.onNotification = function () { };
         this.baseURL = process.env.VUE_APP_API_URL || 'https://bracketjd-api.azurewebsites.net/api/' || 'https://localhost:5001/api/';
         this.hub = "tournamenthub"
         this.tournamentId = null;
@@ -46,7 +45,7 @@ export default class TournamentSocket {
         return connected;
     }
     onConnected() {
-            this.getTournament();
+        this.getTournament();
     }
     update(data) {
         this.tournamentView = data;
@@ -56,15 +55,22 @@ export default class TournamentSocket {
     patch(data) {
         let tournamentView = this.tournamentView;
         if (!data) return;
-        if (!tournamentView){
+        if (!tournamentView) {
             //request full data
             this.getTournament();
             return;
-        } 
-        this.jsondiffpatch.patch(tournamentView, data);
-        console.log("patch", data);
-        if (this.onUpdate)
-            this.onUpdate(tournamentView);
+        }
+        try {
+            this.jsondiffpatch.patch(tournamentView, data);
+            console.log("patch", data);
+            if (this.onUpdate)
+                this.onUpdate(tournamentView);
+        } catch (ex) {
+            //it may be out of sync, get full sync
+            console.warn("patch(data)",ex);
+            this.getTournament();
+            return;
+        }
     }
     getTournament() {
         let tournamentId = this.tournamentId;

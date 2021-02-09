@@ -4,6 +4,6 @@ module.exports = {
     publicPath:  process.env.CORDOVA_PLATFORM ? '' :'/',
 
     devServer: {
-        //https: true
+        https: true
       }
 }
