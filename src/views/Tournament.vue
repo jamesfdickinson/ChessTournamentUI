@@ -32,8 +32,8 @@
               <ion-thumbnail slot="start">
                 <img v-if="tournament.image" :src="tournament.image" />
               </ion-thumbnail>
-              <ion-label>
-                <h1>{{ tournament.name }}</h1>
+              <ion-label style="white-space: normal;">
+                <h1 >{{ tournament.name }}</h1>
                 <p>{{ getLocalDate(tournament.startDateTime) }}</p>
               </ion-label>
               <ion-icon
@@ -48,10 +48,10 @@
               >
               </ion-icon>
             </ion-item>
-            <ion-item>
+            <ion-item >
               <ion-icon slot="start" name="alarm"></ion-icon>
               <ion-label>
-                <div>{{ tournament.status }}</div>
+                <div style="white-space: normal;">{{ tournament.status }}</div>
                 <div>{{ countDownDisplay }}</div>
                 <ion-progress-bar
                   :value="tournament.statusPercentage"

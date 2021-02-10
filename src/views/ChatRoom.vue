@@ -53,9 +53,6 @@ export default {
     };
   },
   methods: {
-    offer() {
-      roomSocket.offer();
-    },
     loadData() {},
     populate(data) {
       this.room = data;
