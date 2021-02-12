@@ -2,6 +2,7 @@
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
 export default class RoomSocket {
     constructor() {
+        this.onConnected = function () { };
         this.onUpdate = function () { };
         this.onOffer = function () { };
         this.onAnswer = function () { };
@@ -19,12 +20,15 @@ export default class RoomSocket {
             .configureLogging(LogLevel.Information)
             .withAutomaticReconnect()
             .build();
-        this.connection.onreconnected(() => this.onConnected());
-        this.connection.on("Update", this.onSUpdate.bind(this));
-        this.connection.on("Offer", this.onSOffer.bind(this));
-        this.connection.on("Answer", this.onSAnswer.bind(this));
-        this.connection.on("Candidate", this.onSCandidate.bind(this));
-        return this.connection.start().then(() => this.onConnected());
+        this.connection.onreconnected(() => this.onSocketConnected());
+        // this.connection.on("UserInfo", this.onSUserInfo.bind(this));
+        // this.connection.on("JoinRoom", this.onSJoinRoom.bind(this));
+        // this.connection.on("LeaveRoom", this.onSLeaveRoom.bind(this));
+        // this.connection.on("Message", this.onSMessage.bind(this));
+        // this.connection.on("Signal", this.onSSignal.bind(this));
+        this.connection.on("Update", this.onSocketUpdate.bind(this));
+        this.connection.on("Signal", this.onSocketSignal.bind(this));
+        return this.connection.start().then(() => this.onSocketConnected());
     }
     close() {
         if (this.connection)
@@ -37,45 +41,49 @@ export default class RoomSocket {
         return connected;
     }
     //events//
-    onConnected() {
+    onSocketConnected() {
+        if (this.onConnected) this.onConnected();
         // if (this.room)
-        //    this.joinRoom(this.room);
+        //     this.joinRoom(this.room);
     }
-    onSUpdate(data) {
+    onSocketUpdate(data) {
         if (this.onUpdate)
             this.onUpdate(data);
     }
-    onSOffer(from,description) {
-        if (this.onOffer)
-            this.onOffer(from,JSON.parse(description));
+    onSocketSignal(from,user, type, data) {
+
+        if (type == "Offer") {
+            if (this.onOffer)
+                this.onOffer(from,user, JSON.parse(data));
+        }
+        if (type == "Answer")
+            if (this.onAnswer) {
+                this.onAnswer(from,user, JSON.parse(data));
+            }
+        if (type == "Candidate") {
+            if (this.onCandidate)
+                this.onCandidate(from,user, JSON.parse(data));
+        }
     }
-    onSAnswer(id,description) {
-        if (this.onAnswer)
-            this.onAnswer(id,JSON.parse(description));
-    }
-    onSCandidate(id,candidate) {
-        if (this.onCandidate)
-            this.onCandidate(id,JSON.parse(candidate));
-    }
+    //actions//
     update(room) {
         if (this.connection && this.connection.connectionState == "Connected")
             this.connection.invoke("Update", room);
     }
-    offer(id,data) {
+    offer(to, from, data) {
         if (this.connection && this.connection.connectionState == "Connected")
-            this.connection.invoke("Offer", id,JSON.stringify(data));
+            this.connection.invoke("Signal", to, from, "Offer", JSON.stringify(data));
     }
-    answer(id,data) {
+    answer(to,from, data) {
         if (this.connection && this.connection.connectionState == "Connected")
-            this.connection.invoke("Answer", id,JSON.stringify(data));
+            this.connection.invoke("Signal", to, from, "Answer", JSON.stringify(data));
     }
-    candidate(id,data) {
+    candidate(to,from, data) {
         if (this.connection && this.connection.connectionState == "Connected")
-        this.connection.invoke("Candidate", id,JSON.stringify(data));
+            this.connection.invoke("Signal", to, from, "Candidate", JSON.stringify(data));
     }
-    //actions//
-    joinRoom(room) {
+    joinRoom(room, name,avatar) {
         if (this.connection && this.connection.connectionState == "Connected")
-            this.connection.invoke("JoinRoom", room);
+            this.connection.invoke("JoinRoom", room, name,avatar);
     }
 }
