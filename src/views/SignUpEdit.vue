@@ -18,8 +18,8 @@
           <ion-label>Show Signup Page</ion-label>
           <ion-checkbox
             slot="start"
-            :checked="tournament.showSignUpPage"
-            @ionChange="tournament.showSignUpPage = ($event.target.checked == true);"
+            :checked="tournament.allowRegistration"
+            @ionChange="tournament.allowRegistration = ($event.target.checked == true);"
           ></ion-checkbox>
         </ion-item>
         <ion-item>
@@ -66,7 +66,6 @@ export default {
         isPublic: true,
         owner: null,
         teams: "",
-        showSignUpPage: true,
         signUpText: "",
         type: null
       },

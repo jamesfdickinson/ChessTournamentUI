@@ -104,9 +104,11 @@ import fetch from "@/services/fetch";
 export default {
   name: "home",
   data() {
+    const dateFilter = ((d) => new Date(d.setDate(d.getDate() - 2)))(new Date());
     return {
       tournaments: [],
       searchInput: "",
+      dateFilter: dateFilter,
       errors: [],
     };
   },
@@ -140,7 +142,11 @@ export default {
         .get(`tournament/type/Cribbage`)
         .then((response) => {
           this.tournaments = response.data;
-          if (this.tournaments) this.tournaments.sort((a, b) => b.id - a.id);
+          if (this.tournaments) {
+            this.tournaments.sort((a, b) => {
+              return new Date(a.startDateTime) - new Date(b.startDateTime);
+            });
+          }
         })
         .catch((e) => {
           this.errors.push(e);
@@ -154,6 +160,12 @@ export default {
     filteredItems() {
       let filteredData = this.tournaments;
       let searchInput = this.searchInput;
+      let dateFilter = this.dateFilter;
+      if (dateFilter) {
+        filteredData = filteredData.filter(
+          (a) => new Date(a.startDateTime) > dateFilter
+        );
+      }
       if (searchInput) {
         searchInput = searchInput.toLowerCase();
         filteredData = filteredData.filter((p) => {
@@ -163,6 +175,7 @@ export default {
             return true;
           if (p.teams && p.teams.toLowerCase().startsWith(searchInput))
             return true;
+
           return false;
         });
       }

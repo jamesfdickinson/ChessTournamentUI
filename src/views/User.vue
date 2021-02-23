@@ -13,9 +13,7 @@
 
         <ion-title>User</ion-title>
         <ion-buttons slot="end">
-          <ion-button
-            @click="$router.push({ name: 'UserEdit' })"
-          >
+          <ion-button @click="$router.push({ name: 'UserEdit' })">
             <ion-icon name="create"></ion-icon>
           </ion-button>
         </ion-buttons>
@@ -39,9 +37,13 @@
           <ion-label position="fixed">GamerId</ion-label>
           <ion-label>{{ user.gamerId }}</ion-label>
         </ion-item>
-         <ion-item>
+        <ion-item>
           <ion-label position="fixed">Avatar</ion-label>
-          <ion-avatar><img :src="user.avatar"  /></ion-avatar>
+          <ion-avatar><img :src="user.avatar" /></ion-avatar>
+        </ion-item>
+        <ion-item>
+          <ion-label position="fixed">Newsletter</ion-label>
+          <ion-label>{{ user.emailSubscribe ? "true" : "false" }}</ion-label>
         </ion-item>
         <ion-item>
           <ion-label position="fixed">Password</ion-label>
@@ -79,17 +81,7 @@ export default {
   data() {
     var user = authentication.getUser() || {};
     return {
-      user: {
-        id: user.id,
-        userName: user.userName,
-        email: user.email,
-        name: user.name,
-        gamerId: user.gamerId,
-        avatar: user.avatar,
-        password: null,
-        passwordVerify: null,
-        allowNotifications: user.allowNotifications,
-      },
+      user: user,
       error: "",
     };
   },

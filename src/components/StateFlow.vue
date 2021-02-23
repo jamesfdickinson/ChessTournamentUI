@@ -1,13 +1,27 @@
 <template>
-  <ion-card>
+  <ion-card :disabled="isProcessing">
     <ion-card-header>
       <ion-card-title>{{ flow.state }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <p>{{ flow.description }}</p>
       <ion-item>
-        <template v-for="action of flow.actions">
-          <ion-button  :key="action" slot="end" @click="sendFlowAction(action)">
+        <template v-for="(action, index) of flow.actions">
+          <ion-button
+            v-if="index == 0"
+            :key="action"
+            slot="end"
+            @click="sendFlowAction(action)"
+          >
+            {{ action }}
+          </ion-button>
+          <ion-button
+            v-if="index != 0"
+            :key="action"
+            color="light"
+            slot="end"
+            @click="sendFlowAction(action)"
+          >
             {{ action }}
           </ion-button>
         </template>
@@ -35,6 +49,7 @@ export default {
     return {
       tournamentId: tournamentId,
       flow: {},
+      isProcessing: null,
       errors: [],
     };
   },
@@ -48,6 +63,7 @@ export default {
     sendFlowAction(action) {
       this.results = "";
       var tournamentId = this.tournamentId;
+      this.isProcessing = true;
       tournamentAPI
         .flowAction(tournamentId, action)
         .then((message) => {
@@ -56,6 +72,9 @@ export default {
         })
         .catch((e) => {
           this.errors.push(e);
+        })
+        .finally(() => {
+          this.isProcessing = false;
         });
     },
   },

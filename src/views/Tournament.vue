@@ -32,8 +32,8 @@
               <ion-thumbnail slot="start">
                 <img v-if="tournament.image" :src="tournament.image" />
               </ion-thumbnail>
-              <ion-label style="white-space: normal;">
-                <h1 >{{ tournament.name }}</h1>
+              <ion-label style="white-space: normal">
+                <h1>{{ tournament.name }}</h1>
                 <p>{{ getLocalDate(tournament.startDateTime) }}</p>
               </ion-label>
               <ion-icon
@@ -48,10 +48,10 @@
               >
               </ion-icon>
             </ion-item>
-            <ion-item >
+            <ion-item>
               <ion-icon slot="start" name="alarm"></ion-icon>
               <ion-label>
-                <div style="white-space: normal;">{{ tournament.status }}</div>
+                <div style="white-space: normal">{{ tournament.status }}</div>
                 <div>{{ countDownDisplay }}</div>
                 <ion-progress-bar
                   :value="tournament.statusPercentage"
@@ -245,45 +245,48 @@ export default {
     },
     editPlayer() {},
     signup() {
-      let user = this.user;
-      let tournamentId = parseInt(this.tournamentId);
-
-      this.errors = [];
-      if (!user)
-        this.errors.push("User is not logged in.  Can't sign up user.");
-
-      var player = {
-        tournamentId: tournamentId,
-        firstName: user.name,
-        lastName: "",
-        grade: 12,
-        team: "",
-        rating: 1000,
-        division: 1,
-        isPresent: false,
-        paid: false,
-        parentName: null,
-        email: user.email,
-        parentPhone: null,
-        emailHelpList: false,
-        allowNotifications: true,
-        gamerId: user.gamerId,
-        avatar: user.avatar,
-      };
-      if (this.errors.length > 0) return;
-      fetch
-        .post(`player`, player)
-        .then(() => {
-          this.loadData();
-        })
-        .catch((e) => {
-          console.error(e.response);
-          let errorMessage = "error signing up.";
-          if (e && e.response && e.response.data)
-            errorMessage = e.response.data;
-          this.errors.push(errorMessage);
-        });
+      this.$router.push({ name: `SignUp` });
     },
+    // signup() {
+    //   let user = this.user;
+    //   let tournamentId = parseInt(this.tournamentId);
+
+    //   this.errors = [];
+    //   if (!user)
+    //     this.errors.push("User is not logged in.  Can't sign up user.");
+
+    //   var player = {
+    //     tournamentId: tournamentId,
+    //     firstName: user.name,
+    //     lastName: "",
+    //     grade: 12,
+    //     team: "",
+    //     rating: 1000,
+    //     division: 1,
+    //     isPresent: false,
+    //     paid: false,
+    //     parentName: null,
+    //     email: user.email,
+    //     parentPhone: null,
+    //     emailHelpList: false,
+    //     allowNotifications: true,
+    //     gamerId: user.gamerId,
+    //     avatar: user.avatar,
+    //   };
+    //   if (this.errors.length > 0) return;
+    //   fetch
+    //     .post(`player`, player)
+    //     .then(() => {
+    //       this.loadData();
+    //     })
+    //     .catch((e) => {
+    //       console.error(e.response);
+    //       let errorMessage = "error signing up.";
+    //       if (e && e.response && e.response.data)
+    //         errorMessage = e.response.data;
+    //       this.errors.push(errorMessage);
+    //     });
+    // },
     checkIn(playerId) {
       if (!playerId) return;
       fetch.put(`player/${playerId}/checkin/true`).then(() => {

@@ -114,7 +114,14 @@
             </div>
           </ion-item>
         </ion-list>
-
+        <ion-item>
+          <ion-label>Subscribe to Newsletter  </ion-label>
+          <ion-checkbox
+            slot="start"
+            :checked="user.emailSubscribe"
+            @ionChange="user.emailSubscribe = $event.target.checked == true"
+          ></ion-checkbox>
+        </ion-item>
         <ion-button type="submit" expand="block">Submit</ion-button>
 
         <ul style="color: red">
@@ -214,7 +221,7 @@ export default {
     },
     gameIdChange(gamerId) {
       gamification.GetUser(gamerId).then((userData) => {
-        if(!userData) return;
+        if (!userData) return;
         let avatar = userData.Avatar;
         this.gamificationAvatar = avatar;
       });

@@ -76,7 +76,14 @@
             </template>
           </div>
         </ion-item>
-
+        <ion-item>
+          <ion-label>Subscribe to Newsletter </ion-label>
+          <ion-checkbox
+            slot="start"
+            :checked="user.emailSubscribe"
+            @ionChange="user.emailSubscribe = $event.target.checked == true"
+          ></ion-checkbox>
+        </ion-item>
         <!-- <ion-item>
           <ion-label position="stacked">First Name</ion-label>
           <ion-input :value="user.firstName" @input="user.firstName = $event.target.value"></ion-input>
@@ -154,17 +161,7 @@ export default {
     let avatars = avatar.getAll();
     this.gameIdChange(user.gamerId);
     return {
-      user: {
-        id: user.id,
-        userName: user.userName,
-        email: user.email,
-        name: user.name,
-        gamerId: user.gamerId,
-        avatar: user.avatar,
-        password: null,
-        passwordVerify: null,
-        allowNotifications: user.allowNotifications,
-      },
+      user: user,
       avatars: avatars,
       gamificationAvatar: null,
       error: "",

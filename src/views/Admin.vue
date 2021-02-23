@@ -220,7 +220,7 @@ export default {
     loadData() {
       var tournamentId = this.tournamentId;
       fetch
-        .get(`tournament/${tournamentId}`)
+        .get(`tournamentView/${tournamentId}`)
         .then((response) => {
           this.tournament = response.data;
           this.state = this.tournament.state;

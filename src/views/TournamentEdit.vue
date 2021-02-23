@@ -150,16 +150,6 @@
           ></ion-checkbox>
         </ion-item>
         <ion-item>
-          <ion-label>Show Signup Page</ion-label>
-          <ion-checkbox
-            slot="start"
-            :checked="tournament.showSignUpPage"
-            @ionChange="
-              tournament.showSignUpPage = $event.target.checked == true
-            "
-          ></ion-checkbox>
-        </ion-item>
-        <ion-item>
           <ion-label>Require Check-In</ion-label>
           <ion-checkbox
             slot="start"
@@ -238,9 +228,9 @@ export default {
   components: {},
   data() {
     var tournamentId = this.$route.params.tournament;
-    var randomInviteCode =
-      Math.random().toString(36).substring(2, 5) +
-      Math.random().toString(36).substring(2, 5);
+    // var randomInviteCode =
+    //   Math.random().toString(36).substring(2, 5) +
+    //   Math.random().toString(36).substring(2, 5);
     var randomInviteCodeRecorder =
       Math.random().toString(36).substring(2, 5) +
       Math.random().toString(36).substring(2, 5);
@@ -251,7 +241,7 @@ export default {
       tournamentId: tournamentId,
       tournament: {
         name: "",
-        accessCodeBasic: randomInviteCode,
+        accessCodeBasic: null,
         accessCodeRecorder: randomInviteCodeRecorder,
         accessCodeAdmin: randomInviteCodeAdmin,
         details: "",
@@ -262,7 +252,6 @@ export default {
         isPublic: true,
         owner: null,
         teams: "",
-        showSignUpPage: true,
         signUpText: "",
         type: null,
         rounds: 5,

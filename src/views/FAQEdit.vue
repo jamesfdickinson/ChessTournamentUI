@@ -70,7 +70,6 @@ export default {
         isPublic: true,
         owner: null,
         teams: "",
-        showSignUpPage: true,
         signUpText: "",
         type: null,
       },
