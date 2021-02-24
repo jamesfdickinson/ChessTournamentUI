@@ -66,6 +66,7 @@ notificationSocket.connect(token);
 //   if (user) signalR.send("Login", user.userName);
 // });
 notificationSocket.onUpdate = function (data) {
+  //todo: use own built in event in class
   EventBus.$emit('updated', data);
 };
 notificationSocket.onNotification = function (notification) {
@@ -82,8 +83,10 @@ notificationSocket.onNotification = function (notification) {
 };
 //auto reconnect socket 
 document.addEventListener("visibilitychange", function () {
-  if (document.visibilityState === 'visible') {
-    console.log("visibilitychange " + document.visibilityState);
+  let visibilityState = document.visibilityState;
+  EventBus.$emit('visibilityState', visibilityState);
+  if (visibilityState === 'visible') {
+    console.log("visibilitychange " + visibilityState);
     if (!notificationSocket.isConnected()) {
       notificationSocket.connect(token).then(() => {
         toast.show("Reconnected", 5000, null, null, "_self");
@@ -115,7 +118,7 @@ router.beforeEach((to, from, next) => {
 
 
   //require
-  const pagesNoAuthenticationRequired = ['UserCreate', 'Login', 'PasswordResetRequest', 'PasswordChange','ChatRoom'];
+  const pagesNoAuthenticationRequired = ['UserCreate', 'Login', 'PasswordResetRequest', 'PasswordChange', 'ChatRoom'];
   const authRequired = !pagesNoAuthenticationRequired.includes(to.name);
   if (authRequired && !user) {
     return next(`/Login?redirect=${to.path}`);
@@ -154,7 +157,13 @@ router.beforeEach((to, from, next) => {
   }
 });
 router.afterEach((to) => {
-  if (to)  notificationSocket.track(to.fullPath);
+  if (to) {
+    notificationSocket.track(to.fullPath);
+    if(to.params && to.params["tournament"]){
+      let tournament = to.params["tournament"];
+      notificationSocket.joinTournament(tournament);
+    }
+  }
 });
 
 Vue.component('downloadCsv', JsonCSV)

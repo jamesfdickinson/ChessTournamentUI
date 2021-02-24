@@ -12,7 +12,8 @@ export default class NotificationSocket {
         this.onUpdate = function () { };
         this.onNotification = function () { };
         this.baseURL = process.env.VUE_APP_API_URL || 'https://bracketjd-api.azurewebsites.net/api/' || 'https://localhost:5001/api/';
-        this.hub = "notificationhub"
+        this.hub = "notificationhub";
+        this.tournamentId = null;
         this.tournamentView = null;
         this.jsondiffpatch = new DiffPatcher();
 
@@ -30,8 +31,8 @@ export default class NotificationSocket {
             .build();
         this.connection.onreconnected(() => this.onConnected());
         this.connection.on("Notification", this.notification.bind(this));
-        // this.connection.on("Update", this.update.bind(this));
-        // this.connection.on("Patch", this.patch.bind(this));
+        this.connection.on("Update", this.update.bind(this));
+        this.connection.on("Patch", this.patch.bind(this));
         return this.connection.start().then(() => this.onConnected());
     }
     close() {
@@ -51,10 +52,10 @@ export default class NotificationSocket {
             });
     }
     onConnected() {
-        // if (this.tournamentId) {
-        //     this.joinTournament(this.tournamentId);
-        //     this.getTournament(this.tournamentId);
-        // }
+        if (this.tournamentId) {
+            this.joinTournament(this.tournamentId);
+            this.getTournament(this.tournamentId);
+        }
     }
     notification(notification) {
         if (this.onNotification)
@@ -64,28 +65,39 @@ export default class NotificationSocket {
         if (this.connection && this.connection.connectionState == "Connected")
             this.connection.invoke("Track", location);
     }
-    // update(data) {
-    //     this.tournamentView = data;
-    //     if (this.onUpdate)
-    //         this.onUpdate(data);
-    // }
-    // patch(data) {
-    //     let tournamentView = this.tournamentView;
-    //     if (!data) return;
-    //     if (!tournamentView) return; 
-    //     this.jsondiffpatch.patch(tournamentView, data);
-    //     console.log("patch", data);
-    //     if (this.onUpdate)
-    //         this.onUpdate(tournamentView);
-    // }
-    // joinTournament(tournamentId) {
-    //     if (!tournamentId) return
-    //     this.tournamentId = tournamentId; //set to be called onConnected if needed
-    //     if (this.connection && this.connection.connectionState == "Connected")
-    //         this.connection.invoke("JoinTournament", tournamentId);
-    // }
-    // getTournament(tournamentId) {
-    //     if (this.connection && this.connection.connectionState == "Connected")
-    //         this.connection.invoke("GetTournament", tournamentId);
-    // }
+    update(data) {
+        this.tournamentView = data;
+        if (this.onUpdate)
+            this.onUpdate(data);
+    }
+    patch(data) {
+        let tournamentView = this.tournamentView;
+        if (!data) return;
+        if (!tournamentView) {
+            //request full data
+            this.getTournament();
+            return;
+        }
+        try {
+            this.jsondiffpatch.patch(tournamentView, data);
+            console.log("patch", data);
+            if (this.onUpdate)
+                this.onUpdate(tournamentView);
+        } catch (ex) {
+            //it may be out of sync, get full sync
+            console.warn("patch(data)", ex);
+            this.getTournament();
+            return;
+        }
+    }
+    joinTournament(tournamentId) {
+        if (!tournamentId) return
+        this.tournamentId = tournamentId; //set to be called onConnected if needed
+        if (this.connection && this.connection.connectionState == "Connected")
+            this.connection.invoke("JoinTournament", tournamentId);
+    }
+    getTournament(tournamentId) {
+        if (this.connection && this.connection.connectionState == "Connected")
+            this.connection.invoke("GetTournament", tournamentId);
+    }
 }

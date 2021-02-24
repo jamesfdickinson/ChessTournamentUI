@@ -208,12 +208,12 @@ import Chat from "@/components/Chat.vue";
 import Standings from "@/components/Standings.vue";
 import Table from "@/components/Table.vue";
 import Authentication from "@/services/Authentication";
-//import EventBus from "@/services/EventBus.js";
-import TournamentSocket from "@/services/TournamentSocket.js";
+import EventBus from "@/services/EventBus.js";
+//import TournamentSocket from "@/services/TournamentSocket.js";
 //import LayoutMenu from "@/components/LayoutMenu.vue";
 const tournamentAPI = new TournamentAPI();
 const authentication = new Authentication();
-const tournamentSocket = new TournamentSocket();
+//const tournamentSocket = new TournamentSocket();
 export default {
   name: "home",
   components: {
@@ -437,7 +437,7 @@ export default {
       //   let tablePositions = tournament.tablePositions || [];
       //   userTables = this.getTableUser(tablePositions, email) || {};
       // }
-      if (email) {
+      if (email && tournament.players) {
         userPlayers = tournament.players.filter((i) => i.email == email);
         userTables = this.getTableUser(tournament.players, email) || {};
       }
@@ -463,22 +463,45 @@ export default {
       //console.log("onUpdate", data);
       this.populate(data);
     },
+    // visibilityState(state) {
+    //   if (state === "visible") {
+    //     if (tournamentSocket) {
+    //       if (!tournamentSocket.isConnected()) {
+    //         tournamentSocket
+    //           .connect(this.tournamentId)
+    //           .then(() => {
+    //             console.log("Reconnected - tournamentSocket");
+    //           })
+    //           .catch(() => {
+    //             console.log("Failed reconnecting - tournamentSocket");
+    //           });
+    //         console.log("Reconnecting - tournamentSocket");
+    //       }
+    //     }
+    //   }
+    // },
   },
   mounted() {
     this.loadData();
     // this.connectToChat();
+    
     //todo: move data to store and listen to data updates
-    //EventBus.$on("updated", this.onUpdate);
+    //todo: move event to notification class
+    EventBus.$on("updated", this.onUpdate);
 
-    tournamentSocket.onUpdate = this.onUpdate.bind(this);
-    tournamentSocket.connect(this.tournamentId);
+    //tournamentSocket.onUpdate = this.onUpdate.bind(this);
+    //tournamentSocket.connect(this.tournamentId);
+    //EventBus.$on("visibilityState", this.visibilityState);
   },
   created() {},
   beforeDestroy() {
     //this.disconnectToChat();
-    //EventBus.$off("updated", this.onUpdate);
 
-    tournamentSocket.close();
+    //todo: move event to notification class
+    EventBus.$off("updated", this.onUpdate);
+
+    //EventBus.$off("visibilityState", this.visibilityState);
+    //tournamentSocket.close();
   },
 };
 </script>

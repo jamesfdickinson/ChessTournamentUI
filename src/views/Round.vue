@@ -182,10 +182,11 @@
 import TournamentAPI from "@/services/TournamentAPI";
 import TeamIcon from "@/components/TeamIcon.vue";
 import Authentication from "@/services/Authentication";
-import TournamentSocket from "@/services/TournamentSocket.js";
+import EventBus from "@/services/EventBus.js";
+//import TournamentSocket from "@/services/TournamentSocket.js";
 const tournamentAPI = new TournamentAPI();
 const authentication = new Authentication();
-const tournamentSocket = new TournamentSocket();
+//const tournamentSocket = new TournamentSocket();
 export default {
   name: "home",
   components: { TeamIcon },
@@ -354,12 +355,14 @@ export default {
   },
   mounted() {
     this.loadData();
-    tournamentSocket.onUpdate = this.onUpdate.bind(this);
-    tournamentSocket.connect(this.tournamentId);
+    //tournamentSocket.onUpdate = this.onUpdate.bind(this);
+    //tournamentSocket.connect(this.tournamentId);
+    EventBus.$on("updated", this.onUpdate);
   },
   created() {},
   beforeDestroy() {
-    tournamentSocket.close();
+    //tournamentSocket.close();
+    EventBus.$off("updated", this.onUpdate);
   },
 };
 </script>
