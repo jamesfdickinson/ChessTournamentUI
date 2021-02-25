@@ -23,6 +23,10 @@
       <ion-icon slot="start" name="help"></ion-icon>
       <ion-label>FAQ</ion-label>
     </ion-item>
+    <ion-item button detail="true" v-on:click="openReports()">
+      <ion-icon slot="start" name="help"></ion-icon>
+      <ion-label>Reports</ion-label>
+    </ion-item>
     <!-- <router-link :to="{ name: 'SignUp'}">
       <ion-item button detail="true">
         <ion-icon slot="start" name="clipboard"></ion-icon>
@@ -131,7 +135,7 @@ export default {
         params: { tournament: this.tournamentId }
       });
     },
-    openScores() {
+    openReports() {
       this.$router.push({
         name: "Reports",
         params: { tournament: this.tournamentId }
