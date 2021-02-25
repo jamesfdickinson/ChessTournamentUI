@@ -122,7 +122,7 @@ export default {
       team: "",
       rating: 1000,
       division: 1,
-      isPresent: true,
+      isPresent: false,
       paid: false,
       parentName: "",
       email: "",
