@@ -179,9 +179,10 @@ export default {
       });
     },
     save() {
+      let tournamentId = this.tournamentId;
       let positions = this.positions;
       tournamentAPI
-        .matchUpdate(positions)
+        .matchesUpdate(tournamentId,positions)
         .then((data) => {
           console.log(data);
           this.$router.go(-1);

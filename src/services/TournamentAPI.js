@@ -10,9 +10,6 @@ export default class TournamentAPI {
                 return data
             })
     }
-    matchUpdate(match) {
-        return fetch.post(`match/${match.id}`, match);
-    }
     round(tournamentId, roundId) {
         return fetch
             .get(`round/Grouped/${roundId}?tournament=${tournamentId}`)
@@ -90,6 +87,9 @@ export default class TournamentAPI {
                 let data = response.data;
                 return data;
             });
+    }
+    matchUpdate(match) {
+        return fetch.put(`match/${match.id}`, match);
     }
     matchesUpdate(tournamentId, matches) {
         return fetch

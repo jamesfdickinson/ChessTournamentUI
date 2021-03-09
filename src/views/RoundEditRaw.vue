@@ -198,8 +198,9 @@ export default {
     save(match) {
       this.errors = [];
       this.messages = [];
+      let tournamentId = this.tournamentId;
       tournamentAPI
-        .matchUpdate([match])
+        .matchesUpdate(tournamentId,[match])
         .then(() => {
           this.messages.push("Saved");
         })
