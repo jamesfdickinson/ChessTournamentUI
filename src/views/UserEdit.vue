@@ -124,7 +124,7 @@
         </ion-item>
       </ion-list>
 
-      <ion-button expand="block" v-on:click="save()">Sumbit</ion-button>
+      <ion-button expand="block" v-on:click="save()">Submit</ion-button>
       <hr />
       <div style="color: red">{{ error }}</div>
     </ion-content>

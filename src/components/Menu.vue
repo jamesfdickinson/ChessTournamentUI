@@ -24,7 +24,7 @@
       <ion-label>FAQ</ion-label>
     </ion-item>
     <ion-item button detail="true" v-on:click="openReports()">
-      <ion-icon slot="start" name="help"></ion-icon>
+      <ion-icon slot="start" name="paper"></ion-icon>
       <ion-label>Reports</ion-label>
     </ion-item>
     <!-- <router-link :to="{ name: 'SignUp'}">

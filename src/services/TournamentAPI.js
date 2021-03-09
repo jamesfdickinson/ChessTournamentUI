@@ -38,10 +38,10 @@ export default class TournamentAPI {
                 return data;
             });
     }
-    tableGet(tournamentId, round, tableId) {
+    tableGet(tableId) {
         //api/table/1?round=2&tournament=117
         return fetch
-            .get(`table/${tableId}?round=${round}&tournament=${tournamentId}`)
+            .get(`table/${tableId}`)
             .then(response => {
                 let table = response.data;
                 return table;
@@ -91,9 +91,17 @@ export default class TournamentAPI {
                 return data;
             });
     }
-    matchesSave(tournamentId, matches) {
+    matchesUpdate(tournamentId, matches) {
         return fetch
             .put(`match/${tournamentId}`, matches)
+            .then(response => {
+                let data = response.data;
+                return data;
+            });
+    }
+    matchesCreate(tournamentId, matches) {
+        return fetch
+            .post(`match/${tournamentId}`, matches)
             .then(response => {
                 let data = response.data;
                 return data;

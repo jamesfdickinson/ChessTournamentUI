@@ -199,7 +199,7 @@ export default {
       this.errors = [];
       this.messages = [];
       tournamentAPI
-        .matchUpdate(match)
+        .matchUpdate([match])
         .then(() => {
           this.messages.push("Saved");
         })
@@ -226,7 +226,7 @@ export default {
       let tournamentId = this.tournamentId;
       let roundId = this.roundId;
       tournamentAPI
-        .matchesSave(tournamentId, [match])
+        .matchesCreate(tournamentId, [match])
         .then(() => {
           this.messages.push("Created");
           this.loadData();

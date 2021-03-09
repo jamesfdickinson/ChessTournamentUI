@@ -103,11 +103,12 @@ export default {
     },
     addUser() {
       var tournamentId = this.$route.params.tournament;
+      parseInt
       var userName = this.userName;
       var role = this.role;
       fetch
         .post(`tournamentuser/${tournamentId}`, {
-          TournamentId:tournamentId,
+          TournamentId:parseInt(tournamentId),
           userName:userName,
           role:role,
 

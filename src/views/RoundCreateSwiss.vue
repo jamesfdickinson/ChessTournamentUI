@@ -244,7 +244,7 @@ export default {
       let sendNotifications = this.sendNotifications;
 
       tournamentAPI
-        .matchesSave(tournamentId, matches)
+        .matchesCreate(tournamentId, matches)
         .then((data) => {
           console.log(`Round ${round} created : ${data}`);
           tournamentAPI.flowAction(tournamentId, "play");
