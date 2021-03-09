@@ -259,7 +259,7 @@ export default {
         gameRoomLink: null,
         autoAdvanceRounds: false,
         allowNotifications: true,
-        allowRegistration: true,
+        allowRegistration: false,
         state: "setup",
         maxPlayers: 50,
         requireCheckIn: true,

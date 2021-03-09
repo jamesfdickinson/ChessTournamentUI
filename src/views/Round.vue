@@ -23,6 +23,9 @@
           <ion-button @click="edit()">
             <ion-icon name="create" size=""></ion-icon>
           </ion-button>
+          <ion-button @click="createTable()">
+            <ion-icon name="add-circle-outline"></ion-icon>
+          </ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
@@ -129,7 +132,9 @@
                 name="radio-button-on"
                 slot="start"
                 :color="[
-                  isInRoom(position.playerEmail, position.room) ? 'success' : 'light',
+                  isInRoom(position.playerEmail, position.room)
+                    ? 'success'
+                    : 'light',
                 ]"
               ></ion-icon>
               <TeamIcon
@@ -252,6 +257,23 @@ export default {
         params: { id: id, spectate: true },
       });
     },
+    createTable() {
+      let roundId = this.roundId;
+      let tournamentId = this.tournamentId;
+      let tables = this.round.length;
+
+      let table = (tables || 0) + 1;
+      let id = table + "R" + roundId + "T" + tournamentId;
+      this.$router.push({
+        name: "TableEdit",
+        params: {
+          id: id,
+          round: roundId,
+          tournament: tournamentId,
+          table: table,
+        },
+      });
+    },
     openTable(id) {
       let roundId = this.roundId;
       let tournamentId = this.tournamentId;
@@ -267,7 +289,7 @@ export default {
       this.players = [];
     },
     isInRoom(email, room) {
-      if(!this.tournament) return;
+      if (!this.tournament) return;
       let players = this.tournament.players || [];
       let isInRoom = players.some(
         (p) =>
@@ -278,7 +300,8 @@ export default {
     loadData() {
       var tournamentId = this.tournamentId;
       var roundId = this.roundId;
-      tournamentAPI.round(tournamentId,roundId)
+      tournamentAPI
+        .round(tournamentId, roundId)
         .then((data) => {
           this.populate(data);
         })
