@@ -246,6 +246,8 @@ export default {
       //let round = this.round;
       let tableId = this.tableId;
       let tournamentId = this.tournamentId;
+      //get table may need to be by tournamentid / round / table number, but then how does room id fit in
+      //api/table/1?round=2&tournament=117
       tournamentAPI
         .tableGet(tableId)
         .then((data) => {

@@ -271,7 +271,7 @@ export default {
           round: roundId,
           tournament: tournamentId,
           table: table,
-        },
+        }
       });
     },
     openTable(id) {
