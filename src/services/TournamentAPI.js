@@ -12,6 +12,14 @@ export default class TournamentAPI {
     }
     round(tournamentId, roundId) {
         return fetch
+            .get(`round/${roundId}?tournament=${tournamentId}`)
+            .then(response => {
+                let data = response.data;
+                return data
+            })
+    }
+    roundGrouped(tournamentId, roundId) {
+        return fetch
             .get(`round/Grouped/${roundId}?tournament=${tournamentId}`)
             .then(response => {
                 let data = response.data;

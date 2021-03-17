@@ -75,7 +75,7 @@
               "
             >
               <ion-icon name="clipboard" slot="start"></ion-icon>
-              <ion-label>You are not registered</ion-label>
+              <ion-label>Not registered</ion-label>
               <ion-button slot="end" @click="signup()">Sign-Up</ion-button>
               <!-- <ion-button
             slot="end"
@@ -247,46 +247,6 @@ export default {
     signup() {
       this.$router.push({ name: `SignUp` });
     },
-    // signup() {
-    //   let user = this.user;
-    //   let tournamentId = parseInt(this.tournamentId);
-
-    //   this.errors = [];
-    //   if (!user)
-    //     this.errors.push("User is not logged in.  Can't sign up user.");
-
-    //   var player = {
-    //     tournamentId: tournamentId,
-    //     firstName: user.name,
-    //     lastName: "",
-    //     grade: 12,
-    //     team: "",
-    //     rating: 1000,
-    //     division: 1,
-    //     isPresent: false,
-    //     paid: false,
-    //     parentName: null,
-    //     email: user.email,
-    //     parentPhone: null,
-    //     emailHelpList: false,
-    //     allowNotifications: true,
-    //     gamerId: user.gamerId,
-    //     avatar: user.avatar,
-    //   };
-    //   if (this.errors.length > 0) return;
-    //   fetch
-    //     .post(`player`, player)
-    //     .then(() => {
-    //       this.loadData();
-    //     })
-    //     .catch((e) => {
-    //       console.error(e.response);
-    //       let errorMessage = "error signing up.";
-    //       if (e && e.response && e.response.data)
-    //         errorMessage = e.response.data;
-    //       this.errors.push(errorMessage);
-    //     });
-    // },
     checkIn(playerId) {
       if (!playerId) return;
       fetch.put(`player/${playerId}/checkin/true`).then(() => {

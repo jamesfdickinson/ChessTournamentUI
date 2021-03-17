@@ -138,7 +138,7 @@
                 ]"
               ></ion-icon>
               <TeamIcon
-                :title="position.playerFirstName"
+                :title="position.playerTeam"
                 style="margin-right: 10px"
               ></TeamIcon>
 
@@ -301,7 +301,7 @@ export default {
       var tournamentId = this.tournamentId;
       var roundId = this.roundId;
       tournamentAPI
-        .round(tournamentId, roundId)
+        .roundGrouped(tournamentId, roundId)
         .then((data) => {
           this.populate(data);
         })
@@ -321,7 +321,7 @@ export default {
     },
     onUpdate(tournament) {
       this.tournament = tournament;
-      //todo pull round data from tournament data
+      //todo: pull round data from tournament data
       this.loadData();
     },
   },
