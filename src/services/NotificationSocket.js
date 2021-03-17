@@ -1,6 +1,8 @@
 
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
 import { DiffPatcher } from 'jsondiffpatch';
+import TournamentAPI from "@/services/TournamentAPI";
+const tournamentAPI = new TournamentAPI();
 //import { diff, Config, DiffPatcher, formatters } from 'jsondiffpatch';
 let instance = null;
 export default class NotificationSocket {
@@ -97,7 +99,14 @@ export default class NotificationSocket {
             this.connection.invoke("JoinTournament", tournamentId);
     }
     getTournament(tournamentId) {
-        if (this.connection && this.connection.connectionState == "Connected")
-            this.connection.invoke("GetTournament", tournamentId);
+        //get tournament data from api as it is compressed and larger amount of data, else try via socket
+        return tournamentAPI.tournamentView(tournamentId)
+            .then((data) => {
+                this.update(data);
+            })
+            .catch(() => {
+                if (this.connection && this.connection.connectionState == "Connected")
+                    this.connection.invoke("GetTournament", tournamentId);
+            });
     }
 }
