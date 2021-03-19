@@ -179,6 +179,15 @@
             <div v-html="tournament.video"></div>
           </ion-card>
         </div>
+        <!-- <div class="flex-item">
+          <div v-if="tournament.state == 'play'">
+            <ion-card>
+              <template v-for="table of roundTables">
+                <Table :key="table.id" :table="table"></Table>
+              </template>
+            </ion-card>
+          </div>
+        </div> -->
         <div class="flex-item">
           <ion-card
             v-if="players && players.length > 0"
@@ -233,6 +242,7 @@ export default {
       user: user,
       userName: userName,
       userPlayers: [],
+      roundTables: [],
       userTables: [],
       players: [],
       countDownDisplay: null,
@@ -324,36 +334,9 @@ export default {
           this.errors.push(e);
         });
     },
-    getTableUserOld(allPositions, email) {
-      let round = allPositions.reduce(
-        (max, p) => (p.round > max ? p.round : max),
-        0
-      );
+    getTableUser(allPositions, email, round) {
       let tablePositionsUser = allPositions.filter(
-        (t) => t.playerEmail === email && t.round === round
-      );
-      if (tablePositionsUser.length === 0) return null;
-
-      let tables = [];
-      for (let i = 0; i < tablePositionsUser.length; i++) {
-        let userPosition = tablePositionsUser[i];
-        let tablePositions = allPositions.filter(
-          (t) => t.table === userPosition.table && t.round === round
-        );
-        let table = {
-          id: userPosition.room,
-          round: userPosition.round,
-          table: userPosition.table,
-          room: userPosition.room,
-          positions: tablePositions,
-        };
-        tables.push(table);
-      }
-      return tables;
-    },
-    getTableUser(allPositions, email) {
-      let tablePositionsUser = allPositions.filter(
-        (t) => t.email === email && t.room
+        (t) => t.playerEmail === email && t.round == round && t.room
       );
       if (tablePositionsUser.length === 0) return null;
 
@@ -365,12 +348,12 @@ export default {
           .map((p) => {
             return {
               playerId: p.playerId,
-              playerName: p.name,
-              playerFirstName: p.firstName,
-              playerLastName: p.lastName,
-              playerEmail: p.email,
+              playerName: p.playerName,
+              playerFirstName: p.playerFirstName,
+              playerLastName: p.playerLastName,
+              playerEmail: p.playerEmail,
               avatar: p.avatar,
-              points: p.roundPoints,
+              points: p.points,
             };
           });
         let isCompleted = tablePositions.some((x) => x.points > 0);
@@ -386,28 +369,85 @@ export default {
       }
       return tables;
     },
+    groupBy(arr, criteria) {
+      return arr.reduce(function (obj, item) {
+        // Check if the criteria is a function to run on the item or a property of it
+        var key =
+          typeof criteria === "function" ? criteria(item) : item[criteria];
+        // If the key doesn't exist yet, create it
+        if (!obj.hasOwnProperty(key)) {
+          obj[key] = [];
+        }
+        // Push the value to the object
+        obj[key].push(item);
+        // Return the object to the next item in the loop
+        return obj;
+      }, {});
+    },
+    createTables(allPositions) {
+      if (allPositions.length === 0) return null;
+      let groupedPositions = this.groupBy(allPositions, "room");
+      let tables = [];
+
+      for (const [key, value] of Object.entries(groupedPositions)) {
+        let isCompleted = value.some((x) => x.points > 0);
+        let table = {
+          id: key,
+          table: key,
+          room: key,
+          positions: value,
+          isCompleted: isCompleted,
+        };
+        tables.push(table);
+      }
+      tables.sort((a, b) => a.id > b.id);
+      return tables;
+    },
     populate(data) {
       let tournament = data || {};
       let user = authentication.getUser() || {};
       let email = user.email;
       let userPlayers = [];
-      let userTables = [];
+
       // if (email) {
       //   userPlayers = tournament.players.filter((i) => i.email == email);
       //   let tablePositions = tournament.tablePositions || [];
       //   userTables = this.getTableUser(tablePositions, email) || {};
       // }
+      let round = tournament.round;
+      let tablePositions = tournament.tablePositions || {};
+      let roundTables = tablePositions.filter((i) => i.round == round);
+      let userRooms = tablePositions
+        .filter((i) => i.round == round && i.playerEmail == email && email)
+        .map((i) => i.room);
+      let userTables = tablePositions.filter((i) => userRooms.includes(i.room));
+
       if (email && tournament.players) {
         userPlayers = tournament.players.filter((i) => i.email == email);
-        userTables = this.getTableUser(tournament.players, email) || {};
       }
+      this.userTables = this.createTables(userTables);
+      this.roundTables = this.createTables(roundTables);
       this.tournament = tournament;
       this.players = tournament.players || [];
 
       this.playersCheckedIn = this.players.filter((p) => p.isPresent).length;
       this.userPlayers = userPlayers;
-      this.userTables = userTables;
 
+      //let state = tournament.state;
+      // this.progress = 0.5;
+      // if (state == "registration") {
+      //   this.progress = (tournament.players || 0) / tournament.maxPlayers;
+      // }
+      // if (state == "check-in") {
+      //   if (tournament.players) {
+      //     let ptotal = tournament.players.length;
+      //     let pPresent = tournament.players.filter((p) => p.isPresent).length;
+      //     this.progress = pPresent / ptotal;
+      //   }
+      // }
+      // if (state == "play") {
+      //   this.progress = (tournament.players || 0) / tournament.maxPlayers;
+      // }
       //todo: bind in markup
       //this.countDown
       //this.updateCountDown(new Date("Jan 7, 2021 14:51:25"));
@@ -444,7 +484,7 @@ export default {
   mounted() {
     this.loadData();
     // this.connectToChat();
-    
+
     //todo: move data to store and listen to data updates
     //todo: move event to notification class
     EventBus.$on("updated", this.onUpdate);

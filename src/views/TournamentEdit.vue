@@ -53,6 +53,13 @@
           ></ion-datetime>
         </ion-item>
         <ion-item>
+          <ion-label position="stacked">Current Round</ion-label>
+          <ion-input
+            :value="tournament.round"
+            @input="tournament.round = $event.target.value"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
           <ion-label position="stacked">Rounds</ion-label>
           <ion-input
             :value="tournament.rounds"
@@ -69,6 +76,20 @@
             <ion-select-option value="Swiss">Swiss</ion-select-option>
             <!-- <ion-select-option value="SingleElimination">Single Elimination</ion-select-option> -->
           </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Status</ion-label>
+          <ion-input 
+            :value="tournament.status"
+            @input="tournament.status = $event.target.value"
+          ></ion-input>
+        </ion-item>
+                <ion-item>
+          <ion-label position="stacked">StatusProgress</ion-label>
+          <ion-input type="number"
+            :value="tournament.statusProgress"
+            @input="tournament.statusProgress = $event.target.value"
+          ></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">State</ion-label>
@@ -265,7 +286,10 @@ export default {
         requireCheckIn: true,
         allowCheckIn: false,
         startDateTime: null,
-        video: ""
+        video: "",
+        status: "Setup",
+        statusProgress: 0,
+        round: 0,
       },
       error: "",
     };
@@ -279,13 +303,13 @@ export default {
       let tournament = this.tournament;
       tournament.rounds = parseInt(tournament.rounds);
       if (isNaN(tournament.rounds)) {
-         this.error = "Error: rounds is not a number";
-         return;
+        this.error = "Error: rounds is not a number";
+        return;
       }
       tournament.maxPlayers = parseInt(tournament.maxPlayers);
       if (isNaN(tournament.maxPlayers)) {
-         this.error = "Error: maxPlayers is not a number";
-         return;
+        this.error = "Error: maxPlayers is not a number";
+        return;
       }
 
       if (tournamentId && tournament) {
