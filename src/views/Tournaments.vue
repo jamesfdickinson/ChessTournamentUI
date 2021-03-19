@@ -55,8 +55,39 @@
             </ion-card-content>
           </ion-card>
         </router-link>-->
+    
         <ion-list>
-          <template v-for="tournament of filteredItems">
+          <template v-for="tournament of filteredItemsFuture">
+            <ion-item
+              :key="tournament.id"
+              button
+              detail="true"
+              v-on:click="tournamentDetails(tournament.id)"
+            >
+              <ion-thumbnail slot="start">
+                <img
+                  v-if="!tournament.image"
+                  src="images/chess-board-thin.jpg"
+                />
+                <img v-if="tournament.image" :src="tournament.image" />
+              </ion-thumbnail>
+              <ion-label>
+                <h2>{{ tournament.name }}</h2>
+                <p>
+                  {{ getLocalDate(tournament.startDateTime) }}
+                </p>
+              </ion-label>
+              <ion-badge slot="end">
+                {{ tournament.state }}
+              </ion-badge>
+              <!--                 
+                <ion-button slot="end" color="light" :href="tournament.id" >View </ion-button> -->
+            </ion-item>
+          </template>
+          <ion-item>
+            <ion-label> Completed </ion-label>
+          </ion-item>
+          <template v-for="tournament of filteredItemsCompleted">
             <ion-item
               :key="tournament.id"
               button
@@ -104,11 +135,17 @@ import fetch from "@/services/fetch";
 export default {
   name: "home",
   data() {
-    const dateFilter = ((d) => new Date(d.setDate(d.getDate() - 2)))(new Date());
+    const dateFilter = ((d) => new Date(d.setDate(d.getDate() - 1)))(
+      new Date()
+    );
+    const dateFilterMax = ((d) => new Date(d.setDate(d.getDate() - 120)))(
+      new Date()
+    );
     return {
       tournaments: [],
       searchInput: "",
       dateFilter: dateFilter,
+      dateFilterMax: dateFilterMax,
       errors: [],
     };
   },
@@ -157,7 +194,7 @@ export default {
     this.loadData();
   },
   computed: {
-    filteredItems() {
+    filteredItemsFuture() {
       let filteredData = this.tournaments;
       let searchInput = this.searchInput;
       let dateFilter = this.dateFilter;
@@ -166,6 +203,39 @@ export default {
           (a) => new Date(a.startDateTime) > dateFilter
         );
       }
+      filteredData.sort((a, b) => {
+        return new Date(a.startDateTime) - new Date(b.startDateTime);
+      });
+      if (searchInput) {
+        searchInput = searchInput.toLowerCase();
+        filteredData = filteredData.filter((p) => {
+          if (p.name && p.name.toLowerCase().startsWith(searchInput))
+            return true;
+          if (p.details && p.details.toLowerCase().startsWith(searchInput))
+            return true;
+          if (p.teams && p.teams.toLowerCase().startsWith(searchInput))
+            return true;
+
+          return false;
+        });
+      }
+      return filteredData;
+    },
+    filteredItemsCompleted() {
+      let filteredData = this.tournaments;
+      let searchInput = this.searchInput;
+      let dateFilter = this.dateFilter;
+      let dateFilterMax = this.dateFilterMax;
+      if (dateFilter) {
+        filteredData = filteredData.filter(
+          (a) =>
+            new Date(a.startDateTime) < dateFilter &&
+            new Date(a.startDateTime) > dateFilterMax
+        );
+      }
+      filteredData.sort((a, b) => {
+        return new Date(b.startDateTime) - new Date(a.startDateTime);
+      });
       if (searchInput) {
         searchInput = searchInput.toLowerCase();
         filteredData = filteredData.filter((p) => {
