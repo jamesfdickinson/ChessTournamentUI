@@ -188,6 +188,7 @@ import fetch from "@/services/fetch";
 import Toast from "@/components/Toast.js";
 const toast = new Toast();
 import StateFlow from "@/components/StateFlow.vue";
+import EventBus from "@/services/EventBus.js";
 
 export default {
   name: "home",
@@ -230,9 +231,19 @@ export default {
           this.errors.push(e);
         });
     },
+    onUpdate(tournament) {
+      this.tournament = tournament;
+      //todo: pull round data from tournament data
+      this.loadData();
+    }
   },
-  created() {
+  mounted() {
     this.loadData();
+    EventBus.$on("updated", this.onUpdate);
+  },
+  created() {},
+  beforeDestroy() {
+    EventBus.$off("updated", this.onUpdate);
   },
 };
 </script>

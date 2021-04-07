@@ -163,7 +163,7 @@ export default {
         round: roundId,
         room: tableId,
         table: table,
-        points: 0,
+        points: null,
       },
       errors: [],
     };

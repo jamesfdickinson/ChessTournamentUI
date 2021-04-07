@@ -199,14 +199,14 @@
           ></ion-checkbox>
         </ion-item>
 
-        <!-- <ion-item>
+        <ion-item>
           <ion-label>Is Public</ion-label>
           <ion-checkbox
             slot="start"
             :checked="tournament.isPublic"
             @ionChange="tournament.isPublic = ($event.target.checked == true);"
           ></ion-checkbox>
-        </ion-item>-->
+        </ion-item>
         <!-- <ion-item>
           <ion-label position="stacked">Signup Content</ion-label>
            <ion-label position="stacked">(Use &lt;br&gt; for new line)</ion-label>
@@ -304,6 +304,11 @@ export default {
       tournament.rounds = parseInt(tournament.rounds);
       if (isNaN(tournament.rounds)) {
         this.error = "Error: rounds is not a number";
+        return;
+      }
+      tournament.round = parseInt(tournament.round);
+      if (isNaN(tournament.round)) {
+        this.error = "Error: round is not a number";
         return;
       }
       tournament.maxPlayers = parseInt(tournament.maxPlayers);

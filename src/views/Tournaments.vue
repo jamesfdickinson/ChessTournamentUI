@@ -55,7 +55,7 @@
             </ion-card-content>
           </ion-card>
         </router-link>-->
-    
+
         <ion-list>
           <template v-for="tournament of filteredItemsFuture">
             <ion-item
@@ -89,6 +89,7 @@
           </ion-item>
           <template v-for="tournament of filteredItemsCompleted">
             <ion-item
+              style="opacity: 0.5"
               :key="tournament.id"
               button
               detail="true"
@@ -114,6 +115,9 @@
                 <ion-button slot="end" color="light" :href="tournament.id" >View </ion-button> -->
             </ion-item>
           </template>
+          <ion-item>
+            <ion-button expand="block" v-on:click="createTournament()">Create Tournament</ion-button>
+          </ion-item>
         </ion-list>
         <!-- <router-link
               :key="tournament.id"
@@ -172,6 +176,12 @@ export default {
       this.$router.push({
         name: "Tournament",
         params: { tournament: tournamentId },
+      });
+    },
+    createTournament() {
+      this.$router.push({
+        name: "TournamentCreate",
+        params: { },
       });
     },
     loadData() {
