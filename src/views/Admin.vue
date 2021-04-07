@@ -14,7 +14,7 @@
       </ion-toolbar>
     </ion-header>
     <ion-content>
-      <StateFlow> </StateFlow>
+      <StateFlow :key="state"> </StateFlow>
       <ion-list>
         <!-- <ion-list-header>
           <ion-label>Players</ion-label>
@@ -52,8 +52,6 @@
           <ion-icon slot="start" name="filing"></ion-icon>
           <ion-label>Roster</ion-label>
         </ion-item>-->
-
-
 
         <ion-list-header>
           <ion-label>Tournament Settings</ion-label>
@@ -124,13 +122,17 @@
         <ion-list-header>
           <ion-label>Manage Rounds</ion-label>
         </ion-list-header>
-        <router-link :to="{ name: 'RoundCreate', params: { tournament: tournamentId }}">
+        <router-link
+          :to="{ name: 'RoundCreate', params: { tournament: tournamentId } }"
+        >
           <ion-item button detail="true">
             <ion-icon slot="start" name="list"></ion-icon>
             <ion-label>Create Round</ion-label>
           </ion-item>
         </router-link>
-        <router-link :to="{ name: 'RoundsEdit', params: { tournament: tournamentId }}">
+        <router-link
+          :to="{ name: 'RoundsEdit', params: { tournament: tournamentId } }"
+        >
           <ion-item button detail="true">
             <ion-icon slot="start" name="list"></ion-icon>
             <ion-label>Edit Rounds</ion-label>
@@ -157,15 +159,13 @@
           </ion-item>
         </router-link>
 
-        
-
         <!-- <a v-bind:href="'https://admin.chessclub.io/'+ tournamentId+'/'">
           <ion-item button detail="true">
             <ion-icon slot="start" name="cog"></ion-icon>
             <ion-label>Old Admin Site</ion-label>
           </ion-item>
         </a>-->
-        
+
         <!-- <ion-list-header>
           <ion-label>Reports</ion-label>
         </ion-list-header>
@@ -235,7 +235,7 @@ export default {
       this.tournament = tournament;
       //todo: pull round data from tournament data
       this.loadData();
-    }
+    },
   },
   mounted() {
     this.loadData();
