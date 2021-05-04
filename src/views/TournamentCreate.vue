@@ -22,21 +22,21 @@
             @input="tournament.name = $event.target.value"
           ></ion-input>
         </ion-item>
-        <ion-item>
+        <!-- <ion-item>
           <ion-label position="stacked">Type</ion-label>
           <ion-input
             :value="tournament.type"
             @input="tournament.type = $event.target.value"
           ></ion-input>
-        </ion-item>
-        <ion-item>
+        </ion-item> -->
+        <!-- <ion-item>
           <ion-label position="stacked">Details</ion-label>
           <ion-textarea
             auto-grow="true"
             :value="tournament.details"
             @input="tournament.details = $event.target.value"
           ></ion-textarea>
-        </ion-item>
+        </ion-item> -->
         <!-- <ion-item>
           <ion-label position="stacked">Start Date/Time</ion-label>
           <ion-datetime
@@ -52,13 +52,13 @@
             @ionChange="tournament.startDateTime = $event.target.value"
           ></ion-datetime>
         </ion-item>
-        <ion-item>
+        <!-- <ion-item>
           <ion-label position="stacked">Current Round</ion-label>
           <ion-input
             :value="tournament.round"
             @input="tournament.round = $event.target.value"
           ></ion-input>
-        </ion-item>
+        </ion-item> -->
         <ion-item>
           <ion-label position="stacked">Rounds</ion-label>
           <ion-input
@@ -66,7 +66,7 @@
             @input="tournament.rounds = $event.target.value"
           ></ion-input>
         </ion-item>
-        <ion-item>
+        <!-- <ion-item>
           <ion-label position="stacked">Pairing Algorithm</ion-label>
           <ion-select
             placeholder="Select One"
@@ -74,31 +74,30 @@
             @ionChange="tournament.pairing = $event.target.value"
           >
             <ion-select-option value="Swiss">Swiss</ion-select-option>
-            <!-- <ion-select-option value="SingleElimination">Single Elimination</ion-select-option> -->
+            <ion-select-option value="SingleElimination">Single Elimination</ion-select-option>
           </ion-select>
-        </ion-item>
-        <ion-item>
+        </ion-item> -->
+        <!-- <ion-item>
           <ion-label position="stacked">Status</ion-label>
-          <ion-input
+          <ion-input 
             :value="tournament.status"
-            @input="tournament.status = $event.target.value"
-          ></ion-input>
-        </ion-item>
-        <ion-item>
+            @input="tournament.status = $event.target.value" >
+          </ion-input> 
+        </ion-item>-->
+        <!-- <ion-item>
           <ion-label position="stacked">StatusProgress</ion-label>
-          <ion-input
-            type="number"
+          <ion-input type="number"
             :value="tournament.statusProgress"
             @input="tournament.statusProgress = $event.target.value"
           ></ion-input>
-        </ion-item>
-        <ion-item>
+        </ion-item> -->
+        <!-- <ion-item>
           <ion-label position="stacked">State</ion-label>
           <ion-input
             :value="tournament.state"
             @input="tournament.state = $event.target.value"
           ></ion-input>
-        </ion-item>
+        </ion-item> -->
         <ion-item>
           <ion-label position="stacked">Access Code: Basic</ion-label>
           <ion-input
@@ -181,7 +180,7 @@
             "
           ></ion-checkbox>
         </ion-item>
-        <ion-item>
+        <!-- <ion-item>
           <ion-label>Allow Check-In</ion-label>
           <ion-checkbox
             slot="start"
@@ -198,7 +197,7 @@
               tournament.allowRegistration = $event.target.checked == true
             "
           ></ion-checkbox>
-        </ion-item>
+        </ion-item> -->
 
         <ion-item>
           <ion-label>Is Public</ion-label>
@@ -232,9 +231,6 @@
       <ion-button expand="block" color="light" v-on:click="back()"
         >Cancel</ion-button
       >
-      <ion-button expand="block" color="danger" v-on:click="deleteTournament()"
-        >Delete</ion-button
-      >
       <hr />
       <!-- <ion-button color="danger" v-on:click="deletePlayer()">Delete</ion-button> -->
       <!-- <ion-button @click="presentAlertConfirm">Show Alert (confirm)</ion-button> -->
@@ -246,12 +242,16 @@
 
 <script>
 import fetch from "@/services/fetch";
-
+import Authentication from "@/services/Authentication";
+const authentication = new Authentication();
 export default {
   name: "home",
   components: {},
   data() {
     var tournamentId = this.$route.params.tournament;
+    //set owner
+    let user = authentication.getUser();
+    let userName = user ? user.userName : null;
     // var randomInviteCode =
     //   Math.random().toString(36).substring(2, 5) +
     //   Math.random().toString(36).substring(2, 5);
@@ -272,12 +272,12 @@ export default {
         faqcontent: "",
         hidden: false,
         id: 0,
-        image: null,
+        image: "/images/icons/trophy.png",
         isPublic: true,
-        owner: null,
+        owner: userName,
         teams: "",
         signUpText: "",
-        type: null,
+        type: "Cribbage",
         rounds: 5,
         pairing: "Swiss",
         gameRoomLink: null,
@@ -319,7 +319,14 @@ export default {
         this.error = "Error: maxPlayers is not a number";
         return;
       }
-
+      if (!tournament.name) {
+        this.error = "Error: No tournament name is set";
+        return;
+      }
+      if (!tournament.startDateTime) {
+        this.error = "Error: No start time is set";
+        return;
+      }
       if (tournamentId && tournament) {
         fetch
           .put(`tournament/${tournamentId}`, tournament)
@@ -345,21 +352,21 @@ export default {
           });
       }
     },
-    deleteTournament() {
-      let tournamentId = this.tournamentId;
-      this.$confirm(`Are you sure you want to delete the Tournament?`).then(
-        () => {
-          fetch
-            .delete(`tournament/${tournamentId}`)
-            .then((response) => {
-              console.log(response);
-              this.$router.push({ path: "/" });
-            })
-            .catch((e) => {
-              this.error = "Error: Delete failed";
-              console.warn(e);
-            });
-        });
+    deletePlayer() {
+      //  let tournamentId = this.tournamentId;
+      // if (tournamentId) {
+      //   fetch
+      //     .delete(`tournament/${tournamentId}`)
+      //     .then(response => {
+      //       console.log(response);
+      //       //back
+      //       this.$router.back();
+      //     })
+      //     .catch(e => {
+      //       this.error = "Error: Delete failed";
+      //       console.warn(e);
+      //     });
+      // }
     },
     loadData() {
       let tournamentId = this.tournamentId;

@@ -7,6 +7,7 @@ import PasswordResetRequest from './views/PasswordResetRequest.vue'
 import AccessDenied from './views/AccessDenied.vue'
 import Tournament from './views/Tournament.vue'
 import TournamentEdit from './views/TournamentEdit.vue'
+import TournamentCreate from './views/TournamentCreate.vue'
 import Tournaments from './views/Tournaments.vue'
 import TournamentVideoEdit from './views/TournamentVideoEdit.vue'
 import CheckIn from './views/CheckIn.vue'
@@ -118,7 +119,7 @@ export default new VueRouter({
     {
       path: '/TournamentCreate',
       name: 'TournamentCreate',
-      component: TournamentEdit
+      component: TournamentCreate
     },
     {
       path: '/:tournament',
