@@ -256,7 +256,7 @@
         <ion-item>
           <ckeditor
             :editor="editor"
-            v-model="tournament.faqcontent"
+            v-model="tournament.faqContent"
             :config="editorConfig"
           ></ckeditor>
         </ion-item>
@@ -273,8 +273,8 @@
           <ion-label position="stacked">FAQ Content</ion-label>
           <ion-label position="stacked">(Use &lt;br&gt; for new line)</ion-label>
              <ion-textarea auto-grow="true"
-            :value="tournament.faqcontent"
-            @input="tournament.faqcontent = $event.target.value"
+            :value="tournament.faqContent"
+            @input="tournament.faqContent = $event.target.value"
           ></ion-textarea>
         </ion-item>-->
       </ion-list>
@@ -330,7 +330,7 @@ export default {
         accessCodeRecorder: randomInviteCodeRecorder,
         accessCodeAdmin: randomInviteCodeAdmin,
         details: "",
-        faqcontent: "",
+        faqContent: "",
         hidden: false,
         id: 0,
         image: "/images/icons/trophy.png",

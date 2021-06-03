@@ -81,7 +81,7 @@ export default {
         name: "",
         accessCodeBasic: "",
         details: "",
-        faqcontent: "",
+        faqContent: "",
         hidden: false,
         id: null,
         image: null,

@@ -21,7 +21,7 @@
         <ion-item>
           <ckeditor
             :editor="editor"
-            v-model="tournament.faqcontent"
+            v-model="tournament.faqContent"
             :config="editorConfig"
           ></ckeditor>
         </ion-item>
@@ -63,7 +63,7 @@ export default {
         name: "",
         accessCodeBasic: "",
         details: "",
-        faqcontent: "",
+        faqContent: "",
         hidden: false,
         id: null,
         image: null,
