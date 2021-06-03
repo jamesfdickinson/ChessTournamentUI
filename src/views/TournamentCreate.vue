@@ -44,13 +44,39 @@
             :value="new Date(tournament.startDateTime+'Z').toISOString()"
           ></ion-datetime>
         </ion-item> -->
-        <ion-item>
+        <!-- <ion-item>
           <ion-label position="stacked">Start Date/Time</ion-label>
           <ion-datetime
             display-format="D MMM YYYY H:mm"
             :value="tournament.startDateTime"
             @ionChange="tournament.startDateTime = $event.target.value"
           ></ion-datetime>
+        </ion-item> -->
+        <ion-item>
+          <ion-label position="stacked">Start Date</ion-label>
+          <input
+            type="date"
+            :value="startDate"
+            @input="startDate = $event.target.value"
+            style="border: 0"
+          />
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Start Time</ion-label>
+          <input
+            type="time"
+            :value="startTime"
+            @input="startTime = $event.target.value"
+            style="border: 0"
+          />
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Rounds</ion-label>
+          <ion-input
+            :value="tournament.rounds"
+            @input="tournament.rounds = $event.target.value"
+          ></ion-input>
         </ion-item>
         <!-- <ion-item>
           <ion-label position="stacked">Current Round</ion-label>
@@ -59,13 +85,6 @@
             @input="tournament.round = $event.target.value"
           ></ion-input>
         </ion-item> -->
-        <ion-item>
-          <ion-label position="stacked">Rounds</ion-label>
-          <ion-input
-            :value="tournament.rounds"
-            @input="tournament.rounds = $event.target.value"
-          ></ion-input>
-        </ion-item>
         <!-- <ion-item>
           <ion-label position="stacked">Pairing Algorithm</ion-label>
           <ion-select
@@ -142,6 +161,20 @@
           ></ion-input>
         </ion-item>
         <ion-item>
+          <ion-label position="stacked">Check-In Duration (seconds)</ion-label>
+          <ion-input
+            :value="tournament.checkInDuration"
+            @input="tournament.checkInDuration = $event.target.value"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Streaming: Twitch Profile</ion-label>
+          <ion-input
+            :value="tournament.twitchProfile"
+            @input="tournament.twitchProfile = $event.target.value"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
           <ion-label>Auto Advance Rounds</ion-label>
           <ion-checkbox
             slot="start"
@@ -151,7 +184,7 @@
             "
           ></ion-checkbox>
         </ion-item>
-        <ion-item>
+        <!-- <ion-item>
           <ion-label>Allow Notifications</ion-label>
           <ion-checkbox
             slot="start"
@@ -160,7 +193,7 @@
               tournament.allowNotifications = $event.target.checked == true
             "
           ></ion-checkbox>
-        </ion-item>
+        </ion-item> -->
 
         <ion-item>
           <ion-label>Is Hidden</ion-label>
@@ -187,7 +220,7 @@
             :checked="tournament.allowCheckIn"
             @ionChange="tournament.allowCheckIn = $event.target.checked == true"
           ></ion-checkbox>
-        </ion-item>
+        </ion-item> -->
         <ion-item>
           <ion-label>Allow Registration</ion-label>
           <ion-checkbox
@@ -197,7 +230,7 @@
               tournament.allowRegistration = $event.target.checked == true
             "
           ></ion-checkbox>
-        </ion-item> -->
+        </ion-item>
 
         <ion-item>
           <ion-label>Is Public</ion-label>
@@ -206,6 +239,26 @@
             :checked="tournament.isPublic"
             @ionChange="tournament.isPublic = $event.target.checked == true"
           ></ion-checkbox>
+        </ion-item>
+        <ion-list-header>
+          <ion-label>Signup Page</ion-label>
+        </ion-list-header>
+        <ion-item>
+          <ckeditor
+            :editor="editor"
+            v-model="tournament.signUpText"
+            :config="editorConfig"
+          ></ckeditor>
+        </ion-item>
+        <ion-list-header>
+          <ion-label>FAQ Content</ion-label>
+        </ion-list-header>
+        <ion-item>
+          <ckeditor
+            :editor="editor"
+            v-model="tournament.faqcontent"
+            :config="editorConfig"
+          ></ckeditor>
         </ion-item>
         <!-- <ion-item>
           <ion-label position="stacked">Signup Content</ion-label>
@@ -242,6 +295,7 @@
 
 <script>
 import fetch from "@/services/fetch";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Authentication from "@/services/Authentication";
 const authentication = new Authentication();
 export default {
@@ -263,6 +317,13 @@ export default {
       Math.random().toString(36).substring(2, 5);
     return {
       tournamentId: tournamentId,
+      editor: ClassicEditor,
+      editorConfig: {
+        // The configuration of the rich-text editor.
+        link: {
+          addTargetToExternalLinks: true,
+        },
+      },
       tournament: {
         name: "",
         accessCodeBasic: null,
@@ -293,7 +354,11 @@ export default {
         status: "Setup",
         statusProgress: 0,
         round: 0,
+        checkInDuration: 120,
+        TwitchProfile: "",
       },
+      startDate: null,
+      startTime: null,
       error: "",
     };
   },
@@ -304,6 +369,8 @@ export default {
     save() {
       let tournamentId = this.tournamentId;
       let tournament = this.tournament;
+      let startDate = this.startDate;
+      let startTime = this.startTime;
       tournament.rounds = parseInt(tournament.rounds);
       if (isNaN(tournament.rounds)) {
         this.error = "Error: rounds is not a number";
@@ -323,8 +390,18 @@ export default {
         this.error = "Error: No tournament name is set";
         return;
       }
-      if (!tournament.startDateTime) {
+      if (!startDate) {
+        this.error = "Error: No start date is set";
+        return;
+      }
+      if (!startTime) {
         this.error = "Error: No start time is set";
+        return;
+      }
+      tournament.startDateTime = new Date(startDate + "T" + startTime);
+
+      if (!tournament.startDateTime) {
+        this.error = "Error: No start datetime is set";
         return;
       }
       if (tournamentId && tournament) {

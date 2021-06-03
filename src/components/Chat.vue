@@ -117,8 +117,7 @@ export default {
     },
     shouldScroll() {
       let messages = document.getElementById("chat-log");
-      let shouldScroll =
-        messages.scrollTop + messages.clientHeight === messages.scrollHeight;
+      let shouldScroll = (messages.scrollHeight - Math.abs(messages.scrollTop)) <= (messages.clientHeight + 60);
       return shouldScroll;
     },
     scrollToEnd() {

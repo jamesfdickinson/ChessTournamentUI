@@ -116,8 +116,12 @@
             </ion-item>
           </template>
           <ion-item>
-            <ion-button expand="block" v-on:click="createTournament()">Create Tournament</ion-button>
+            <ion-button expand="block" v-on:click="createTournament()"
+              >Create Tournament</ion-button
+            >
           </ion-item>
+        
+          
         </ion-list>
         <!-- <router-link
               :key="tournament.id"
@@ -142,7 +146,7 @@ export default {
     const dateFilter = ((d) => new Date(d.setDate(d.getDate() - 1)))(
       new Date()
     );
-    const dateFilterMax = ((d) => new Date(d.setDate(d.getDate() - 120)))(
+    const dateFilterMax = ((d) => new Date(d.setDate(d.getDate() - 30)))(
       new Date()
     );
     return {
@@ -181,7 +185,7 @@ export default {
     createTournament() {
       this.$router.push({
         name: "TournamentCreate",
-        params: { },
+        params: {},
       });
     },
     loadData() {

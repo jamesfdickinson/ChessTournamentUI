@@ -174,9 +174,14 @@
             ></Chat>
           </ion-card>
         </div>
-        <div class="flex-item">
-          <ion-card v-if="tournament.video">
+        <div class="flex-item" v-if="tournament.video">
+          <ion-card >
             <div v-html="tournament.video"></div>
+          </ion-card>
+        </div>
+        <div class="flex-item"  v-if="tournament.twitchProfile">
+          <ion-card>
+             <VideoTwitch :userName="tournament.twitchProfile"></VideoTwitch>
           </ion-card>
         </div>
         <!-- <div class="flex-item">
@@ -188,9 +193,9 @@
             </ion-card>
           </div>
         </div> -->
-        <div class="flex-item">
+        <div class="flex-item"  v-if="players && players.length > 0">
           <ion-card
-            v-if="players && players.length > 0"
+           
             style="xheight: 220px; overflow-y: auto"
           >
             <ion-list-header lines="inset">
@@ -215,6 +220,7 @@ import TournamentAPI from "@/services/TournamentAPI";
 import fetch from "@/services/fetch";
 import Chat from "@/components/Chat.vue";
 import Standings from "@/components/Standings.vue";
+import VideoTwitch from "@/components/VideoTwitch.vue";
 import Table from "@/components/Table.vue";
 import Authentication from "@/services/Authentication";
 import EventBus from "@/services/EventBus.js";
@@ -229,6 +235,7 @@ export default {
     Chat,
     Standings,
     Table,
+    VideoTwitch,
   },
   data() {
     var tournamentId = this.$route.params.tournament || 118;

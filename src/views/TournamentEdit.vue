@@ -22,21 +22,21 @@
             @input="tournament.name = $event.target.value"
           ></ion-input>
         </ion-item>
-        <ion-item>
+        <!-- <ion-item>
           <ion-label position="stacked">Type</ion-label>
           <ion-input
             :value="tournament.type"
             @input="tournament.type = $event.target.value"
           ></ion-input>
-        </ion-item>
-        <ion-item>
+        </ion-item> -->
+        <!-- <ion-item>
           <ion-label position="stacked">Details</ion-label>
           <ion-textarea
             auto-grow="true"
             :value="tournament.details"
             @input="tournament.details = $event.target.value"
           ></ion-textarea>
-        </ion-item>
+        </ion-item> -->
         <!-- <ion-item>
           <ion-label position="stacked">Start Date/Time</ion-label>
           <ion-datetime
@@ -44,21 +44,33 @@
             :value="new Date(tournament.startDateTime+'Z').toISOString()"
           ></ion-datetime>
         </ion-item> -->
-        <ion-item>
+        <!-- <ion-item>
           <ion-label position="stacked">Start Date/Time</ion-label>
           <ion-datetime
             display-format="D MMM YYYY H:mm"
             :value="tournament.startDateTime"
             @ionChange="tournament.startDateTime = $event.target.value"
           ></ion-datetime>
+        </ion-item> -->
+        <ion-item>
+          <ion-label position="stacked">Start Date</ion-label>
+          <input
+            type="date"
+            :value="startDate"
+            @input="startDate = $event.target.value"
+            style="border: 0"
+          />
         </ion-item>
         <ion-item>
-          <ion-label position="stacked">Current Round</ion-label>
-          <ion-input
-            :value="tournament.round"
-            @input="tournament.round = $event.target.value"
-          ></ion-input>
+          <ion-label position="stacked">Start Time</ion-label>
+          <input
+            type="time"
+            :value="startTime"
+            @input="startTime = $event.target.value"
+            style="border: 0"
+          />
         </ion-item>
+
         <ion-item>
           <ion-label position="stacked">Rounds</ion-label>
           <ion-input
@@ -66,7 +78,14 @@
             @input="tournament.rounds = $event.target.value"
           ></ion-input>
         </ion-item>
-        <ion-item>
+        <!-- <ion-item>
+          <ion-label position="stacked">Current Round</ion-label>
+          <ion-input
+            :value="tournament.round"
+            @input="tournament.round = $event.target.value"
+          ></ion-input>
+        </ion-item> -->
+        <!-- <ion-item>
           <ion-label position="stacked">Pairing Algorithm</ion-label>
           <ion-select
             placeholder="Select One"
@@ -74,7 +93,7 @@
             @ionChange="tournament.pairing = $event.target.value"
           >
             <ion-select-option value="Swiss">Swiss</ion-select-option>
-            <!-- <ion-select-option value="SingleElimination">Single Elimination</ion-select-option> -->
+            <ion-select-option value="SingleElimination">Single Elimination</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item>
@@ -98,7 +117,7 @@
             :value="tournament.state"
             @input="tournament.state = $event.target.value"
           ></ion-input>
-        </ion-item>
+        </ion-item> -->
         <ion-item>
           <ion-label position="stacked">Access Code: Basic</ion-label>
           <ion-input
@@ -126,6 +145,9 @@
             :value="tournament.image"
             @input="tournament.image = $event.target.value"
           ></ion-input>
+          <ion-thumbnail slot="end">
+            <ion-img :src="tournament.image"></ion-img>
+          </ion-thumbnail>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Teams (separated by commas)</ion-label>
@@ -143,6 +165,20 @@
           ></ion-input>
         </ion-item>
         <ion-item>
+          <ion-label position="stacked">Check-In Duration (seconds)</ion-label>
+          <ion-input
+            :value="tournament.checkInDuration"
+            @input="tournament.checkInDuration = $event.target.value"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Streaming: Twitch Profile</ion-label>
+          <ion-input
+            :value="tournament.twitchProfile"
+            @input="tournament.twitchProfile = $event.target.value"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
           <ion-label>Auto Advance Rounds</ion-label>
           <ion-checkbox
             slot="start"
@@ -152,7 +188,7 @@
             "
           ></ion-checkbox>
         </ion-item>
-        <ion-item>
+        <!-- <ion-item>
           <ion-label>Allow Notifications</ion-label>
           <ion-checkbox
             slot="start"
@@ -161,7 +197,7 @@
               tournament.allowNotifications = $event.target.checked == true
             "
           ></ion-checkbox>
-        </ion-item>
+        </ion-item> -->
 
         <ion-item>
           <ion-label>Is Hidden</ion-label>
@@ -181,14 +217,14 @@
             "
           ></ion-checkbox>
         </ion-item>
-        <ion-item>
+        <!-- <ion-item>
           <ion-label>Allow Check-In</ion-label>
           <ion-checkbox
             slot="start"
             :checked="tournament.allowCheckIn"
             @ionChange="tournament.allowCheckIn = $event.target.checked == true"
           ></ion-checkbox>
-        </ion-item>
+        </ion-item> -->
         <ion-item>
           <ion-label>Allow Registration</ion-label>
           <ion-checkbox
@@ -207,6 +243,26 @@
             :checked="tournament.isPublic"
             @ionChange="tournament.isPublic = $event.target.checked == true"
           ></ion-checkbox>
+        </ion-item>
+        <ion-list-header>
+          <ion-label>Signup Page</ion-label>
+        </ion-list-header>
+        <ion-item>
+          <ckeditor
+            :editor="editor"
+            v-model="tournament.signUpText"
+            :config="editorConfig"
+          ></ckeditor>
+        </ion-item>
+        <ion-list-header>
+          <ion-label>FAQ Content</ion-label>
+        </ion-list-header>
+        <ion-item>
+          <ckeditor
+            :editor="editor"
+            v-model="tournament.faqcontent"
+            :config="editorConfig"
+          ></ckeditor>
         </ion-item>
         <!-- <ion-item>
           <ion-label position="stacked">Signup Content</ion-label>
@@ -232,7 +288,11 @@
       <ion-button expand="block" color="light" v-on:click="back()"
         >Cancel</ion-button
       >
-      <ion-button expand="block" color="danger" v-on:click="deleteTournament()"
+      <ion-button
+        expand="block"
+        color="danger"
+        v-if="tournamentId"
+        v-on:click="deleteTournament()"
         >Delete</ion-button
       >
       <hr />
@@ -246,12 +306,18 @@
 
 <script>
 import fetch from "@/services/fetch";
-
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import Authentication from "@/services/Authentication";
+const authentication = new Authentication();
 export default {
   name: "home",
   components: {},
   data() {
     var tournamentId = this.$route.params.tournament;
+    var copyId = this.$route.params.copyId;
+    //set owner
+    let user = authentication.getUser();
+    let userName = user ? user.userName : null;
     // var randomInviteCode =
     //   Math.random().toString(36).substring(2, 5) +
     //   Math.random().toString(36).substring(2, 5);
@@ -263,6 +329,14 @@ export default {
       Math.random().toString(36).substring(2, 5);
     return {
       tournamentId: tournamentId,
+      copyId: copyId,
+      editor: ClassicEditor,
+      editorConfig: {
+        // The configuration of the rich-text editor.
+        link: {
+          addTargetToExternalLinks: true,
+        },
+      },
       tournament: {
         name: "",
         accessCodeBasic: null,
@@ -272,12 +346,12 @@ export default {
         faqcontent: "",
         hidden: false,
         id: 0,
-        image: null,
+        image: "/images/icons/trophy.png",
         isPublic: true,
-        owner: null,
+        owner: userName,
         teams: "",
         signUpText: "",
-        type: null,
+        type: "Cribbage",
         rounds: 5,
         pairing: "Swiss",
         gameRoomLink: null,
@@ -293,7 +367,11 @@ export default {
         status: "Setup",
         statusProgress: 0,
         round: 0,
+        checkInDuration: 120,
+        TwitchProfile: "",
       },
+      startDate: null,
+      startTime: null,
       error: "",
     };
   },
@@ -304,6 +382,8 @@ export default {
     save() {
       let tournamentId = this.tournamentId;
       let tournament = this.tournament;
+      let startDate = this.startDate;
+      let startTime = this.startTime;
       tournament.rounds = parseInt(tournament.rounds);
       if (isNaN(tournament.rounds)) {
         this.error = "Error: rounds is not a number";
@@ -319,7 +399,24 @@ export default {
         this.error = "Error: maxPlayers is not a number";
         return;
       }
+      if (!tournament.name) {
+        this.error = "Error: No tournament name is set";
+        return;
+      }
+      if (!startDate) {
+        this.error = "Error: No start date is set";
+        return;
+      }
+      if (!startTime) {
+        this.error = "Error: No start time is set";
+        return;
+      }
+      tournament.startDateTime = new Date(startDate + "T" + startTime);
 
+      if (!tournament.startDateTime) {
+        this.error = "Error: No start datetime is set";
+        return;
+      }
       if (tournamentId && tournament) {
         fetch
           .put(`tournament/${tournamentId}`, tournament)
@@ -359,15 +456,22 @@ export default {
               this.error = "Error: Delete failed";
               console.warn(e);
             });
-        });
+        }
+      );
     },
     loadData() {
       let tournamentId = this.tournamentId;
+      let copyId = this.copyId;
       if (tournamentId) {
         fetch
           .get(`tournament/${tournamentId}`)
           .then((response) => {
             this.tournament = response.data;
+            if (this.tournament && this.tournament.startDateTime) {
+              let date = new Date(this.tournament.startDateTime);
+              this.startDate = this.getHTML5DateStringsFromDate(date);
+              this.startTime = this.getHTML5TimeStringsFromDate(date);
+            }
             //this.tournament.startDateTime = new Date(tournament.startDateTime+'Z').toISOString()
           })
           .catch((e) => {
@@ -375,6 +479,46 @@ export default {
             console.warn(e);
           });
       }
+      if (copyId) {
+        fetch
+          .get(`tournament/${copyId}`)
+          .then((response) => {
+            this.tournament = response.data;
+            this.tournament.id = 0;
+            this.tournament.startDateTime = null;
+            if (this.tournament && this.tournament.startDateTime) {
+              let date = new Date(this.tournament.startDateTime);
+              this.startDate = this.getHTML5DateStringsFromDate(date);
+              this.startTime = this.getHTML5TimeStringsFromDate(date);
+            }
+            //this.tournament.startDateTime = new Date(tournament.startDateTime+'Z').toISOString()
+          })
+          .catch((e) => {
+            this.error = "Error: Load failed";
+            console.warn(e);
+          });
+      }
+    },
+    getHTML5DateStringsFromDate(d) {
+      // Date string
+      let ds =
+        d.getFullYear().toString() +
+        "-" +
+        (d.getMonth() + 1).toString().padStart(2, "0") +
+        "-" +
+        d.getDate().toString().padStart(2, "0");
+      return ds;
+    },
+    getHTML5TimeStringsFromDate(d) {
+      // Time string
+      let ts =
+        d.getHours().toString().padStart(2, "0") +
+        ":" +
+        d.getMinutes().toString().padStart(2, "0") +
+        ":" +
+        d.getSeconds().toString().padStart(2, "0");
+
+      return ts;
     },
   },
   created() {

@@ -158,6 +158,14 @@
             <ion-label>Tools</ion-label>
           </ion-item>
         </router-link>
+        <router-link
+          :to="{ name: 'TournamentCreate', params: { copyId: tournamentId } }"
+        >
+          <ion-item button detail="true">
+            <ion-icon slot="start" name="copy"></ion-icon>
+            <ion-label>Copy Tournament</ion-label>
+          </ion-item>
+        </router-link>
 
         <!-- <a v-bind:href="'https://admin.chessclub.io/'+ tournamentId+'/'">
           <ion-item button detail="true">
