@@ -42,6 +42,17 @@ npm run lint
 ```
 
 ## Change Log
+### 2.4 "Create Tournament"
+- Copy tournament
+- Better data and time picker
+- Twitch settings are now just your Twitch username in the tournament settings.
+- Many bug fixes (should need to refresh less)
+- Chat scrolling reworked 
+- Configuable Check-in duration
+- Upgraded to .net 5
+
+### 2.3 "Admin"
+- Create new tables (simple)
 ### 2.12 "Embed game / Round Check in"
 - Play the game directly through the tournament software
 - Spectate other players' games
