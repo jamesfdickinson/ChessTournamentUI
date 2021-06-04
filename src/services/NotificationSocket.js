@@ -56,7 +56,7 @@ export default class NotificationSocket {
     onConnected() {
         if (this.tournamentId) {
             this.joinTournament(this.tournamentId);
-            
+
         }
     }
     notification(notification) {
@@ -94,6 +94,9 @@ export default class NotificationSocket {
     }
     joinTournament(tournamentId) {
         if (!tournamentId) return
+        tournamentId = parseInt(tournamentId);
+        if (isNaN(tournamentId)) return;
+
         this.tournamentId = tournamentId; //set to be called onConnected if needed
         this.tournamentView = null;
         //this.getTournament(this.tournamentId);
@@ -101,7 +104,7 @@ export default class NotificationSocket {
             this.connection.invoke("JoinTournament", tournamentId);
     }
     getTournament(tournamentId) {
-        if(!tournamentId) tournamentId = this.tournamentId;
+        if (!tournamentId) tournamentId = this.tournamentId;
         //get tournament data from api as it is compressed and larger amount of data, else try via socket
         return tournamentAPI.tournamentView(tournamentId)
             .then((data) => {

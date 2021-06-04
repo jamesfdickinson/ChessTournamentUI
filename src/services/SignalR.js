@@ -10,11 +10,12 @@ export default class SignalR {
         this.baseURL = process.env.VUE_APP_API_URL || 'https://bracketjd-api.azurewebsites.net/api/' || 'https://localhost:5001/api/';
 
     }
-    connect(bearerToken,hub) {
+    connect(bearerToken, hub) {
 
         let url = this.baseURL + hub;
         this.connection = new HubConnectionBuilder()
-            .withUrl(url, { accessTokenFactory: () => bearerToken })
+            .withUrl(url)
+            //.withUrl(url, { accessTokenFactory: () => bearerToken })//bearerToken gets too large for the url and fails on azure with a 2000 limit
             .configureLogging(LogLevel.Information)
             .withAutomaticReconnect([0, 3000, 5000, 10000, 15000, 30000, 60000, 60000 * 2, 60000 * 4])
             .build();
@@ -37,7 +38,7 @@ export default class SignalR {
     send(action, ...args) {
         // this.connection.invoke("SendMessage","jh", "user","message");
         if (this.connection && this.connection.connectionState == "Connected")
-        this.connection.invoke(action, ...args);
+            this.connection.invoke(action, ...args);
     }
     notification(notification) {
         if (this.onNotification)
