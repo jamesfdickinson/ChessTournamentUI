@@ -485,6 +485,8 @@ export default {
           .then((response) => {
             this.tournament = response.data;
             this.tournament.id = 0;
+            this.tournament.round = 0;
+            this.tournament.state = "setup";
             this.tournament.startDateTime = null;
             if (this.tournament && this.tournament.startDateTime) {
               let date = new Date(this.tournament.startDateTime);
