@@ -70,24 +70,26 @@
             </ion-item>
             <ion-item
               v-if="
-                tournament.allowRegistration === true &&
-                userPlayers.length === 0
+                tournament.allowRegistration === true 
+                && tournament.isFull === false 
+                && userPlayers.length === 0
               "
             >
               <ion-icon name="clipboard" slot="start"></ion-icon>
               <ion-label>Not registered</ion-label>
               <ion-button slot="end" @click="signup()">Sign-Up</ion-button>
-              <!-- <ion-button
-            slot="end"
-            @click="
-              $router.push({
-                name: 'SignUp',
-                params: { tournament: tournamentId },
-              })
-            "
-            >Sign-Up</ion-button> -->
             </ion-item>
-
+            <ion-item
+              v-if="
+                tournament.allowRegistration === true 
+                && tournament.isFull === true 
+                && userPlayers.length === 0
+              "
+            >
+              <ion-icon name="clipboard" slot="start"></ion-icon>
+              <ion-label>Not registered</ion-label>
+              <ion-label slot="end" >[Registration is full]</ion-label>
+            </ion-item>
             <template v-for="userPlayer of userPlayers">
               <div :key="userPlayer.playerId">
                 <ion-item v-if="!tournament.allowCheckIn">
