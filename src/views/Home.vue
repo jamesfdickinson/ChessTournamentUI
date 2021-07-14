@@ -1,5 +1,5 @@
 <template>
-  <layout-menu>
+  <layout-no-menu>
     <ion-page class="ion-page" main>
       <!-- <ion-page class="ion-page" main> -->
       <!-- <ion-header>
@@ -153,7 +153,7 @@
         </ion-card> -->
       </ion-content>
     </ion-page>
-  </layout-menu>
+  </layout-no-menu>
 </template>
 
 <script>
