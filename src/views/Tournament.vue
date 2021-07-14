@@ -88,7 +88,7 @@
             >
               <ion-icon name="clipboard" slot="start"></ion-icon>
               <ion-label>Not registered</ion-label>
-              <ion-label slot="end" >[Registration is full]</ion-label>
+              <ion-button slot="end" disabled="true" >Registration is full</ion-button>
             </ion-item>
             <template v-for="userPlayer of userPlayers">
               <div :key="userPlayer.playerId">

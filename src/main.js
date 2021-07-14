@@ -118,7 +118,7 @@ router.beforeEach((to, from, next) => {
 
 
   //require
-  const pagesNoAuthenticationRequired = ['UserCreate', 'Login', 'PasswordResetRequest', 'PasswordChange', 'ChatRoom'];
+  const pagesNoAuthenticationRequired = ['UserCreate', 'Login', 'PasswordResetRequest', 'PasswordChange', 'ChatRoom','Home'];
   const authRequired = !pagesNoAuthenticationRequired.includes(to.name);
   if (authRequired && !user) {
     return next(`/Login?redirect=${to.path}`);

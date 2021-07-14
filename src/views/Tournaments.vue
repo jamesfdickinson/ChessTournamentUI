@@ -6,7 +6,7 @@
         <ion-toolbar color="primary">
           <ion-buttons slot="start">
             <!-- <ion-menu-toggle> -->
-            <ion-button>
+            <ion-button v-on:click="home()">
               <ion-icon slot="icon-only" name="home"></ion-icon>
             </ion-button>
             <!-- </ion-menu-toggle> -->
@@ -120,8 +120,6 @@
               >Create Tournament</ion-button
             >
           </ion-item>
-        
-          
         </ion-list>
         <!-- <router-link
               :key="tournament.id"
@@ -158,6 +156,9 @@ export default {
     };
   },
   methods: {
+    home() {
+      this.$router.push({ name: "Home" });
+    },
     userDetails() {
       this.$router.push({ name: "User" });
     },

@@ -50,6 +50,7 @@ export default class Authorization {
         //const pagesBasic = [];
         let authRequiredBasic = pagesBasic.includes(toPage);
 
+
         //contains role "tournamentId-role".
         //let superAdminRole = "0-SuperAdmin"; 
         let superAdminRole = "0-Create"; 

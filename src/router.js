@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-//import Home from './views/Home.vue'
+import Home from './views/Home.vue'
 import Login from './views/Login.vue'
 import PasswordChange from './views/PasswordChange.vue'
 import PasswordResetRequest from './views/PasswordResetRequest.vue'
@@ -63,12 +63,17 @@ export default new VueRouter({
     {
       path: '/',
       name: 'Home',
-      component: Tournaments
+      component: Home
     },
     {
       path: '/index.html',
       name: 'Home',
-      component: Tournaments
+      component: Home
+    },
+    {
+      path: '/Home',
+      name: 'Home',
+      component: Home
     },
     {
       path: '/Login',
