@@ -5,7 +5,7 @@
         <ion-buttons slot="start">
           <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
         </ion-buttons>
-        <ion-title>Scores - Score Group Rank</ion-title>
+        <ion-title id="title" >Scores - Score Group Rank</ion-title>
         <ion-buttons slot="end">
           <ion-button @click="print()">
             <ion-icon name="print" size="large"></ion-icon>

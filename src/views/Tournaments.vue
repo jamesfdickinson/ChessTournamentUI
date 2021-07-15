@@ -20,6 +20,9 @@
         </ion-toolbar>
       </ion-header>
       <ion-content>
+        <ion-refresher slot="fixed" @ionRefresh="refresh($event)">
+          <ion-refresher-content></ion-refresher-content>
+        </ion-refresher>
         <ion-searchbar
           :value="searchInput"
           @ionInput="searchInput = $event.target.value"
@@ -189,8 +192,13 @@ export default {
         params: {},
       });
     },
+    refresh(event) {
+      this.loadData().then(() => {
+        event.target.complete();
+      });
+    },
     loadData() {
-      fetch
+      return fetch
         .get(`tournament/type/Cribbage`)
         .then((response) => {
           this.tournaments = response.data;

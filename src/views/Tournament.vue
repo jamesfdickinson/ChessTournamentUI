@@ -22,6 +22,9 @@
       </ion-toolbar>
     </ion-header>
     <ion-content>
+      <ion-refresher slot="fixed" @ionRefresh="refresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
       <div class="flex-container">
         <div class="flex-item-full">
           <ion-card>
@@ -70,9 +73,9 @@
             </ion-item>
             <ion-item
               v-if="
-                tournament.allowRegistration === true 
-                && tournament.isFull === false 
-                && userPlayers.length === 0
+                tournament.allowRegistration === true &&
+                tournament.isFull === false &&
+                userPlayers.length === 0
               "
             >
               <ion-icon name="clipboard" slot="start"></ion-icon>
@@ -81,14 +84,16 @@
             </ion-item>
             <ion-item
               v-if="
-                tournament.allowRegistration === true 
-                && tournament.isFull === true 
-                && userPlayers.length === 0
+                tournament.allowRegistration === true &&
+                tournament.isFull === true &&
+                userPlayers.length === 0
               "
             >
               <ion-icon name="clipboard" slot="start"></ion-icon>
               <ion-label>Not registered</ion-label>
-              <ion-button slot="end" disabled="true" >Registration is full</ion-button>
+              <ion-button slot="end" disabled="true"
+                >Registration is full</ion-button
+              >
             </ion-item>
             <template v-for="userPlayer of userPlayers">
               <div :key="userPlayer.playerId">
@@ -177,13 +182,13 @@
           </ion-card>
         </div>
         <div class="flex-item" v-if="tournament.video">
-          <ion-card >
+          <ion-card>
             <div v-html="tournament.video"></div>
           </ion-card>
         </div>
-        <div class="flex-item"  v-if="tournament.twitchProfile">
+        <div class="flex-item" v-if="tournament.twitchProfile">
           <ion-card>
-             <VideoTwitch :userName="tournament.twitchProfile"></VideoTwitch>
+            <VideoTwitch :userName="tournament.twitchProfile"></VideoTwitch>
           </ion-card>
         </div>
         <!-- <div class="flex-item">
@@ -195,11 +200,8 @@
             </ion-card>
           </div>
         </div> -->
-        <div class="flex-item"  v-if="players && players.length > 0">
-          <ion-card
-           
-            style="xheight: 220px; overflow-y: auto"
-          >
+        <div class="flex-item" v-if="players && players.length > 0">
+          <ion-card style="xheight: 220px; overflow-y: auto">
             <ion-list-header lines="inset">
               <ion-label
                 >Players {{ players.length }} ({{
@@ -334,7 +336,7 @@ export default {
     },
     loadData() {
       var tournamentId = this.tournamentId;
-      tournamentAPI
+      return tournamentAPI
         .tournamentView(tournamentId)
         .then((data) => {
           this.populate(data);
@@ -489,6 +491,11 @@ export default {
     //     }
     //   }
     // },
+    refresh(event) {
+      this.loadData().then(() => {
+        event.target.complete();
+      });
+    },
   },
   mounted() {
     this.loadData();

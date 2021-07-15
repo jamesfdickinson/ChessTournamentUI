@@ -1,6 +1,6 @@
 
 <template>
-  <div>
+  <div v-show="title">
     <div v-show="isLoaded" class="teamIcon">
       <img :src="'images/teams/'+title+'.png'" @load="loaded"  />
     </div>
@@ -49,7 +49,7 @@ export default {
 <style scoped>
 .teamIcon {
   max-height: 25px;
-  width: 32px;
+  width: 26px;
   display: inline-block;
   text-align: center;
 }
@@ -59,7 +59,7 @@ export default {
   border-radius: 5px;
 }
 .initialBox {
-  width: 32px;
+  min-width: 26px;
 
   font-weight: bold;
   background-color: #097123;

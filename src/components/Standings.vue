@@ -2,17 +2,42 @@
   <ion-list>
     <template v-for="player of players">
       <ion-item :key="player.playerId">
+        <!-- <div slot="start">
+          <div style="">
+            <ion-avatar>
+              <AvatarIcon
+                :name="player.name"
+                :image="player.avatar"
+                :disabled="!player.isOnline"
+              ></AvatarIcon>
+            </ion-avatar>
+            <div style="position: absolute; top: 0; left: 10px">
+              <TeamIcon
+                style="font-size: 12px; padding: 2px 0px; width: default"
+                :title="player.team"
+                slot="start"
+              ></TeamIcon>
+            </div>
+            <div v-if="player.isPresent" class="checkMark">✔</div>
+          </div>
+        </div> -->
         <ion-avatar slot="start">
           <AvatarIcon
             :name="player.name"
             :image="player.avatar"
             :disabled="!player.isOnline"
           ></AvatarIcon>
+          <div class="team">
+            <TeamIcon
+              :title="player.team"
+              slot="start"  >
+            </TeamIcon>
+          </div>
           <div v-if="player.isPresent" class="checkMark">✔</div>
         </ion-avatar>
 
         <ion-label
-          style="cursor: pointer"
+          style="cursor: pointer text-overflow: ellipsis;  max-width: 150px;"
           v-on:click="openPlayer(player.playerId)"
           >{{ player.firstName }} {{ player.lastName }}</ion-label
         >
@@ -22,9 +47,9 @@
           :color="[
             player.location && player.location.includes('PlayGame')
               ? 'success'
-              : (player.roundPoints == null
+              : player.roundPoints == null
               ? 'medium'
-              : 'light')
+              : 'light',
           ]"
           name="eye"
           @click="watchGame(player.room)"
@@ -39,9 +64,15 @@
   </ion-list>
 </template>
 <style scoped>
+.team{
+  position: absolute; 
+  bottom: 0; 
+  left: 10px;
+  font-size: 12px;
+}
 .checkMark {
   position: absolute;
-  bottom: 0;
+  top: 2px;
   left: 10px;
   color: #ffffff;
   width: 20px;
@@ -54,9 +85,10 @@
 </style>
 <script>
 import AvatarIcon from "@/components/AvatarIcon.vue";
+import TeamIcon from "@/components/TeamIcon.vue";
 export default {
   name: "Standings",
-  components: { AvatarIcon },
+  components: { AvatarIcon, TeamIcon },
   props: {
     players: {
       type: Array,
