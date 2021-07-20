@@ -50,7 +50,7 @@
                   <option v-for="team in teams" :key="team" :value="team">
                     {{ team }}
                   </option>
-                   <option  value="">Unassigned</option>
+                   <option  value="">Other</option>
                 </select>
               </div>
             </ion-item>
