@@ -100,6 +100,16 @@
                 <ion-item v-if="!tournament.allowCheckIn">
                   <ion-icon name="clipboard" slot="start"></ion-icon>
                   <ion-label>Registered</ion-label>
+                  <ion-button v-if="tournament.teams"
+                    slot="end"
+                    @click="
+                      $router.push({
+                        name: 'TeamEdit',
+                        params: { id: userPlayer.playerId },
+                      })
+                    "
+                    >Update Team</ion-button
+                  >
                   <ion-button
                     slot="end"
                     @click="

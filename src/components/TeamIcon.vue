@@ -2,14 +2,16 @@
 <template>
   <div v-show="title">
     <div v-show="isLoaded" class="teamIcon">
-      <img :src="'images/teams/'+title+'.png'" @load="loaded"  />
+      <img :src="'images/teams/' + title + '.png'" @load="loaded" />
     </div>
     <!-- <img v-if="image" v-bind:src="image" /> -->
     <div
       v-if="!isLoaded"
       class="initialBox"
-      v-bind:style="{'background-color':stringToColour(title) }"
-    >{{(title||"-").substring(0, 2)}}</div>
+      v-bind:style="{ 'background-color': stringToColour(title) }"
+    >
+      {{stringAbbreviation(title)}}
+    </div>
   </div>
 </template>
 
@@ -18,19 +20,25 @@
 export default {
   name: "TeamIcon",
   props: {
-    title: String
+    title: String,
   },
-  data: function() {
+  data: function () {
     return {
-      isLoaded: false
+      isLoaded: false,
     };
   },
   methods: {
     loaded() {
       this.isLoaded = true;
     },
+    stringAbbreviation(str) {
+      if(!str) return;
+      var matches = str.match(/\b(\w)/g); 
+      var acronym = matches.join(""); 
+      return acronym.substring(0, 4);
+    },
     stringToColour(str) {
-      if(!str) str = "";
+      if (!str) str = "";
       var hash = 0;
       for (let i = 0; i < str.length; i++) {
         hash = str.charCodeAt(i) + ((hash << 5) - hash);
@@ -42,8 +50,8 @@ export default {
         colour += ("00" + value.toString(16)).substr(-2);
       }
       return colour;
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>

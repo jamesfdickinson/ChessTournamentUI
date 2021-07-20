@@ -14,6 +14,7 @@ import CheckIn from './views/CheckIn.vue'
 import SignUp from './views/SignUp.vue'
 import SignUpComplete from './views/SignUpComplete.vue'
 import SignUpEdit from './views/SignUpEdit.vue'
+import TeamEdit from './views/TeamEdit.vue'
 import PlayGame from './views/PlayGame.vue'
 import ChatRoom from './views/ChatRoom.vue'
 import Players from './views/Players.vue'
@@ -171,7 +172,13 @@ export default new VueRouter({
       path: '/:tournament/SignUpEdit',
       name: 'SignUpEdit',
       component: SignUpEdit
+    },    
+    {
+      path: '/:tournament/TeamEdit/:id',
+      name: 'TeamEdit',
+      component: TeamEdit
     },
+    
     {
       path: '/:tournament/PlayGame/:id',
       name: 'PlayGame',
