@@ -165,6 +165,7 @@ export default {
       let tournament = this.tournament;
       let password = this.password;
       let accessCodeBasic = null;
+      let isTeamRequired = this.teams.length > 0
       //add default grade for cribbage
       if (!player.grade) player.grade = 12;
 
@@ -179,7 +180,7 @@ export default {
       if (!agreeTerms) this.errors.push("Agree to terms is required.");
       if (!player.firstName) this.errors.push("First name is required.");
       //if (!player.lastName) this.errors.push("last name is required.");
-      //if (!player.team) this.errors.push("Team is required.");
+      if (!player.team && isTeamRequired) this.errors.push("Team is required.");
       if (!player.grade) this.errors.push("Grade is required.");
       if (isNaN(player.grade)) this.errors.push("Grade is not a number.");
       if (!player.rating) this.rating = 1000;
