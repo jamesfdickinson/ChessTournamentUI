@@ -42,6 +42,17 @@
                 @input="player.firstName = $event.target.value"
               ></ion-input>
             </ion-item>
+            <ion-item v-if="teams.length > 0">
+              <ion-label position="stacked">Team/Club</ion-label>
+              <div style="width: 100%">
+                <select v-model="player.team">
+                  <option disabled value="">Select One</option>
+                  <option v-for="team in teams" :key="team" :value="team">
+                    {{ team }}
+                  </option>
+                </select>
+              </div>
+            </ion-item>
             <ion-item>
               <ion-label position="stacked">Team/Club (optional)</ion-label>
               <ion-input
@@ -49,6 +60,7 @@
                 @input="player.team = $event.target.value"
               ></ion-input>
             </ion-item>
+
             <!-- <ion-item>
             <ion-label position="stacked">Last Name</ion-label>
             <ion-input :value="player.lastName" @input="player.lastName = $event.target.value"></ion-input>
@@ -138,7 +150,7 @@ export default {
       showSignUpPage: true,
       player: player,
       agreeTerms: false,
-      password:null,
+      password: null,
       errors: [],
     };
   },
@@ -203,8 +215,6 @@ export default {
             this.teams = tournament.teams.split(",").map(function (item) {
               return item.trim();
             });
-          } else {
-            this.teams = ["Unknown"];
           }
         })
         .catch((e) => {
