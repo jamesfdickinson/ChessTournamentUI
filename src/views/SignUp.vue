@@ -102,13 +102,14 @@
             </ion-item>
           </ion-list>
           <!-- </ion-card> -->
-          <ion-button type="submit" expand="block">Submit</ion-button>
+          
           <!-- <p v-if="errors.length">
           <b>Please correct the following error(s):</b>
           </p>-->
           <ul style="color: red">
             <li v-for="error in errors" v-bind:key="error">*{{ error }}</li>
           </ul>
+          <ion-button type="submit" expand="block">Submit</ion-button>
         </form>
       </div>
     </ion-content>
