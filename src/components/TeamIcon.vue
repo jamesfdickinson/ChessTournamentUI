@@ -34,6 +34,7 @@ export default {
     stringAbbreviation(str) {
       if(!str) return;
       var matches = str.match(/\b(\w)/g); 
+      if(!matches)  return str.substring(0, 4);
       var acronym = matches.join(""); 
       return acronym.substring(0, 4);
     },

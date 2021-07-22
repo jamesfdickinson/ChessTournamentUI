@@ -43,7 +43,11 @@
           v-on:click="openPlayer(player.playerId)"
         >
           <!-- <ion-icon name="contact" slot="start"></ion-icon>  -->
-          <TeamIcon :title="player.team?player.team:'-'" :image="player.image" slot="start"></TeamIcon> 
+          <TeamIcon
+            :title="player.team ? player.team : '-'"
+            :image="player.image"
+            slot="start"
+          ></TeamIcon>
           <ion-avatar slot="start">
             <AvatarIcon
               :name="player.firstName"
@@ -64,7 +68,7 @@ import TeamIcon from "@/components/TeamIcon.vue";
 import AvatarIcon from "@/components/AvatarIcon.vue";
 export default {
   name: "home",
-  components: { AvatarIcon,TeamIcon },
+  components: { AvatarIcon, TeamIcon },
   data() {
     return {
       searchInput: "",
