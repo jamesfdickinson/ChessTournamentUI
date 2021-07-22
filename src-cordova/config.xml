@@ -4,7 +4,7 @@
     <description>
       Chess Tournament
     </description>
-    <author email="jimmy@jdsoftwarellc.com" href="https://chessclub.io">
+    <author email="jimmy@jdsoftwarellc.com" href="https://bracketjd.com">
         Apache Cordova Team
     </author>
     <hook src="../node_modules/vue-cli-plugin-cordova/serve-config-hook.js" type="after_prepare" />
