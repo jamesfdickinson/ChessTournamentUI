@@ -1,6 +1,5 @@
 <template>
   <div class="grid-container">
-    
     <div id="chat-log" class="chat-log">
       <template v-for="chatItem of chatLog">
         <div :key="chatItem.id">
@@ -13,13 +12,26 @@
     <div class="chat-button">
       <form @submit.prevent="handleSubmit">
         <ion-item>
-          <ion-icon slot="start" name="text"></ion-icon>
+          <!-- <ion-icon slot="start" name="text"></ion-icon> -->
+          <ion-icon
+            v-if="!isMuted"
+            @click="mute()"
+            slot="start"
+            name="volume-mute"
+          ></ion-icon>
+          <ion-icon
+            v-if="isMuted"
+            @click="unmute()"
+            slot="start"
+            name="volume-off"
+          ></ion-icon>
           <ion-input
             type="text"
             :value="message"
             @input="message = $event.target.value"
             placeholder="message..."
           ></ion-input>
+
           <ion-button slot="end" type="submit">Send</ion-button>
         </ion-item>
       </form>
@@ -70,9 +82,11 @@ export default {
     this.soundAlert = new Howl({
       src: ["/audio/for-sure.mp3"],
     });
+    let isMuted  = localStorage.getItem('isMuted') == "true";
     return {
       api: null,
       message: "",
+      isMuted: isMuted,
     };
   },
   methods: {
@@ -89,6 +103,14 @@ export default {
 
       signalR.send("SendMessage", channel, userName, message);
       this.$nextTick(() => this.scrollToEnd());
+    },
+    mute() {
+      this.isMuted = true;
+      localStorage.setItem('isMuted', true);
+    },
+    unmute() {
+      this.isMuted = false;
+       localStorage.setItem('isMuted', false);
     },
     onMessages(messages) {
       //clear array
@@ -109,15 +131,18 @@ export default {
         name: user,
         message: message,
       });
-
-      this.soundAlert.play();
+      if (!this.isMuted) {
+        this.soundAlert.play();
+      }
 
       let shouldScroll = this.shouldScroll();
       if (shouldScroll) this.$nextTick(() => this.scrollToEnd());
     },
     shouldScroll() {
       let messages = document.getElementById("chat-log");
-      let shouldScroll = (messages.scrollHeight - Math.abs(messages.scrollTop)) <= (messages.clientHeight + 60);
+      let shouldScroll =
+        messages.scrollHeight - Math.abs(messages.scrollTop) <=
+        messages.clientHeight + 60;
       return shouldScroll;
     },
     scrollToEnd() {

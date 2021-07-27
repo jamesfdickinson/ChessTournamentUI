@@ -43,11 +43,11 @@
           v-on:click="openPlayer(player.playerId)"
         >
           <!-- <ion-icon name="contact" slot="start"></ion-icon>  -->
-          <TeamIcon
+          <!-- <TeamIcon
             :title="player.team ? player.team : '-'"
             :image="player.image"
             slot="start"
-          ></TeamIcon>
+          ></TeamIcon> -->
           <ion-avatar slot="start">
             <AvatarIcon
               :name="player.firstName"
@@ -55,6 +55,8 @@
             ></AvatarIcon>
           </ion-avatar>
           <ion-label>{{ player.firstName }} {{ player.lastName }}</ion-label>
+          <ion-label v-if="player.team">[{{ player.team }}]</ion-label>
+        
         </ion-item>
       </ion-list>
     </ion-content>
