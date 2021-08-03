@@ -10,7 +10,7 @@
       class="initialBox"
       v-bind:style="{ 'background-color': stringToColour(title) }"
     >
-      {{stringAbbreviation(title)}}
+      {{ stringAbbreviation(title) }}
     </div>
   </div>
 </template>
@@ -32,11 +32,14 @@ export default {
       this.isLoaded = true;
     },
     stringAbbreviation(str) {
-      if(!str) return;
-      var matches = str.match(/\b(\w)/g); 
-      if(!matches)  return str.substring(0, 4);
-      var acronym = matches.join(""); 
-      return acronym.substring(0, 4);
+      if (!str) return;
+      var matches = str.match(/\b(\w)/g);
+      if (!matches) return str.substring(0, 4);
+      
+      var acronym = matches.join("");
+      if (acronym.length > 1) return acronym.substring(0, 4);
+
+      return str.substring(0, 4);
     },
     stringToColour(str) {
       if (!str) str = "";

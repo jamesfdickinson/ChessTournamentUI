@@ -97,10 +97,17 @@
             </ion-item>
             <template v-for="userPlayer of userPlayers">
               <div :key="userPlayer.playerId">
-                <ion-item v-if="!tournament.allowCheckIn">
+                <ion-item>
                   <ion-icon name="clipboard" slot="start"></ion-icon>
-                  <ion-label>Registered</ion-label>
-                  <ion-button v-if="tournament.teams"
+                  <ion-label
+                    >{{ userPlayer.name
+                    }}<span v-if="userPlayer.team"
+                      >[{{ userPlayer.team }}]</span
+                    ></ion-label
+                  >
+
+                  <ion-button
+                    v-if="tournament.teams"
                     slot="end"
                     @click="
                       $router.push({
@@ -111,6 +118,7 @@
                     >Update Team</ion-button
                   >
                   <ion-button
+                    v-if="!tournament.teams"
                     slot="end"
                     @click="
                       $router.push({
@@ -120,6 +128,28 @@
                     "
                     >View</ion-button
                   >
+                </ion-item>
+                <ion-item
+                  v-if="
+                    !tournament.allowCheckIn && userPlayer.isPresent !== true
+                  "
+                >
+                  <ion-icon
+                    name="checkmark"
+                    slot="start"
+                    color="success"
+                  ></ion-icon>
+                  <ion-label>Registered</ion-label>
+                  <!-- <ion-button
+                    slot="end"
+                    @click="
+                      $router.push({
+                        name: 'Player',
+                        params: { id: userPlayer.playerId },
+                      })
+                    "
+                    >Leave</ion-button
+                  > -->
                 </ion-item>
 
                 <ion-item
@@ -211,6 +241,11 @@
           </div>
         </div> -->
         <div class="flex-item" v-if="players && players.length > 0">
+          <ion-card style="xheight: 200px overflow-y: auto">
+            <ReportScoreGroupRank :players="players"></ReportScoreGroupRank>
+          </ion-card>
+        </div>
+        <div class="flex-item" v-if="tournament.teams">
           <ion-card style="xheight: 220px; overflow-y: auto">
             <ion-list-header lines="inset">
               <ion-label
@@ -238,6 +273,7 @@ import VideoTwitch from "@/components/VideoTwitch.vue";
 import Table from "@/components/Table.vue";
 import Authentication from "@/services/Authentication";
 import EventBus from "@/services/EventBus.js";
+import ReportScoreGroupRank from "@/components/ReportScoreGroupRankComp.vue";
 //import TournamentSocket from "@/services/TournamentSocket.js";
 //import LayoutMenu from "@/components/LayoutMenu.vue";
 const tournamentAPI = new TournamentAPI();
@@ -250,6 +286,7 @@ export default {
     Standings,
     Table,
     VideoTwitch,
+    ReportScoreGroupRank,
   },
   data() {
     var tournamentId = this.$route.params.tournament || 118;

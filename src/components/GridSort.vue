@@ -200,14 +200,14 @@ td {
   text-align: left;
 }
 th {
-  font-size: 1em;
-  /* font-size: 20px; */
+  /* font-size: 1em; */
+   font-size: 16px; 
   font-weight: 500;
 }
 
 td {
   padding: 4px 4px;
-  font-size: 0.8em;
+  font-size: 14px;
 }
 
 th.active {
