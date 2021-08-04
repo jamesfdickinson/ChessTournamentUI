@@ -240,12 +240,12 @@
             </ion-card>
           </div>
         </div> -->
-        <div class="flex-item" v-if="players && players.length > 0">
+        <div class="flex-item"  v-if="tournament.teams">
           <ion-card style="xheight: 200px overflow-y: auto">
             <ReportScoreGroupRank :players="players"></ReportScoreGroupRank>
           </ion-card>
         </div>
-        <div class="flex-item" v-if="tournament.teams">
+        <div class="flex-item" v-if="players && players.length > 0">
           <ion-card style="xheight: 220px; overflow-y: auto">
             <ion-list-header lines="inset">
               <ion-label
