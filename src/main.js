@@ -117,13 +117,6 @@ router.beforeEach((to, from, next) => {
   let user = authentication.getUser();
 
 
-  //require
-  const pagesNoAuthenticationRequired = ['UserCreate', 'Login', 'PasswordResetRequest', 'PasswordChange', 'ChatRoom','Home'];
-  const authRequired = !pagesNoAuthenticationRequired.includes(to.name);
-  if (authRequired && !user) {
-    return next(`/Login?redirect=${to.path}`);
-  }
-
   let toPage = to.name;
   let tournamentId = to.params.tournament;
   let userName = null;
@@ -137,6 +130,8 @@ router.beforeEach((to, from, next) => {
   let allowAccess = authorization.isPageAllowed(toPage, tournamentId, roles, userName);
   if (allowAccess) {
     next();
+  } else if (!user) {
+    return next(`/Login?redirect=${to.path}`);
   } else {
     //check roles from server
     authorization.requestAccess(userName, tournamentId)
@@ -159,7 +154,7 @@ router.beforeEach((to, from, next) => {
 router.afterEach((to) => {
   if (to) {
     notificationSocket.track(to.fullPath);
-    if(to.params && to.params["tournament"]){
+    if (to.params && to.params["tournament"]) {
       let tournament = to.params["tournament"];
       notificationSocket.joinTournament(tournament);
     }

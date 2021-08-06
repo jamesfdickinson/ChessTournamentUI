@@ -34,13 +34,13 @@ export default class Authorization {
                 throw error;
             });
     }
-    isPageAllowed(toPage,tournamentId, roles) {
-        if(!roles) roles = [];
+    isPageAllowed(toPage, tournamentId, roles) {
+        if (!roles) roles = [];
         //redirect to login page if not logged in and trying to access a restricted page
         const pagesSuperAdmin = ['TournamentCreate'];
         const authRequiredSuperAdmin = pagesSuperAdmin.includes(toPage);
-        
-        const pagesAdmin = ['Admin','RoundEditRaw'];
+
+        const pagesAdmin = ['Admin', 'RoundEditRaw'];
         const authRequiredAdmin = pagesAdmin.includes(toPage);
 
         const pagesRecorder = ['CheckIn', 'PlayerEdit', 'PlayerNew', 'TableEdit'];
@@ -48,12 +48,18 @@ export default class Authorization {
 
         const pagesBasic = ['Players', 'Reports', 'Tournament', 'Tournament', 'SignUp', 'SignUpComplete', 'FAQ'];
         //const pagesBasic = [];
-        let authRequiredBasic = pagesBasic.includes(toPage);
+        const authRequiredBasic = pagesBasic.includes(toPage);
 
+        //require
+        const pagesNoAuthenticationRequired = ['UserCreate', 'Login', 'PasswordResetRequest', 'PasswordChange', 'ChatRoom', 'Home', 'Help', 'HelpHowToHost'];
+        const noAuthRequired = pagesNoAuthenticationRequired.includes(toPage);
+        if (noAuthRequired) {
+            true;
+        }
 
         //contains role "tournamentId-role".
         //let superAdminRole = "0-SuperAdmin"; 
-        let superAdminRole = "0-Create"; 
+        let superAdminRole = "0-Create";
         let adminRole = tournamentId + "-Admin";
         let recorderRole = tournamentId + "-Recorder";
         let basicRole = tournamentId + "-Basic";
@@ -79,7 +85,7 @@ export default class Authorization {
         return true;
 
     }
-    inviteCode(code,userName, tournamentId) {
+    inviteCode(code, userName, tournamentId) {
         return fetch.post(`accesscode`, { code: code, userName: userName, tournamentId: parseInt(tournamentId) })
             .then(response => {
                 var user = response.data;

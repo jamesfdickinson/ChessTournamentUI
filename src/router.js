@@ -51,7 +51,8 @@ import User from './views/User.vue'
 import UserCreate from './views/UserCreate.vue'
 import UserEdit from './views/UserEdit.vue'
 import UserAccess from './views/UserAccess.vue'
-
+import Help from './views/Help.vue'
+import HelpHowToHost from './views/HelpHowToHost.vue'
 
 //import RoundEdit from './views/PlayerEdit.vue'
 
@@ -106,6 +107,17 @@ export default new VueRouter({
       path: '/UserEdit',
       name: 'UserEdit',
       component: UserEdit
+    },
+    {
+      path: '/Help',
+      name: 'Help',
+      component: Help
+    },
+    
+    {
+      path: '/Help/HowToHost',
+      name: 'HelpHowToHost',
+      component: HelpHowToHost
     },
     {
       path: '/:tournament/UserAccess',
@@ -346,7 +358,7 @@ export default new VueRouter({
       component: ReportWallChart
     },
 
-
+    
   ]
 });
 

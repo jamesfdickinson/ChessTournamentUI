@@ -24,15 +24,15 @@ export default {
   },
   data() {
     var tournamentId = this.$route.params.tournament;
-    var title = "Score Group Rank";
+    var title = "Score Team Rank";
     var description =
       "This report ranks teams based on the top 5 total points from each team.";
     return {
       tournamentId: tournamentId,
       data: [],
       searchQuery: "",
-      //gridColumns: ["team", "groupPoints", "players","playersTotal", "division"],
-      gridColumns: ["team", "groupPoints", "players","playersTotal"],
+      //gridColumns: ["team", "teamPoints", "players","playersTotal", "division"],
+      gridColumns: ["team", "teamPoints", "players","playersTotal"],
       gridData: [],
       title: title,
       description: description,
@@ -72,7 +72,7 @@ export default {
         let teamSummary = {
           team: team,
           rank: 0,
-          groupPoints: teamTopScores.reduce(
+          teamPoints: teamTopScores.reduce(
             (acc, item) => acc + item.points,
             0
           ),
@@ -83,7 +83,7 @@ export default {
         teamSummarys.push(teamSummary);
       }
       teamSummarys.sort(function (a, b) {
-        return b.groupPoints - a.groupPoints;
+        return b.teamPoints - a.teamPoints;
       });
       return teamSummarys;
     },
