@@ -60,7 +60,7 @@ export default {
   name: "PlayGame",
   components: {},
   data() {
-    let id = this.$route.params.id; //https://cardgames.app/cribbage/game/?room=T6R4T27&name=Jimmy&email=jimmy@jdsoftwarellc.com&id=
+    let id = this.$route.params.id; //https://cardsjd.com/cribbage/game/?room=T6R4T27&name=Jimmy&email=jimmy@jdsoftwarellc.com&id=
     let tournamentId = this.$route.params.tournament;
     let spectate = this.$route.params.spectate;
     return {
@@ -75,7 +75,7 @@ export default {
       //todo: pass template in from tournament settings or position
 
       let linkTemplate =
-        "https://cardgames.app/cribbage/game/?room=[room]&name=[name]&email=[email]&id=[id]&spectate=[spectate]&avatar=[avatar]";
+        "https://cardsjd.com/cribbage/game/?room=[room]&name=[name]&email=[email]&id=[id]&spectate=[spectate]&avatar=[avatar]";
       //let linkTemplate = "http://192.168.1.25:8081/CribbageUI/www/?room=[room]&name=[name]&email=[email]&id=[id]&spectate=[spectate]";
 
       if (!linkTemplate) return "";

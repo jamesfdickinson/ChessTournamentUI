@@ -22,9 +22,6 @@
       </ion-toolbar>
     </ion-header>
     <ion-content>
-      <ion-refresher slot="fixed" @ionRefresh="refresh($event)">
-        <ion-refresher-content></ion-refresher-content>
-      </ion-refresher>
       <div class="flex-container">
         <div class="flex-item-full">
           <ion-card>

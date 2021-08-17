@@ -1,9 +1,6 @@
 <template>
   <layout-no-menu>
     <ion-content>
-      <!-- <ion-refresher slot="fixed" @ionRefresh="refresh($event)">
-        <ion-refresher-content></ion-refresher-content>
-      </ion-refresher> -->
       <div class="section-to-print">
         <GridSort :data="gridData" :columns="gridColumns"></GridSort>
        
