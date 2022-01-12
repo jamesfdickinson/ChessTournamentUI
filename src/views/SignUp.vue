@@ -50,7 +50,7 @@
                   <option v-for="team in teams" :key="team" :value="team">
                     {{ team }}
                   </option>
-                   <option  value="">Other</option>
+                  <option value="">Other</option>
                 </select>
               </div>
             </ion-item>
@@ -74,6 +74,108 @@
                 @input="player.gamerId = $event.target.value"
               ></ion-input>
             </ion-item> -->
+
+            <ion-item v-if="type === 'Chess'">
+              <ion-label position="stacked">Grade</ion-label>
+              <div style="width: 100%">
+                <select
+                  v-model="player.grade"
+                  @change="player.rating = player.grade * 100"
+                >
+                  <option disabled value="">Select One</option>
+                  <option value="0">K</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="12">Open Division</option>
+                </select>
+              </div>
+            </ion-item>
+            <!-- <ion-item>
+              <ion-label position="stacked">Grade</ion-label>
+              <select 
+                placeholder="Select One"
+                :value="player.grade"
+                @ionChange="player.grade= $event.target.value;player.rating =player.grade*100;"
+              >
+               <option disabled value="">Select One</option>
+                <option value="0">K</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="12">Open Division</option>
+              </select>
+            </ion-item> -->
+            <!-- <ion-item>
+              <ion-label position="stacked">Grade</ion-label>
+              <ion-select
+                placeholder="Select One"
+                :value="player.grade"
+                @ionChange="player.grade= $event.target.value;player.rating =player.grade*100;"
+              >
+                <ion-select-option value="0">K</ion-select-option>
+                <ion-select-option value="1">1</ion-select-option>
+                <ion-select-option value="2">2</ion-select-option>
+                <ion-select-option value="3">3</ion-select-option>
+                <ion-select-option value="4">4</ion-select-option>
+                <ion-select-option value="5">5</ion-select-option>
+                <ion-select-option value="6">6</ion-select-option>
+                <ion-select-option value="7">7</ion-select-option>
+                <ion-select-option value="8">8</ion-select-option>
+                 <ion-select-option value="9">9</ion-select-option>
+                <ion-select-option value="10">10</ion-select-option>
+                <ion-select-option value="11">11</ion-select-option>
+                <ion-select-option value="12">12</ion-select-option>
+                <ion-select-option value="12">Open Division</ion-select-option>
+              </ion-select>
+            </ion-item> -->
+            <!-- <ion-item>
+              <ion-label position="stacked">Grade</ion-label>
+              <ion-input
+                type="number"
+                :value="player.grade"
+                @input="player.grade = $event.target.value;player.rating =player.grade*100"
+              ></ion-input>
+            </ion-item>-->
+            <!-- <ion-item>
+              <ion-label position="stacked">Rating</ion-label>
+              <ion-input
+                type="number"
+                :value="player.rating"
+                @input="player.rating = $event.target.value"
+              ></ion-input>
+            </ion-item> -->
+            <ion-item v-if="type === 'Chess'">
+              <ion-label position="stacked">Parent's Name</ion-label>
+              <ion-input
+                :value="player.parentName"
+                @input="player.parentName = $event.target.value"
+              ></ion-input>
+            </ion-item>
+
+            <ion-item v-if="type === 'Chess'">
+              <ion-label position="stacked">Phone Number</ion-label>
+              <ion-input
+                inputmode="tel"
+                :value="player.parentPhone"
+                @input="player.parentPhone = $event.target.value"
+              ></ion-input>
+            </ion-item>
+
             <ion-item>
               <ion-label position="stacked">Email</ion-label>
               <ion-input
@@ -103,7 +205,7 @@
             </ion-item>
           </ion-list>
           <!-- </ion-card> -->
-          
+
           <!-- <p v-if="errors.length">
           <b>Please correct the following error(s):</b>
           </p>-->
@@ -150,6 +252,7 @@ export default {
       tournament: {},
       teams: [],
       showSignUpPage: true,
+      type: null,
       player: player,
       agreeTerms: false,
       password: null,
@@ -167,7 +270,7 @@ export default {
       let tournament = this.tournament;
       let password = this.password;
       let accessCodeBasic = null;
-      let isTeamRequired = this.teams.length > 0
+      let isTeamRequired = this.teams.length > 0;
       //add default grade for cribbage
       if (!player.grade) player.grade = 12;
 
@@ -214,6 +317,10 @@ export default {
           let tournament = response.data;
           this.tournament = tournament;
           if (tournament) this.showSignUpPage = tournament.allowRegistration;
+          if (tournament && tournament.type) {
+            this.type = tournament.type;
+            if (tournament.type === "Chess") this.player.firstName = "";
+          }
           if (tournament && tournament.teams) {
             this.teams = tournament.teams.split(",").map(function (item) {
               return item.trim();

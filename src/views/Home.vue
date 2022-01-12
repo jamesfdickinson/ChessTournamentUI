@@ -76,10 +76,11 @@
           </ion-list-header>
           <ion-item>
             <ol>
-              <li>Login or create an account (free)</li>
+              <li>Click on LOGIN/SIGNUP and create an account (FREE)</li>
               <li>Select a tournament</li>
-              <li>Click the “Sign Up” button</li>
-              <li>Be on Tournament page when it starts</li>
+              <li>Click on Registration</li>
+              <li>Be on the Tournament Page when it starts</li>
+              <li>Have Fun!</li>
             </ol>
           </ion-item>
           <!-- <ion-card>

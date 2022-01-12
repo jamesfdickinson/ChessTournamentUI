@@ -237,7 +237,7 @@
             </ion-card>
           </div>
         </div> -->
-        <div class="flex-item"  v-if="tournament.teams">
+        <div class="flex-item" v-if="tournament.teams">
           <ion-card style="xheight: 200px overflow-y: auto">
             <ReportScoreGroupRank :players="players"></ReportScoreGroupRank>
           </ion-card>
@@ -506,12 +506,19 @@ export default {
       //todo: bind in markup
       //this.countDown
       //this.updateCountDown(new Date("Jan 7, 2021 14:51:25"));
-      let timerDateTime = new Date(
-        Math.max(
-          new Date(tournament.startDateTime),
-          new Date(tournament.timerDateTime)
-        )
-      );
+
+      let timerDateTime = new Date(tournament.startDateTime);
+      if (tournament && tournament.state == "check-in") {
+        timerDateTime = new Date(tournament.timerDateTime);
+      }
+
+      // let timerDateTime = new Date(
+      //   Math.max(
+      //     new Date(tournament.startDateTime),
+      //     new Date(tournament.timerDateTime)
+      //   )
+      // );
+
       this.updateCountDown(timerDateTime);
     },
     onUpdate(data) {

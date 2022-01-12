@@ -27,11 +27,7 @@
           <ion-button @click="fullScreen()">
             <ion-icon name="expand" size="large"></ion-icon>
           </ion-button>
-          <ion-button
-            :href="getRoomLink(id, spectate)"
-            target="_blank"
-            @click="$router.go(-1)"
-          >
+          <ion-button :href="roomURL" target="_blank" @click="$router.go(-1)">
             <!-- <ion-icon name="globe" size="large"></ion-icon> -->
             <ion-icon name="browsers" size="large"></ion-icon>
             <!-- <ion-icon name="tv" size="large"></ion-icon>  -->
@@ -45,7 +41,7 @@
     <ion-content id="gameFrame">
       <iframe
         id="iframe-game"
-        :src="getRoomLink(id, spectate)"
+        :src="roomURL"
         style="width: 100%; min-height: 100%"
       >
       </iframe>
@@ -55,7 +51,9 @@
 
 <script>
 import Authentication from "@/services/Authentication";
+import TournamentAPI from "@/services/TournamentAPI";
 const authentication = new Authentication();
+const tournamentAPI = new TournamentAPI();
 export default {
   name: "PlayGame",
   components: {},
@@ -63,22 +61,26 @@ export default {
     let id = this.$route.params.id; //https://cardsjd.com/cribbage/game/?room=T6R4T27&name=Jimmy&email=jimmy@jdsoftwarellc.com&id=
     let tournamentId = this.$route.params.tournament;
     let spectate = this.$route.params.spectate;
+    let gameRoomLink =
+      "https://cardsjd.com/cribbage/game/?room=[room]&name=[name]&email=[email]&id=[id]&spectate=[spectate]&avatar=[avatar]";
+    //let gameRoomLink = "http://192.168.1.25:8081/CribbageUI/www/?room=[room]&name=[name]&email=[email]&id=[id]&spectate=[spectate]";
+    let roomURL = "";
     return {
       id: id,
       tournamentId: tournamentId,
       spectate: spectate,
+      gameRoomLink: gameRoomLink,
+      roomURL: roomURL,
       errors: [],
     };
   },
   methods: {
-    getRoomLink(room, spectate) {
+    getRoomLink(room, spectate, gameRoomLink) {
       //todo: pass template in from tournament settings or position
 
-      let linkTemplate =
-        "https://cardsjd.com/cribbage/game/?room=[room]&name=[name]&email=[email]&id=[id]&spectate=[spectate]&avatar=[avatar]";
-      //let linkTemplate = "http://192.168.1.25:8081/CribbageUI/www/?room=[room]&name=[name]&email=[email]&id=[id]&spectate=[spectate]";
+      if (!gameRoomLink) gameRoomLink = this.gameRoomLink;
 
-      if (!linkTemplate) return "";
+      if (!gameRoomLink) return "";
       let user = authentication.getUser();
       var userName = user && user.name ? user.name : "unknown";
       let email = user && user.email ? user.email : "";
@@ -89,7 +91,7 @@ export default {
       //let gamerId = user && user.gamerId ? user.gamerId : user.email;
       let gamerId = user.email;
 
-      let url = linkTemplate;
+      let url = gameRoomLink;
 
       // //get gamerId from player if user is player
       // let round = this.round;
@@ -158,7 +160,23 @@ export default {
         params: { id: id, round: roundId, tournament: tournamentId },
       });
     },
-    loadData() {},
+    loadData() {
+      var tournamentId = this.tournamentId;
+      return tournamentAPI
+        .tournamentView(tournamentId)
+        .then((data) => {
+          this.populate(data);
+        })
+        .catch((e) => {
+          this.errors.push(e);
+        });
+    },
+    populate(data) {
+      let room = this.id;
+      let spectate = this.spectate;
+      let gameRoomLink = data.gameRoomLink;
+      this.roomURL = this.getRoomLink(room, spectate, gameRoomLink);
+    },
     onChildWindowMessage(event) {
       const data = event.data;
       if (data == "quitGame") {

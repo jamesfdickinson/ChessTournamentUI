@@ -12,6 +12,7 @@ import Tournaments from './views/Tournaments.vue'
 import TournamentVideoEdit from './views/TournamentVideoEdit.vue'
 import CheckIn from './views/CheckIn.vue'
 import SignUp from './views/SignUp.vue'
+import SignUpChess from './views/SignUpChess.vue'
 import SignUpComplete from './views/SignUpComplete.vue'
 import SignUpEdit from './views/SignUpEdit.vue'
 import TeamEdit from './views/TeamEdit.vue'
@@ -176,6 +177,11 @@ export default new VueRouter({
       component: SignUp
     },
     {
+      path: '/:tournament/SignUpChess',
+      name: 'SignUpChess',
+      component: SignUpChess
+    },  
+    {
       path: '/:tournament/SignUpComplete',
       name: 'SignUpComplete',
       component: SignUpComplete
@@ -185,6 +191,7 @@ export default new VueRouter({
       name: 'SignUpEdit',
       component: SignUpEdit
     },    
+  
     {
       path: '/:tournament/TeamEdit/:id',
       name: 'TeamEdit',
