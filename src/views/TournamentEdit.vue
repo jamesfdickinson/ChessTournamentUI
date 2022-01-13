@@ -185,13 +185,7 @@
             @input="tournament.gameRoomLink = $event.target.value"
           ></ion-input>
         </ion-item>
-        <!-- <ion-item>
-          <ion-label position="stacked">SignUp Page</ion-label>
-          <ion-input
-            :value="tournament.signUpPage"
-            @input="tournament.signUpPage = $event.target.value"
-          ></ion-input>
-        </ion-item> -->
+       
         <ion-item>
           <ion-label>Auto Advance Rounds</ion-label>
           <ion-checkbox

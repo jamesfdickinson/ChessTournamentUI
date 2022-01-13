@@ -328,8 +328,10 @@ export default {
       if (!date) return null;
       let localDate = new Date(date);
       if (!localDate) return null;
-      let options = { dateStyle: "medium", timeStyle: "short" };
-      return localDate.toLocaleString(undefined, options);
+      //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleTimeString
+      //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat
+      let options = { dateStyle: "medium", timeStyle: "long" }; ////timeZoneName: 'short' 
+       return localDate.toLocaleString(undefined, options);
     },
     updateCountDown(countDownToTime) {
       // Set the date we're counting down to

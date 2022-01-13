@@ -199,7 +199,7 @@ export default {
     },
     loadData() {
       return fetch
-        .get(`tournament/type/Cribbage`)
+        .get(`tournament`) //.get(`tournament/type/Cribbage`)
         .then((response) => {
           this.tournaments = response.data;
           if (this.tournaments) {
