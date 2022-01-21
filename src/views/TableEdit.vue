@@ -98,8 +98,7 @@
             ></ion-icon>
           </ion-item>
         </template>
-        <ion-item
-          >
+        <ion-item>
           <ion-label>
             <select v-model="positionNew.playerId">
               <option disabled value="">Select One</option>
@@ -166,6 +165,9 @@ export default {
         points: null,
       },
       errors: [],
+      winPoints: 2,
+      tiePoints: 1,
+      lossPoints: 0,
     };
   },
   methods: {
@@ -182,7 +184,7 @@ export default {
       let tournamentId = this.tournamentId;
       let positions = this.positions;
       tournamentAPI
-        .matchesUpdate(tournamentId,positions)
+        .matchesUpdate(tournamentId, positions)
         .then((data) => {
           console.log(data);
           this.$router.go(-1);
@@ -226,26 +228,46 @@ export default {
         });
     },
     selectWinner(winner) {
+      //todo: move settings to backend tournament settings
+      let winPoints = this.winPoints || 2;
+      let tiePoints = this.tiePoints || 1;
+      let lossPoints = this.lossPoints || 0;
+
       let positions = this.positions;
       if (!positions) return;
       for (let i = 0; i < positions.length; i++) {
         let position = positions[i];
         //todo: give point to player and zero to all others
         if (winner == position.playerId) {
-          position.points = 2;
+          position.points = winPoints;
         } else {
-          position.points = 0;
+          position.points = lossPoints;
         }
         //tie
         if (winner === "tie") {
-          position.points = 1;
+          position.points = tiePoints;
         }
       }
+    },
+    populate(data) {
+      this.winPoints = data.winPoints;
+      this.tiePoints = data.tiePoints;
+      this.lossPoints = data.lossPoints;
     },
     loadData() {
       //let round = this.round;
       let tableId = this.tableId;
       let tournamentId = this.tournamentId;
+
+      tournamentAPI
+        .tournamentView(tournamentId)
+        .then((data) => {
+          this.populate(data);
+        })
+        .catch((e) => {
+          this.errors.push(e);
+        });
+
       //get table may need to be by tournamentid / round / table number, but then how does room id fit in
       //api/table/1?round=2&tournament=117
       tournamentAPI

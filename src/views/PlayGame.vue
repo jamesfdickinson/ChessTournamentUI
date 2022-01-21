@@ -38,7 +38,7 @@
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
-    <ion-content id="gameFrame">
+    <ion-content id="gameFrame" v-if="this.roomURL">
       <iframe
         id="iframe-game"
         :src="roomURL"

@@ -185,7 +185,28 @@
             @input="tournament.gameRoomLink = $event.target.value"
           ></ion-input>
         </ion-item>
-       
+
+        <ion-item>
+          <ion-label position="stacked">Win Points</ion-label>
+          <ion-input
+            :value="tournament.winPoints"
+            @input="tournament.winPoints = $event.target.value"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Tie Points</ion-label>
+          <ion-input
+            :value="tournament.tiePoints"
+            @input="tournament.tiePoints = $event.target.value"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Loss Points</ion-label>
+          <ion-input
+            :value="tournament.lossPoints"
+            @input="tournament.lossPoints = $event.target.value"
+          ></ion-input>
+        </ion-item>
         <ion-item>
           <ion-label>Auto Advance Rounds</ion-label>
           <ion-checkbox
