@@ -8,7 +8,7 @@
       <ion-icon slot="start" name="paper"></ion-icon>
       <ion-label>Rounds</ion-label>
     </ion-item>
-    <router-link :to="{ name: 'Standings'}">
+    <router-link :to="{ name: 'Standings' }">
       <ion-item button detail="true">
         <ion-icon slot="start" name="podium"></ion-icon>
         <ion-label>Standings</ion-label>
@@ -27,24 +27,24 @@
       <ion-icon slot="start" name="paper"></ion-icon>
       <ion-label>Reports</ion-label>
     </ion-item>
-    <!-- <router-link :to="{ name: 'SignUp'}">
+   <router-link :to="{ name: 'SignUp'}">
       <ion-item button detail="true">
         <ion-icon slot="start" name="clipboard"></ion-icon>
-        <ion-label>Sign Up</ion-label>
+        <ion-label>Register</ion-label>
       </ion-item>
-    </router-link> -->
+    </router-link>
     <ion-list-header>
       <ion-label>Admin</ion-label>
     </ion-list-header>
-    <!-- <ion-list-header>
+   <ion-list-header>
       <ion-label>Recorder</ion-label>
-    </ion-list-header>-->
-    <!-- <router-link :to="{ name: 'CheckIn', params: { tournament: tournamentId }}">
+    </ion-list-header>
+     <router-link :to="{ name: 'CheckIn', params: { tournament: tournamentId }}">
       <ion-item button detail="true">
         <ion-icon slot="start" name="clipboard"></ion-icon>
-        <ion-label>Check-In</ion-label>
+        <ion-label>Recorder Settings</ion-label>
       </ion-item>
-    </router-link> -->
+    </router-link> 
 
     <!-- <ion-list-header>
       <ion-label>Coach</ion-label>
@@ -57,7 +57,7 @@
     <!-- <ion-list-header>
       <ion-label>Admin</ion-label>
     </ion-list-header>-->
-    <router-link :to="{ name: 'Admin', params: { tournament: tournamentId }}">
+    <router-link :to="{ name: 'Admin', params: { tournament: tournamentId } }">
       <ion-item button detail="true">
         <ion-icon slot="start" name="cog"></ion-icon>
         <ion-label>Admin Settings</ion-label>
@@ -73,7 +73,7 @@
     <ion-list-header>
       <ion-label>Other</ion-label>
     </ion-list-header>
-    <router-link :to="{ name: 'Tournaments'}">
+    <router-link :to="{ name: 'Tournaments' }">
       <ion-item button detail="true">
         <ion-icon slot="start" name="trophy"></ion-icon>
         <ion-label>Tournaments</ion-label>
@@ -101,6 +101,7 @@ a {
 }
 </style>
 <script>
+
 export default {
   name: "menutournament",
   components: {},
@@ -108,7 +109,7 @@ export default {
     var tournamentId = this.$route.params.tournament || 120;
     return {
       tournamentId: tournamentId,
-      errors: []
+      errors: [],
     };
   },
   methods: {
@@ -120,57 +121,47 @@ export default {
     openHome() {
       this.$router.push({
         name: "Tournament",
-        params: { tournament: this.tournamentId }
+        params: { tournament: this.tournamentId },
       });
     },
     openPlayers() {
       this.$router.push({
         name: "Players",
-        params: { tournament: this.tournamentId }
+        params: { tournament: this.tournamentId },
       });
     },
     openRounds() {
       this.$router.push({
         name: "Rounds",
-        params: { tournament: this.tournamentId }
+        params: { tournament: this.tournamentId },
       });
     },
     openReports() {
       this.$router.push({
         name: "Reports",
-        params: { tournament: this.tournamentId }
+        params: { tournament: this.tournamentId },
       });
     },
     openSignUp() {
       this.$router.push({
         name: "signup",
-        params: { tournament: this.tournamentId }
+        params: { tournament: this.tournamentId },
       });
     },
     openFAQ() {
       this.$router.push({
         name: "FAQ",
-        params: { tournament: this.tournamentId }
+        params: { tournament: this.tournamentId },
       });
     },
     clearData() {
       this.$router.push({ path: "home" });
       this.posts = [];
     },
-    loadData() {
-      // // var tournamentId = this.tournamentId;
-      // // fetch
-      // //   .get(`tournament/${tournamentId}`)
-      // //   .then(response => {
-      // //     this.tournament = response.data;
-      // //   })
-      // //   .catch(e => {
-      // //     this.errors.push(e);
-      // //   });
-    }
+    
   },
   created() {
-    this.loadData();
-  }
+   
+  },
 };
 </script>

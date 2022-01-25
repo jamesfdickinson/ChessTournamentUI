@@ -330,8 +330,8 @@ export default {
       if (!localDate) return null;
       //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleTimeString
       //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat
-      let options = { dateStyle: "medium", timeStyle: "long" }; ////timeZoneName: 'short' 
-       return localDate.toLocaleString(undefined, options);
+      let options = { dateStyle: "medium", timeStyle: "long" }; ////timeZoneName: 'short'
+      return localDate.toLocaleString(undefined, options);
     },
     updateCountDown(countDownToTime) {
       // Set the date we're counting down to
