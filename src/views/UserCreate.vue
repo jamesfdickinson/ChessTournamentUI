@@ -66,7 +66,7 @@
               @ionChange="user.allowNotifications = ($event.target.checked == true);"
             ></ion-checkbox>
           </ion-item> -->
-          <ion-item v-if="tournament.type == 'Cribbage'">
+          <!-- <ion-item >
             <ion-label position="stacked">Cribbage ID</ion-label>
             <ion-input
               type="number"
@@ -74,7 +74,7 @@
               @input="user.gamerId = $event.target.value"
               @change="gameIdChange(user.gamerId)"
             ></ion-input>
-          </ion-item>
+          </ion-item> -->
 
           <ion-item>
             <ion-label position="stacked">Avatar</ion-label>
