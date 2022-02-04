@@ -51,10 +51,14 @@
             @input="player.team = $event.target.value"
           ></ion-input>
         </ion-item>
-        <!--   <ion-item>
+        <ion-item>
           <ion-label position="stacked">Grade</ion-label>
-          <ion-input :value="player.grade" @input="player.grade = $event.target.value"></ion-input>
+          <ion-input
+            :value="player.grade"
+            @input="player.grade = $event.target.value"
+          ></ion-input>
         </ion-item>
+        <!-- 
         <ion-item>
           <ion-label position="stacked">Rating</ion-label>
           <ion-input :value="player.rating" @input="player.rating = $event.target.value"></ion-input>
