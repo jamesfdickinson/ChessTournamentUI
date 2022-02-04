@@ -375,7 +375,7 @@ export default {
         faqContent: "",
         hidden: false,
         id: 0,
-        image: "/images/icons/trophy.png",
+        image: "/images/icons/cribbage.png",
         isPublic: true,
         owner: userName,
         teams: "",

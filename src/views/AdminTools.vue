@@ -4,7 +4,11 @@
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
-          <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
+          <ion-icon
+            name="arrow-round-back"
+            size="large"
+            @click="$router.go(-1)"
+          ></ion-icon>
         </ion-buttons>
         <ion-title>Admin Tools</ion-title>
       </ion-toolbar>
@@ -42,7 +46,7 @@
           <ion-icon slot="start" name="trash"></ion-icon>
           <ion-label>Delete all players</ion-label>
         </ion-item>
-         <ion-item button detail="true" v-on:click="updateAllAvatars()">
+        <ion-item button detail="true" v-on:click="updateAllAvatars()">
           <ion-icon slot="start" name="contact"></ion-icon>
           <ion-label>Update all avatars from JD</ion-label>
         </ion-item>
@@ -50,9 +54,21 @@
           <ion-icon slot="start" name="contact"></ion-icon>
           <ion-label>Test Show Toast</ion-label>
         </ion-item>
+        <ion-item
+          button
+          detail="true"
+          v-on:click="Create2DivisionsKto3and4plus()"
+        >
+          <ion-icon slot="start" name="contact"></ion-icon>
+          <ion-label>Create 2 divisions K to 3 and 4 plus</ion-label>
+        </ion-item>
+        <ion-item button detail="true" v-on:click="Create1Division()">
+          <ion-icon slot="start" name="contact"></ion-icon>
+          <ion-label>Create 1 division</ion-label>
+        </ion-item>
       </ion-list>
-      <div style="color:green;">{{message}}</div>
-      <div style="color:red;">{{error}}</div>
+      <div style="color: green">{{ message }}</div>
+      <div style="color: red">{{ error }}</div>
     </ion-content>
     <!-- </ion-page> -->
   </layout-menu>
@@ -73,7 +89,7 @@ export default {
     return {
       tournamentId: tournamentId,
       error: null,
-      message: null
+      message: null,
     };
   },
   methods: {
@@ -81,10 +97,10 @@ export default {
       var tournamentId = this.tournamentId;
       fetch
         .get(`tools/SetAllPlayersPresent/${tournamentId}`)
-        .then(response => {
+        .then((response) => {
           this.message = response.data;
         })
-        .catch(e => {
+        .catch((e) => {
           this.error = e;
         });
     },
@@ -92,10 +108,10 @@ export default {
       var tournamentId = this.tournamentId;
       fetch
         .get(`tools/SetAllPlayersNotPresent/${tournamentId}`)
-        .then(response => {
+        .then((response) => {
           this.message = response.data;
         })
-        .catch(e => {
+        .catch((e) => {
           this.error = e;
         });
     },
@@ -103,10 +119,10 @@ export default {
       var tournamentId = this.tournamentId;
       fetch
         .get(`tools/ResetRankings/${tournamentId}`)
-        .then(response => {
+        .then((response) => {
           this.message = response.data;
         })
-        .catch(e => {
+        .catch((e) => {
           this.error = e;
         });
     },
@@ -114,10 +130,10 @@ export default {
       var tournamentId = this.tournamentId;
       fetch
         .get(`tools/ResetAllRankingsBasedOnGrade/${tournamentId}`)
-        .then(response => {
+        .then((response) => {
           this.message = response.data;
         })
-        .catch(e => {
+        .catch((e) => {
           this.error = e;
         });
     },
@@ -125,10 +141,10 @@ export default {
       var tournamentId = this.tournamentId;
       fetch
         .get(`tools/RandomWins/${tournamentId}`)
-        .then(response => {
+        .then((response) => {
           this.message = response.data;
         })
-        .catch(e => {
+        .catch((e) => {
           this.error = e;
         });
     },
@@ -137,10 +153,10 @@ export default {
         var tournamentId = this.tournamentId;
         fetch
           .get(`tools/DeleteAllRounds/${tournamentId}`)
-          .then(response => {
+          .then((response) => {
             this.message = response.data;
           })
-          .catch(e => {
+          .catch((e) => {
             this.error = e;
           });
       });
@@ -150,10 +166,10 @@ export default {
         var tournamentId = this.tournamentId;
         fetch
           .get(`tools/DeleteAllPlayers/${tournamentId}`)
-          .then(response => {
+          .then((response) => {
             this.message = response.data;
           })
-          .catch(e => {
+          .catch((e) => {
             this.error = e;
           });
       });
@@ -163,19 +179,47 @@ export default {
         var tournamentId = this.tournamentId;
         fetch
           .get(`tools/UpdateAllAvatars/${tournamentId}`)
-          .then(response => {
+          .then((response) => {
             this.message = response.data;
           })
-          .catch(e => {
+          .catch((e) => {
             this.error = e;
           });
       });
     },
     showToast() {
       let toast = new Toast();
-      toast.show("Round 5 has started",8000,"/audio/arpeggio.mp3","/27/Round/5",null);
-    }
+      toast.show(
+        "Round 5 has started",
+        8000,
+        "/audio/arpeggio.mp3",
+        "/27/Round/5",
+        null
+      );
+    },
+    Create2DivisionsKto3and4plus() {
+      var tournamentId = this.tournamentId;
+      fetch
+        .get(`tools/Create2DivisionsKto3and4plus/${tournamentId}`)
+        .then((response) => {
+          this.message = response.data;
+        })
+        .catch((e) => {
+          this.error = e;
+        });
+    },
+    Create1Division() {
+      var tournamentId = this.tournamentId;
+      fetch
+        .get(`tools/Create1Division/${tournamentId}`)
+        .then((response) => {
+          this.message = response.data;
+        })
+        .catch((e) => {
+          this.error = e;
+        });
+    },
   },
-  created() {}
+  created() {},
 };
 </script>

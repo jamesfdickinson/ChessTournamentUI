@@ -31,10 +31,6 @@
             <ion-item>
               <ion-button
                 expand="block"
-                v-on:click="sendTournamentUsersNotifications(title,body,url)"
-              >Send to All Users</ion-button>
-              <ion-button
-                expand="block"
                 v-on:click="sendTournamentPlayersNotifications(title,body,url)"
               >Send to All Players</ion-button>
             </ion-item>
@@ -143,21 +139,6 @@ export default {
     back() {
       this.$router.back();
     },
-     sendTournamentUsersNotifications(title, body, url) {
-      let tournamentId = this.tournamentId;
-      if (tournamentId && (title || body)) {
-        tournamentAPI
-          .sendTournamentUsersNotifications(tournamentId, title, body, url)
-          .then(data => {
-            this.success = "Sent: " + data || "";
-            console.log(data);
-          })
-          .catch(e => {
-            this.error = "Error: " + e;
-            console.warn(e);
-          });
-      }
-    },
     sendTournamentPlayersNotifications(title, body, url) {
       let tournamentId = this.tournamentId;
       if (tournamentId && (title || body)) {
@@ -223,7 +204,27 @@ export default {
       }
     },
     sendRoundSMS() {
-      this.error = "SMS is disabled";
+      let tournamentId = this.tournamentId;
+      let round = this.round;
+      this.error = "";
+      this.success = "";
+
+      if (!round) {
+        this.error = "Missing round number";
+        return;
+      }
+      if (tournamentId && round) {
+        tournamentAPI
+          .sendRoundSMS(tournamentId, round)
+          .then(data => {
+            this.success = data;
+            console.log(data);
+          })
+          .catch(e => {
+            this.error = "Error: " + e;
+            console.warn(e);
+          });
+      }
     },
     sendPlayerNotification() {
       this.error = "sendPlayerNotification is disabled";

@@ -115,22 +115,6 @@ export default class TournamentAPI {
                 return data;
             });
     }
-    sendTournamentUsersNotifications(tournamentId, title, body, url) {
-        const message = {
-            title: title,
-            body: body,
-            url: url
-        };
-
-        if (tournamentId) {
-            let url = `notification/SendPushNotificationToAllUsers/${tournamentId}`;
-            return fetch.post(url, message)
-                .then(response => {
-                    let data = response.data;
-                    return data;
-                });
-        }
-    }
     sendTournamentPlayersNotifications(tournamentId, title, body, url) {
         const message = {
             title: title,
@@ -157,6 +141,28 @@ export default class TournamentAPI {
                 });
         }
     }
+    sendRoundNotifications(tournamentId, round) {
+        if (tournamentId && round) {
+            let url = `notification/roundpushNotification/${tournamentId}?round=${round}`;
+            return fetch.post(url)
+                .then(response => {
+                    let data = response.data;
+                    return data;
+                });
+        }
+    }
+    sendRoundSMS(tournamentId, round) {
+        if (tournamentId && round) {
+            let url = `SMSRound/${tournamentId}?round=${round}`;
+            return fetch.post(url)
+                .then(response => {
+                    let data = response.data;
+                    return data;
+                });
+        }
+    }
+
+
     sendRoundGameInvite(tournamentId, round) {
         if (tournamentId && round) {
             let url = `notification/RoundGameInvite/${tournamentId}?round=${round}`;
