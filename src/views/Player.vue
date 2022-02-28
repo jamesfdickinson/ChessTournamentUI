@@ -47,11 +47,11 @@
           <ion-label position="fixed">Team</ion-label>
           <ion-label slot>{{ player.team }}</ion-label>
         </ion-item>
-        <!--  <ion-item>
+          <ion-item>
           <ion-label position="fixed">Grade</ion-label>
           <ion-label slot>{{player.grade}}</ion-label>
         </ion-item>
-        <ion-item>
+       <!-- <ion-item>
           <ion-label position="fixed">Rating</ion-label>
           <ion-label slot>{{player.rating}}</ion-label>
         </ion-item>-->
