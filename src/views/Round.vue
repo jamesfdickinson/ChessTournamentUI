@@ -50,8 +50,8 @@
           <div :key="table.id">
             <ion-item color="primary">
               <!-- <ion-label slot="start">Table {{table.id}}</ion-label> -->
-
-              <ion-label slot="start">Room {{ table.id }}</ion-label>
+              <!-- <ion-label slot="start">Room {{ table.id }}</ion-label> -->
+              <ion-label slot="start">Table {{ table.id }}</ion-label>
 
               <ion-button
                 v-if="table.positions.some((p) => p.playerEmail == user.email)"
@@ -130,22 +130,34 @@
             >
               <ion-icon
                 name="radio-button-on"
-                slot="start"
+                xslot="start"
                 :color="[
                   isInRoom(position.playerEmail, position.room)
                     ? 'success'
                     : 'light',
                 ]"
               ></ion-icon>
-              <TeamIcon
-                :title="position.playerTeam"
-                style="margin-right: 10px"
-              ></TeamIcon>
+              
+              <ion-icon
+                v-if="position.color == 'Black'"
+                src="/images/chess_pawn_black.svg"
+                slot
+              ></ion-icon>
+              <ion-icon
+                v-else-if="position.color == 'White'"
+                src="/images/chess_pawn_white.svg"
+                slot
+              ></ion-icon>
+            
 
               <ion-label
                 >{{ position.playerFirstName }}
                 {{ position.playerLastName }}</ion-label
               >
+                   <TeamIcon
+                :title="position.playerTeam"
+                style="margin-right: 10px"
+              ></TeamIcon>
               <ion-badge slot="end" color="light">{{
                 position.points
               }}</ion-badge>
