@@ -73,7 +73,8 @@ export default {
       searchQuery: "",
       gridColumns: [
         "table",
-        "name",
+        "firstName", 
+        "lastName",
         "color",
         "points",
         "totalPoints",
