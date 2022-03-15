@@ -96,12 +96,11 @@
               <div :key="userPlayer.playerId">
                 <ion-item>
                   <ion-icon name="clipboard" slot="start"></ion-icon>
-                  <ion-label
-                    >{{ userPlayer.name
-                    }}<span v-if="userPlayer.team"
+                  <ion-label>{{ userPlayer.name }}
+                    <!-- <span v-if="userPlayer.team"
                       >[{{ userPlayer.team }}]</span
-                    ></ion-label
-                  >
+                    > -->
+                  </ion-label>
 
                   <ion-button
                     v-if="tournament.teams"
