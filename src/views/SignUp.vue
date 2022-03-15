@@ -42,6 +42,13 @@
                 @input="player.firstName = $event.target.value"
               ></ion-input>
             </ion-item>
+            <ion-item>
+              <ion-label position="stacked">Last Name</ion-label>
+              <ion-input
+                :value="player.lastName"
+                @input="player.lastName = $event.target.value"
+              ></ion-input>
+            </ion-item>
             <ion-item v-if="teams.length > 0">
               <ion-label position="stacked">Team/Club</ion-label>
               <div style="width: 100%">
@@ -319,7 +326,9 @@ export default {
           if (tournament) this.showSignUpPage = tournament.allowRegistration;
           if (tournament && tournament.type) {
             this.type = tournament.type;
-            if (tournament.type === "Chess") this.player.firstName = "";
+            if (tournament.type === "Chess") {
+              this.player.firstName = "";
+            }
           }
           if (tournament && tournament.teams) {
             this.teams = tournament.teams.split(",").map(function (item) {

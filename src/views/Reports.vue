@@ -70,6 +70,17 @@
             <ion-label>Scores by Name</ion-label>
           </ion-item>
         </router-link>
+        <ion-list-header>
+          <ion-label>Player Details</ion-label>
+        </ion-list-header>
+
+        <router-link :to="{ name: 'ReportPlayerDetailed', params: { tournament: tournamentId, title:'Player Details',sortKeys:['firstName'] }}">
+          <ion-item button detail="true">
+            <ion-icon slot="start" name="person"></ion-icon>
+            <ion-label>Player Details</ion-label>
+          </ion-item>
+        </router-link>
+
 
         <ion-list-header>
           <ion-label>Round Details</ion-label>

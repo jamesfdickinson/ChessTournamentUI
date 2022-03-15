@@ -108,6 +108,12 @@ export default {
             let order = sortOrders[sortKey] || 1;
             let aV = a[sortKey];
             let bV = b[sortKey];
+            if (typeof aV === "string" || aV instanceof String) {
+              aV = aV.toLowerCase();
+            }
+            if (typeof bV === "string" || bV instanceof String) {
+              bV = bV.toLowerCase();
+            }
             let compValue = aV === bV ? 0 : aV > bV ? 1 : -1;
             if (compValue !== 0) return compValue * order;
           }
@@ -201,7 +207,7 @@ td {
 }
 th {
   /* font-size: 1em; */
-   font-size: 16px; 
+  font-size: 16px;
   font-weight: 500;
 }
 

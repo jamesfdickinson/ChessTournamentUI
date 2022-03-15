@@ -4,7 +4,11 @@
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
-          <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
+          <ion-icon
+            name="arrow-round-back"
+            size="large"
+            @click="$router.go(-1)"
+          ></ion-icon>
         </ion-buttons>
 
         <!-- <ion-buttons slot="start">
@@ -16,7 +20,7 @@
         </ion-buttons>-->
         <ion-title>Check-In</ion-title>
         <ion-buttons slot="end">
-          <ion-button v-on:click="$router.push({ name: 'PlayerNew'})">
+          <ion-button v-on:click="$router.push({ name: 'PlayerNew' })">
             <ion-icon name="person-add" size="large"></ion-icon>
           </ion-button>
         </ion-buttons>
@@ -27,29 +31,31 @@
         <ion-item>
           <ion-searchbar
             :value="searchInput"
-            @ionInput="searchInput = $event.target.value;"
-            @ionChange="searchInput= $event.target.value;"
+            @ionInput="searchInput = $event.target.value"
+            @ionChange="searchInput = $event.target.value"
           ></ion-searchbar>
 
           <ion-label>Hide Checked-In</ion-label>
           <ion-toggle
             slot="end"
             :checked="hideCheckedIn"
-            @ionChange="hideCheckedIn= $event.target.checked;"
+            @ionChange="hideCheckedIn = $event.target.checked"
           ></ion-toggle>
         </ion-item>
 
         <ion-item color="light">
-          <ion-icon v-on:click="sortBy('isPresent')" slot="start" name="checkmark"></ion-icon>
+          <ion-icon
+            v-on:click="sortBy('isPresent')"
+            slot="start"
+            name="checkmark"
+          ></ion-icon>
+
           <ion-label v-on:click="sortBy('firstName')">Name</ion-label>
           <ion-label v-on:click="sortBy('team')">Team</ion-label>
+          <ion-icon v-on:click="sortBy('paid')" name="cash"></ion-icon>
+          <ion-icon name="create" slot="end"></ion-icon>
         </ion-item>
-        <ion-item
-     
-          v-for="player of filteredItems"
-          :key="player.playerId"
-         
-        >
+        <ion-item v-for="player of filteredItems" :key="player.playerId">
           <ion-icon
             v-if="player.isPresent"
             @click="checkOut(player.playerId)"
@@ -65,13 +71,19 @@
             color="secondary"
           ></ion-icon>
 
-          <ion-label>{{player.firstName}} {{player.lastName}}</ion-label>
-          <ion-label>{{player.team}}</ion-label>
-           <ion-icon
-              name="create"
-              slot="end"
-              @click="openPlayer(player.playerId)"
-            ></ion-icon>
+          <ion-label>{{ player.firstName }} {{ player.lastName }}</ion-label>
+
+          <ion-label>{{ player.team }}</ion-label>
+          <ion-icon
+            xslot="start"
+            name="cash"
+            :color="player.paid ? 'secondary' : 'light'"
+          ></ion-icon>
+          <ion-icon
+            name="create"
+            slot="end"
+            @click="openPlayer(player.playerId)"
+          ></ion-icon>
         </ion-item>
       </ion-list>
     </ion-content>
@@ -102,7 +114,7 @@ export default {
       sortKeys: [],
       sortOrders: [],
       players: [],
-      errors: []
+      errors: [],
     };
   },
   methods: {
@@ -110,7 +122,7 @@ export default {
       let tournamentId = this.tournamentId;
       this.$router.push({
         name: "PlayerEdit",
-        params: { id: id, tournament: tournamentId }
+        params: { id: id, tournament: tournamentId },
       });
     },
     // toggleHideCheckedIn() {
@@ -119,7 +131,7 @@ export default {
     //   //remember hideCheckedIn
     //   localStorage.setItem("hideCheckedIn", hideCheckedIn);
     // },
-    sortBy: function(key) {
+    sortBy: function (key) {
       //remove it if it is in the list
       var index = this.sortKeys.indexOf(key);
       if (index > -1) {
@@ -154,13 +166,13 @@ export default {
       var tournamentId = this.$route.params.tournament;
       fetch
         .get(`players/${tournamentId}`)
-        .then(response => {
+        .then((response) => {
           this.players = response.data;
         })
-        .catch(e => {
+        .catch((e) => {
           this.errors.push(e);
         });
-    }
+    },
   },
   computed: {
     filteredItems() {
@@ -174,12 +186,12 @@ export default {
       let searchInput = this.searchInput;
 
       if (hideCheckedIn) {
-        data = data.filter(p => {
+        data = data.filter((p) => {
           return !p.isPresent;
         });
       }
       if (sortKeys) {
-        data = data.slice().sort(function(a, b) {
+        data = data.slice().sort(function (a, b) {
           for (let i = 0; i < sortKeys.length; i++) {
             let sortKey = sortKeys[i];
             let order = sortOrders[sortKey] || 1;
@@ -193,7 +205,7 @@ export default {
       }
       if (searchInput) {
         searchInput = searchInput.toLowerCase();
-        data = data.filter(p => {
+        data = data.filter((p) => {
           if (p.firstName && p.firstName.toLowerCase().startsWith(searchInput))
             return true;
           if (p.lastName && p.lastName.toLowerCase().startsWith(searchInput))
@@ -204,10 +216,10 @@ export default {
         });
       }
       return data;
-    }
+    },
   },
   created() {
     this.loadData();
-  }
+  },
 };
 </script>

@@ -48,6 +48,7 @@ import ReportScoreGroupRankiframe from './views/ReportScoreGroupRankiframe.vue'
 import ReportScoreGroupRankDetails from './views/ReportScoreGroupRankDetails.vue'
 import ReportScoreSubGradeGroupRank from './views/ReportScoreSubGradeGroupRank.vue'
 import ReportWallChart from './views/ReportWallChart.vue'
+import ReportPlayerDetailed from './views/ReportPlayerDetailed.vue'
 import User from './views/User.vue'
 import UserCreate from './views/UserCreate.vue'
 import UserEdit from './views/UserEdit.vue'
@@ -364,7 +365,11 @@ export default new VueRouter({
       name: 'ReportWallChart',
       component: ReportWallChart
     },
-
+    {
+      path: '/:tournament/ReportPlayerDetailed',
+      name: 'ReportPlayerDetailed',
+      component: ReportPlayerDetailed
+    },  
     
   ]
 });
