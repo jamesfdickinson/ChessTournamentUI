@@ -42,6 +42,11 @@ npm run lint
 ```
 
 ## Change Log
+### 2.5 "Create Round Swiss / Report"
+- Swiss create round option
+- Player detailed report
+- fix wall chart and other reports
+
 ### 2.4 "Create Tournament"
 - Copy tournament
 - Better data and time picker
