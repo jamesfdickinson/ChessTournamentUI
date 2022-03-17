@@ -213,7 +213,7 @@ export default {
         sameGradeWeight: 10,
         sameRatingWeight: 10,
         sameTeamAbsolute: false,
-        playedBeforeAbsolute: false,
+        playedBeforeAbsolute: true,
       },
       matches: [],
       errors: [],
