@@ -138,7 +138,20 @@
             <ion-label>Edit Rounds</ion-label>
           </ion-item>
         </router-link>
-
+        <ion-list-header>
+          <ion-label>Players</ion-label>
+        </ion-list-header>
+        <router-link
+          :to="{
+            name: 'ReportPlayerDetailedAdmin',
+            params: { tournament: tournamentId },
+          }"
+        >
+          <ion-item button detail="true">
+            <ion-icon slot="start" name="list"></ion-icon>
+            <ion-label>Player Details</ion-label>
+          </ion-item>
+        </router-link>
         <ion-list-header>
           <ion-label>Tools</ion-label>
         </ion-list-header>
