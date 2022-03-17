@@ -77,6 +77,17 @@ export default class TournamentAPI {
                 return data;
             })
     }
+    generateSwissMatching(tournamentId, round, filter) {
+        return fetch
+            .post(
+                `round/GenerateSwissMatching/${round}?tournament=${tournamentId}`,
+                filter
+            )
+            .then(response => {
+                let matches = response.data;
+                return matches;
+            })
+    }
     generateTopDownRound(tournamentId, round, filter) {
         return fetch
             .post(
@@ -125,16 +136,6 @@ export default class TournamentAPI {
         if (tournamentId) {
             let url = `notification/SendPushNotificationToAllPlayers/${tournamentId}`;
             return fetch.post(url, message)
-                .then(response => {
-                    let data = response.data;
-                    return data;
-                });
-        }
-    }
-    sendRoundNotifications(tournamentId, round) {
-        if (tournamentId && round) {
-            let url = `notification/roundpushNotification/${tournamentId}?round=${round}`;
-            return fetch.post(url)
                 .then(response => {
                     let data = response.data;
                     return data;

@@ -121,8 +121,11 @@
         </ion-item>
       </ion-list>
       <div class="ion-padding">
-        <ion-button expand="block" @click="generateTopDownRound()"
-          >Generate</ion-button
+        <ion-button xexpand="block" @click="generateTopDownRound()"
+          >Generate Weights</ion-button
+        >
+        <ion-button xexpand="block" @click="generateSwissRound()"
+          >Generate Swiss</ion-button
         >
       </div>
 
@@ -218,6 +221,23 @@ export default {
     };
   },
   methods: {
+    generateSwissRound() {
+      this.errors = [];
+
+      let tournamentId = this.$route.params.tournament;
+      let round = this.round;
+      let filter = this.filter;
+
+      tournamentAPI
+        .generateSwissMatching(tournamentId, round, filter)
+        .then((data) => {
+          this.matches = data;
+          console.log(data);
+        })
+        .catch((e) => {
+          this.errors.push(e);
+        });
+    },
     generateTopDownRound() {
       this.errors = [];
 
