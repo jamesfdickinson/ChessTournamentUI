@@ -1,6 +1,6 @@
 # Chess Tournament
 
-This is the UI for https://chessclub.io.  It relies on the Chess Tournament web API for the backend.  
+This is the UI for https://bracketjd.com.  It relies on the Chess Tournament web API for the backend.  
 
 Currently several local schools are using chessclub.io.
 
