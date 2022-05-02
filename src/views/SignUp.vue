@@ -311,9 +311,13 @@ export default {
           this.$router.push({ name: `Tournament` });
         })
         .catch((e) => {
-          //todo: display error
+          //display error
           console.error(e);
           this.errors.push("error signing up.");
+          if (e.response && e.response.data) {
+            console.error(e.response.data);
+            this.errors.push(e.response.data);
+          } 
         });
     },
     loadData() {
