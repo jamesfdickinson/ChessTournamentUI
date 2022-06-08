@@ -278,8 +278,15 @@ export default {
       let password = this.password;
       let accessCodeBasic = null;
       let isTeamRequired = this.teams.length > 0;
-      //add default grade for cribbage
+
+      //add default grade
       if (!player.grade) player.grade = 12;
+
+      if (!player.timeZone) {
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        player.timeZone = timezone;
+      }
+
 
       player.tournamentId = tournamentId;
       if (tournament) {
@@ -301,6 +308,8 @@ export default {
       if (accessCodeBasic && accessCodeBasic != password)
         this.errors.push("Incorrect access code");
 
+
+
       if (this.errors.length > 0) return;
 
       fetch
@@ -317,7 +326,7 @@ export default {
           if (e.response && e.response.data) {
             console.error(e.response.data);
             this.errors.push(e.response.data);
-          } 
+          }
         });
     },
     loadData() {
@@ -349,6 +358,7 @@ export default {
         if (user.name) this.player.firstName = user.name;
         if (user.gamerId) this.player.gamerId = user.gamerId;
         if (user.avatar) this.player.avatar = user.avatar;
+        if (user.timeZone) this.player.timeZone = user.timeZone;
       }
     },
   },

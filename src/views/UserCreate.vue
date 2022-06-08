@@ -115,7 +115,7 @@
           </ion-item>
         </ion-list>
         <ion-item>
-          <ion-label>Subscribe to Newsletter  </ion-label>
+          <ion-label>Subscribe to Newsletter </ion-label>
           <ion-checkbox
             slot="start"
             :checked="user.emailSubscribe"
@@ -187,7 +187,8 @@ export default {
       let passwordVerify = this.passwordVerify;
       let redirect = this.redirect;
       user.username = user.email;
-
+      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      user.timeZone = timezone;
       //validation
       this.errors = [];
       if (!user.name) this.errors.push("Display Name is required");
