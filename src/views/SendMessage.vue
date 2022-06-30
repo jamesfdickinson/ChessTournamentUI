@@ -4,7 +4,11 @@
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
-          <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
+          <ion-icon
+            name="arrow-round-back"
+            size="large"
+            @click="$router.go(-1)"
+          ></ion-icon>
         </ion-buttons>
         <ion-title>Send Message</ion-title>
       </ion-toolbar>
@@ -17,26 +21,75 @@
         <ion-card>
           <ion-list>
             <ion-list-header>
-              <ion-label>Send Tournament Message to All (nofitication)</ion-label>
+              <ion-label>Send All Players a Nofitication</ion-label>
             </ion-list-header>
             <ion-item>
-              <ion-input placeholder="title" :value="title" @input="title = $event.target.value"></ion-input>
+              <ion-input
+                placeholder="title"
+                :value="title"
+                @input="title = $event.target.value"
+              ></ion-input>
             </ion-item>
             <ion-item>
-              <ion-input placeholder="body" :value="body" @input="body = $event.target.value"></ion-input>
+              <ion-input
+                placeholder="body"
+                :value="body"
+                @input="body = $event.target.value"
+              ></ion-input>
             </ion-item>
-            <ion-item>
+            <!-- <ion-item>
               <ion-input placeholder="url" :value="url" @input="url = $event.target.value"></ion-input>
-            </ion-item>
+            </ion-item> -->
             <ion-item>
               <ion-button
                 expand="block"
-                v-on:click="sendTournamentPlayersNotifications(title,body,url)"
-              >Send to All Players</ion-button>
+                v-on:click="
+                  sendTournamentPlayersNotifications(title, body, url)
+                "
+                :disabled="success != '' || error != ''"
+                >Send Notifications</ion-button
+              >
             </ion-item>
           </ion-list>
         </ion-card>
         <ion-card>
+          <ion-list>
+            <ion-list-header>
+              <ion-label>Send All Players an Email</ion-label>
+            </ion-list-header>
+            <ion-item>
+              <ion-input
+                placeholder="title"
+                :value="title"
+                @input="title = $event.target.value"
+              ></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input
+                placeholder="body"
+                :value="body"
+                @input="body = $event.target.value"
+              ></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label text-wrap>Send test email only</ion-label>
+              <ion-checkbox
+                slot="start"
+                :checked="isTest"
+                @ionChange="isTest = $event.target.checked == true"
+              ></ion-checkbox>
+            </ion-item>
+            <ion-item>
+              <ion-button
+                expand="block"
+                v-on:click="sendTournamentPlayersEmail(title, body, isTest)"
+                :disabled="success != '' || error != ''"
+                >Send Emails</ion-button
+              >
+            </ion-item>
+          </ion-list>
+        </ion-card>
+        <!-- <ion-card>
           <ion-list>
             <ion-list-header>
               <ion-label>Send Round Message to All (nofitication)</ion-label>
@@ -53,9 +106,9 @@
               <ion-button expand="block" v-on:click="sendRoundSMS()">Send SMS</ion-button>
             </ion-item>
           </ion-list>
-        </ion-card>
+        </ion-card> -->
 
-        <ion-card>
+        <!-- <ion-card>
           <ion-list>
             <ion-list-header>
               <ion-label>Send Message to Player</ion-label>
@@ -86,9 +139,9 @@
               <ion-button expand="block" v-on:click="sendPlayerSMS()">Send SMS</ion-button>
             </ion-item>
           </ion-list>
-        </ion-card>
+        </ion-card> -->
 
-        <ion-card>
+        <!-- <ion-card>
           <ion-list>
             <ion-list-header>
               <ion-label>Send game invites to All</ion-label>
@@ -104,10 +157,10 @@
               <ion-button expand="block" v-on:click="sendRoundGameInvites()">Send Invites</ion-button>
             </ion-item>
           </ion-list>
-        </ion-card>
+        </ion-card>-->
       </ion-list>
-      <div style="color:green;">{{success}}</div>
-      <div style="color:red;">{{error}}</div>
+      <div style="color: green">{{ success }}</div>
+      <div style="color: red">{{ error }}</div>
     </ion-content>
     <!-- </ion-page> -->
   </layout-menu>
@@ -131,8 +184,10 @@ export default {
       title: null,
       body: null,
       url: null,
+      isTest: false,
       error: "",
-      success: ""
+      success: "",
+      status: "",
     };
   },
   methods: {
@@ -142,13 +197,30 @@ export default {
     sendTournamentPlayersNotifications(title, body, url) {
       let tournamentId = this.tournamentId;
       if (tournamentId && (title || body)) {
+        this.success = "Sending...";
         tournamentAPI
           .sendTournamentPlayersNotifications(tournamentId, title, body, url)
-          .then(data => {
+          .then((data) => {
             this.success = "Sent: " + data || "";
             console.log(data);
           })
-          .catch(e => {
+          .catch((e) => {
+            this.error = "Error: " + e;
+            console.warn(e);
+          });
+      }
+    },
+    sendTournamentPlayersEmail(title, body, isTest) {
+      let tournamentId = this.tournamentId;
+      if (tournamentId && (title || body)) {
+        this.success = "Sending...";
+        tournamentAPI
+          .sendTournamentPlayersEmail(tournamentId, title, body, isTest)
+          .then((data) => {
+            this.success = "Sent: " + data || "";
+            console.log(data);
+          })
+          .catch((e) => {
             this.error = "Error: " + e;
             console.warn(e);
           });
@@ -170,11 +242,11 @@ export default {
       if (tournamentId && round) {
         tournamentAPI
           .sendRoundNotifications(tournamentId, round)
-          .then(data => {
+          .then((data) => {
             this.success = "Sent: " + data || "";
             console.log(data);
           })
-          .catch(e => {
+          .catch((e) => {
             this.error = "Error: " + e;
             console.warn(e);
           });
@@ -193,11 +265,11 @@ export default {
       if (tournamentId && round) {
         tournamentAPI
           .sendRoundGameInvite(tournamentId, round)
-          .then(data => {
+          .then((data) => {
             this.success = "Sent: " + data || "";
             console.log(data);
           })
-          .catch(e => {
+          .catch((e) => {
             this.error = "Error: " + e;
             console.warn(e);
           });
@@ -216,11 +288,11 @@ export default {
       if (tournamentId && round) {
         tournamentAPI
           .sendRoundSMS(tournamentId, round)
-          .then(data => {
+          .then((data) => {
             this.success = data;
             console.log(data);
           })
-          .catch(e => {
+          .catch((e) => {
             this.error = "Error: " + e;
             console.warn(e);
           });
@@ -234,10 +306,10 @@ export default {
     },
     loadData() {
       //todo: get current round number
-    }
+    },
   },
   created() {
     this.loadData();
-  }
+  },
 };
 </script>

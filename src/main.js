@@ -74,6 +74,8 @@ notificationSocket.onNotification = function (notification) {
   if (!notification) return false;
 
   let message = notification.title;
+  if (notification.body) message += " " + notification.body;
+
   let url = notification.link;
   let audio = notification.audio || "/audio/arpeggio.mp3";
   if (message.startsWith("Please check in")) {

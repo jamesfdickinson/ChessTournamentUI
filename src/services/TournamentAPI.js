@@ -142,6 +142,23 @@ export default class TournamentAPI {
                 });
         }
     }
+    sendTournamentPlayersEmail(tournamentId, title, body, isTest) {
+        const message = {
+            title: title,
+            body: body,
+            isTest: !!isTest
+        };
+
+
+        if (tournamentId) {
+            let url = `email/MessageAll/${tournamentId}`;
+            return fetch.post(url, message)
+                .then(response => {
+                    let data = response.data;
+                    return data;
+                });
+        }
+    }
     sendRoundNotifications(tournamentId, round) {
         if (tournamentId && round) {
             let url = `notification/roundpushNotification/${tournamentId}?round=${round}`;
