@@ -282,7 +282,7 @@
           ></ion-checkbox>
         </ion-item>
          <ion-item>
-          <ion-label>Allow Multiple Players Per Login</ion-label>
+          <ion-label>Auto Open Game</ion-label>
           <ion-checkbox
             slot="start"
             :checked="tournament.autoOpenGame"
@@ -414,6 +414,9 @@ export default {
         round: 0,
         checkInDuration: 120,
         twitchProfile: "",
+        winPoints: 2,
+        tiePoints: 1,
+        lossPoints: 0,
         allowMultiplePlayersPerLogin: false,
         autoOpenGame: false
       },

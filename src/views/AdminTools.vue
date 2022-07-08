@@ -4,11 +4,7 @@
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
-          <ion-icon
-            name="arrow-round-back"
-            size="large"
-            @click="$router.go(-1)"
-          ></ion-icon>
+          <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
         </ion-buttons>
         <ion-title>Admin Tools</ion-title>
       </ion-toolbar>
@@ -54,17 +50,17 @@
           <ion-icon slot="start" name="contact"></ion-icon>
           <ion-label>Test Show Toast</ion-label>
         </ion-item>
-        <ion-item
-          button
-          detail="true"
-          v-on:click="Create2DivisionsKto3and4plus()"
-        >
+        <ion-item button detail="true" v-on:click="Create2DivisionsKto3and4plus()">
           <ion-icon slot="start" name="contact"></ion-icon>
           <ion-label>Create 2 divisions K to 3 and 4 plus</ion-label>
         </ion-item>
         <ion-item button detail="true" v-on:click="Create1Division()">
           <ion-icon slot="start" name="contact"></ion-icon>
           <ion-label>Create 1 division</ion-label>
+        </ion-item>
+        <ion-item button detail="true" v-on:click="SendAllToTournamentHomeNotification()">
+          <ion-icon slot="start" name="contact"></ion-icon>
+          <ion-label>Send All To Tournament Home Notification</ion-label>
         </ion-item>
       </ion-list>
       <div style="color: green">{{ message }}</div>
@@ -219,7 +215,19 @@ export default {
           this.error = e;
         });
     },
+    SendAllToTournamentHomeNotification() {
+      var tournamentId = this.tournamentId;
+      fetch
+        .post(`notification/SendAllToTournamentHomeNotification/${tournamentId}`)
+        .then((response) => {
+          this.message = response.data;
+        })
+        .catch((e) => {
+          this.error = e;
+        });
+    },
+    
   },
-  created() {},
+  created() { },
 };
 </script>

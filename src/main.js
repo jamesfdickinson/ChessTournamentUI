@@ -84,8 +84,8 @@ notificationSocket.onNotification = function (notification) {
   toast.show(message, 15000, audio, url, "_self");
   if(notification.autoOpenURL){
     
-    if(url.startsWith("https://cardsjd.com")){
-      url = url.replace("https://cardsjd.com", "");
+    if(url.startsWith("https://bracketjd.com")){
+      url = url.replace("https://bracketjd.com", "");
     }
     window.open(url, "_self");
   }
