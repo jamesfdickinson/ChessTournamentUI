@@ -76,12 +76,19 @@ notificationSocket.onNotification = function (notification) {
   let message = notification.title;
   if (notification.body) message += " " + notification.body;
 
-  let url = notification.link;
+  let url = notification.url;
   let audio = notification.audio || "/audio/arpeggio.mp3";
   if (message.startsWith("Please check in")) {
     audio = "/audio/alert1.mp3";
   }
   toast.show(message, 15000, audio, url, "_self");
+  if(notification.autoOpenURL){
+    
+    if(url.startsWith("https://cardsjd.com")){
+      url = url.replace("https://cardsjd.com", "");
+    }
+    window.open(url, "_self");
+  }
 };
 //auto reconnect socket 
 document.addEventListener("visibilitychange", function () {

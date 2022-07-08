@@ -141,7 +141,7 @@ export default class TournamentAPI {
                     return data;
                 });
         }
-    }
+    }  
     sendTournamentPlayersEmail(tournamentId, title, body, isTest) {
         const message = {
             title: title,

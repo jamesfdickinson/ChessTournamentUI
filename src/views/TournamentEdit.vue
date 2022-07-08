@@ -281,6 +281,14 @@
             @ionChange="tournament.allowMultiplePlayersPerLogin = $event.target.checked == true"
           ></ion-checkbox>
         </ion-item>
+         <ion-item>
+          <ion-label>Allow Multiple Players Per Login</ion-label>
+          <ion-checkbox
+            slot="start"
+            :checked="tournament.autoOpenGame"
+            @ionChange="tournament.autoOpenGame = $event.target.checked == true"
+          ></ion-checkbox>
+        </ion-item>
         <ion-list-header>
           <ion-label>Signup Page</ion-label>
         </ion-list-header>
@@ -406,7 +414,8 @@ export default {
         round: 0,
         checkInDuration: 120,
         twitchProfile: "",
-        allowMultiplePlayersPerLogin: false
+        allowMultiplePlayersPerLogin: false,
+        autoOpenGame: false
       },
       startDate: null,
       startTime: null,
