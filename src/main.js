@@ -82,12 +82,14 @@ notificationSocket.onNotification = function (notification) {
     audio = "/audio/alert1.mp3";
   }
   toast.show(message, 15000, audio, url, "_self");
-  if(notification.autoOpenURL){
-    
-    if(url.startsWith("https://bracketjd.com")){
+  if (notification.autoOpenURL) {
+    let isWindowHidden = document.hidden;
+    if (url.startsWith("https://bracketjd.com")) {
       url = url.replace("https://bracketjd.com", "");
     }
-    window.open(url, "_self");
+    if (!isWindowHidden) {
+      window.open(url, "_self");
+    }
   }
 };
 //auto reconnect socket 
