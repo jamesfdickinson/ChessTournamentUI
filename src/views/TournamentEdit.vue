@@ -4,11 +4,7 @@
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
-          <ion-icon
-            name="arrow-round-back"
-            size="large"
-            @click="$router.go(-1)"
-          ></ion-icon>
+          <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
         </ion-buttons>
         <ion-title>Edit Tournament</ion-title>
       </ion-toolbar>
@@ -17,10 +13,7 @@
       <ion-list>
         <ion-item>
           <ion-label position="stacked">Name</ion-label>
-          <ion-input
-            :value="tournament.name"
-            @input="tournament.name = $event.target.value"
-          ></ion-input>
+          <ion-input :value="tournament.name" @input="tournament.name = $event.target.value"></ion-input>
         </ion-item>
         <!-- <ion-item>
           <ion-label position="stacked">Type</ion-label>
@@ -54,29 +47,16 @@
         </ion-item> -->
         <ion-item>
           <ion-label position="stacked">Start Date</ion-label>
-          <input
-            type="date"
-            :value="startDate"
-            @input="startDate = $event.target.value"
-            style="border: 0"
-          />
+          <input type="date" :value="startDate" @input="startDate = $event.target.value" style="border: 0" />
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Start Time</ion-label>
-          <input
-            type="time"
-            :value="startTime"
-            @input="startTime = $event.target.value"
-            style="border: 0"
-          />
+          <input type="time" :value="startTime" @input="startTime = $event.target.value" style="border: 0" />
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked">Rounds</ion-label>
-          <ion-input
-            :value="tournament.rounds"
-            @input="tournament.rounds = $event.target.value"
-          ></ion-input>
+          <ion-input :value="tournament.rounds" @input="tournament.rounds = $event.target.value"></ion-input>
         </ion-item>
         <!-- <ion-item>
           <ion-label position="stacked">Current Round</ion-label>
@@ -120,102 +100,68 @@
         </ion-item> -->
         <ion-item>
           <ion-label position="stacked">Access Code: Basic</ion-label>
-          <ion-input
-            :value="tournament.accessCodeBasic"
-            @input="tournament.accessCodeBasic = $event.target.value"
-          ></ion-input>
+          <ion-input :value="tournament.accessCodeBasic" @input="tournament.accessCodeBasic = $event.target.value">
+          </ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Access Code: Recorder</ion-label>
-          <ion-input
-            :value="tournament.accessCodeRecorder"
-            @input="tournament.accessCodeRecorder = $event.target.value"
-          ></ion-input>
+          <ion-input :value="tournament.accessCodeRecorder"
+            @input="tournament.accessCodeRecorder = $event.target.value"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Access Code: Admin</ion-label>
-          <ion-input
-            :value="tournament.accessCodeAdmin"
-            @input="tournament.accessCodeAdmin = $event.target.value"
-          ></ion-input>
+          <ion-input :value="tournament.accessCodeAdmin" @input="tournament.accessCodeAdmin = $event.target.value">
+          </ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Image (url)</ion-label>
-          <ion-input
-            :value="tournament.image"
-            @input="tournament.image = $event.target.value"
-          ></ion-input>
+          <ion-input :value="tournament.image" @input="tournament.image = $event.target.value"></ion-input>
           <ion-thumbnail slot="end">
             <ion-img :src="tournament.image"></ion-img>
           </ion-thumbnail>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Teams (separated by commas)</ion-label>
-          <ion-textarea
-            auto-grow="true"
-            :value="tournament.teams"
-            @input="tournament.teams = $event.target.value"
-          ></ion-textarea>
+          <ion-textarea auto-grow="true" :value="tournament.teams" @input="tournament.teams = $event.target.value">
+          </ion-textarea>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Max Players</ion-label>
-          <ion-input
-            :value="tournament.maxPlayers"
-            @input="tournament.maxPlayers = $event.target.value"
-          ></ion-input>
+          <ion-input :value="tournament.maxPlayers" @input="tournament.maxPlayers = $event.target.value"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Check-In Duration (seconds)</ion-label>
-          <ion-input
-            :value="tournament.checkInDuration"
-            @input="tournament.checkInDuration = $event.target.value"
-          ></ion-input>
+          <ion-input :value="tournament.checkInDuration" @input="tournament.checkInDuration = $event.target.value">
+          </ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Streaming: Twitch Profile</ion-label>
-          <ion-input
-            :value="tournament.twitchProfile"
-            @input="tournament.twitchProfile = $event.target.value"
-          ></ion-input>
+          <ion-input :value="tournament.twitchProfile" @input="tournament.twitchProfile = $event.target.value">
+          </ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">gameRoomLink</ion-label>
-          <ion-input
-            :value="tournament.gameRoomLink"
-            @input="tournament.gameRoomLink = $event.target.value"
-          ></ion-input>
+          <ion-input :value="tournament.gameRoomLink" @input="tournament.gameRoomLink = $event.target.value">
+          </ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked">Win Points</ion-label>
-          <ion-input
-            :value="tournament.winPoints"
-            @input="tournament.winPoints = $event.target.value"
-          ></ion-input>
+          <ion-input :value="tournament.winPoints" @input="tournament.winPoints = $event.target.value"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Tie Points</ion-label>
-          <ion-input
-            :value="tournament.tiePoints"
-            @input="tournament.tiePoints = $event.target.value"
-          ></ion-input>
+          <ion-input :value="tournament.tiePoints" @input="tournament.tiePoints = $event.target.value"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Loss Points</ion-label>
-          <ion-input
-            :value="tournament.lossPoints"
-            @input="tournament.lossPoints = $event.target.value"
-          ></ion-input>
+          <ion-input :value="tournament.lossPoints" @input="tournament.lossPoints = $event.target.value"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label>Auto Advance Rounds</ion-label>
-          <ion-checkbox
-            slot="start"
-            :checked="tournament.autoAdvanceRounds"
-            @ionChange="
-              tournament.autoAdvanceRounds = $event.target.checked == true
-            "
-          ></ion-checkbox>
+          <ion-checkbox slot="start" :checked="tournament.autoAdvanceRounds" @ionChange="
+            tournament.autoAdvanceRounds = $event.target.checked == true
+          "></ion-checkbox>
         </ion-item>
         <!-- <ion-item>
           <ion-label>Allow Notifications</ion-label>
@@ -230,21 +176,14 @@
 
         <ion-item>
           <ion-label>Is Hidden</ion-label>
-          <ion-checkbox
-            slot="start"
-            :checked="tournament.hidden"
-            @ionChange="tournament.hidden = $event.target.checked == true"
-          ></ion-checkbox>
+          <ion-checkbox slot="start" :checked="tournament.hidden"
+            @ionChange="tournament.hidden = $event.target.checked == true"></ion-checkbox>
         </ion-item>
         <ion-item>
           <ion-label>Require Check-In</ion-label>
-          <ion-checkbox
-            slot="start"
-            :checked="tournament.requireCheckIn"
-            @ionChange="
-              tournament.requireCheckIn = $event.target.checked == true
-            "
-          ></ion-checkbox>
+          <ion-checkbox slot="start" :checked="tournament.requireCheckIn" @ionChange="
+            tournament.requireCheckIn = $event.target.checked == true
+          "></ion-checkbox>
         </ion-item>
         <!-- <ion-item>
           <ion-label>Allow Check-In</ion-label>
@@ -256,58 +195,42 @@
         </ion-item> -->
         <ion-item>
           <ion-label>Allow Registration</ion-label>
-          <ion-checkbox
-            slot="start"
-            :checked="tournament.allowRegistration"
-            @ionChange="
-              tournament.allowRegistration = $event.target.checked == true
-            "
-          ></ion-checkbox>
+          <ion-checkbox slot="start" :checked="tournament.allowRegistration" @ionChange="
+            tournament.allowRegistration = $event.target.checked == true
+          "></ion-checkbox>
         </ion-item>
 
         <ion-item>
           <ion-label>Is Public</ion-label>
-          <ion-checkbox
-            slot="start"
-            :checked="tournament.isPublic"
-            @ionChange="tournament.isPublic = $event.target.checked == true"
-          ></ion-checkbox>
+          <ion-checkbox slot="start" :checked="tournament.isPublic"
+            @ionChange="tournament.isPublic = $event.target.checked == true"></ion-checkbox>
         </ion-item>
         <ion-item>
           <ion-label>Allow Multiple Players Per Login</ion-label>
-          <ion-checkbox
-            slot="start"
-            :checked="tournament.allowMultiplePlayersPerLogin"
-            @ionChange="tournament.allowMultiplePlayersPerLogin = $event.target.checked == true"
-          ></ion-checkbox>
+          <ion-checkbox slot="start" :checked="tournament.allowMultiplePlayersPerLogin"
+            @ionChange="tournament.allowMultiplePlayersPerLogin = $event.target.checked == true"></ion-checkbox>
         </ion-item>
-         <ion-item>
+        <ion-item>
           <ion-label>Auto Open Game</ion-label>
-          <ion-checkbox
-            slot="start"
-            :checked="tournament.autoOpenGame"
-            @ionChange="tournament.autoOpenGame = $event.target.checked == true"
-          ></ion-checkbox>
+          <ion-checkbox slot="start" :checked="tournament.autoOpenGame"
+            @ionChange="tournament.autoOpenGame = $event.target.checked == true"></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>Send Post Email</ion-label>
+          <ion-checkbox slot="start" :checked="tournament.SendPostEmail"
+            @ionChange="tournament.SendPostEmail = $event.target.checked == true"></ion-checkbox>
         </ion-item>
         <ion-list-header>
           <ion-label>Signup Page</ion-label>
         </ion-list-header>
         <ion-item>
-          <ckeditor
-            :editor="editor"
-            v-model="tournament.signUpText"
-            :config="editorConfig"
-          ></ckeditor>
+          <ckeditor :editor="editor" v-model="tournament.signUpText" :config="editorConfig"></ckeditor>
         </ion-item>
         <ion-list-header>
           <ion-label>FAQ Content</ion-label>
         </ion-list-header>
         <ion-item>
-          <ckeditor
-            :editor="editor"
-            v-model="tournament.faqContent"
-            :config="editorConfig"
-          ></ckeditor>
+          <ckeditor :editor="editor" v-model="tournament.faqContent" :config="editorConfig"></ckeditor>
         </ion-item>
         <!-- <ion-item>
           <ion-label position="stacked">Signup Content</ion-label>
@@ -330,16 +253,8 @@
       <div style="color: red">{{ error }}</div>
       <ion-button expand="block" v-on:click="save()">Save</ion-button>
       <hr />
-      <ion-button expand="block" color="light" v-on:click="back()"
-        >Cancel</ion-button
-      >
-      <ion-button
-        expand="block"
-        color="danger"
-        v-if="tournamentId"
-        v-on:click="deleteTournament()"
-        >Delete</ion-button
-      >
+      <ion-button expand="block" color="light" v-on:click="back()">Cancel</ion-button>
+      <ion-button expand="block" color="danger" v-if="tournamentId" v-on:click="deleteTournament()">Delete</ion-button>
       <hr />
       <!-- <ion-button color="danger" v-on:click="deletePlayer()">Delete</ion-button> -->
       <!-- <ion-button @click="presentAlertConfirm">Show Alert (confirm)</ion-button> -->
@@ -408,6 +323,7 @@ export default {
         requireCheckIn: true,
         allowCheckIn: false,
         startDateTime: null,
+        timerDateTime: null,
         video: "",
         status: "Setup",
         statusProgress: 0,
@@ -418,7 +334,8 @@ export default {
         tiePoints: 1,
         lossPoints: 0,
         allowMultiplePlayersPerLogin: false,
-        autoOpenGame: false
+        autoOpenGame: false,
+        SendPostEmail: true
       },
       startDate: null,
       startTime: null,
@@ -462,7 +379,7 @@ export default {
         return;
       }
       tournament.startDateTime = new Date(startDate + "T" + startTime);
-
+      tournament.timerDateTime = tournament.startDateTime;
       if (!tournament.startDateTime) {
         this.error = "Error: No start datetime is set";
         return;
@@ -537,6 +454,7 @@ export default {
             this.tournament.id = 0;
             this.tournament.round = 0;
             this.tournament.state = "setup";
+            this.tournament.status = "Setup - In Progress";
             this.tournament.startDateTime = null;
             if (this.tournament && this.tournament.startDateTime) {
               let date = new Date(this.tournament.startDateTime);
