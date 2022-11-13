@@ -217,8 +217,8 @@
         </ion-item>
         <ion-item>
           <ion-label>Send Post Email</ion-label>
-          <ion-checkbox slot="start" :checked="tournament.SendPostEmail"
-            @ionChange="tournament.SendPostEmail = $event.target.checked == true"></ion-checkbox>
+          <ion-checkbox slot="start" :checked="tournament.sendPostEmail"
+            @ionChange="tournament.sendPostEmail = $event.target.checked == true"></ion-checkbox>
         </ion-item>
         <ion-list-header>
           <ion-label>Signup Page</ion-label>
@@ -335,7 +335,7 @@ export default {
         lossPoints: 0,
         allowMultiplePlayersPerLogin: false,
         autoOpenGame: false,
-        SendPostEmail: true
+        sendPostEmail: true
       },
       startDate: null,
       startTime: null,
