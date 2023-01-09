@@ -195,7 +195,7 @@
         </ion-item> -->
         <ion-item>
           <ion-label>Allow Registration</ion-label>
-          <ion-checkbox slot="start" :checked="tournament.allowRegistration" @ionChange="
+          <ion-checkbox slot="start" disabled="true" :checked="tournament.allowRegistration" @ionChange="
             tournament.allowRegistration = $event.target.checked == true
           "></ion-checkbox>
         </ion-item>
@@ -214,6 +214,11 @@
           <ion-label>Auto Open Game</ion-label>
           <ion-checkbox slot="start" :checked="tournament.autoOpenGame"
             @ionChange="tournament.autoOpenGame = $event.target.checked == true"></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>Allow Chat</ion-label>
+          <ion-checkbox slot="start" :checked="tournament.allowChat"
+            @ionChange="tournament.allowChat = $event.target.checked == true"></ion-checkbox>
         </ion-item>
         <ion-item>
           <ion-label>Send Post Email</ion-label>
@@ -267,26 +272,21 @@
 <script>
 import fetch from "@/services/fetch";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import TournamentTemplate from "@/services/TournamentTemplate";
 import Authentication from "@/services/Authentication";
 const authentication = new Authentication();
+const tournamentTemplate = new TournamentTemplate();
 export default {
   name: "home",
   components: {},
   data() {
-    var tournamentId = this.$route.params.tournament;
-    var copyId = this.$route.params.copyId;
-    //set owner
-    let user = authentication.getUser();
-    let userName = user ? user.userName : null;
-    // var randomInviteCode =
-    //   Math.random().toString(36).substring(2, 5) +
-    //   Math.random().toString(36).substring(2, 5);
-    var randomInviteCodeRecorder =
-      Math.random().toString(36).substring(2, 5) +
-      Math.random().toString(36).substring(2, 5);
-    var randomInviteCodeAdmin =
-      Math.random().toString(36).substring(2, 5) +
-      Math.random().toString(36).substring(2, 5);
+    let tournamentId = this.$route.params.tournament;
+    let copyId = this.$route.params.copyId;
+    let tournamentType = this.$route.params.tournamentType;
+
+    //default tournament settings
+    let tournamentDefault = tournamentTemplate.getTournamentTemplate(tournamentType);
+
     return {
       tournamentId: tournamentId,
       copyId: copyId,
@@ -297,46 +297,7 @@ export default {
           addTargetToExternalLinks: true,
         },
       },
-      tournament: {
-        name: "",
-        accessCodeBasic: null,
-        accessCodeRecorder: randomInviteCodeRecorder,
-        accessCodeAdmin: randomInviteCodeAdmin,
-        details: "",
-        faqContent: "",
-        hidden: false,
-        id: 0,
-        image: "/images/icons/cribbage.png",
-        isPublic: true,
-        owner: userName,
-        teams: "",
-        signUpText: "",
-        type: "Cribbage",
-        rounds: 5,
-        pairing: "Swiss",
-        gameRoomLink: null,
-        autoAdvanceRounds: false,
-        allowNotifications: true,
-        allowRegistration: false,
-        state: "setup",
-        maxPlayers: 50,
-        requireCheckIn: true,
-        allowCheckIn: false,
-        startDateTime: null,
-        timerDateTime: null,
-        video: "",
-        status: "Setup",
-        statusProgress: 0,
-        round: 0,
-        checkInDuration: 120,
-        twitchProfile: "",
-        winPoints: 2,
-        tiePoints: 1,
-        lossPoints: 0,
-        allowMultiplePlayersPerLogin: false,
-        autoOpenGame: false,
-        sendPostEmail: true
-      },
+      tournament: tournamentDefault,
       startDate: null,
       startTime: null,
       error: "",
@@ -384,6 +345,13 @@ export default {
         this.error = "Error: No start datetime is set";
         return;
       }
+      if (tournament.owner == null) {
+        //set owner
+        let user = authentication.getUser();
+        let userName = user ? user.userName : null;
+        tournament.owner = userName;
+      }
+
       if (tournamentId && tournament) {
         fetch
           .put(`tournament/${tournamentId}`, tournament)
@@ -400,8 +368,19 @@ export default {
           .post(`tournament`, tournament)
           .then((response) => {
             console.log(response);
+            if (response.data && response.data.id) {
+              let newTournamentId = response.data.id;
+              this.$router.push({
+                name: "Tournament",
+                params: { tournament: newTournamentId },
+              });
+            } else {
+              this.$router.push({
+                name: "Tournaments"
+              });
+            }
             //back
-            this.$router.back();
+
           })
           .catch((e) => {
             this.error = "Error: Save failed";
@@ -417,7 +396,9 @@ export default {
             .delete(`tournament/${tournamentId}`)
             .then((response) => {
               console.log(response);
-              this.$router.push({ path: "/" });
+              this.$router.push({
+                name: "Tournaments"
+              });
             })
             .catch((e) => {
               this.error = "Error: Delete failed";

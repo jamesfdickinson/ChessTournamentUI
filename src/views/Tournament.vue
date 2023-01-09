@@ -157,7 +157,7 @@
             </template>
           </div>
         </div>
-        <div class="flex-item">
+        <div class="flex-item" v-if="tournament.allowChat">
           <ion-card style="height: 200px">
             <Chat :channel="tournamentId.toString()" :userName="userName"></Chat>
           </ion-card>
