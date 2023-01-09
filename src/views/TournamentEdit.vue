@@ -58,6 +58,11 @@
           <ion-label position="stacked">Rounds</ion-label>
           <ion-input :value="tournament.rounds" @input="tournament.rounds = $event.target.value"></ion-input>
         </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Streaming: Twitch Profile</ion-label>
+          <ion-input :value="tournament.twitchProfile" @input="tournament.twitchProfile = $event.target.value">
+          </ion-input>
+        </ion-item>
         <!-- <ion-item>
           <ion-label position="stacked">Current Round</ion-label>
           <ion-input
@@ -132,11 +137,6 @@
         <ion-item>
           <ion-label position="stacked">Check-In Duration (seconds)</ion-label>
           <ion-input :value="tournament.checkInDuration" @input="tournament.checkInDuration = $event.target.value">
-          </ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked">Streaming: Twitch Profile</ion-label>
-          <ion-input :value="tournament.twitchProfile" @input="tournament.twitchProfile = $event.target.value">
           </ion-input>
         </ion-item>
         <ion-item>

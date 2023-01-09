@@ -23,11 +23,8 @@
         <ion-refresher slot="fixed" @ionRefresh="refresh($event)">
           <ion-refresher-content></ion-refresher-content>
         </ion-refresher>
-        <ion-searchbar
-          :value="searchInput"
-          @ionInput="searchInput = $event.target.value"
-          @ionChange="searchInput = $event.target.value"
-        ></ion-searchbar>
+        <ion-searchbar :value="searchInput" @ionInput="searchInput = $event.target.value"
+          @ionChange="searchInput = $event.target.value"></ion-searchbar>
 
         <!-- <router-link
           :to="{ name: 'Tournament', params: { tournament: 120 }}"
@@ -61,17 +58,9 @@
 
         <ion-list>
           <template v-for="tournament of filteredItemsFuture">
-            <ion-item
-              :key="tournament.id"
-              button
-              detail="true"
-              v-on:click="tournamentDetails(tournament.id)"
-            >
+            <ion-item :key="tournament.id" button detail="true" v-on:click="tournamentDetails(tournament.id)">
               <ion-thumbnail slot="start">
-                <img
-                  v-if="!tournament.image"
-                  src="images/chess-board-thin.jpg"
-                />
+                <img v-if="!tournament.image" src="images/chess-board-thin.jpg" />
                 <img v-if="tournament.image" :src="tournament.image" />
               </ion-thumbnail>
               <ion-label>
@@ -87,22 +76,14 @@
                 <ion-button slot="end" color="light" :href="tournament.id" >View </ion-button> -->
             </ion-item>
           </template>
-          <ion-item>
+    <ion-item>
             <ion-label> Completed </ion-label>
           </ion-item>
           <template v-for="tournament of filteredItemsCompleted">
-            <ion-item
-              style="opacity: 0.5"
-              :key="tournament.id"
-              button
-              detail="true"
-              v-on:click="tournamentDetails(tournament.id)"
-            >
+            <ion-item style="opacity: 0.5" :key="tournament.id" button detail="true"
+              v-on:click="tournamentDetails(tournament.id)">
               <ion-thumbnail slot="start">
-                <img
-                  v-if="!tournament.image"
-                  src="images/chess-board-thin.jpg"
-                />
+                <img v-if="!tournament.image" src="images/chess-board-thin.jpg" />
                 <img v-if="tournament.image" :src="tournament.image" />
               </ion-thumbnail>
               <ion-label>
@@ -114,14 +95,10 @@
               <ion-badge slot="end">
                 {{ tournament.state }}
               </ion-badge>
-              <!--                 
-                <ion-button slot="end" color="light" :href="tournament.id" >View </ion-button> -->
             </ion-item>
-          </template>
+          </template> 
           <ion-item>
-            <ion-button expand="block" v-on:click="createTournament()"
-              >Create Tournament</ion-button
-            >
+            <ion-button expand="block" v-on:click="createTournament()">Create Tournament</ion-button>
           </ion-item>
         </ion-list>
         <!-- <router-link
