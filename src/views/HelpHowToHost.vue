@@ -94,6 +94,11 @@
           <img src="/images/help/AdminMenuButton.png" alt="Admin Menu Button" />
 
 
+          <h2>Copy Tournament</h2>
+          <p>You can copy an existing tournament when creating a new tournament. This will create a copy all the setting
+            and clear all the players and rounds.</p>
+          <img src="/images/help/AdminCopyTournament.png" alt="Admin Copy Tournament" />
+          
           <h2>Advanced Setup</h2>
           <p>The ** items are required, The * items are common:</p>
           <ul>
