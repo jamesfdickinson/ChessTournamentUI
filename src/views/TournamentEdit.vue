@@ -201,8 +201,8 @@
         </ion-item>
         <ion-item>
           <ion-label>Show Team Scores</ion-label>
-          <ion-checkbox slot="start"  :checked="tournament.ShowTeamScores" @ionChange="
-            tournament.ShowTeamScores = $event.target.checked == true
+          <ion-checkbox slot="start"  :checked="tournament.showTeamScores" @ionChange="
+            tournament.showTeamScores = $event.target.checked == true
           "></ion-checkbox>
         </ion-item>
         
