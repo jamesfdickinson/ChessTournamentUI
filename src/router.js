@@ -144,8 +144,8 @@ export default new VueRouter({
       component: TournamentCreate
     },
     {
-      path: '/TournamentEdit/:copyId',
-      name: 'TournamentEdit',
+      path: '/TournamentCopy/:copyId',
+      name: 'TournamentCopy',
       component: TournamentEdit
     },
     {

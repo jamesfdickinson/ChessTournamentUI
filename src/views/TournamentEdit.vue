@@ -163,7 +163,7 @@
             tournament.autoAdvanceRounds = $event.target.checked == true
           "></ion-checkbox>
         </ion-item>
-        <!-- <ion-item>
+        <ion-item>
           <ion-label>Allow Notifications</ion-label>
           <ion-checkbox
             slot="start"
@@ -172,7 +172,7 @@
               tournament.allowNotifications = $event.target.checked == true
             "
           ></ion-checkbox>
-        </ion-item> -->
+        </ion-item>
 
         <ion-item>
           <ion-label>Is Hidden</ion-label>
@@ -195,11 +195,17 @@
         </ion-item> -->
         <ion-item>
           <ion-label>Allow Registration</ion-label>
-          <ion-checkbox slot="start" disabled="true" :checked="tournament.allowRegistration" @ionChange="
+          <ion-checkbox slot="start"  :checked="tournament.allowRegistration" @ionChange="
             tournament.allowRegistration = $event.target.checked == true
           "></ion-checkbox>
         </ion-item>
-
+        <ion-item>
+          <ion-label>Show Team Scores</ion-label>
+          <ion-checkbox slot="start"  :checked="tournament.ShowTeamScores" @ionChange="
+            tournament.ShowTeamScores = $event.target.checked == true
+          "></ion-checkbox>
+        </ion-item>
+        
         <ion-item>
           <ion-label>Is Public</ion-label>
           <ion-checkbox slot="start" :checked="tournament.isPublic"

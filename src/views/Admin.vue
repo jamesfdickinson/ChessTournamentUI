@@ -172,7 +172,7 @@
           </ion-item>
         </router-link>
         <router-link
-          :to="{ name: 'TournamentEdit', params: { copyId: tournamentId } }"
+          :to="{ name: 'TournamentCopy', params: { copyId: tournamentId } }"
         >
           <ion-item button detail="true">
             <ion-icon slot="start" name="copy"></ion-icon>

@@ -50,13 +50,21 @@
           <ion-icon slot="start" name="contact"></ion-icon>
           <ion-label>Test Show Toast</ion-label>
         </ion-item>
+        <ion-item button detail="true" v-on:click="Create1Division()">
+          <ion-icon slot="start" name="contact"></ion-icon>
+          <ion-label>Create 1 division</ion-label>
+        </ion-item>
         <ion-item button detail="true" v-on:click="Create2DivisionsKto3and4plus()">
           <ion-icon slot="start" name="contact"></ion-icon>
           <ion-label>Create 2 divisions K to 3 and 4 plus</ion-label>
         </ion-item>
-        <ion-item button detail="true" v-on:click="Create1Division()">
+        <ion-item button detail="true" v-on:click="Create2DivisionsKto6and7plus()">
           <ion-icon slot="start" name="contact"></ion-icon>
-          <ion-label>Create 1 division</ion-label>
+          <ion-label>Create 2 Divisions K to 6 and 7 plus</ion-label>
+        </ion-item>
+        <ion-item button detail="true" v-on:click="Create3DivisionsKto2and3to6and7plus()">
+          <ion-icon slot="start" name="contact"></ion-icon>
+          <ion-label>Create 3 Divisions K to 2 and 3 to 6 and 7 plus</ion-label>
         </ion-item>
         <ion-item button detail="true" v-on:click="SendAllToTournamentHomeNotification()">
           <ion-icon slot="start" name="contact"></ion-icon>
@@ -193,6 +201,17 @@ export default {
         null
       );
     },
+    Create1Division() {
+      var tournamentId = this.tournamentId;
+      fetch
+        .get(`tools/Create1Division/${tournamentId}`)
+        .then((response) => {
+          this.message = response.data;
+        })
+        .catch((e) => {
+          this.error = e;
+        });
+    },
     Create2DivisionsKto3and4plus() {
       var tournamentId = this.tournamentId;
       fetch
@@ -204,10 +223,21 @@ export default {
           this.error = e;
         });
     },
-    Create1Division() {
+    Create2DivisionsKto6and7plus() {
       var tournamentId = this.tournamentId;
       fetch
-        .get(`tools/Create1Division/${tournamentId}`)
+        .get(`tools/Create2DivisionsKto6and7plus/${tournamentId}`)
+        .then((response) => {
+          this.message = response.data;
+        })
+        .catch((e) => {
+          this.error = e;
+        });
+    },
+    Create3DivisionsKto2and3to6and7plus() {
+      var tournamentId = this.tournamentId;
+      fetch
+        .get(`tools/Create3DivisionsKto2and3to6and7plus/${tournamentId}`)
         .then((response) => {
           this.message = response.data;
         })
