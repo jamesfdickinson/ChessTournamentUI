@@ -79,7 +79,7 @@
           xdetail="true"
           v-for="playerGame of playerGames"
           :key="playerGame.Id"
-          v-on:click="openRound(playerGame.round)"
+          v-on:click="openPlayer(playerGame.Id)"
         >
           <!-- <ion-note slot="start" >{{  playerGame.round }}</ion-note> -->
           <ion-label>{{ playerGame.opponets }}</ion-label>
