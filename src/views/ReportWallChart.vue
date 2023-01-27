@@ -1,8 +1,9 @@
 <template>
   <layout-raw>
- <a href="#" onclick="window.history.back();">Back</a>
+    <a href="#" onclick="window.history.back();">Back</a>
+    <div class="section-to-print">
       <h1>Wall Chart</h1>
-        <!-- <form @submit.prevent="handleSubmit">
+      <!-- <form @submit.prevent="handleSubmit">
         <ion-item color>
           <ion-label slot>Division</ion-label>
           <ion-card background="light">
@@ -21,7 +22,7 @@
         <button type="submit">Submit</button>
       </form>
       <hr>
-    
+
       <!-- <h3>Division: {{division}}</h3> -->
 
       <table>
@@ -41,32 +42,32 @@
         <tbody>
           <template v-for="row in data">
             <tr :key="row.playerId">
-              <td>{{row.rankId}}</td>
-              <td>{{row.firstName}} {{row.lastName}}</td>
-              <td>{{row.team}}</td>
-              <td>{{row.grade}}</td>
-              <td>{{row.rd1Color}} {{row.rd1Played}}</td>
-              <td>{{row.rd2Color}} {{row.rd2Played}}</td>
-              <td>{{row.rd3Color}} {{row.rd3Played}}</td>
-              <td>{{row.rd4Color}} {{row.rd4Played}}</td>
-              <td>{{row.rd5Color}} {{row.rd5Played}}</td>
+              <td>{{ row.rankId }}</td>
+              <td>{{ row.firstName }} {{ row.lastName }}</td>
+              <td>{{ row.team }}</td>
+              <td>{{ row.grade }}</td>
+              <td>{{ row.rd1Color }} {{ row.rd1Played }}</td>
+              <td>{{ row.rd2Color }} {{ row.rd2Played }}</td>
+              <td>{{ row.rd3Color }} {{ row.rd3Played }}</td>
+              <td>{{ row.rd4Color }} {{ row.rd4Played }}</td>
+              <td>{{ row.rd5Color }} {{ row.rd5Played }}</td>
             </tr>
             <tr :key="row.rankId">
               <td></td>
-              <td>{{row.rating}}</td>
+              <td>{{ row.rating }}</td>
               <td></td>
               <td></td>
-              <td>{{row.rd1Score}}</td>
-              <td>{{row.rd2Score}}</td>
-              <td>{{row.rd3Score}}</td>
-              <td>{{row.rd4Score}}</td>
-              <td>{{row.rd5Score}}</td>
+              <td>{{ row.rd1Score }}</td>
+              <td>{{ row.rd2Score }}</td>
+              <td>{{ row.rd3Score }}</td>
+              <td>{{ row.rd4Score }}</td>
+              <td>{{ row.rd5Score }}</td>
             </tr>
           </template>
         </tbody>
       </table>
-  
- </layout-raw>
+    </div>
+  </layout-raw>
 </template>
 
 <script>
@@ -115,6 +116,7 @@ table {
   width: 100%;
   border-collapse: collapse;
 }
+
 table,
 th,
 td {
