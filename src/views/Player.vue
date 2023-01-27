@@ -66,7 +66,7 @@
         <ion-list>-->
         <ion-list-header color="primary">Games</ion-list-header>
         <ion-item xdetail="true" v-for="playerGame of playerGames" :key="playerGame.Id"
-          v-on:click="openPlayer(playerGame.Id)">
+          v-on:click="openPlayer(playerGame.opponentId)">
           <!-- <ion-note slot="start" >{{  playerGame.round }}</ion-note> -->
           <ion-label>{{ playerGame.opponets }}</ion-label>
           <ion-badge slot="end">{{ playerGame.points }}</ion-badge>
