@@ -195,7 +195,7 @@
         </ion-item> -->
         <ion-item>
           <ion-label>Allow Registration</ion-label>
-          <ion-checkbox slot="start"  :checked="tournament.allowRegistration" @ionChange="
+          <ion-checkbox slot="start" :disabled="tournament.state == 'setup'"  :checked="tournament.allowRegistration" @ionChange="
             tournament.allowRegistration = $event.target.checked == true
           "></ion-checkbox>
         </ion-item>
