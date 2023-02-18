@@ -77,10 +77,12 @@
           <ion-item>
             <ol>
               <li>Click on LOGIN/SIGNUP and create an account (FREE)</li>
+              <li>Players play in ALL rounds</li>
+              <li>The date and time on the tournament page are in YOUR time zone</li>
               <li>Select a tournament</li>
               <li>Click on Registration</li>
-              <li>Be on the Tournament Page when it starts</li>
-              <li>Have Fun!</li>
+              <li>Be on the tournament page when it starts</li>
+              <li>These tournaments are FUN and CASUAL!</li>
             </ol>
           </ion-item>
           <!-- <ion-card>
