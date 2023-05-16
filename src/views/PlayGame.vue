@@ -86,6 +86,17 @@ export default {
       let email = user && user.email ? user.email : "";
       let name = user && user.name ? user.name : "";
       let avatar = user && user.avatar ? user.avatar : "";
+
+      //clear special characters found in name causing an issues with the url, & # and @
+      name = name.replace("&", "");
+      name = name.replace("#", "");
+      name = name.replace("@", "");
+      userName = userName.replace("&", "");
+      userName = userName.replace("#", "");
+      userName = userName.replace("@", "");
+
+     
+
       //note: can't trust players to supply their own cribbage id.  Had an issue with many with the same number
       //note: now link the systems using their email
       //let gamerId = user && user.gamerId ? user.gamerId : user.email;
