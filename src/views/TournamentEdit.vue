@@ -15,6 +15,10 @@
           <ion-label position="stacked">Name</ion-label>
           <ion-input :value="tournament.name" @input="tournament.name = $event.target.value"></ion-input>
         </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Owner</ion-label>
+          <ion-input readonly :value="tournament.owner" @input="tournament.owner = $event.target.value"></ion-input> 
+        </ion-item>
         <!-- <ion-item>
           <ion-label position="stacked">Type</ion-label>
           <ion-input

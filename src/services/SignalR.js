@@ -52,9 +52,9 @@ export default class SignalR {
         if (this.onReceiveMessages)
             this.onReceiveMessages(messages);
     }
-    receiveMessage(user, message) {
+    receiveMessage(user, message, userId) {
         console.log(user + "-" + message);
         if (this.onReceiveMessage)
-            this.onReceiveMessage(user, message);
+            this.onReceiveMessage(user, message, userId);
     }
 }

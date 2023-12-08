@@ -3,8 +3,22 @@
     <div id="chat-log" class="chat-log">
       <template v-for="chatItem of chatLog">
         <div :key="chatItem.id">
-          <strong style="color: green">{{ chatItem.name }}:</strong>
-          {{ chatItem.message }}
+          <!-- <div v-if="adminIds.includes(chatItem.userId)">
+            <strong style="color: rgb(180, 0, 0)">{{ chatItem.name }}:</strong>
+            <strong> {{ chatItem.message }} </strong>
+          </div> -->
+          <div v-if="adminIds.includes(chatItem.userId)">
+            
+            <span style="font-weight: bold;color: #3880ff">{{ chatItem.name }}:</span>
+            <span style="font-weight:bold;"> {{ chatItem.message }}</span>
+          </div>
+          <div v-else>
+            <!-- <ion-icon v-if="!isMuted" @click="mute()" slot="start" name="volume-mute"></ion-icon>
+            <ion-icon v-if="isMuted" @click="unmute()" slot="start" name="volume-off"></ion-icon> -->
+
+            <span style="font-weight: bold; color: green">{{ chatItem.name }}:</span>
+            {{ chatItem.message }}
+          </div>
         </div>
       </template>
     </div>
@@ -13,30 +27,23 @@
       <form @submit.prevent="handleSubmit">
         <ion-item>
           <!-- <ion-icon slot="start" name="text"></ion-icon> -->
-          <ion-icon
-            v-if="!isMuted"
-            @click="mute()"
-            slot="start"
-            name="volume-mute"
-          ></ion-icon>
-          <ion-icon
-            v-if="isMuted"
-            @click="unmute()"
-            slot="start"
-            name="volume-off"
-          ></ion-icon>
-          <ion-input
-            type="text"
-            :value="message"
-            @input="message = $event.target.value"
-            placeholder="message..."
-          ></ion-input>
+          <ion-icon v-if="!isMuted" @click="mute()" slot="start" name="volume-mute"></ion-icon>
+          <ion-icon v-if="isMuted" @click="unmute()" slot="start" name="volume-off"></ion-icon>
+          <ion-input type="text" :value="message" @input="message = $event.target.value"
+            placeholder="message..."></ion-input>
 
           <ion-button slot="end" type="submit">Send</ion-button>
         </ion-item>
+        <!-- <ion-item>
+          <ion-button type="button">UnMute</ion-button>
+          <ion-button type="button">Mute</ion-button>
+          <ion-button type="button">Clear All</ion-button>
+        </ion-item> -->
       </form>
     </div>
+    <div class="chat-button">
 
+    </div>
     <!-- <div class="chat-users">
       <div>Jimmy</div>
       <div>BatMan</div>
@@ -74,15 +81,17 @@ export default {
         return [];
       },
     },
-    users: Array,
     channel: String,
     userName: String,
+    userId: String,
+    blockedIds: Array,
+    adminIds: Array
   },
   data: function () {
     this.soundAlert = new Howl({
       src: ["/audio/for-sure.mp3"],
     });
-    let isMuted  = localStorage.getItem('isMuted') == "true";
+    let isMuted = localStorage.getItem('isMuted') == "true";
     return {
       api: null,
       message: "",
@@ -100,9 +109,16 @@ export default {
     send(message) {
       var channel = this.channel.toString();
       let userName = this.userName || "Unknown";
+      let userId = this.userId || "Unknown";
 
-      signalR.send("SendMessage", channel, userName, message);
+      signalR.send("SendMessage", channel, userName, message, userId);
       this.$nextTick(() => this.scrollToEnd());
+    },
+    isUserMuted(userId) {
+      if(this.blockedIds.includes(userId)){
+        return true;
+      }
+      return false;
     },
     mute() {
       this.isMuted = true;
@@ -110,7 +126,7 @@ export default {
     },
     unmute() {
       this.isMuted = false;
-       localStorage.setItem('isMuted', false);
+      localStorage.setItem('isMuted', false);
     },
     onMessages(messages) {
       //clear array
@@ -121,15 +137,17 @@ export default {
         chatLog.push({
           name: message.user,
           message: message.message,
+          userId: message.userId
         });
       }
       this.$nextTick(() => this.scrollToEnd());
     },
-    onMessage(user, message) {
+    onMessage(user, message, userId) {
       let chatLog = this.chatLog;
       chatLog.push({
         name: user,
         message: message,
+        userId: userId
       });
       if (!this.isMuted) {
         this.soundAlert.play();
@@ -182,7 +200,7 @@ export default {
       signalR.close();
     },
   },
-  updated() {},
+  updated() { },
   created() {
     //this.loadDataSampleData();
     this.connectToChat();
@@ -211,7 +229,7 @@ export default {
     "footer footer"; */
 }
 
-.grid-container > div {
+.grid-container>div {
   background-color: rgba(255, 255, 255, 0.8);
   xtext-align: left;
   xmargin: 5px 5px;
@@ -225,10 +243,12 @@ export default {
   overflow-y: scroll;
   padding: 10px 10px;
 }
+
 .chat-button {
   grid-area: footer;
   padding: 0px 0px;
 }
+
 .chat-users {
   grid-area: sidebar;
   padding: 10px 10px;

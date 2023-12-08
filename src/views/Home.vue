@@ -1,265 +1,142 @@
 <template>
   <layout-no-menu>
     <ion-page class="ion-page" main>
-      <!-- <ion-page class="ion-page" main> -->
-      <!-- <ion-header>
-        <ion-toolbar color="primary">
-          <ion-buttons slot="start"> </ion-buttons>
-          <ion-img
-            slot=""
-            style="height: 100px"
-            src="./images/trophyflat.png"
-          ></ion-img>
-          <ion-title>
-            <h1 style="text-align: center">Bracket JD</h1>
-          </ion-title>
-
-          <ion-buttons slot="end">
-             <ion-button v-on:click="userDetails()">
-              <ion-icon name="contact"></ion-icon>
-            </ion-button> 
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header> -->
       <ion-content>
-        <div  style="background-color:#3880ff;color:#FFFFFF;">
-          <ion-img
-            slot=""
-            style="height: 100px"
-            src="./images/trophyflat.png"
-          ></ion-img>
-          <ion-title>
-            <h1 style="text-align: center">Bracket JD</h1>
-          </ion-title>
+        <div style="background-color:#3880ff;color:#FFFFFF;">
+          <ion-img slot="" style="height: 100px" src="./images/trophyflat.png"></ion-img>
+
+          <h1 class="title">Bracket JD</h1>
+
         </div>
-        <ion-list>
-          <!-- <ion-item>
-        
-          <div style="background-color: var(--ion-background-color)">
-              <h1 style="text-align: center">Bracket JD</h1>
-            </div> 
-          </ion-item> -->
-
-          <ion-item>
-            <!-- <ion-item>
-              Play live tournaments online. Find an upcomming tournament and
+        <div style="padding: 20px; max-width: 600px; margin: 0 auto;">
+          <h1>Welcome to Bracket JD</h1>
+          <div>
+            <p>
+              Play live tournaments online. Find an upcoming tournament and
               register to play. The tournaments are hosted live by the
-              community. Hosts utilize a live video stream to answer questions,
-              create rounds, and entertain the players.
-            </ion-item> -->
-
-            <!-- <ion-img
-            style="height: 100px"
-            src="./images/trophyflat.png"
-          ></ion-img> -->
-            <!-- <ion-card-header>
-            <ion-card-title>Bracket JD</ion-card-title>
-          </ion-card-header> -->
-            <div>
-              <p>
-                Play live tournaments online. Find an upcoming tournament and
-                register to play. The tournaments are hosted live by the
-                community. Hosts utilize a live video stream to answer
-                questions, create rounds, and entertain the players.
-              </p>
-              <!-- <ion-button>More Details</ion-button> -->
-            </div>
-          </ion-item>
-          <ion-item>
-            <ion-button v-on:click="login()">Login / Sign up</ion-button>
-            <!-- <ion-button>Login / Sign up</ion-button> -->
-            <!-- <ion-button>FAQ</ion-button> -->
-          </ion-item>
-
-          <ion-list-header>
-            <ion-label>How to play</ion-label>
-          </ion-list-header>
-          <ion-item>
-            <ol>
-              <li>Click on LOGIN/SIGNUP and create an account (FREE)</li>
-              <li>Players play in ALL rounds</li>
-              <li>The date and time on the tournament page are in YOUR time zone</li>
-              <li>Select a tournament</li>
-              <li>Click on Registration</li>
-              <li>Be on the tournament page when it starts</li>
-              <li>These tournaments are FUN and CASUAL!</li>
-            </ol>
-          </ion-item>
-          <!-- <ion-card>
-
-          <ion-card-content>
-            <p>How to play</p>
-            <ol>
-              <li>Login or create an account (free)</li>
-              <li>Select a tournament</li>
-              <li>Click the “Sign Up” button</li>
-              <li>Be on Tournament page when it starts</li>
-            </ol>
-          </ion-card-content>
-        </ion-card> -->
-          <!-- <ion-card>
-
-          <ion-card-header>
-            <ion-card-title>Format</ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-                     <p>
-              Tournament format and rules are created by the host of that
-              tournament. A common tournament format that has been used using
-              Bracket JD has been 5 games with 2 points for a win and 3 points
-              for a skunk. Players play all games and the player with the more
-              points wins. Those tournament last from 60-90 miutes.
+              community. Hosts utilize a live video stream to answer
+              questions, create rounds, and entertain the players.
             </p>
-          </ion-card-content>
-        </ion-card> -->
+          </div>
 
-          <!-- <ion-card>
-          <ion-card-content> -->
+          <div class="searchBox">
+            <h2>Find Tournament</h2>
+            <div style=" display: flex;">
+              <input type="text" placeholder="Search.." class="searchText" v-model="searchQuery" />
+              <input type="submit" value="Search" class="searchButton" v-on:click="search()" />
+            </div>
+            <p>
+              <a href="Tournaments/all">All</a> |
+              <a href="Tournaments/chess">Chess</a> |
+              <a href="Tournaments/cribbage">Cribbage</a> |
+              <a href="Tournaments/ginrummy">Gin Rummy</a>
+            </p>
 
-          <ion-list-header>
-            <ion-label>Tournaments</ion-label>
-          </ion-list-header>
-          <template v-for="tournament of filteredItemsFuture">
-            <ion-item
-              :key="tournament.id"
-              button
-              detail="true"
-              v-on:click="tournamentDetails(tournament.id)"
-            >
-              <ion-thumbnail slot="start">
-                <img
-                  v-if="!tournament.image"
-                  src="images/chess-board-thin.jpg"
-                />
-                <img v-if="tournament.image" :src="tournament.image" />
-              </ion-thumbnail>
-              <ion-label>
-                <h2>{{ tournament.name }}</h2>
-                <p>
-                  {{ getLocalDate(tournament.startDateTime) }}
-                </p>
-              </ion-label>
-              <ion-badge slot="end">
-                {{ tournament.state }}
-              </ion-badge>
-              <!--
-                <ion-button slot="end" color="light" :href="tournament.id" >View </ion-button> -->
-            </ion-item>
-          </template>
-          <ion-item>
-            <ion-button slot="end" v-on:click="tournamentsPage()">
-              More Tournaments
-            </ion-button>
-          </ion-item>
-        </ion-list>
-        <!-- </ion-card-content>
-        </ion-card> -->
+          </div>
+
+          <div class="quoteBox">
+            <div>
+              <h2>How to play</h2>
+              <ol>
+                <li>Click on <a href="Login">Login / Sign up</a> and create an
+                  account (FREE)</li>
+                <li>Find a tournament</li>
+                <li>Registrater for a tournament</li>
+                <li>Read the tournament's FAQ/Rules</li>
+                <li>Be on the tournament page when it starts</li>
+                <li>These tournaments are FUN and CASUAL!</li>
+              </ol>
+            </div>
+          </div>
+
+          <footer>
+            <p>
+              <a href="https://bracketjd.com">Bracket JD</a> |
+              <a href="mailto:tournament@jdsoftwarellc.com">Contact</a> 
+       
+            </p>
+          </footer>
+        </div>
       </ion-content>
     </ion-page>
   </layout-no-menu>
 </template>
+<style>
+.title {
+  margin: 0;
+  padding: 0;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #FFFFFF;
+  text-align: center;
+  padding-bottom: 10px;
+}
 
+.searchBox {
+  margin: 30px 0;
+}
+
+.searchText {
+  flex-grow: 1;
+  border-radius: 3px;
+  margin: 0 5px 0 0px;
+  padding: 5px 5px;
+  transition: box-shadow 0.2s linear;
+  border: 0;
+  box-shadow: 0 1px 3px 0 rgba(35, 40, 43, 0.2), 0 1px 3px 0 rgba(0, 0, 0, 0.3), inset 0 0 0 1px #C3CACE;
+}
+
+.searchButton {
+  background-color: rgb(56, 128, 255);
+  border: 1px solid rgb(56, 128, 255);
+  color: #FFFFFF;
+  border-radius: 3px;
+  box-shadow: 0 4px 6px 1px rgba(35, 40, 43, 0.2), 0 1px 3px 0 rgba(35, 40, 43, 0.3);
+  padding: 5px 10px
+}
+
+.quoteBox {
+  margin: 30px 0;
+  background-color: #f7f7f7;
+  border-radius: 3px;
+  padding: 5px 20px 10px 20px;
+}
+footer{
+  margin-top: 30px;
+  text-align: center;
+}
+</style>
 <script>
 // @ is an alias to /src
-import fetch from "@/services/fetch";
 export default {
   name: "home",
   components: {},
   data() {
-    const dateFilter = ((d) => new Date(d.setDate(d.getDate() - 1)))(
-      new Date()
-    );
     return {
-      tournaments: [],
-      searchInput: "",
-      dateFilter: dateFilter,
-      errors: [],
+      searchQuery: ""
     };
   },
   methods: {
+    search() {
+      const searchQuery = this.searchQuery;
+      this.$router.push({ name: "Tournaments", params: { type: "all", searchQuery: searchQuery } });
+    },
     login() {
       this.$router.push({ name: "Login" });
     },
     userDetails() {
       this.$router.push({ name: "User" });
     },
-    tournamentsPage() {
+    tournamentsPage(type) {
+      if (!type) type = "all";
       this.$router.push({ name: "Tournaments" });
     },
-    getLocalDate(date) {
-      if (!date) return null;
-      let localDate = new Date(date);
-      if (!localDate) return null;
-      let options = { dateStyle: "medium", timeStyle: "short" };
-      return localDate.toLocaleString(undefined, options);
-    },
-    getStatus(state) {
-      if (state == "setup") return "open";
-      if (state == "registration") return "open";
-      if (state == "check-in") return "open";
-      if (state == "play") return "open";
-      if (state == "end") return "open";
-      return state;
-    },
-    tournamentDetails(tournamentId) {
-      this.$router.push({
-        name: "Tournament",
-        params: { tournament: tournamentId },
-      });
-    },
-    createTournament() {
-      this.$router.push({
-        name: "TournamentCreate",
-        params: {},
-      });
-    },
-    loadData() {
-      fetch
-        .get(`tournament`) //.get(`tournament/type/Cribbage`)
-        .then((response) => {
-          this.tournaments = response.data;
-          if (this.tournaments) {
-            this.tournaments.sort((a, b) => {
-              return new Date(a.startDateTime) - new Date(b.startDateTime);
-            });
-          }
-        })
-        .catch((e) => {
-          this.errors.push(e);
-        });
-    },
+
   },
   created() {
-    this.loadData();
-  },
-  computed: {
-    filteredItemsFuture() {
-      let filteredData = this.tournaments;
-      let searchInput = this.searchInput;
-      let dateFilter = this.dateFilter;
-      if (dateFilter) {
-        filteredData = filteredData.filter(
-          (a) => new Date(a.startDateTime) > dateFilter
-        );
-      }
-      filteredData.sort((a, b) => {
-        return new Date(a.startDateTime) - new Date(b.startDateTime);
-      });
-      if (searchInput) {
-        searchInput = searchInput.toLowerCase();
-        filteredData = filteredData.filter((p) => {
-          if (p.name && p.name.toLowerCase().startsWith(searchInput))
-            return true;
-          if (p.details && p.details.toLowerCase().startsWith(searchInput))
-            return true;
-          if (p.teams && p.teams.toLowerCase().startsWith(searchInput))
-            return true;
 
-          return false;
-        });
-      }
-      return filteredData;
-    },
   },
+
 };
 </script>

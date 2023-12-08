@@ -23,8 +23,16 @@
         <ion-refresher slot="fixed" @ionRefresh="refresh($event)">
           <ion-refresher-content></ion-refresher-content>
         </ion-refresher>
-        <ion-searchbar :value="searchInput" @ionInput="searchInput = $event.target.value"
-          @ionChange="searchInput = $event.target.value"></ion-searchbar>
+        <ion-item>
+          <ion-label position="fixed">Name</ion-label>
+          <ion-searchbar :value="searchInput" @ionInput="searchInput = $event.target.value"
+            @ionChange="searchInput = $event.target.value"></ion-searchbar>
+        </ion-item>
+        <ion-item>
+          <ion-label position="fixed">Game Type</ion-label>
+          <ion-searchbar :value="type" @ionInput="type = $event.target.value"
+            @ionChange="type = $event.target.value"></ion-searchbar>
+        </ion-item>
 
         <!-- <router-link
           :to="{ name: 'Tournament', params: { tournament: 120 }}"
@@ -76,7 +84,7 @@
                 <ion-button slot="end" color="light" :href="tournament.id" >View </ion-button> -->
             </ion-item>
           </template>
-    <ion-item>
+          <ion-item>
             <ion-label> Completed </ion-label>
           </ion-item>
           <template v-for="tournament of filteredItemsCompleted">
@@ -96,7 +104,7 @@
                 {{ tournament.state }}
               </ion-badge>
             </ion-item>
-          </template> 
+          </template>
           <ion-item>
             <ion-button expand="block" v-on:click="createTournament()">Create Tournament</ion-button>
           </ion-item>
@@ -121,6 +129,8 @@ import fetch from "@/services/fetch";
 export default {
   name: "home",
   data() {
+    let type = this.$route.params.type || "all";
+    let searchInput = this.$route.params.searchQuery || "";
     const dateFilter = ((d) => new Date(d.setDate(d.getDate() - 1)))(
       new Date()
     );
@@ -128,8 +138,9 @@ export default {
       new Date()
     );
     return {
+      type: type,
       tournaments: [],
-      searchInput: "",
+      searchInput: searchInput,
       dateFilter: dateFilter,
       dateFilterMax: dateFilterMax,
       errors: [],
@@ -175,8 +186,9 @@ export default {
       });
     },
     loadData() {
+      const type = this.type;
       return fetch
-        .get(`tournament`) //.get(`tournament/type/Cribbage`)
+        .get(`tournament/type/${type}`)
         .then((response) => {
           this.tournaments = response.data;
           if (this.tournaments) {

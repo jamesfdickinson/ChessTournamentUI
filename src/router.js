@@ -139,6 +139,11 @@ export default new VueRouter({
       component: Tournaments
     },
     {
+      path: '/Tournaments/:type',
+      name: 'Tournaments',
+      component: Tournaments
+    },
+    {
       path: '/TournamentCreate',
       name: 'TournamentCreate',
       component: TournamentCreate

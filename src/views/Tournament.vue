@@ -159,7 +159,7 @@
         </div>
         <div class="flex-item" v-if="tournament.allowChat">
           <ion-card style="height: 200px">
-            <Chat :channel="tournamentId.toString()" :userName="userName"></Chat>
+            <Chat :channel="tournamentId.toString()" :adminIds="adminIds" :blockedIds="blockedIds" :userId="userId" :userName="userName"></Chat>
           </ion-card>
         </div>
         <div class="flex-item" v-if="tournament.video">
@@ -228,16 +228,21 @@ export default {
     ReportScoreGroupRank,
   },
   data() {
-    var tournamentId = this.$route.params.tournament || 118;
-    //var tournamentGuid = ...
-    let user = authentication.getUser();
-    var userName = user && user.name ? user.name : "unknown";
+    let tournamentId = this.$route.params.tournament || 118;
 
+    let user = authentication.getUser();
+    let userName = user && user.name ? user.name : "unknown";
+    let userId = user && user.userName ? user.userName : null;
+    let blockedIds = []; 
+    let adminIds = ["jamesfdickinson@gmail.com"]; 
     return {
       tournamentId: tournamentId,
       tournament: {},
       user: user,
       userName: userName,
+      userId: userId,
+      adminIds: adminIds,
+      blockedIds: blockedIds,
       userPlayers: [],
       roundTables: [],
       userTables: [],
