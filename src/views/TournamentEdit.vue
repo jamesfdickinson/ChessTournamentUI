@@ -12,12 +12,16 @@
     <ion-content>
       <ion-list>
         <ion-item>
-          <ion-label position="stacked">Name</ion-label>
+          <ion-label position="stacked">Tournament Name</ion-label>
           <ion-input :value="tournament.name" @input="tournament.name = $event.target.value"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Owner</ion-label>
-          <ion-input readonly :value="tournament.owner" @input="tournament.owner = $event.target.value"></ion-input> 
+          <ion-input readonly :value="tournament.owner" @input="tournament.owner = $event.target.value"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Host Name</ion-label>
+          <ion-input :value="tournament.hostName" @input="tournament.hostName = $event.target.value"></ion-input>
         </ion-item>
         <!-- <ion-item>
           <ion-label position="stacked">Type</ion-label>
@@ -165,17 +169,13 @@
           <ion-label>Auto Advance Rounds</ion-label>
           <ion-checkbox slot="start" :checked="tournament.autoAdvanceRounds" @ionChange="
             tournament.autoAdvanceRounds = $event.target.checked == true
-          "></ion-checkbox>
+            "></ion-checkbox>
         </ion-item>
         <ion-item>
           <ion-label>Allow Notifications</ion-label>
-          <ion-checkbox
-            slot="start"
-            :checked="tournament.allowNotifications"
-            @ionChange="
-              tournament.allowNotifications = $event.target.checked == true
-            "
-          ></ion-checkbox>
+          <ion-checkbox slot="start" :checked="tournament.allowNotifications" @ionChange="
+            tournament.allowNotifications = $event.target.checked == true
+            "></ion-checkbox>
         </ion-item>
 
         <ion-item>
@@ -187,7 +187,7 @@
           <ion-label>Require Check-In</ion-label>
           <ion-checkbox slot="start" :checked="tournament.requireCheckIn" @ionChange="
             tournament.requireCheckIn = $event.target.checked == true
-          "></ion-checkbox>
+            "></ion-checkbox>
         </ion-item>
         <!-- <ion-item>
           <ion-label>Allow Check-In</ion-label>
@@ -199,17 +199,18 @@
         </ion-item> -->
         <ion-item>
           <ion-label>Allow Registration</ion-label>
-          <ion-checkbox slot="start" :disabled="tournament.state == 'setup'"  :checked="tournament.allowRegistration" @ionChange="
-            tournament.allowRegistration = $event.target.checked == true
-          "></ion-checkbox>
+          <ion-checkbox slot="start" :disabled="tournament.state == 'setup'" :checked="tournament.allowRegistration"
+            @ionChange="
+              tournament.allowRegistration = $event.target.checked == true
+              "></ion-checkbox>
         </ion-item>
         <ion-item>
           <ion-label>Show Team Scores</ion-label>
-          <ion-checkbox slot="start"  :checked="tournament.showTeamScores" @ionChange="
+          <ion-checkbox slot="start" :checked="tournament.showTeamScores" @ionChange="
             tournament.showTeamScores = $event.target.checked == true
-          "></ion-checkbox>
+            "></ion-checkbox>
         </ion-item>
-        
+
         <ion-item>
           <ion-label>Is Public</ion-label>
           <ion-checkbox slot="start" :checked="tournament.isPublic"
@@ -359,7 +360,9 @@ export default {
         //set owner
         let user = authentication.getUser();
         let userName = user ? user.userName : null;
+        let name = user && user.name ? user.name : "unknown";
         tournament.owner = userName;
+        tournament.hostName = name;
       }
 
       if (tournamentId && tournament) {
@@ -458,6 +461,15 @@ export default {
             this.error = "Error: Load failed";
             console.warn(e);
           });
+      }
+      //pre popuplate owner
+      if (tournamentId == null && copyId == null) {
+        //set owner
+        let user = authentication.getUser();
+        let userName = user ? user.userName : null;
+        let name = user && user.name ? user.name : "";
+        this.tournament.owner = userName;
+        this.tournament.hostName = name;
       }
     },
     getHTML5DateStringsFromDate(d) {

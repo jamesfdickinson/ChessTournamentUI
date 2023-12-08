@@ -35,13 +35,15 @@
               <ion-label style="white-space: normal">
                 <h1>{{ tournament.name }}</h1>
                 <p>{{ getLocalDate(tournament.startDateTime) }}</p>
+                <p>Host: {{ tournament.hostName || "" }}</p>
+                <p>Rounds: {{ tournament.rounds }}</p>
               </ion-label>
               <ion-icon name="settings" slot="end" @click="
                 $router.push({
                   name: 'Admin',
                   params: { tournament: tournamentId },
                 })
-              ">
+                ">
               </ion-icon>
             </ion-item>
             <ion-item>
@@ -56,22 +58,20 @@
                   name: 'FAQ',
                   params: { tournament: tournamentId },
                 })
-              ">FAQ</ion-button>
+                ">FAQ</ion-button>
             </ion-item>
-            <ion-item v-if="
-              tournament.allowRegistration === true &&
+            <ion-item v-if="tournament.allowRegistration === true &&
               tournament.isFull === false &&
               userPlayers.length === 0
-            ">
+              ">
               <ion-icon name="clipboard" slot="start"></ion-icon>
               <ion-label>Not registered</ion-label>
               <ion-button slot="end" @click="signup()">Sign-Up</ion-button>
             </ion-item>
-            <ion-item v-if="
-              tournament.allowRegistration === true &&
+            <ion-item v-if="tournament.allowRegistration === true &&
               tournament.isFull === true &&
               userPlayers.length === 0
-            ">
+              ">
               <ion-icon name="clipboard" slot="start"></ion-icon>
               <ion-label>Not registered</ion-label>
               <ion-button slot="end" disabled="true">Registration is full</ion-button>
@@ -91,17 +91,16 @@
                       name: 'TeamEdit',
                       params: { id: userPlayer.playerId },
                     })
-                  ">Update Team</ion-button>
+                    ">Update Team</ion-button>
                   <ion-button v-if="!tournament.teams" slot="end" @click="
                     $router.push({
                       name: 'Player',
                       params: { id: userPlayer.playerId },
                     })
-                  ">View</ion-button>
+                    ">View</ion-button>
                 </ion-item>
-                <ion-item v-if="
-                  !tournament.allowCheckIn && userPlayer.isPresent !== true
-                ">
+                <ion-item v-if="!tournament.allowCheckIn && userPlayer.isPresent !== true
+                  ">
                   <ion-icon name="checkmark" slot="start" color="success"></ion-icon>
                   <ion-label>Registered</ion-label>
                   <!-- <ion-button
@@ -116,9 +115,8 @@
                   > -->
                 </ion-item>
 
-                <ion-item v-if="
-                  tournament.allowCheckIn && userPlayer.isPresent === false
-                ">
+                <ion-item v-if="tournament.allowCheckIn && userPlayer.isPresent === false
+                  ">
                   <ion-icon name="close-circle-outline" slot="start" color="danger"></ion-icon>
                   <ion-label color="danger">NOT checked-in</ion-label>
                   <ion-button slot="end" :disabled="!tournament.allowCheckIn" @click="checkIn(userPlayer.playerId)">
@@ -151,7 +149,7 @@
                         id: tournament.round,
                       },
                     })
-                  ">View All</ion-button>
+                    ">View All</ion-button>
                 </ion-item>
               </ion-card>
             </template>
@@ -159,7 +157,8 @@
         </div>
         <div class="flex-item" v-if="tournament.allowChat">
           <ion-card style="height: 200px">
-            <Chat :channel="tournamentId.toString()" :adminIds="adminIds" :blockedIds="blockedIds" :userId="userId" :userName="userName"></Chat>
+            <Chat :channel="tournamentId.toString()" :adminIds="adminIds" :blockedIds="blockedIds" :userId="userId"
+              :userName="userName"></Chat>
           </ion-card>
         </div>
         <div class="flex-item" v-if="tournament.video">
@@ -190,7 +189,7 @@
           <ion-card style="xheight: 220px; overflow-y: auto">
             <ion-list-header lines="inset">
               <ion-label>Players {{ players.length }} ({{
-                  playersCheckedIn
+                playersCheckedIn
               }})</ion-label>
             </ion-list-header>
             <Standings :players="players"></Standings>
@@ -233,8 +232,8 @@ export default {
     let user = authentication.getUser();
     let userName = user && user.name ? user.name : "unknown";
     let userId = user && user.userName ? user.userName : null;
-    let blockedIds = []; 
-    let adminIds = ["jamesfdickinson@gmail.com"]; 
+    let blockedIds = [];
+    let adminIds = [];
     return {
       tournamentId: tournamentId,
       tournament: {},
@@ -433,6 +432,7 @@ export default {
       this.roundTables = this.createTables(roundTables);
       this.tournament = tournament;
       this.players = tournament.players || [];
+      this.adminIds = tournament.owner ? [tournament.owner] : [];
       //filter players that have no score or are no present in the tournament (show all if pre tournament)
       if (round > 0) {
         this.players = this.players.filter((p) => p.points != null || p.isPresent || p.isOnline);
