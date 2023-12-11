@@ -214,7 +214,7 @@ export default {
       let dateFilter = this.dateFilter;
       if (dateFilter) {
         filteredData = filteredData.filter(
-          (a) => new Date(a.startDateTime) > dateFilter
+          (a) => new Date(a.startDateTime) > dateFilter && a.state != "end"
         );
       }
       filteredData.sort((a, b) => {
@@ -243,8 +243,10 @@ export default {
       if (dateFilter) {
         filteredData = filteredData.filter(
           (a) =>
-            new Date(a.startDateTime) < dateFilter &&
-            new Date(a.startDateTime) > dateFilterMax
+            (new Date(a.startDateTime) < dateFilter &&
+            new Date(a.startDateTime) > dateFilterMax)
+            ||
+            (new Date(a.startDateTime) < dateFilter && a.state == "end")
         );
       }
       filteredData.sort((a, b) => {
