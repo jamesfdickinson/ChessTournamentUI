@@ -66,11 +66,10 @@
 
 <script>
 import fetch from "@/services/fetch";
-import TeamIcon from "@/components/TeamIcon.vue";
 import AvatarIcon from "@/components/AvatarIcon.vue";
 export default {
   name: "home",
-  components: { AvatarIcon, TeamIcon },
+  components: { AvatarIcon },
   data() {
     return {
       searchInput: "",

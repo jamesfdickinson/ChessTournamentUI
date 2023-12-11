@@ -28,8 +28,7 @@
             <p>
               <a href="Tournaments/all">All</a> |
               <a href="Tournaments/chess">Chess</a> |
-              <a href="Tournaments/cribbage">Cribbage</a> |
-              <a href="Tournaments/ginrummy">Gin Rummy</a>
+              <a href="Tournaments/cribbage">Cribbage</a> 
             </p>
 
           </div>
