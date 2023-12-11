@@ -52,7 +52,7 @@
           <footer>
             <p>
               <a href="https://bracketjd.com">Bracket JD</a> |
-              <a href="mailto:tournament@jdsoftwarellc.com">Contact</a> | <a href="">version 1.0.3</a>
+              <a href="mailto:tournament@jdsoftwarellc.com">Contact</a> | <a href="">version 1.0.4</a>
        
             </p>
           </footer>
