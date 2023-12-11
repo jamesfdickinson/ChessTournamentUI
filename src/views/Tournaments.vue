@@ -246,7 +246,7 @@ export default {
             (new Date(a.startDateTime) < dateFilter &&
             new Date(a.startDateTime) > dateFilterMax)
             ||
-            (new Date(a.startDateTime) > dateFilterMax) && a.state == "end")
+            (new Date(a.startDateTime) > dateFilterMax && a.state == "end")
         );
       }
       filteredData.sort((a, b) => {
