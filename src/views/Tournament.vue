@@ -35,8 +35,8 @@
               <ion-label style="white-space: normal">
                 <h1>{{ tournament.name }}</h1>
                 <p>{{ getLocalDate(tournament.startDateTime) }}</p>
-                <p>Host: {{ tournament.hostName || "" }}</p>
-                <p>Rounds: {{ tournament.rounds }}</p>
+                <p>Host: {{ tournament.hostName || "" }} Rounds: {{ tournament.rounds }}</p>
+              
               </ion-label>
               <ion-icon name="settings" slot="end" @click="
                 $router.push({

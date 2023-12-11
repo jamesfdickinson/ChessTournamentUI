@@ -76,6 +76,8 @@
                 <p>
                   {{ getLocalDate(tournament.startDateTime) }}
                 </p>
+                <p>Host: {{ tournament.hostName || "" }} Rounds: {{ tournament.rounds }}</p>
+              
               </ion-label>
               <ion-badge slot="end">
                 {{ tournament.state }}
