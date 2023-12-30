@@ -64,7 +64,7 @@
              <ion-item>
               <ion-label position="stacked">Grade</ion-label>
               <div style="width: 100%;">
-                <select  v-model="player.grade" @change="player.rating =player.grade*100;">
+                <select  v-model="player.grade" @change="player.rating = player.grade*100;">
                   <option disabled value="">Select One</option>
                   <option value="0">K</option>
                   <option value="1">1</option>
@@ -251,7 +251,7 @@ export default {
       if (!player.team) this.errors.push("team is required.");
       if (!player.grade) this.errors.push("grade is required.");
       if (isNaN(player.grade)) this.errors.push("grade is not a number.");
-      if (!player.rating) this.rating = 1000;
+      if (isNaN(player.rating)) this.rating = 1000;
       if (isNaN(player.rating)) this.errors.push("rating is not a number.");
 
       if (this.errors.length > 0) return;

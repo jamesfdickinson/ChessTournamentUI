@@ -158,14 +158,14 @@
                 @input="player.grade = $event.target.value;player.rating =player.grade*100"
               ></ion-input>
             </ion-item>-->
-            <!-- <ion-item>
+            <ion-item v-if="type === 'Chess'">
               <ion-label position="stacked">Rating</ion-label>
               <ion-input
                 type="number"
                 :value="player.rating"
                 @input="player.rating = $event.target.value"
               ></ion-input>
-            </ion-item> -->
+            </ion-item>
             <ion-item v-if="type === 'Chess'">
               <ion-label position="stacked">Parent's Name</ion-label>
               <ion-input
@@ -302,7 +302,7 @@ export default {
       if (!player.team && isTeamRequired) this.errors.push("Team is required.");
       if (!player.grade) this.errors.push("Grade is required.");
       if (isNaN(player.grade)) this.errors.push("Grade is not a number.");
-      if (!player.rating) this.rating = 1000;
+      if (isNaN(player.rating)) this.rating = 1000;
       if (isNaN(player.rating)) this.errors.push("Rating is not a number.");
       if (!player.email) this.errors.push("Email is required.");
       if (accessCodeBasic && accessCodeBasic != password)

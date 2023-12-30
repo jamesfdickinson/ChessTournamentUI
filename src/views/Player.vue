@@ -41,10 +41,10 @@
           <ion-label position="fixed">Grade</ion-label>
           <ion-label slot>{{ player.grade }}</ion-label>
         </ion-item>
-        <!-- <ion-item>
+         <ion-item>
           <ion-label position="fixed">Rating</ion-label>
           <ion-label slot>{{player.rating}}</ion-label>
-        </ion-item>-->
+        </ion-item>
         <ion-item>
           <ion-label position="fixed">Division</ion-label>
           <ion-label slot>{{ player.division }}</ion-label>

@@ -58,11 +58,10 @@
             @input="player.grade = $event.target.value"
           ></ion-input>
         </ion-item>
-        <!-- 
         <ion-item>
           <ion-label position="stacked">Rating</ion-label>
           <ion-input :value="player.rating" @input="player.rating = $event.target.value"></ion-input>
-        </ion-item>-->
+        </ion-item>
         <ion-item>
           <ion-label position="stacked">Division</ion-label>
           <ion-input
