@@ -87,7 +87,7 @@
               <div style="width: 100%">
                 <select
                   v-model="player.grade"
-                  @change="player.rating = player.grade * 100"
+                  @change="player.rating = player.grade * 100 + parseInt(skillLevelAdjustment)"
                 >
                   <option disabled value="">Select One</option>
                   <option value="0">K</option>
@@ -158,6 +158,21 @@
                 @input="player.grade = $event.target.value;player.rating =player.grade*100"
               ></ion-input>
             </ion-item>-->
+            <ion-item v-if="type === 'Chess'">
+              <ion-label position="stacked">Skill level</ion-label>
+              <div style="width: 100%">
+                <select
+                  v-model="skillLevelAdjustment"
+                  @change="player.rating = player.grade * 100 + parseInt(skillLevelAdjustment)"
+                >
+                  <option disabled value="">Select One</option>
+                  <option value="-50">Beginning</option>
+                  <option value="0">Intermediate</option>
+                  <option value="50">Advanced</option>
+      
+                </select>
+              </div>
+            </ion-item>
             <ion-item v-if="type === 'Chess'">
               <ion-label position="stacked">Rating</ion-label>
               <ion-input
@@ -258,6 +273,7 @@ export default {
       tournamentId: tournamentId,
       tournament: {},
       teams: [],
+      skillLevelAdjustment: 0,
       showSignUpPage: true,
       type: null,
       player: player,
