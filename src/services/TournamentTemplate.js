@@ -30,7 +30,7 @@ export default class TournamentTemplate {
                 type: "Cribbage",
                 rounds: 5,
                 pairing: "Swiss",
-                gameRoomLink: "https://cardsjd.com/cribbage/embedded/?room=[room]&name=[name]&email=[email]&id=[id]&spectate=[spectate]&avatar=[avatar]",
+                gameRoomLink: "https://cardsjd.com/cribbageembedded/?room=[room]&name=[name]&email=[email]&id=[id]&spectate=[spectate]&avatar=[avatar]",
                 autoAdvanceRounds: true,
                 allowNotifications: true,
                 allowRegistration: false,
