@@ -23,6 +23,31 @@
         <ion-refresher slot="fixed" @ionRefresh="refresh($event)">
           <ion-refresher-content></ion-refresher-content>
         </ion-refresher>
+        <!-- Text summary of the tournaments type such as cribbage, chess, etc. -->
+        <ion-card v-if="type == 'cribbage'" >
+          <ion-card-header>
+            <ion-card-title>Cribbage Tournaments</ion-card-title>
+            <!-- <ion-card-subtitle>Card Subtitle</ion-card-subtitle> -->
+          </ion-card-header>
+          <ion-card-content>
+            <p>Find an Online Cribbage tournament and register to play.  
+              Be on the page when the tournament starts.
+              Read the FAQ for the tournament rules, each tournament host may have different rules. 
+              <a href="https://cardsjd.com/cribbage">Cribbage JD</a> software is integrated in the tournament to play the matches.
+            </p>
+          </ion-card-content>
+        </ion-card>
+        <ion-card v-if="type == 'chess'" >
+          <ion-card-header>
+            <ion-card-title>Chess Tournaments</ion-card-title>
+            <!-- <ion-card-subtitle>Card Subtitle</ion-card-subtitle> -->
+          </ion-card-header>
+          <ion-card-content>
+            <p>Find the Chess tournament and register to play. Chess tournaments are live in-person tournament.
+              Read the FAQ for the tournament rules, each tournament host may have different rules.
+            </p>
+          </ion-card-content>
+        </ion-card>
         <ion-item>
           <ion-label position="fixed">Name</ion-label>
           <ion-searchbar :value="searchInput" @ionInput="searchInput = $event.target.value"
@@ -77,7 +102,7 @@
                   {{ getLocalDate(tournament.startDateTime) }}
                 </p>
                 <p>Host: {{ tournament.hostName || "" }} Rounds: {{ tournament.rounds }}</p>
-              
+
               </ion-label>
               <ion-badge slot="end">
                 {{ tournament.state }}
@@ -87,27 +112,10 @@
             </ion-item>
           </template>
           <ion-item>
-            <ion-label> Completed </ion-label>
+            <ion-label> </ion-label>
           </ion-item>
-          <template v-for="tournament of filteredItemsCompleted">
-            <ion-item style="opacity: 0.5" :key="tournament.id" button detail="true"
-              v-on:click="tournamentDetails(tournament.id)">
-              <ion-thumbnail slot="start">
-                <img v-if="!tournament.image" src="images/chess-board-thin.jpg" />
-                <img v-if="tournament.image" :src="tournament.image" />
-              </ion-thumbnail>
-              <ion-label>
-                <h2>{{ tournament.name }}</h2>
-                <p>
-                  {{ getLocalDate(tournament.startDateTime) }}
-                </p>
-              </ion-label>
-              <ion-badge slot="end">
-                {{ tournament.state }}
-              </ion-badge>
-            </ion-item>
-          </template>
           <ion-item>
+            <ion-button expand="block" :href='"tournaments/" + type + "/end"'>View Completed Tournaments</ion-button>
             <ion-button expand="block" v-on:click="createTournament()">Create Tournament</ion-button>
           </ion-item>
         </ion-list>
@@ -133,10 +141,11 @@ export default {
   data() {
     let type = this.$route.params.type || "all";
     let searchInput = this.$route.params.searchQuery || "";
+    let stateFilter = this.$route.params.stateFilter || "";
     const dateFilter = ((d) => new Date(d.setDate(d.getDate() - 1)))(
       new Date()
     );
-    const dateFilterMax = ((d) => new Date(d.setDate(d.getDate() - 30)))(
+    const dateFilterMax = ((d) => new Date(d.setDate(d.getDate() - 60)))(
       new Date()
     );
     return {
@@ -145,6 +154,7 @@ export default {
       searchInput: searchInput,
       dateFilter: dateFilter,
       dateFilterMax: dateFilterMax,
+      stateFilter: stateFilter,
       errors: [],
     };
   },
@@ -188,7 +198,8 @@ export default {
       });
     },
     loadData() {
-      const type = this.type;
+      //const type = this.type;
+      const type = "all";
       return fetch
         .get(`tournament/type/${type}`)
         .then((response) => {
@@ -212,61 +223,50 @@ export default {
       let filteredData = this.tournaments;
       let searchInput = this.searchInput;
       let dateFilter = this.dateFilter;
-      if (dateFilter) {
+      let typeFilter = this.type;
+      let stateFilter = this.stateFilter;
+      let dateFilterMax = this.dateFilterMax;
+      if (stateFilter !== "end") {
         filteredData = filteredData.filter(
           (a) => new Date(a.startDateTime) > dateFilter && a.state != "end"
         );
       }
+      if (stateFilter === "end") {
+        filteredData = filteredData.filter(
+          (a) =>
+            (new Date(a.startDateTime) < dateFilter && new Date(a.startDateTime) > dateFilterMax)
+            ||
+            (new Date(a.startDateTime) > dateFilterMax && a.state == "end")
+        );
+      }
+
+      if (typeFilter && typeFilter != "all") {
+        typeFilter = typeFilter.toLowerCase();
+        filteredData = filteredData.filter((a) => a.type.toLowerCase().startsWith(typeFilter));
+      }
+
       filteredData.sort((a, b) => {
         return new Date(a.startDateTime) - new Date(b.startDateTime);
       });
       if (searchInput) {
         searchInput = searchInput.toLowerCase();
         filteredData = filteredData.filter((p) => {
-          if (p.name && p.name.toLowerCase().startsWith(searchInput))
+          if (p.name && p.name.toLowerCase().includes(searchInput))
             return true;
           if (p.details && p.details.toLowerCase().startsWith(searchInput))
             return true;
           if (p.teams && p.teams.toLowerCase().startsWith(searchInput))
+            return true;
+          if (p.type && p.type.toLowerCase().startsWith(searchInput))
+            return true;
+          if (p.hostName && p.hostName.toLowerCase().startsWith(searchInput))
             return true;
 
           return false;
         });
       }
       return filteredData;
-    },
-    filteredItemsCompleted() {
-      let filteredData = this.tournaments;
-      let searchInput = this.searchInput;
-      let dateFilter = this.dateFilter;
-      let dateFilterMax = this.dateFilterMax;
-      if (dateFilter) {
-        filteredData = filteredData.filter(
-          (a) =>
-            (new Date(a.startDateTime) < dateFilter &&
-            new Date(a.startDateTime) > dateFilterMax)
-            ||
-            (new Date(a.startDateTime) > dateFilterMax && a.state == "end")
-        );
-      }
-      filteredData.sort((a, b) => {
-        return new Date(b.startDateTime) - new Date(a.startDateTime);
-      });
-      if (searchInput) {
-        searchInput = searchInput.toLowerCase();
-        filteredData = filteredData.filter((p) => {
-          if (p.name && p.name.toLowerCase().startsWith(searchInput))
-            return true;
-          if (p.details && p.details.toLowerCase().startsWith(searchInput))
-            return true;
-          if (p.teams && p.teams.toLowerCase().startsWith(searchInput))
-            return true;
-
-          return false;
-        });
-      }
-      return filteredData;
-    },
+    }
   },
 };
 </script>

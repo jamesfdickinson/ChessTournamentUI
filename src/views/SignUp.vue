@@ -237,6 +237,7 @@
           <ion-button type="submit" expand="block">Submit</ion-button>
         </form>
       </div>
+      <div style="height:200px"><!--Spacer to all room for the keyboard on ios--></div>
     </ion-content>
     <!-- </ion-page> -->
   </layout-no-menu>

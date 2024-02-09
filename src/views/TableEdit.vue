@@ -80,13 +80,13 @@
               slot="end"
               type="number"
               :value="position.points"
-              @input="position.points = parseInt($event.target.value) || 0"
+              @input="position.points = parseFloat($event.target.value) || 0"
             ></ion-input>
             <ion-input
               slot="end"
               type="number"
               :value="position.tieBreaker"
-              @input="position.tieBreaker = parseInt($event.target.value) || 0"
+              @input="position.tieBreaker = parseFloat($event.target.value) || 0"
             ></ion-input>
             <ion-icon
               name="trash"

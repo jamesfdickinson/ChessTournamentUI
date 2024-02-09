@@ -193,6 +193,7 @@
           <li v-for="error in errors" v-bind:key="error">*{{ error }}</li>
         </ul>
       </form>
+      <div style="height:200px"><!--Spacer to all room for the keyboard on ios--></div>
     </ion-content>
     <!-- </ion-page> -->
   </layout-no-menu>
