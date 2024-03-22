@@ -28,7 +28,7 @@
             <p>
               <a href="Tournaments/all">All</a> |
               <a href="Tournaments/chess">Chess</a> |
-              <a href="Tournaments/cribbage">Cribbage</a> 
+              <a href="Tournaments/cribbage">Cribbage</a>
             </p>
 
           </div>
@@ -43,16 +43,23 @@
                 <li>Registrater for a tournament</li>
                 <li>Read the tournament's FAQ/Rules</li>
                 <li>Be on the tournament page when it starts</li>
-                <li>These tournaments are FUN and CASUAL!</li>
+                <li>Any questions, ask the tournament host</li>
               </ol>
             </div>
           </div>
+
+      
+            <div>
+              <h2>Details</h2>
+              <a href="help/HowToHost">Tournament Overview</a>
+            </div>
+        
 
           <footer>
             <p>
               <a href="https://bracketjd.com">Bracket JD</a> |
               <a href="mailto:tournament@jdsoftwarellc.com">Contact</a> | <a href="">version 1.0.7</a>
-       
+
             </p>
           </footer>
         </div>
@@ -101,7 +108,8 @@
   border-radius: 3px;
   padding: 5px 20px 10px 20px;
 }
-footer{
+
+footer {
   margin-top: 30px;
   text-align: center;
 }
