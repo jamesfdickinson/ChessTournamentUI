@@ -120,7 +120,6 @@
           <p> <img style="max-width:400px;" src="/images/help/Round.png" alt="Tournament Round List" /> <img
               style="max-width:400px;" src="/images/help/RecorderRecordMatch.png" alt="Record Match" /></p>
 
-
           <h2>Standings Reports</h2>
           <p>The main page displays a basic standing and updates live. The reports section offers several other standing
             reports; Grade standings, Teams standing (top 5 per team), Wall chart, and more. If teams are used, a
