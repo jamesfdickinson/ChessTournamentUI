@@ -100,8 +100,6 @@
 
 
 
-
-
           <h2>Communicate pairings</h2>
           <p>All players have access to the round chart with seating assignments and results on the "Rounds" page.</p>
           <p>All players are notified of the "round pairing" via Push notifications or sms. The round pairing will
@@ -109,11 +107,6 @@
             multiple players under their login (email), such as a parent of multiple children or a coach.</p>
           <p>Most in-person tournaments have gone "paperless" with the three methods of communication and the abundance
             of players owning a mobile device.</p>
-
-
-
-
-
 
           <h2>Record matches</h2>
           <p>On the Rounds page, Admin or Recorders can record match results. Multiple users with access can record
