@@ -5,6 +5,7 @@ import VueSimpleAlert from "vue-simple-alert";
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import App from './App.vue'
 import router from './router'
+import VueMeta from 'vue-meta'
 
 // import Ionic from "@ionic/vue"
 // import "@ionic/core/css/core.css"
@@ -111,6 +112,8 @@ document.addEventListener("visibilitychange", function () {
 });
 //document.addEventListener(visibilityChange, handleVisibilityChange, false);
 
+
+Vue.use(VueMeta)
 
 Vue.config.productionTip = true;
 

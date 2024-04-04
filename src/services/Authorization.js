@@ -36,9 +36,10 @@ export default class Authorization {
     }
     isPageAllowed(toPage, tournamentId, roles) {
         if (!roles) roles = [];
+       
         //redirect to login page if not logged in and trying to access a restricted page
-        const pagesSuperAdmin = ['TournamentCreate'];
-        const authRequiredSuperAdmin = pagesSuperAdmin.includes(toPage);
+        const pagesCreate = ['TournamentCreate'];
+        const authRequiredCreate = pagesCreate.includes(toPage);
 
         const pagesAdmin = ['Admin', 'RoundEditRaw'];
         const authRequiredAdmin = pagesAdmin.includes(toPage);
@@ -51,21 +52,25 @@ export default class Authorization {
         const authRequiredBasic = pagesBasic.includes(toPage);
 
         //require
-        const pagesNoAuthenticationRequired = ['UserCreate', 'Login', 'PasswordResetRequest', 'PasswordChange', 'ChatRoom', 'Home', 'Help', 'HelpHowToHost'];
+        const pagesNoAuthenticationRequired = ['UserCreate', 'Login', 'PasswordResetRequest', 'PasswordChange', 'ChatRoom', 'Home', 'Help', 'HelpHowToHost','TournamentOverview'];
         const noAuthRequired = pagesNoAuthenticationRequired.includes(toPage);
         if (noAuthRequired) {
             true;
         }
 
         //contains role "tournamentId-role".
-        //let superAdminRole = "0-SuperAdmin"; 
-        let superAdminRole = "0-Create";
+        let superAdminRole = "0-SuperAdmin"; 
+        let createRole = "0-Create";
         let adminRole = tournamentId + "-Admin";
         let recorderRole = tournamentId + "-Recorder";
         let basicRole = tournamentId + "-Basic";
 
+        //check if has SuperAdmin role and allow access to all pages
+        if ((roles.includes(superAdminRole))) {
+            return true;
+        }
         //check if has SuperAdmin role for tournament
-        if (authRequiredSuperAdmin && !(roles.includes(superAdminRole))) {
+        if (authRequiredCreate && !(roles.includes(createRole))) {
             return false;
         }
 

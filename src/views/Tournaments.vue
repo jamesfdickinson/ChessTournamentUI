@@ -91,7 +91,7 @@
 
         <ion-list>
           <template v-for="tournament of filteredItemsFuture">
-            <ion-item :key="tournament.id" button detail="true" v-on:click="tournamentDetails(tournament.id)">
+            <ion-item :key="tournament.id" button detail="true" v-on:click="tournamentSummary(tournament.id)">
               <ion-thumbnail slot="start">
                 <img v-if="!tournament.image" src="images/chess-board-thin.jpg" />
                 <img v-if="tournament.image" :src="tournament.image" />
@@ -179,6 +179,12 @@ export default {
       if (state == "play") return "open";
       if (state == "end") return "open";
       return state;
+    },
+    tournamentSummary(tournamentId) {
+      this.$router.push({
+        name: "TournamentOverview",
+        params: { tournament: tournamentId },
+      });
     },
     tournamentDetails(tournamentId) {
       this.$router.push({

@@ -10,6 +10,7 @@ import TournamentEdit from './views/TournamentEdit.vue'
 import TournamentCreate from './views/TournamentCreate.vue'
 import Tournaments from './views/Tournaments.vue'
 import TournamentVideoEdit from './views/TournamentVideoEdit.vue'
+import TournamentOverview from './views/TournamentOverview.vue'
 import CheckIn from './views/CheckIn.vue'
 import SignUp from './views/SignUp.vue'
 import SignUpChess from './views/SignUpChess.vue'
@@ -177,7 +178,13 @@ export default new VueRouter({
       path: '/:tournament/TournamentVideoEdit',
       name: 'TournamentVideoEdit',
       component: TournamentVideoEdit 
+    },   
+     {
+      path: '/:tournament/TournamentOverview',
+      name: 'TournamentOverview',
+      component: TournamentOverview 
     },
+    
     {
       path: '/:tournament/CheckIn',
       name: 'CheckIn',
