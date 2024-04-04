@@ -17,6 +17,7 @@
             @ionChange="tournamentType = $event.target.value">
             <ion-select-option value="Cribbage">Cribbage</ion-select-option>
             <ion-select-option value="Chess">Chess</ion-select-option>
+            <ion-select-option value="Other">Other</ion-select-option>
           </ion-select>
         </ion-item>
       </ion-list>
@@ -45,6 +46,10 @@ export default {
     },
     save() {
       let tournamentType = this.tournamentType;
+      if(!tournamentType) {
+        this.error = "Please select a tournament type";
+        return;
+      }
       this.$router.push({
         name: "TournamentEdit",
         params: { tournamentType: tournamentType },
