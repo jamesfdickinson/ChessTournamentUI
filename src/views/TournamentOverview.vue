@@ -35,7 +35,7 @@
             <td>Rounds</td>
             <td>{{ tournament.rounds }}</td>
           </tr>
-         
+
 
           <tr>
             <td>Access</td>
@@ -54,7 +54,7 @@
 
 
 
-      
+
         <details>
           <summary>Read FAQ</summary>
           <div class="content" v-html="tournament.faqContent"></div>
@@ -63,8 +63,8 @@
           <summary>SignUp Details</summary>
           <div class="content" v-html="tournament.signUpText"></div>
         </details>
-        
 
+        <p><a href="/Tournaments">More tournaments</a></p>
       </div>
 
 
