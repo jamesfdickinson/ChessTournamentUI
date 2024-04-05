@@ -5,12 +5,12 @@
   "orientationx": "landscape",
   "icons": [
     {
-      "src": "images/icons/trophyflat.png",
+      "src": "images/icons/trophy-192x192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "images/icons/trophyflat.png",
+      "src": "images/icons/trophy-512x512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
