@@ -82,6 +82,13 @@ export default {
   name: "home",
 
   components: {},
+  metaInfo: {
+    title: 'Bracket JD - Login',
+    titleTemplate: null, // override the parent template and just use the above title only
+    meta: [
+      { name: 'description', content: 'Login to play online tournaments. Need an account? Sign up. Forgot password?' },
+    ]
+  },
   data() {
     let tournamentId = this.$route.params.tournament;
     let redirect = this.$route.query.redirect;

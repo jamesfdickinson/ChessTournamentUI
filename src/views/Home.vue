@@ -119,6 +119,13 @@ footer {
 export default {
   name: "home",
   components: {},
+  metaInfo: {
+    title: 'Bracket JD - Online Tournaments Software',
+    titleTemplate: null, // override the parent template and just use the above title only
+    meta: [
+      { name: 'description', content: 'Play live tournaments online or in-person.  Host your own tournaments with a live video stream.' },
+    ]
+  },
   data() {
     return {
       searchQuery: ""

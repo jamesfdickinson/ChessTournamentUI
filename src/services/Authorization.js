@@ -3,10 +3,8 @@ export default class Authorization {
     constructor() {
     }
     requestAccess(userName, tournamentId) {
-        if (!userName) {
-            var user = this.getUser() || {};
-            userName = user.userName;
-        }
+        if (!userName) throw new Error("requestAccess: No username");
+
         return fetch.post(`authentication/RequestAccess/${userName}?tournament=${tournamentId}`)
             .then(response => {
                 var user = response.data;
@@ -18,25 +16,36 @@ export default class Authorization {
                 throw error;
             });
     }
-    refreshAccess(userName) {
-        if (!userName) {
-            var user = this.getUser() || {};
-            userName = user.userName;
-        }
-        return fetch.get(`authentication/roles/${userName}`)
-            .then(response => {
-                var user = response.data;
-                localStorage.setItem("user", JSON.stringify(user));
-                return user;
-            })
-            .catch((error) => {
-                if (error.response) throw error.response.data || error.response.statusText;
-                throw error;
+    refreshAccess(userName, force) {
+        if (!userName) throw new Error("requestAccess: No username");
+
+        //trottle call to server
+        let accessLastChecked = parseInt(localStorage.getItem("access-last-checked"));
+        let maxAccessLastCheckedElapsed = 1000 * 60 * 60; //60 minutes
+        let accessLastCheckedElapsed = Number.isInteger(accessLastChecked) ? (new Date() - new Date(accessLastChecked)) : 0;
+
+        if (force || accessLastCheckedElapsed > maxAccessLastCheckedElapsed || accessLastCheckedElapsed === 0) {
+            localStorage.setItem("access-last-checked", new Date().getTime());//update last checked
+
+            return fetch.get(`authentication/roles/${userName}`)
+                .then(response => {
+                    var user = response.data;
+                    localStorage.setItem("user", JSON.stringify(user));
+                    return user;
+                })
+                .catch((error) => {
+                    if (error.response) throw error.response.data || error.response.statusText;
+                    throw error;
+                });
+        } else {
+            return new Promise(function (resolve) {
+                resolve(JSON.parse(localStorage.getItem("user")));
             });
+        }
     }
     isPageAllowed(toPage, tournamentId, roles) {
         if (!roles) roles = [];
-       
+
         //redirect to login page if not logged in and trying to access a restricted page
         const pagesCreate = ['TournamentCreate'];
         const authRequiredCreate = pagesCreate.includes(toPage);
@@ -52,14 +61,14 @@ export default class Authorization {
         const authRequiredBasic = pagesBasic.includes(toPage);
 
         //require
-        const pagesNoAuthenticationRequired = ['UserCreate', 'Login', 'PasswordResetRequest', 'PasswordChange', 'ChatRoom', 'Home', 'Help', 'HelpHowToHost','TournamentOverview'];
+        const pagesNoAuthenticationRequired = ['UserCreate', 'Login', 'PasswordResetRequest', 'PasswordChange', 'ChatRoom', 'Home', 'Help', 'HelpHowToHost', 'TournamentOverview'];
         const noAuthRequired = pagesNoAuthenticationRequired.includes(toPage);
         if (noAuthRequired) {
             true;
         }
 
         //contains role "tournamentId-role".
-        let superAdminRole = "0-SuperAdmin"; 
+        let superAdminRole = "0-SuperAdmin";
         let createRole = "0-Create";
         let adminRole = tournamentId + "-Admin";
         let recorderRole = tournamentId + "-Recorder";
@@ -102,12 +111,11 @@ export default class Authorization {
                 throw error;
             });
     }
-    fakeInviteCode(code, tournamentId) {
+    fakeInviteCode(user, code, tournamentId) {
         return new Promise(function (resolve, reject) {
             if (code !== "123") reject("Invalid access code");
 
             var newRole = tournamentId + "-Basic";
-            var user = this.getUser();
             //add rule if not there
             if (user.roles.indexOf(newRole) === -1) {
                 user.roles.push(newRole);

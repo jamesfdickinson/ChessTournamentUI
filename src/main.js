@@ -140,6 +140,11 @@ router.beforeEach((to, from, next) => {
     userName = user.userName;
     roles = user.roles || [];
   }
+
+  //refresh token if needed async.  Next cycle will have new token
+  if (userName) authorization.refreshAccess(userName);
+
+
   //check roles locally
   let allowAccess = authorization.isPageAllowed(toPage, tournamentId, roles, userName);
   if (allowAccess) {

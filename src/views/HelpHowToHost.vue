@@ -11,13 +11,13 @@
         <div style="margin:20px 20px;">
 
           <h1>Tournament Hosting</h1>
-          <p>Bracket JD is used as a tournament tool to help run tournaments hosted either in-person or online.  
-            It is designed to be easy to use and flexible to support many different types of tournaments. 
+          <p>Bracket JD is used as a tournament tool to help run tournaments hosted either in-person or online.
+            It is designed to be easy to use and flexible to support many different types of tournaments.
             Ultimately it is up to the tournament director to decide how to run the tournament. </p>
-            <p>Below is a guide to help you get started hosting a tournament. </p> 
+          <p>Below is a guide to help you get started hosting a tournament. </p>
 
           <h2>Flow</h2>
-          <p>The tournament flow has automatic mode, semi automatic, or manual mode.  The flow switches between the
+          <p>The tournament flow has automatic mode, semi automatic, or manual mode. The flow switches between the
             different tournament states.</p>
           <ul>
             <li><b>Setup:</b> Admin setting up the tournament. No one is allowed to register.</li>
@@ -50,13 +50,15 @@
 
 
           <h2>Access</h2>
-          <p>There are three levels of access; <b>Basic, Recorder, Admin</b>. An access code is created for each level. Sharing
+          <p>There are three levels of access; <b>Basic, Recorder, Admin</b>. An access code is created for each level.
+            Sharing
             the access code allows a user access to that level. Access codes are randomly set, but can be changed to
             easier to remember more field access codes in the admin settings. </p>
           <p>Alternatively, an admin can manually grant a player access in the admin settings "User Access".</p>
           <p><b>Basic</b> - A player participating in the tournament <br />
             <b>Recorder</b> - Register players, updates players details, record match results<br />
-            <b>Admin</b> - Create tournament, manage tournament flow, create rounds, and all other tournament settings.</p>
+            <b>Admin</b> - Create tournament, manage tournament flow, create rounds, and all other tournament settings.
+          </p>
           <p> <img style="max-width:400px;" src="/images/help/AdminAccessCodes.png" alt="Tournament Access Codes" /></p>
 
 
@@ -314,3 +316,15 @@
     </ion-page>
   </layout-no-menu>
 </template>
+<script>
+export default {
+  name: "HelpHowToHost",
+  metaInfo: {
+    title: 'Tournaments - How to host online tournaments',
+    titleTemplate: null, // override the parent template and just use the above title only
+    meta: [
+      { name: 'description', content: 'How to host online tournaments' },
+    ]
+  }
+}
+</script>

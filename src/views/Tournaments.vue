@@ -24,20 +24,21 @@
           <ion-refresher-content></ion-refresher-content>
         </ion-refresher>
         <!-- Text summary of the tournaments type such as cribbage, chess, etc. -->
-        <ion-card v-if="type == 'cribbage'" >
+        <ion-card v-if="type == 'cribbage'">
           <ion-card-header>
             <ion-card-title>Cribbage Tournaments</ion-card-title>
             <!-- <ion-card-subtitle>Card Subtitle</ion-card-subtitle> -->
           </ion-card-header>
           <ion-card-content>
-            <p>Find an Online Cribbage tournament and register to play.  
+            <p>Find an Online Cribbage tournament and register to play.
               Be on the page when the tournament starts.
-              Read the FAQ for the tournament rules, each tournament host may have different rules. 
-              <a href="https://cardsjd.com/cribbage">Cribbage JD</a> software is integrated in the tournament to play the matches.
+              Read the FAQ for the tournament rules, each tournament host may have different rules.
+              <a href="https://cardsjd.com/cribbage">Cribbage JD</a> software is integrated in the tournament to play
+              the matches.
             </p>
           </ion-card-content>
         </ion-card>
-        <ion-card v-if="type == 'chess'" >
+        <ion-card v-if="type == 'chess'">
           <ion-card-header>
             <ion-card-title>Chess Tournaments</ion-card-title>
             <!-- <ion-card-subtitle>Card Subtitle</ion-card-subtitle> -->
@@ -138,6 +139,23 @@
 import fetch from "@/services/fetch";
 export default {
   name: "home",
+  metaInfo() {
+    let type = this.$route.params.type || "all";
+    if(type == "cribbage")type = "Cribbage";
+    if(type == "chess")type = "Chess";
+    if(type == "ginrummy")type = "Gin Rummy";
+    if(type == "spades")type = "Spades";
+    
+    const title = `Online ${type} Tournament List`;
+    return {
+      title: title,
+      meta: [
+        {
+          name: 'description', content: title
+        }
+      ]
+    }
+  },
   data() {
     let type = this.$route.params.type || "all";
     let searchInput = this.$route.params.searchQuery || "";
