@@ -7,14 +7,24 @@
             <strong style="color: rgb(180, 0, 0)">{{ chatItem.name }}:</strong>
             <strong> {{ chatItem.message }} </strong>
           </div> -->
-          <div v-if="adminIds.includes(chatItem.userId)">
-            
+          <div v-if="fromAdmin(chatItem.userId)">
+
             <span style="font-weight: bold;color: #3880ff">{{ chatItem.name }}:</span>
             <span style="font-weight:bold;"> {{ chatItem.message }}</span>
           </div>
-          <div v-else>
-            <!-- <ion-icon v-if="!isMuted" @click="mute()" slot="start" name="volume-mute"></ion-icon>
-            <ion-icon v-if="isMuted" @click="unmute()" slot="start" name="volume-off"></ion-icon> -->
+          <div v-else-if="isAdmin && !chatItem.tag">
+            <!-- <ion-icon v-if="isMuted"  slot="start" name="volume-off"></ion-icon> -->
+            <span style="font-weight: bold; color: green"
+              @click="showUserChatOptions(chatItem.userId, chatItem.name)">{{ chatItem.name }}:</span>
+            {{ chatItem.message }}
+          </div>
+          <div v-else-if="isAdmin && chatItem.tag == 'muted'">
+            <!-- <span  >&#10060;</span>  -->
+            <span style="font-weight: bold; color: green;opacity: 0.4;"
+              @click="showUserChatOptions(chatItem.userId, chatItem.name)">{{ chatItem.name }} (Muted):</span>
+            <span style=" opacity:0.4;">{{ chatItem.message }}</span>
+          </div>
+          <div v-else-if="!isAdmin && !chatItem.tag">
 
             <span style="font-weight: bold; color: green">{{ chatItem.name }}:</span>
             {{ chatItem.message }}
@@ -34,16 +44,17 @@
 
           <ion-button slot="end" type="submit">Send</ion-button>
         </ion-item>
-        <!-- <ion-item>
-          <ion-button type="button">UnMute</ion-button>
-          <ion-button type="button">Mute</ion-button>
-          <ion-button type="button">Clear All</ion-button>
-        </ion-item> -->
+        <ion-item v-if="showUserDetails">
+          <p>{{ userDetails.userName }} </p>
+
+          <ion-button type="button" @click="muteUser(userDetails.userId)">Mute</ion-button>
+          <ion-button type="button" @click="unmuteUser(userDetails.userId)">UnMute</ion-button>
+          <!-- <ion-button type="button">Clear All</ion-button> -->
+          <a @click="hideUserChatOptions">[ Close ]</a>
+        </ion-item>
       </form>
     </div>
-    <div class="chat-button">
 
-    </div>
     <!-- <div class="chat-users">
       <div>Jimmy</div>
       <div>BatMan</div>
@@ -71,7 +82,8 @@ const signalR = new SignalR();
 import Authentication from "@/services/Authentication";
 const authentication = new Authentication();
 import { Howl } from "howler";
-
+import Filter from 'bad-words-jd';
+const filter = new Filter();
 export default {
   name: "Chat",
   props: {
@@ -92,10 +104,17 @@ export default {
       src: ["/audio/for-sure.mp3"],
     });
     let isMuted = localStorage.getItem('isMuted') == "true";
+    let isAdmin = this.adminIds.includes(this.userId);
     return {
       api: null,
       message: "",
       isMuted: isMuted,
+      isAdmin: isAdmin,
+      showUserDetails: false,
+      userDetails: {
+        userName: "",
+        userId: "",
+      },
     };
   },
   methods: {
@@ -114,8 +133,40 @@ export default {
       signalR.send("SendMessage", channel, userName, message, userId);
       this.$nextTick(() => this.scrollToEnd());
     },
+
+    showUserChatOptions(userId, userName) {
+      this.showUserDetails = true;
+      this.userDetails.userId = userId;
+      this.userDetails.userName = userName;
+    },
+    fromAdmin(userId) {
+      return this.adminIds.includes(userId);
+    },
+    hideUserChatOptions() {
+      this.showUserDetails = false;
+    },
+    muteUser(userIdToMute) {
+      var channel = this.channel.toString();
+      let userName = this.userName || "Unknown";
+      let userId = this.userId || "Unknown";
+
+      let message = `/mute ${userIdToMute}`;
+
+      signalR.send("SendMessage", channel, userName, message, userId);
+      this.hideUserChatOptions();
+    },
+    unmuteUser(userIdToUnMute) {
+      var channel = this.channel.toString();
+      let userName = this.userName || "Unknown";
+      let userId = this.userId || "Unknown";
+
+      let message = `/unmute ${userIdToUnMute}`;
+
+      signalR.send("SendMessage", channel, userName, message, userId);
+      this.hideUserChatOptions();
+    },
     isUserMuted(userId) {
-      if(this.blockedIds.includes(userId)){
+      if (this.blockedIds.includes(userId)) {
         return true;
       }
       return false;
@@ -128,26 +179,34 @@ export default {
       this.isMuted = false;
       localStorage.setItem('isMuted', false);
     },
+    filterMessage(message) {
+      const cleanMessage = filter.clean(message);
+      return cleanMessage;
+    },
     onMessages(messages) {
       //clear array
       this.chatLog.splice(0, this.chatLog.length);
       let chatLog = this.chatLog;
       for (let i = 0; i < messages.length; i++) {
         let message = messages[i];
+        let cleanMessage = this.filterMessage(message.message);
         chatLog.push({
           name: message.user,
-          message: message.message,
-          userId: message.userId
+          message: cleanMessage,
+          userId: message.userId,
+          tag: message.tag
         });
       }
       this.$nextTick(() => this.scrollToEnd());
     },
-    onMessage(user, message, userId) {
+    onMessage(user, message, userId, tag) {
       let chatLog = this.chatLog;
+      let cleanMessage  = this.filterMessage(message);
       chatLog.push({
         name: user,
-        message: message,
-        userId: userId
+        message: cleanMessage,
+        userId: userId,
+        tag: tag
       });
       if (!this.isMuted) {
         this.soundAlert.play();
@@ -258,5 +317,3 @@ export default {
   overflow-y: scroll;
 }
 </style>
-
-

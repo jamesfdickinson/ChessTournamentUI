@@ -141,11 +141,11 @@ export default {
   name: "home",
   metaInfo() {
     let type = this.$route.params.type || "all";
-    if(type == "cribbage")type = "Cribbage";
-    if(type == "chess")type = "Chess";
-    if(type == "ginrummy")type = "Gin Rummy";
-    if(type == "spades")type = "Spades";
-    
+    if (type == "cribbage") type = "Cribbage";
+    if (type == "chess") type = "Chess";
+    if (type == "ginrummy") type = "Gin Rummy";
+    if (type == "spades") type = "Spades";
+
     const title = `Online ${type} Tournament List`;
     return {
       title: title,
@@ -250,6 +250,7 @@ export default {
       let typeFilter = this.type;
       let stateFilter = this.stateFilter;
       let dateFilterMax = this.dateFilterMax;
+      let sortOrder = "asc";
       if (stateFilter !== "end") {
         filteredData = filteredData.filter(
           (a) => new Date(a.startDateTime) > dateFilter && a.state != "end"
@@ -262,16 +263,24 @@ export default {
             ||
             (new Date(a.startDateTime) > dateFilterMax && a.state == "end")
         );
+        sortOrder = "desc";
       }
 
       if (typeFilter && typeFilter != "all") {
         typeFilter = typeFilter.toLowerCase();
         filteredData = filteredData.filter((a) => a.type.toLowerCase().startsWith(typeFilter));
       }
+      if (sortOrder == "desc") {
+        filteredData.sort((a, b) => {
+          return new Date(b.startDateTime) - new Date(a.startDateTime);
+        });
+      }
+      if (sortOrder == "asc") {
+        filteredData.sort((a, b) => {
+          return new Date(a.startDateTime) - new Date(b.startDateTime);
+        });
+      }
 
-      filteredData.sort((a, b) => {
-        return new Date(a.startDateTime) - new Date(b.startDateTime);
-      });
       if (searchInput) {
         searchInput = searchInput.toLowerCase();
         filteredData = filteredData.filter((p) => {
