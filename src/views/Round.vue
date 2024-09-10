@@ -51,7 +51,7 @@
             <ion-item color="primary">
               <!-- <ion-label slot="start">Table {{table.id}}</ion-label> -->
               <!-- <ion-label slot="start">Room {{ table.id }}</ion-label> -->
-              <ion-label slot="start">Table {{ table.id }}</ion-label>
+              <ion-label slot="start">Table {{ table.tableNumber }}</ion-label>
 
               <ion-button
                 v-if="table.positions.some((p) => p.playerEmail == user.email)"

@@ -3,7 +3,7 @@
     <!-- <ion-list-header>Round {{table.round}} - Table {{table.table}}</ion-list-header>  -->
     <ion-item color="primary" :disabled="table.isCompleted">
       <!-- <ion-label slot="start">Table {{ table.table }} - "{{ table.id }}"</ion-label> -->
-      <ion-label slot="start">Table "{{ table.id }}"</ion-label>
+      <ion-label slot="start">Table {{ table.table }}</ion-label>
       <ion-button
         v-if="table.positions.some((p) => p.playerEmail == user.email)"
         slot="end"

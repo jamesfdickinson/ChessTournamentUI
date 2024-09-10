@@ -88,6 +88,12 @@
               :value="position.tieBreaker"
               @input="position.tieBreaker = parseFloat($event.target.value) || 0"
             ></ion-input>
+            <ion-input
+              slot="end"
+              type="string"
+              :value="position.color"
+              @input="position.color = $event.target.value || ''"
+            ></ion-input>
             <ion-icon
               name="trash"
               slot="end"
@@ -110,12 +116,12 @@
               </template>
             </select>
           </ion-label>
-          <!-- <on-label>
+        <on-label>
             <select v-model="positionNew.color">
-              <option disabled value="">Select One</option>
+              <option disabled value="">Select Color</option>
               <option value="White">White</option>
               <option value="Black">Black</option>
-            </select></on-label> -->
+            </select></on-label>
           <ion-button slot="end" v-on:click="createPosition(positionNew)"
             >Add</ion-button
           >
@@ -211,9 +217,26 @@ export default {
       });
     },
     createPosition(match) {
+      //Bug: why is table being saved as "0"
       this.errors = [];
       this.messages = [];
       let tournamentId = this.tournamentId;
+
+      
+      if(match.table === 0) {
+         match.table = this.tableNumber;
+      }
+      //if table is not set, extract from room
+      if(match.table === 0) {
+        const regex = /(\d+)R/;
+        const str = match.room;
+        const matchRegex = str.match(regex);
+        if (matchRegex) {
+          const extractedNumber = matchRegex[1];
+          match.table = extractedNumber;
+        }
+        
+      }
       //let roundId = this.roundId;
       tournamentAPI
         .matchesCreate(tournamentId, [match])
@@ -273,6 +296,7 @@ export default {
       tournamentAPI
         .tableGet(tableId)
         .then((data) => {
+          this.tableNumber = data.tableNumber;
           this.positions = data.positions || [];
           //this.checkAccess(this.table);
         })

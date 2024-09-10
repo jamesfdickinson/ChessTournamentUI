@@ -67,6 +67,16 @@
         <ion-list-header color="primary">Games</ion-list-header>
         <ion-item xdetail="true" v-for="playerGame of playerGames" :key="playerGame.Id"
           v-on:click="openPlayer(playerGame.opponentId)">
+          <ion-icon
+                v-if="playerGame.color == 'Black'"
+                src="/images/chess_pawn_black.svg"
+                slot
+              ></ion-icon>
+              <ion-icon
+                v-else-if="playerGame.color == 'White'"
+                src="/images/chess_pawn_white.svg"
+                slot
+              ></ion-icon>
           <!-- <ion-note slot="start" >{{  playerGame.round }}</ion-note> -->
           <ion-label>{{ playerGame.opponets }}</ion-label>
           <ion-badge slot="end">{{ playerGame.points }}</ion-badge>

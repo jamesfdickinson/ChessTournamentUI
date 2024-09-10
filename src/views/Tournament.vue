@@ -394,9 +394,10 @@ export default {
 
       for (const [key, value] of Object.entries(groupedPositions)) {
         let isCompleted = value.some((x) => x.points > 0);
+        let tableNumber = value.find((t)=> !!t.table).table;
         let table = {
           id: key,
-          table: key,
+          table: tableNumber,
           room: key,
           positions: value,
           isCompleted: isCompleted,
@@ -423,12 +424,12 @@ export default {
       let userRooms = tablePositions
         .filter((i) => i.round == round && i.playerEmail == email && email)
         .map((i) => i.room);
-      let userTables = tablePositions.filter((i) => userRooms.includes(i.room));
+      let userTablesP = tablePositions.filter((i) => userRooms.includes(i.room));
 
       if (email && tournament.players) {
         userPlayers = tournament.players.filter((i) => i.email == email);
       }
-      this.userTables = this.createTables(userTables);
+      this.userTables = this.createTables(userTablesP);
       this.roundTables = this.createTables(roundTables);
       this.tournament = tournament;
       this.players = tournament.players || [];
