@@ -103,6 +103,9 @@ export default {
     this.soundAlert = new Howl({
       src: ["/audio/for-sure.mp3"],
     });
+    this.soundAlertAdmin = new Howl({
+      src: ["/audio/for-sure-f.mp3"],
+    });
     let isMuted = localStorage.getItem('isMuted') == "true";
     let isAdmin = this.adminIds.includes(this.userId);
     return {
@@ -201,7 +204,7 @@ export default {
     },
     onMessage(user, message, userId, tag) {
       let chatLog = this.chatLog;
-      let cleanMessage  = this.filterMessage(message);
+      let cleanMessage = this.filterMessage(message);
       chatLog.push({
         name: user,
         message: cleanMessage,
@@ -209,7 +212,13 @@ export default {
         tag: tag
       });
       if (!this.isMuted) {
-        this.soundAlert.play();
+        const isAdmin = this.fromAdmin(userId);
+        if (isAdmin) {
+          this.soundAlertAdmin.play();
+        }
+        else {
+          this.soundAlert.play();
+        }
       }
 
       let shouldScroll = this.shouldScroll();
