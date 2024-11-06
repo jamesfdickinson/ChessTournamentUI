@@ -35,8 +35,8 @@
               <ion-label style="white-space: normal">
                 <h1>{{ tournament.name }}</h1>
                 <p>{{ getLocalDate(tournament.startDateTime) }}</p>
-                <p>Host: {{ tournament.hostName || "" }} Rounds: {{ tournament.rounds }}</p>
-              
+                <p>Host: {{ tournament.hostName || "" }} <span v-if="tournament.coHostName" >& {{ tournament.coHostName || "" }}</span> </p>
+                <p>Rounds: {{ tournament.rounds }}</p>
               </ion-label>
               <ion-icon name="settings" slot="end" @click="
                 $router.push({
@@ -434,6 +434,8 @@ export default {
       this.tournament = tournament;
       this.players = tournament.players || [];
       this.adminIds = tournament.owner ? [tournament.owner] : [];
+      if(tournament.coHostUserName) this.adminIds.push(tournament.coHostUserName);
+      
       //filter players that have no score or are no present in the tournament (show all if pre tournament)
       if (round > 0) {
         this.players = this.players.filter((p) => p.points != null || p.isPresent || p.isOnline);

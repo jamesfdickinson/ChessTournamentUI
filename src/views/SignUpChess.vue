@@ -143,6 +143,16 @@
               ></ion-input>
             </ion-item>
             <ion-item>
+              <ion-label position="stacked">Gender</ion-label>
+              <div style="width: 100%;">
+                <select  v-model="player.gender" >
+                  <option disabled value="">Select One</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
+            </ion-item>
+            <ion-item>
               <ion-label position="stacked">Parent's Name</ion-label>
               <ion-input
                 :value="player.parentName"
@@ -217,6 +227,7 @@ export default {
       division: 1,
       isPresent: false,
       paid: false,
+      gender: "",
       parentName: "",
       email: "",
       parentPhone: "",

@@ -29,7 +29,7 @@ export default class TournamentTemplate {
                 signUpText: "",
                 type: "Cribbage",
                 rounds: 5,
-                pairing: "Swiss",
+                pairing: "Weights",
                 gameRoomLink: "https://cardsjd.com/cribbageembedded/?room=[room]&name=[name]&email=[email]&id=[id]&spectate=[spectate]&avatar=[avatar]",
                 autoAdvanceRounds: true,
                 allowNotifications: true,
@@ -52,7 +52,18 @@ export default class TournamentTemplate {
                 allowMultiplePlayersPerLogin: false,
                 autoOpenGame: true,
                 sendPostEmail: true,
-                allowChat: true
+                allowChat: true,
+                pairingWeightScore:80,
+                pairingWeightTeam:50,
+                pairingWeightPlayed:70,
+                pairingWeightRating:0,
+                pairingWeightGrade:10,
+                pairingMaxGradeDifference:-1,
+                pairingMaxScoreDifference:-1,
+                pairingAbsolutePlayed:false,
+                pairingAbsoluteTeam:false,
+                autoStartTournament:false
+
             };
         }
         if (type === "Chess") {
@@ -72,7 +83,7 @@ export default class TournamentTemplate {
                 signUpText: "",
                 type: "Chess",
                 rounds: 5,
-                pairing: "Swiss",
+                pairing: "Weights",
                 gameRoomLink: null,
                 autoAdvanceRounds: false,
                 allowNotifications: true,
@@ -95,7 +106,18 @@ export default class TournamentTemplate {
                 allowMultiplePlayersPerLogin: true,
                 autoOpenGame: false,
                 sendPostEmail: true,
-                allowChat: true
+                allowChat: true,
+                pairingWeightScore:80,
+                pairingWeightTeam:50,
+                pairingWeightPlayed:70,
+                pairingWeightRating:0,
+                pairingWeightGrade:10,
+                pairingMaxGradeDifference:-1,
+                pairingMaxScoreDifference:-1,
+                pairingAbsolutePlayed:false,
+                pairingAbsoluteTeam:false,
+                autoStartTournament:false
+
             };
         }
 
@@ -139,7 +161,17 @@ export default class TournamentTemplate {
             allowMultiplePlayersPerLogin: false,
             autoOpenGame: false,
             sendPostEmail: true,
-            allowChat: true
+            allowChat: true,
+            pairingWeightScore:80,
+            pairingWeightTeam:50,
+            pairingWeightPlayed:70,
+            pairingWeightRating:0,
+            pairingWeightGrade:10,
+            pairingMaxGradeDifference:-1,
+            pairingMaxScoreDifference:-1,
+            pairingAbsolutePlayed:false,
+            pairingAbsoluteTeam:false,
+            autoStartTournament:false
         };
     }
 }

@@ -4,11 +4,7 @@
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
-          <ion-icon
-            name="arrow-round-back"
-            size="large"
-            @click="$router.go(-1)"
-          ></ion-icon>
+          <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
         </ion-buttons>
 
         <ion-title>Sign Up</ion-title>
@@ -37,17 +33,11 @@
           <ion-list>
             <ion-item>
               <ion-label position="stacked">Name</ion-label>
-              <ion-input
-                :value="player.firstName"
-                @input="player.firstName = $event.target.value"
-              ></ion-input>
+              <ion-input :value="player.firstName" @input="player.firstName = $event.target.value"></ion-input>
             </ion-item>
             <ion-item>
               <ion-label position="stacked">Last Name</ion-label>
-              <ion-input
-                :value="player.lastName"
-                @input="player.lastName = $event.target.value"
-              ></ion-input>
+              <ion-input :value="player.lastName" @input="player.lastName = $event.target.value"></ion-input>
             </ion-item>
             <ion-item v-if="teams.length > 0">
               <ion-label position="stacked">Team/Club</ion-label>
@@ -63,10 +53,7 @@
             </ion-item>
             <ion-item>
               <ion-label position="stacked">Team/Club (optional)</ion-label>
-              <ion-input
-                :value="player.team"
-                @input="player.team = $event.target.value"
-              ></ion-input>
+              <ion-input :value="player.team" @input="player.team = $event.target.value"></ion-input>
             </ion-item>
 
             <!-- <ion-item>
@@ -85,10 +72,8 @@
             <ion-item v-if="type === 'Chess'">
               <ion-label position="stacked">Grade</ion-label>
               <div style="width: 100%">
-                <select
-                  v-model="player.grade"
-                  @change="player.rating = player.grade * 100 + parseInt(skillLevelAdjustment)"
-                >
+                <select v-model="player.grade"
+                  @change="player.rating = player.grade * 100 + parseInt(skillLevelAdjustment)">
                   <option disabled value="">Select One</option>
                   <option value="0">K</option>
                   <option value="1">1</option>
@@ -161,69 +146,56 @@
             <ion-item v-if="type === 'Chess'">
               <ion-label position="stacked">Skill level</ion-label>
               <div style="width: 100%">
-                <select
-                  v-model="skillLevelAdjustment"
-                  @change="player.rating = player.grade * 100 + parseInt(skillLevelAdjustment)"
-                >
+                <select v-model="skillLevelAdjustment"
+                  @change="player.rating = player.grade * 100 + parseInt(skillLevelAdjustment)">
                   <option disabled value="">Select One</option>
                   <option value="-50">Beginning</option>
                   <option value="0">Intermediate</option>
                   <option value="50">Advanced</option>
-      
+
                 </select>
               </div>
             </ion-item>
             <ion-item v-if="type === 'Chess'">
               <ion-label position="stacked">Rating</ion-label>
-              <ion-input
-                type="number"
-                :value="player.rating"
-                @input="player.rating = $event.target.value"
-              ></ion-input>
+              <ion-input type="number" :value="player.rating" @input="player.rating = $event.target.value"></ion-input>
+            </ion-item>
+
+            <ion-item v-if="type === 'Chess'">
+              <ion-label position="stacked">Gender</ion-label>
+              <div style="width: 100%;">
+                <select v-model="player.gender">
+                  <option disabled value="">Select One</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
             </ion-item>
             <ion-item v-if="type === 'Chess'">
               <ion-label position="stacked">Parent's Name</ion-label>
-              <ion-input
-                :value="player.parentName"
-                @input="player.parentName = $event.target.value"
-              ></ion-input>
+              <ion-input :value="player.parentName" @input="player.parentName = $event.target.value"></ion-input>
             </ion-item>
 
             <ion-item v-if="type === 'Chess'">
               <ion-label position="stacked">Phone Number</ion-label>
-              <ion-input
-                inputmode="tel"
-                :value="player.parentPhone"
-                @input="player.parentPhone = $event.target.value"
-              ></ion-input>
+              <ion-input inputmode="tel" :value="player.parentPhone"
+                @input="player.parentPhone = $event.target.value"></ion-input>
             </ion-item>
 
             <ion-item>
               <ion-label position="stacked">Email</ion-label>
-              <ion-input
-                type="email"
-                :value="player.email"
-                @input="player.email = $event.target.value"
-              ></ion-input>
+              <ion-input type="email" :value="player.email" @input="player.email = $event.target.value"></ion-input>
             </ion-item>
             <ion-item v-if="tournament.accessCodeBasic">
               <ion-label position="stacked">Access Code</ion-label>
-              <ion-input
-                :value="password"
-                @input="password = $event.target.value"
-              ></ion-input>
+              <ion-input :value="password" @input="password = $event.target.value"></ion-input>
             </ion-item>
 
             <ion-item>
-              <ion-label text-wrap
-                >I agree to the terms of use, privacy policy, and tournament
-                rules</ion-label
-              >
-              <ion-checkbox
-                slot="start"
-                :checked="agreeTerms"
-                @ionChange="agreeTerms = $event.target.checked == true"
-              ></ion-checkbox>
+              <ion-label text-wrap>I agree to the terms of use, privacy policy, and tournament
+                rules</ion-label>
+              <ion-checkbox slot="start" :checked="agreeTerms"
+                @ionChange="agreeTerms = $event.target.checked == true"></ion-checkbox>
             </ion-item>
           </ion-list>
           <!-- </ion-card> -->
@@ -265,6 +237,7 @@ export default {
       paid: false,
       parentName: "",
       email: "",
+      gender: "",
       parentPhone: "",
       emailHelpList: true,
       allowNotifications: true,

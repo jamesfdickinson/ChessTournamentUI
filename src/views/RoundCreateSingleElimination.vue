@@ -220,24 +220,24 @@ export default {
   },
   methods: {
     generateTopDownRound() {
-      this.errors = [];
+      // this.errors = [];
 
-      let tournamentId = this.$route.params.tournament;
-      let round = this.round;
-      let filter = this.filter;
+      // let tournamentId = this.$route.params.tournament;
+      // let round = this.round;
+      // let filter = this.filter;
 
-      fetch
-        .post(
-          `round/GenerateTopDown/${round}?tournament=${tournamentId}`,
-          filter
-        )
-        .then((response) => {
-          this.matches = response.data;
-          console.log(response.data);
-        })
-        .catch((e) => {
-          this.errors.push(e);
-        });
+      // fetch
+      //   .post(
+      //     `round/GenerateTopDown/${round}?tournament=${tournamentId}`,
+      //     filter
+      //   )
+      //   .then((response) => {
+      //     this.matches = response.data;
+      //     console.log(response.data);
+      //   })
+      //   .catch((e) => {
+      //     this.errors.push(e);
+      //   });
     },
     save() {
       this.errors = [];

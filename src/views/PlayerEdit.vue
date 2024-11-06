@@ -107,6 +107,13 @@
             @input="player.email = $event.target.value"
           ></ion-input>
         </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Gender</ion-label>
+          <ion-input
+            :value="player.gender"
+            @input="player.gender = $event.target.value"
+          ></ion-input>
+        </ion-item>
         <!-- <ion-item>
           <ion-label position="stacked">Phone Number</ion-label>
           <ion-input :value="player.parentPhone" @input="player.parentPhone = $event.target.value"></ion-input>
@@ -150,6 +157,7 @@ export default {
         division: 1,
         team: "",
         isPresent: true,
+        gender: ""
       },
       error: "",
     };

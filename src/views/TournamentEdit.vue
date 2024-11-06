@@ -16,12 +16,21 @@
           <ion-input :value="tournament.name" @input="tournament.name = $event.target.value"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="stacked">Owner</ion-label>
+          <ion-label position="stacked">Host (Username)</ion-label>
           <ion-input readonly :value="tournament.owner" @input="tournament.owner = $event.target.value"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Host Name</ion-label>
           <ion-input :value="tournament.hostName" @input="tournament.hostName = $event.target.value"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Co Host (Username)</ion-label>
+          <ion-input :value="tournament.coHostUserName"
+            @input="tournament.coHostUserName = $event.target.value"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Co Host Name</ion-label>
+          <ion-input :value="tournament.coHostName" @input="tournament.coHostName = $event.target.value"></ion-input>
         </ion-item>
         <!-- <ion-item>
           <ion-label position="stacked">Type</ion-label>
@@ -66,12 +75,15 @@
           <ion-label position="stacked">Rounds</ion-label>
           <ion-input :value="tournament.rounds" @input="tournament.rounds = $event.target.value"></ion-input>
         </ion-item>
+   
         <ion-item>
           <ion-label position="stacked">Streaming: Twitch Profile</ion-label>
           <ion-input :value="tournament.twitchProfile" @input="tournament.twitchProfile = $event.target.value">
           </ion-input>
         </ion-item>
-        <!-- <ion-item>
+        <!-- 
+          
+        <ion-item>
           <ion-label position="stacked">Current Round</ion-label>
           <ion-input
             :value="tournament.round"

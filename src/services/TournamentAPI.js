@@ -10,6 +10,14 @@ export default class TournamentAPI {
                 return data
             })
     }
+    tournamentUpdate(tournamentId, tournament) {
+        return fetch
+            .put(`tournament/${tournamentId}`, tournament)
+            .then(response => {
+                let data = response.data;
+                return data;
+            });
+    }
     round(tournamentId, roundId) {
         return fetch
             .get(`round/${roundId}?tournament=${tournamentId}`)
@@ -77,27 +85,16 @@ export default class TournamentAPI {
                 return data;
             })
     }
-    generateSwissMatching(tournamentId, round, filter) {
+    generatePairing(tournamentId, round, filter) {
         return fetch
-            .post(
-                `round/GenerateSwissMatching/${round}?tournament=${tournamentId}`,
-                filter
-            )
-            .then(response => {
-                let matches = response.data;
-                return matches;
-            })
-    }
-    generateTopDownRound(tournamentId, round, filter) {
-        return fetch
-            .post(
-                `round/GenerateTopDown/${round}?tournament=${tournamentId}`,
-                filter
-            )
-            .then(response => {
-                let matches = response.data;
-                return matches;
-            })
+        .post(
+            `pairing/${tournamentId}?round=${round}`,
+            filter
+        )
+        .then(response => {
+            let matches = response.data;
+            return matches;
+        });
     }
     matchDelete(matchId) {
         return fetch

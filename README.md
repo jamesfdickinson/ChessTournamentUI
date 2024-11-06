@@ -42,6 +42,12 @@ npm run lint
 ```
 
 ## Change Log
+### 2.5 "Pairing / Gender / Cohost"
+- 4 pairing options Weights, Swiss, Round Robin, and Stable
+- Pairing setting save for simple mode
+- Gender option for chess and added to admin player report
+- Cohost option added to touranment settings and will carry over if tourmanet is copied
+
 ### 2.5 "Create Round Swiss / Report"
 - Swiss create round option
 - Player detailed report

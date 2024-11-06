@@ -2,16 +2,15 @@
   <layout-raw>
     <ion-toolbar color="primary">
       <ion-buttons slot="start">
-        <ion-icon
-          name="arrow-round-back"
-          size="large"
-          @click="$router.go(-1)"
-        ></ion-icon>
+        <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
       </ion-buttons>
-      <ion-title>Scores - Detailed</ion-title>
+      <ion-title>Player - Detailed Report</ion-title>
       <ion-buttons slot="end">
         <ion-button @click="print()">
           <ion-icon name="print" size="large"></ion-icon>
+        </ion-button>
+        <ion-button @click="exportCSV()">
+          <ion-icon name="download" size="large"></ion-icon>
         </ion-button>
       </ion-buttons>
     </ion-toolbar>
@@ -20,14 +19,8 @@
       <!--   <ion-content scroll-x="true">-->
       <!-- <a href="#" onclick="window.history.back();">Back</a> -->
       <!-- <h1>Detailed Scores </h1> -->
-      <GridSort
-        :data="gridData"
-        :columns="gridColumns"
-        :sortKeys="sortKeys"
-        :sortOrders="sortOrders"
-        :title="title"
-        :description="description"
-      ></GridSort>
+      <GridSort :data="gridData" :columns="gridColumns" :sortKeys="sortKeys" :sortOrders="sortOrders" :title="title"
+        :description="description"></GridSort>
     </div>
   </layout-raw>
 </template>
@@ -71,6 +64,7 @@ export default {
         "parentName",
         "parentPhone",
         "gamerId",
+        "gender",
         "avatar",
       ],
       gridData: [],
@@ -110,13 +104,27 @@ export default {
     print() {
       window.print();
     },
+    exportCSV() {
+      let csvContent = this.convertToCSV(this.gridData);
+      window.open(csvContent);
+    },
+    convertToCSV(arr) {
+      const array = [Object.keys(arr[0])].concat(arr)
+      var output = "data:text/csv;charset=utf-8,";
+      output += array.map(it => {
+        return Object.values(it).toString()
+      }).join('\n')
+      output = encodeURI(output);
+      return output;
+    }
+
   },
   mounted() {
     this.loadData();
 
     EventBus.$on("updated", this.onUpdate);
   },
-  created() {},
+  created() { },
   beforeDestroy() {
     //todo: move event to notification class
     EventBus.$off("updated", this.onUpdate);
@@ -128,19 +136,21 @@ export default {
   body * {
     visibility: hidden;
   }
+
   .section-to-print,
   .section-to-print * {
     visibility: visible;
   }
+
   .section-to-print {
     position: absolute;
     left: 0;
     right: 0;
     top: 0;
   }
+
   .section-not-to-print {
     visibility: hidden;
   }
 }
 </style>
-
