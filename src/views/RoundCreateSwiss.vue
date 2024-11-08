@@ -26,7 +26,7 @@
             <input type="radio" name="pairing" id="Stable" value="Stable" v-model="tournament.pairing">
             <label for="Stable">Stable</label>
 
-            
+
           </div>
         </ion-item>
       </ion-item-group>
@@ -36,7 +36,8 @@
         </ion-list-header>
         <ion-list-header>
           <ion-label class="ion-text-wrap">Adjust each weight accroding to your needs. Absolute values can cause a
-            bye. Weights is efficient and flexible finding the most compatible pairing starting from the top.</ion-label>
+            bye. Weights is efficient and flexible finding the most compatible pairing starting from the
+            top.</ion-label>
         </ion-list-header>
         <ion-item>
           <ion-label>Round</ion-label>
@@ -44,40 +45,39 @@
         </ion-item>
 
         <ion-item>
-          <ion-label>Score Match</ion-label>
-          <ion-range min="0" max="100" :value="tournament.pairingWeightScore"
-            @ionChange="tournament.pairingWeightScore = $event.target.value">
-            <ion-label slot="end">{{ tournament.pairingWeightScore }}</ion-label>
-          </ion-range>
-        </ion-item>
-
-        <ion-item>
-          <ion-label>Different Team</ion-label>
-          <ion-range min="0" max="100" :value="tournament.pairingWeightTeam"
-            @ionChange="tournament.pairingWeightTeam = $event.target.value">
-            <ion-label slot="end">{{ tournament.pairingWeightTeam }}</ion-label>
-          </ion-range>
+          <div class="input-row">
+            <label>Score Match</label>
+            <input type="range" v-model="tournament.pairingWeightScore">
+            <span>{{ tournament.pairingWeightScore }}</span>
+          </div>
         </ion-item>
         <ion-item>
-          <ion-label>Played Before</ion-label>
-          <ion-range min="0" max="100" :value="tournament.pairingWeightPlayed"
-            @ionChange="tournament.pairingWeightPlayed = $event.target.value">
-            <ion-label slot="end">{{ tournament.pairingWeightPlayed }}</ion-label>
-          </ion-range>
+          <div class="input-row">
+            <label>Different Team</label>
+            <input type="range" v-model="tournament.pairingWeightTeam">
+            <span>{{ tournament.pairingWeightTeam }}</span>
+          </div>
         </ion-item>
         <ion-item>
-          <ion-label>Same Grade</ion-label>
-          <ion-range min="0" max="100" :value="tournament.pairingWeightGrade"
-            @ionChange="tournament.pairingWeightGrade = $event.target.value">
-            <ion-label slot="end">{{ tournament.pairingWeightGrade }}</ion-label>
-          </ion-range>
+          <div class="input-row">
+            <label>Played Before</label>
+            <input type="range" v-model="tournament.pairingWeightPlayed">
+            <span>{{ tournament.pairingWeightTeam }}</span>
+          </div>
         </ion-item>
         <ion-item>
-          <ion-label>Same Rating</ion-label>
-          <ion-range min="0" max="100" :value="tournament.pairingWeightRating"
-            @ionChange="tournament.pairingWeightRating = $event.target.value">
-            <ion-label slot="end">{{ tournament.pairingWeightRating }}</ion-label>
-          </ion-range>
+          <div class="input-row">
+            <label>Same Grade</label>
+            <input type="range" v-model="tournament.pairingWeightGrade">
+            <span>{{ tournament.pairingWeightGrade }}</span>
+          </div>
+        </ion-item>
+        <ion-item>
+          <div class="input-row">
+            <label>Same Rating</label>
+            <input type="range" v-model="tournament.pairingWeightRating">
+            <span>{{ tournament.pairingWeightRating }}</span>
+          </div>
         </ion-item>
 
         <ion-list-header>
@@ -142,26 +142,27 @@
         </ion-list-header>
         <ion-list-header>
           <ion-label class="ion-text-wrap">Adjust each weight accroding to your needs. Absolute values can cause a
-            bye.  Round Robin pairing is focused on not playing the same player twice. Round Robin ignores score, grade, rating. </ion-label>
+            bye. Round Robin pairing is focused on not playing the same player twice. Round Robin ignores score, grade,
+            rating. </ion-label>
         </ion-list-header>
         <ion-item>
           <ion-label>Round</ion-label>
           <ion-input :value="round" @input="round = $event.target.value"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label>Different Team</ion-label>
-          <ion-range min="0" max="100" :value="tournament.pairingWeightTeam"
-            @ionChange="tournament.pairingWeightTeam = $event.target.value">
-            <ion-label slot="end">{{ tournament.pairingWeightTeam }}</ion-label>
-          </ion-range>
+          <div class="input-row">
+            <label>Different Team</label>
+            <input type="range" v-model="tournament.pairingWeightTeam">
+            <span>{{ tournament.pairingWeightTeam }}</span>
+          </div>
         </ion-item>
         <ion-item>
-          <ion-label>Played Before</ion-label>
-          <ion-range min="0" max="100" :value="tournament.pairingWeightPlayed"
-            @ionChange="tournament.pairingWeightPlayed = $event.target.value">
-            <ion-label slot="end">{{ tournament.pairingWeightPlayed }}</ion-label>
-          </ion-range>
-        </ion-item>
+          <div class="input-row">
+            <label>Played Before</label>
+            <input type="range" v-model="tournament.pairingWeightPlayed">
+            <span>{{ tournament.pairingWeightTeam }}</span>
+          </div>
+        </ion-item>       
         <ion-list-header>
           <ion-label>Absolutes</ion-label>
         </ion-list-header>
@@ -184,7 +185,8 @@
         </ion-list-header>
         <ion-list-header>
           <ion-label class="ion-text-wrap">Adjust each weight accroding to your needs. Absolute values can cause a
-            bye.  Stable Matching is more powerful than basic Weights, but requires more processing power and time. Each player's match compatibility is calculated with all other players regardless of order. </ion-label>
+            bye. Stable Matching is more powerful than basic Weights, but requires more processing power and time. Each
+            player's match compatibility is calculated with all other players regardless of order. </ion-label>
         </ion-list-header>
         <ion-item>
           <ion-label>Round</ion-label>
@@ -192,40 +194,39 @@
         </ion-item>
 
         <ion-item>
-          <ion-label>Score Match</ion-label>
-          <ion-range min="0" max="100" :value="tournament.pairingWeightScore"
-            @ionChange="tournament.pairingWeightScore = $event.target.value">
-            <ion-label slot="end">{{ tournament.pairingWeightScore }}</ion-label>
-          </ion-range>
-        </ion-item>
-
-        <ion-item>
-          <ion-label>Different Team</ion-label>
-          <ion-range min="0" max="100" :value="tournament.pairingWeightTeam"
-            @ionChange="tournament.pairingWeightTeam = $event.target.value">
-            <ion-label slot="end">{{ tournament.pairingWeightTeam }}</ion-label>
-          </ion-range>
+          <div class="input-row">
+            <label>Score Match</label>
+            <input type="range" v-model="tournament.pairingWeightScore">
+            <span>{{ tournament.pairingWeightScore }}</span>
+          </div>
         </ion-item>
         <ion-item>
-          <ion-label>Played Before</ion-label>
-          <ion-range min="0" max="100" :value="tournament.pairingWeightPlayed"
-            @ionChange="tournament.pairingWeightPlayed = $event.target.value">
-            <ion-label slot="end">{{ tournament.pairingWeightPlayed }}</ion-label>
-          </ion-range>
+          <div class="input-row">
+            <label>Different Team</label>
+            <input type="range" v-model="tournament.pairingWeightTeam">
+            <span>{{ tournament.pairingWeightTeam }}</span>
+          </div>
         </ion-item>
         <ion-item>
-          <ion-label>Same Grade</ion-label>
-          <ion-range min="0" max="100" :value="tournament.pairingWeightGrade"
-            @ionChange="tournament.pairingWeightGrade = $event.target.value">
-            <ion-label slot="end">{{ tournament.pairingWeightGrade }}</ion-label>
-          </ion-range>
+          <div class="input-row">
+            <label>Played Before</label>
+            <input type="range" v-model="tournament.pairingWeightPlayed">
+            <span>{{ tournament.pairingWeightTeam }}</span>
+          </div>
         </ion-item>
         <ion-item>
-          <ion-label>Same Rating</ion-label>
-          <ion-range min="0" max="100" :value="tournament.pairingWeightRating"
-            @ionChange="tournament.pairingWeightRating = $event.target.value">
-            <ion-label slot="end">{{ tournament.pairingWeightRating }}</ion-label>
-          </ion-range>
+          <div class="input-row">
+            <label>Same Grade</label>
+            <input type="range" v-model="tournament.pairingWeightGrade">
+            <span>{{ tournament.pairingWeightGrade }}</span>
+          </div>
+        </ion-item>
+        <ion-item>
+          <div class="input-row">
+            <label>Same Rating</label>
+            <input type="range" v-model="tournament.pairingWeightRating">
+            <span>{{ tournament.pairingWeightRating }}</span>
+          </div>
         </ion-item>
 
         <ion-list-header>
@@ -247,9 +248,9 @@
       </ion-item-group>
 
       <div class="ion-padding">
-          <ion-button xexpand="block" @click="save()">Save</ion-button>
-          <ion-button xexpand="block" @click="generatePairing()">Generate Pairing (Preview)</ion-button>
-        </div>
+        <ion-button xexpand="block" @click="save()">Save</ion-button>
+        <ion-button xexpand="block" @click="generatePairing()">Generate Pairing (Preview)</ion-button>
+      </div>
 
       <div v-if="matches.length">
         <div class="ion-padding">
@@ -349,11 +350,11 @@ export default {
       let tournament = this.tournament;
       let tournamentId = this.$route.params.tournament;
       let round = this.round;
-      let filter =  {
+      let filter = {
         pairing: tournament.pairing,
         scoreMatchWeight: tournament.pairingWeightScore,
         sameTeamWeight: tournament.pairingWeightTeam,
-        playedBeforeWeight:tournament.pairingWeightPlayed,
+        playedBeforeWeight: tournament.pairingWeightPlayed,
         sameGradeWeight: tournament.pairingWeightGrade,
         sameRatingWeight: tournament.pairingWeightRating,
         sameTeamAbsolute: tournament.pairingAbsoluteTeam,
@@ -378,7 +379,7 @@ export default {
       let matches = this.matches;
       let sendNotifications = this.sendNotifications;
 
-      if(this.savePairingSettings){
+      if (this.savePairingSettings) {
         this.save();
       }
 
@@ -468,4 +469,18 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.input-row {
+  display: flex;
+  width: 100%;
+  gap: 15px
+}
+
+.input-row input {
+  flex: 1;
+}
+
+.input-row label {
+  flex-basis: 150px;
+}
+</style>
