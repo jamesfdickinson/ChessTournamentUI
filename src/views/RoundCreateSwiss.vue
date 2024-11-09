@@ -62,7 +62,7 @@
           <div class="input-row">
             <label>Played Before</label>
             <input type="range" v-model="tournament.pairingWeightPlayed">
-            <span>{{ tournament.pairingWeightTeam }}</span>
+            <span>{{ tournament.pairingWeightPlayed }}</span>
           </div>
         </ion-item>
         <ion-item>
@@ -160,7 +160,7 @@
           <div class="input-row">
             <label>Played Before</label>
             <input type="range" v-model="tournament.pairingWeightPlayed">
-            <span>{{ tournament.pairingWeightTeam }}</span>
+            <span>{{ tournament.pairingWeightPlayed }}</span>
           </div>
         </ion-item>       
         <ion-list-header>
@@ -211,7 +211,7 @@
           <div class="input-row">
             <label>Played Before</label>
             <input type="range" v-model="tournament.pairingWeightPlayed">
-            <span>{{ tournament.pairingWeightTeam }}</span>
+            <span>{{ tournament.pairingWeightPlayed }}</span>
           </div>
         </ion-item>
         <ion-item>
