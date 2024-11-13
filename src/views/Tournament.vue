@@ -395,7 +395,9 @@ export default {
 
       for (const [key, value] of Object.entries(groupedPositions)) {
         let isCompleted = value.some((x) => x.points > 0);
-        let tableNumber = value.find((t)=> !!t.table).table;
+        let match = value.find((t)=> !!t.table);
+        if(!match) continue;
+        const tableNumber = match.table;
         let table = {
           id: key,
           table: tableNumber,
