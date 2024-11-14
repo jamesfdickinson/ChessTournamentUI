@@ -75,12 +75,8 @@
           <ion-label position="stacked">Rounds</ion-label>
           <ion-input :value="tournament.rounds" @input="tournament.rounds = $event.target.value"></ion-input>
         </ion-item>
-   
-        <ion-item>
-          <ion-label position="stacked">Streaming: Twitch Profile</ion-label>
-          <ion-input :value="tournament.twitchProfile" @input="tournament.twitchProfile = $event.target.value">
-          </ion-input>
-        </ion-item>
+
+        
         <!-- 
           
         <ion-item>
@@ -144,6 +140,17 @@
           <ion-thumbnail slot="end">
             <ion-img :src="tournament.image"></ion-img>
           </ion-thumbnail>
+        </ion-item>
+           
+        <ion-item>
+          <ion-label position="stacked">Streaming: Twitch Profile</ion-label>
+          <ion-input :value="tournament.twitchProfile" @input="tournament.twitchProfile = $event.target.value">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Streaming: YouTube Channel ID</ion-label>
+          <ion-input :value="tournament.YouTubeStream" @input="tournament.YouTubeStream = $event.target.value">
+          </ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Teams (separated by commas)</ion-label>

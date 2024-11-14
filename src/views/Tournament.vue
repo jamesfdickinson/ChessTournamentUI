@@ -172,6 +172,11 @@
             <VideoTwitch :userName="tournament.twitchProfile"></VideoTwitch>
           </ion-card>
         </div>
+        <div class="flex-item" v-if="tournament.YouTubeStream">
+          <ion-card>
+            <VideoYouTube :userName="tournament.YouTubeStream"></VideoYouTube>
+          </ion-card>
+        </div>
         <!-- <div class="flex-item">
           <div v-if="tournament.state == 'play'">
             <ion-card>
@@ -209,6 +214,7 @@ import fetch from "@/services/fetch";
 import Chat from "@/components/Chat.vue";
 import Standings from "@/components/Standings.vue";
 import VideoTwitch from "@/components/VideoTwitch.vue";
+import VideoYouTube from "@/components/VideoYouTube.vue";
 import Table from "@/components/Table.vue";
 import Authentication from "@/services/Authentication";
 import EventBus from "@/services/EventBus.js";
@@ -225,6 +231,7 @@ export default {
     Standings,
     Table,
     VideoTwitch,
+    VideoYouTube,
     ReportScoreGroupRank,
   },
   data() {
