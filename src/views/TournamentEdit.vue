@@ -148,8 +148,8 @@
           </ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="stacked">Streaming: YouTube Channel ID</ion-label>
-          <ion-input :value="tournament.YouTubeStream" @input="tournament.YouTubeStream = $event.target.value">
+          <ion-label position="stacked">Streaming: YouTube Channel ID</ion-label> 
+          <ion-input :value="tournament.youTubeStream" @input="tournament.youTubeStream = $event.target.value">
           </ion-input>
         </ion-item>
         <ion-item>

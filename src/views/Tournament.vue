@@ -172,9 +172,9 @@
             <VideoTwitch :userName="tournament.twitchProfile"></VideoTwitch>
           </ion-card>
         </div>
-        <div class="flex-item" v-if="tournament.YouTubeStream">
+        <div class="flex-item" v-if="tournament.youTubeStream">
           <ion-card>
-            <VideoYouTube :userName="tournament.YouTubeStream"></VideoYouTube>
+            <VideoYouTube :userName="tournament.youTubeStream"></VideoYouTube>
           </ion-card>
         </div>
         <!-- <div class="flex-item">

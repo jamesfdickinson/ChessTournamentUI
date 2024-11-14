@@ -21,7 +21,7 @@ export default {
   load(){
     const youtubeChannelId = this.userName;
     let html = null;
-      if (twitchName) {
+      if (youtubeChannelId) {
         html = `<iframe 
           src="https://www.youtube.com/embed/live_stream?channel=${youtubeChannelId}"
           width="100%" 
