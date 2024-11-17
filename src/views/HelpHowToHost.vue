@@ -305,9 +305,9 @@
           <img style="max-width:400px;" src="/images/help/AdminFlow.png" alt="screen shot of admin flow" />
           <h2 id="stream">Stream</h2>
           <p>
-            To stream you will need to create a twitch account. Twitch also has a
-            free user-friendly streaming application you can download for free.
-            Once you have created the twitch account, you need to enter the
+            To stream you will need to create a twitch or YouTube account. YouTube and Twitch also has a
+            free user-friendly streaming application you can download for free or you can use a free open source software call OBS.
+            Once you have created the twitch or youtube account, you need to enter the
             streaming using name in the tournament settings.
           </p>
           <img style="max-width:400px;" src="/images/help/AdminStream.png" alt="screen shot of admin stream settings" />
