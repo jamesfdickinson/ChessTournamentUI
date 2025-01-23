@@ -185,6 +185,11 @@
           <ion-input :value="tournament.lossPoints" @input="tournament.lossPoints = $event.target.value"></ion-input>
         </ion-item>
         <ion-item>
+          <ion-label position="stacked">Banned Users (separated by commas)</ion-label>
+          <ion-textarea auto-grow="true" :value="tournament.bannedUsers" @input="tournament.bannedUsers = $event.target.value">
+          </ion-textarea>
+        </ion-item>
+        <ion-item>
           <ion-label>Auto Advance Rounds</ion-label>
           <ion-checkbox slot="start" :checked="tournament.autoAdvanceRounds" @ionChange="
             tournament.autoAdvanceRounds = $event.target.checked == true

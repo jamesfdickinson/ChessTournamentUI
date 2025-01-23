@@ -21,20 +21,16 @@
     "bad-words-jd": "^1.5.16",
     "howler": "^2.2.1",
     "jsondiffpatch": "^0.4.1",
-    "vue": "^2.7.15",
+    "vue": "^2.7.16",
     "vue-json-csv": "^1.2.5",
     "vue-meta": "^2.4.0",
     "vue-router": "^3.1.2",
     "vue-simple-alert": "^1.1.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.10.0",
-    "@vue/cli-plugin-eslint": "^3.10.0",
-    "@vue/cli-service": "^3.10.0",
-    "babel-eslint": "^10.0.2",
+    "@vue/cli-plugin-babel": "^5.0.8",
+    "@vue/cli-service": "^5.0.8",
     "cross-env": "^7.0.0",
-    "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.2.3",
-    "vue-template-compiler": "^2.7.15"
+    "fs": "^0.0.1-security"
   }
 }

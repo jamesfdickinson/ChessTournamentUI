@@ -1,6 +1,20 @@
 import fetch from "@/services/fetch";
+import Authentication from './Authentication'
 export default class TournamentAPI {
     constructor() {
+        this.authentication = new Authentication();
+    }
+    async tournaments(type) {
+        const token = this.authentication.getToken();
+        const response = await fetch(`tournament/type/${type}`, {
+            method: 'get',
+            headers: {
+                'Content-type': 'application/json',
+                'Authorization': `Bearer ${token}`, // notice the Bearer before your token
+            }
+        });
+        let data = response.data;
+        return data;
     }
     tournamentView(tournamentId) {
         return fetch
@@ -87,14 +101,14 @@ export default class TournamentAPI {
     }
     generatePairing(tournamentId, round, filter) {
         return fetch
-        .post(
-            `pairing/${tournamentId}?round=${round}`,
-            filter
-        )
-        .then(response => {
-            let matches = response.data;
-            return matches;
-        });
+            .post(
+                `pairing/${tournamentId}?round=${round}`,
+                filter
+            )
+            .then(response => {
+                let matches = response.data;
+                return matches;
+            });
     }
     matchDelete(matchId) {
         return fetch
@@ -138,7 +152,7 @@ export default class TournamentAPI {
                     return data;
                 });
         }
-    }  
+    }
     sendTournamentPlayersEmail(tournamentId, title, body, isTest) {
         const message = {
             title: title,

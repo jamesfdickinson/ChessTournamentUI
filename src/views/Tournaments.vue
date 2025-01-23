@@ -136,7 +136,10 @@
 
 <script>
 // @ is an alias to /src
-import fetch from "@/services/fetch";
+import TournamentAPI from "@/services/TournamentAPI";
+import Authentication from "@/services/Authentication";
+const tournamentAPI = new TournamentAPI();
+const authentication = new Authentication();
 export default {
   name: "home",
   metaInfo() {
@@ -221,22 +224,21 @@ export default {
         event.target.complete();
       });
     },
-    loadData() {
+    async loadData() {
       //const type = this.type;
       const type = "all";
-      return fetch
-        .get(`tournament/type/${type}`)
-        .then((response) => {
-          this.tournaments = response.data;
-          if (this.tournaments) {
-            this.tournaments.sort((a, b) => {
-              return new Date(a.startDateTime) - new Date(b.startDateTime);
-            });
-          }
-        })
-        .catch((e) => {
-          this.errors.push(e);
-        });
+
+      try {
+        const tournaments = await tournamentAPI.tournaments(type);
+        this.tournaments = tournaments;
+        if (this.tournaments) {
+          this.tournaments.sort((a, b) => {
+            return new Date(a.startDateTime) - new Date(b.startDateTime);
+          });
+        }
+      } catch (e) {
+        this.errors.push(e);
+      }
     },
   },
   created() {
@@ -250,6 +252,7 @@ export default {
       let typeFilter = this.type;
       let stateFilter = this.stateFilter;
       let dateFilterMax = this.dateFilterMax;
+      let userNameFilter =  authentication.getUser()?.userName;
       let sortOrder = "asc";
       if (stateFilter !== "end") {
         filteredData = filteredData.filter(
@@ -269,6 +272,15 @@ export default {
       if (typeFilter && typeFilter != "all") {
         typeFilter = typeFilter.toLowerCase();
         filteredData = filteredData.filter((a) => a.type.toLowerCase().startsWith(typeFilter));
+      }
+      console.log("userNameFilter", userNameFilter);
+      if (userNameFilter) {
+        userNameFilter = userNameFilter.toLowerCase();
+        filteredData = filteredData.filter((a) => {
+          if(!a.bannedUsers) return true;
+          if(!a.bannedUsers.toLowerCase().includes(userNameFilter)) return true;
+          return false;
+        });
       }
       if (sortOrder == "desc") {
         filteredData.sort((a, b) => {
