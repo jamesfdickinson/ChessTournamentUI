@@ -163,7 +163,7 @@ export default {
       this.hideUserChatOptions();
 
       //send to server to update user muted status
-      tournamentAPI.muteUserForTournament(tournamentId, userIdToUnMute, true);
+      tournamentAPI.muteUserForTournament(tournamentId, userIdToMute, true);
     },
     unmuteUser(userIdToUnMute) {
       const channel = this.channel.toString();
