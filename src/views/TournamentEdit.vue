@@ -185,6 +185,11 @@
           <ion-input :value="tournament.lossPoints" @input="tournament.lossPoints = $event.target.value"></ion-input>
         </ion-item>
         <ion-item>
+          <ion-label position="stacked">Muted Users (separated by commas)</ion-label>
+          <ion-textarea auto-grow="true" :value="tournament.mutedUsers" @input="tournament.mutedUsers = $event.target.value">
+          </ion-textarea>
+        </ion-item>
+        <ion-item>
           <ion-label position="stacked">Banned Users (separated by commas)</ion-label>
           <ion-textarea auto-grow="true" :value="tournament.bannedUsers" @input="tournament.bannedUsers = $event.target.value">
           </ion-textarea>

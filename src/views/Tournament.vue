@@ -158,8 +158,8 @@
         </div>
         <div class="flex-item" v-if="tournament.allowChat">
           <ion-card style="height: 200px">
-            <Chat :channel="tournamentId.toString()" :adminIds="adminIds" :blockedIds="blockedIds" :userId="userId"
-              :userName="userName"></Chat>
+            <Chat :channel="tournamentId.toString()" :adminIds="adminIds" :mutedIds="mutedIds" :userId="userId"
+              :userName="userName" :tournamentId="tournamentId"></Chat>
           </ion-card>
         </div>
         <div class="flex-item" v-if="tournament.video">
@@ -240,7 +240,7 @@ export default {
     let user = authentication.getUser();
     let userName = user && user.name ? user.name : "unknown";
     let userId = user && user.userName ? user.userName : null;
-    let blockedIds = [];
+    let mutedIds = [];
     let adminIds = [];
     return {
       tournamentId: tournamentId,
@@ -249,7 +249,7 @@ export default {
       userName: userName,
       userId: userId,
       adminIds: adminIds,
-      blockedIds: blockedIds,
+      mutedIds: mutedIds,
       userPlayers: [],
       roundTables: [],
       userTables: [],
@@ -445,7 +445,7 @@ export default {
       this.players = tournament.players || [];
       this.adminIds = tournament.owner ? [tournament.owner] : [];
       if(tournament.coHostUserName) this.adminIds.push(tournament.coHostUserName);
-      
+      this.mutedIds = tournament.mutedUsers || "";
       //filter players that have no score or are no present in the tournament (show all if pre tournament)
       if (round > 0) {
         this.players = this.players.filter((p) => p.points != null || p.isPresent || p.isOnline);

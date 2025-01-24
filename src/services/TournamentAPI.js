@@ -202,4 +202,17 @@ export default class TournamentAPI {
                 });
         }
     }
+
+    async muteUserForTournament(tournamentId, userId, mute) {
+        const token = this.authentication.getToken();
+        const response = await fetch(`tournament/${tournamentId}/mutedusers/${userId}/{mute}`, {
+            method: 'post',
+            headers: {
+                'Content-type': 'application/json',
+                'Authorization': `Bearer ${token}`, // notice the Bearer before your token
+            }
+        });
+        let data = response.data;
+        return data;
+    }
 }

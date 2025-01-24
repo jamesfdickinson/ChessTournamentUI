@@ -12,19 +12,19 @@
             <span style="font-weight: bold;color: #3880ff">{{ chatItem.name }}:</span>
             <span style="font-weight:bold;"> {{ chatItem.message }}</span>
           </div>
-          <div v-else-if="isAdmin && !chatItem.tag">
+          <div v-else-if="isAdmin && chatItem.muted === false">
             <!-- <ion-icon v-if="isMuted"  slot="start" name="volume-off"></ion-icon> -->
             <span style="font-weight: bold; color: green"
               @click="showUserChatOptions(chatItem.userId, chatItem.name)">{{ chatItem.name }}:</span>
             {{ chatItem.message }}
           </div>
-          <div v-else-if="isAdmin && chatItem.tag == 'muted'">
+          <div v-else-if="isAdmin && chatItem.muted === true">
             <!-- <span  >&#10060;</span>  -->
             <span style="font-weight: bold; color: green;opacity: 0.4;"
               @click="showUserChatOptions(chatItem.userId, chatItem.name)">{{ chatItem.name }} (Muted):</span>
             <span style=" opacity:0.4;">{{ chatItem.message }}</span>
           </div>
-          <div v-else-if="!isAdmin && !chatItem.tag">
+          <div v-else-if="!isAdmin && chatItem.muted === false">
 
             <span style="font-weight: bold; color: green">{{ chatItem.name }}:</span>
             {{ chatItem.message }}
@@ -209,11 +209,13 @@ export default {
         if (userIdLocal != message.userId) {
           cleanMessage = this.filterMessage(cleanMessage);
         }
+        let muted = this.isUserMuted(message.userId);
         chatLog.push({
           name: message.user,
           message: cleanMessage,
           userId: message.userId,
-          tag: message.tag
+          tag: message.tag,
+          muted: muted
         });
       }
       this.$nextTick(() => this.scrollToEnd());
@@ -227,11 +229,13 @@ export default {
       if (userIdLocal != userId) {
         cleanMessage = this.filterMessage(cleanMessage);
       }
+      let muted = this.isUserMuted(userId);
       chatLog.push({
         name: user,
         message: cleanMessage,
         userId: userId,
-        tag: tag
+        tag: tag,
+        muted: muted
       });
       if (!this.isMuted) {
         const isAdmin = this.fromAdmin(userId);
