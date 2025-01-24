@@ -205,7 +205,7 @@ export default class TournamentAPI {
 
     async muteUserForTournament(tournamentId, userId, mute) {
         const token = this.authentication.getToken();
-        const response = await fetch(`tournament/${tournamentId}/mutedusers/${userId}/{mute}`, {
+        const response = await fetch(`tournament/${tournamentId}/mutedusers/${userId}/${mute}`, {
             method: 'post',
             headers: {
                 'Content-type': 'application/json',
