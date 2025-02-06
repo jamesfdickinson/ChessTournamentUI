@@ -147,7 +147,7 @@
                 @input="player.grade = $event.target.value;player.rating =player.grade*100"
               ></ion-input>
             </ion-item>-->
-            <ion-item v-if="type === 'Chess'">
+            <!-- <ion-item v-if="type === 'Chess'">
               <ion-label position="stacked">Skill level</ion-label>
               <div style="width: 100%">
                 <select v-model="skillLevelAdjustment"
@@ -159,7 +159,7 @@
 
                 </select>
               </div>
-            </ion-item>
+            </ion-item> -->
             <ion-item v-if="type === 'Chess'">
               <ion-label position="stacked">Rating</ion-label>
               <ion-input type="number" :value="player.rating" @input="player.rating = $event.target.value"></ion-input>
@@ -340,7 +340,7 @@ export default {
           if (tournament && tournament.teams) {
             this.teams = tournament.teams.split(",").map(function (item) {
               return item.trim();
-            });
+            }).sort();
           }
         })
         .catch((e) => {

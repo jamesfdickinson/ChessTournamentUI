@@ -66,6 +66,10 @@
           <ion-icon slot="start" name="contact"></ion-icon>
           <ion-label>Create 3 Divisions K to 2 and 3 to 6 and 7 plus</ion-label>
         </ion-item>
+        <ion-item button detail="true" v-on:click="Create3DivisionsKto5and6to8and9plus()">
+          <ion-icon slot="start" name="contact"></ion-icon>
+          <ion-label>Create 3 Divisions K to 5 and 6 to 8 and 9 plus</ion-label>
+        </ion-item>
         <ion-item button detail="true" v-on:click="SendAllToTournamentHomeNotification()">
           <ion-icon slot="start" name="contact"></ion-icon>
           <ion-label>Send All To Tournament Home Notification</ion-label>
@@ -245,6 +249,18 @@ export default {
           this.error = e;
         });
     },
+    Create3DivisionsKto5and6to8and9plus() {
+      var tournamentId = this.tournamentId;
+      fetch
+        .get(`tools/Create3DivisionsKto5and6to8and9plus/${tournamentId}`)
+        .then((response) => {
+          this.message = response.data;
+        })
+        .catch((e) => {
+          this.error = e;
+        });
+    },
+    
     SendAllToTournamentHomeNotification() {
       var tournamentId = this.tournamentId;
       fetch
@@ -256,6 +272,9 @@ export default {
           this.error = e;
         });
     },
+
+
+    
     
   },
   created() { },
