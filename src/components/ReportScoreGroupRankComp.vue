@@ -37,6 +37,8 @@ export default {
       title: title,
       description: description,
       errors: [],
+      playersDelayed: this.players,
+      debounceTimeout: null,
     };
   },
   methods: {
@@ -45,11 +47,23 @@ export default {
     },
   },
   created() {},
+  watch: {
+    // Watch the data property you want to monitor
+    players(newVal) {
+      if (this.debounceTimeout) {
+        clearTimeout(this.debounceTimeout);
+      }
+      this.debounceTimeout = setTimeout(() => {
+        this.playersDelayed = newVal;
+      }, 2000); // 2000 milliseconds = 2 seconds
+    },
+  },
+  //delay calculating report until no new data for 2 seconds
   computed: {
     filteredItems() {
       console.log("filteredItems");
       //group players
-      const groupedByTeam = this.players.reduce(function (acc, item) {
+      const groupedByTeam = this.playersDelayed.reduce(function (acc, item) {
         if (!item.team) return acc;
         let key = item.team + "-" + item.division;
         if (!key) return acc;
