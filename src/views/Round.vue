@@ -272,7 +272,10 @@ export default {
     createTable() {
       let roundId = this.roundId;
       let tournamentId = this.tournamentId;
-      let tables = this.round.length;
+      //get max table number from round
+      let tables = this.round.reduce((max, t) => Math.max(max, t.tableNumber), 0);
+
+      
 
       let table = (tables || 0) + 1;
       let id = table + "R" + roundId + "T" + tournamentId;

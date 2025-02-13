@@ -20,7 +20,10 @@
             <input type="radio" name="pairing" id="Weights" value="Weights" v-model="tournament.pairing">
             <label for="Weights">Weights</label>
             <input type="radio" name="pairing" id="Swiss" value="Swiss" v-model="tournament.pairing">
-            <label for="Swiss">Swiss</label>
+            <label for="Swiss">Swiss (Dutch)</label>
+            <input type="radio" name="pairing" id="Swiss0" value="Swiss0" v-model="tournament.pairing">
+            <label for="Swiss0">Swiss 0</label>
+            
             <input type="radio" name="pairing" id="RoundRobin" value="RoundRobin" v-model="tournament.pairing">
             <label for="RoundRobin">Round Robin</label>
             <input type="radio" name="pairing" id="Stable" value="Stable" v-model="tournament.pairing">
@@ -99,11 +102,60 @@
       </ion-item-group>
       <ion-item-group v-if="tournament.pairing == 'Swiss'">
         <ion-list-header>
-          <h1>Swiss</h1>
+          <h1>Swiss (Dutch)</h1>
         </ion-list-header>
         <ion-list-header>
           <ion-label class="ion-text-wrap">
             Adjust each setting accroding to your needs. Absolute values can cause a bye.
+          </ion-label>
+
+        </ion-list-header>
+        <ion-list-header>
+          <ion-label class="ion-text-wrap">
+            The Swiss Dutch system is a non-elimination tournament format that's used when there are too many competitors
+            for a round-robin tournament, but eliminating competitors before the end of the tournament isn't desirable.
+            Rating is used for the first round ordering and splitting top half and matched with bottom half.
+            Following rounds the tournament is sorted by points, then rating and splitting top half and matched with
+            bottom half.
+            Swiss Dutch pairing is often referred to as Swiss in the chess world. 
+            
+            <ul>
+              <li>The primary goal of the swiss pairing is to match players with similar points.</li>
+            <li>Seeding is based on rating.</li>
+            <li>Each player will receive a maximum of 1 bye, unless all players have received a bye</li>
+            <li>There should be no more than 1 bye per division. Exceptions can occur with strong absolute settings or small division.</li>
+
+            </ul>
+            <p>IFDA -Swiss Ducth Rules: <a href="https://handbook.fide.com/chapter/C0403Till2025">https://handbook.fide.com/chapter/C0403Till2025</a></p>
+            
+       </ion-label>
+
+        </ion-list-header>
+
+
+        <ion-list-header>
+          <ion-label>Absolutes</ion-label>
+        </ion-list-header>
+        <ion-item>
+          <ion-label>Not Played Before</ion-label>
+          <ion-checkbox slot="start" :checked="tournament.pairingAbsolutePlayed" @ionChange="
+            tournament.pairingAbsolutePlayed = $event.target.checked == true
+            "></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>Not Same Team</ion-label>
+          <ion-checkbox slot="start" :checked="tournament.pairingAbsoluteTeam"
+            @ionChange="tournament.pairingAbsoluteTeam = $event.target.checked == true"></ion-checkbox>
+        </ion-item>
+
+      </ion-item-group>
+      <ion-item-group v-if="tournament.pairing == 'Swiss0'">
+        <ion-list-header>
+          <h1>Swiss 0</h1>
+        </ion-list-header>
+        <ion-list-header>
+          <ion-label class="ion-text-wrap">
+            (Older version of Swiss) Adjust each setting accroding to your needs. Absolute values can cause a bye.
           </ion-label>
 
         </ion-list-header>
@@ -162,7 +214,7 @@
             <input type="range" v-model="tournament.pairingWeightPlayed">
             <span>{{ tournament.pairingWeightPlayed }}</span>
           </div>
-        </ion-item>       
+        </ion-item>
         <ion-list-header>
           <ion-label>Absolutes</ion-label>
         </ion-list-header>
@@ -279,7 +331,10 @@
                 <!-- <td>
                   <input v-model="match.table" style="width: 40px;" />
                 </td> -->
-                <td>{{ match.table }}</td>
+                <td>
+                     <input :value="match.table" @change="match.table = $event.target.value" type="number" min="0" max="999"></input> 
+                    <!-- {{ match.table }} -->
+                </td>
                 <td>{{ match.firstName }} {{ match.lastName }}</td>
                 <td>{{ match.color }}</td>
                 <td>{{ match.team }}</td>
