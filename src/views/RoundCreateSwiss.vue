@@ -251,22 +251,16 @@
 
       </ion-item-group>
       <ion-item-group>
-        <ion-accordion-group>
-          <ion-accordion value="first">
-            <ion-item slot="header" color="light">
-              <ion-label>First Accordion</ion-label>
-            </ion-item>
-            <div class="ion-padding" slot="content">First Content</div>
-          </ion-accordion>
-        </ion-accordion-group>
-        <ion-item>
-          <ion-label>Table Offset</ion-label>
-          <ion-input :value="round" @input="round = $event.target.value"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label>Round Number</ion-label>
-          <ion-input :value="round" @input="round = $event.target.value"></ion-input>
-        </ion-item>
+      
+          <details>
+          <summary style="padding:15px;">Advanced</summary>
+          <ion-item>
+            <ion-label>Round Number</ion-label>
+            <ion-input style="" :value="round" @input="round = $event.target.value"></ion-input>
+          </ion-item>
+        </details> 
+     
+
       </ion-item-group>
       <div class="ion-padding">
         <ion-button xexpand="block" @click="save()">Save Settings</ion-button>
