@@ -1,5 +1,7 @@
 // vue.config.js
 const fs = require('fs');
+process.env.VUE_APP_VERSION = require('./package.json').version
+
 module.exports = {
   outputDir: 'www',
   publicPath: process.env.CORDOVA_PLATFORM ? '' : '/',

@@ -195,7 +195,7 @@
             bye. Stable Matching is more powerful than basic Weights, but requires more processing power and time. Each
             player's match compatibility is calculated with all other players regardless of order. </ion-label>
         </ion-list-header>
-        >
+       
 
         <ion-item>
           <div class="input-row">

@@ -48,17 +48,17 @@
             </div>
           </div>
 
-      
-            <div>
-              <h2>Details</h2>
-              <a href="help/HowToHost">Tournament Overview</a>
-            </div>
-        
+
+          <div>
+            <h2>Details</h2>
+            <a href="help/HowToHost">Tournament Overview</a>
+          </div>
+
 
           <footer>
             <p>
               <a href="https://bracketjd.com">Bracket JD</a> |
-              <a href="mailto:tournament@jdsoftwarellc.com">Contact</a> | <a href="">version 1.0.12</a>
+              <a href="mailto:tournament@jdsoftwarellc.com">Contact</a> | <a href="">version {{ version }}</a>
 
             </p>
           </footer>
@@ -127,8 +127,10 @@ export default {
     ]
   },
   data() {
+    const version = process.env.VUE_APP_VERSION || "2.0.0";
     return {
-      searchQuery: ""
+      searchQuery: "",
+      version: version,
     };
   },
   methods: {
