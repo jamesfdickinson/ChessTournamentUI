@@ -4,16 +4,12 @@
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
-          <ion-icon
-            name="arrow-round-back"
-            size="large"
-            @click="
-              $router.push({
-                name: 'Rounds',
-                params: { tournament: tournamentId },
-              })
-            "
-          ></ion-icon>
+          <ion-icon name="arrow-round-back" size="large" @click="
+            $router.push({
+              name: 'Rounds',
+              params: { tournament: tournamentId },
+            })
+            "></ion-icon>
         </ion-buttons>
         <ion-title>Round {{ roundId }}</ion-title>
         <ion-buttons slot="end">
@@ -30,19 +26,12 @@
       </ion-toolbar>
     </ion-header>
     <ion-content>
-      <ion-searchbar
-        placeholder="Table #, First, or Last Name"
-        :value="searchInput"
-        @ionInput="searchInput = $event.target.value"
-        @ionChange="searchInput = $event.target.value"
-      ></ion-searchbar>
+      <ion-searchbar placeholder="Table #, First, or Last Name" :value="searchInput"
+        @ionInput="searchInput = $event.target.value" @ionChange="searchInput = $event.target.value"></ion-searchbar>
       <ion-item>
         <ion-label>Hide Completed Games</ion-label>
-        <ion-toggle
-          :checked="hideCompletedGames"
-          @ionInput="hideCompletedGames = $event.target.checked"
-          @ionChange="hideCompletedGames = $event.target.checked"
-        ></ion-toggle>
+        <ion-toggle :checked="hideCompletedGames" @ionInput="hideCompletedGames = $event.target.checked"
+          @ionChange="hideCompletedGames = $event.target.checked"></ion-toggle>
       </ion-item>
 
       <ion-list>
@@ -53,24 +42,19 @@
               <!-- <ion-label slot="start">Room {{ table.id }}</ion-label> -->
               <ion-label slot="start">Table {{ table.tableNumber }}</ion-label>
 
-              <ion-button
-                v-if="table.positions.some((p) => p.playerEmail == user.email)"
-                slot="end"
-                color="light"
+
+              <ion-button 
+                v-if="table.positions.some((p) => p.room)" 
+                slot="end" 
+                color="light" 
                 fill="outline"
-                @click="openGame(table.id)"
+                @click="openGame(table.id, table.positions.some((p) => p.playerEmail == user.email))" 
                 target="_blank"
-                >Join</ion-button
-              >
-              <ion-button
-                v-else
-                slot="end"
-                color="light"
-                fill="outline"
-                @click="watchGame(table.id)"
-                target="_blank"
-                >Watch</ion-button
-              >
+                >
+                {{table.positions.some((p) => p.playerEmail == user.email) ? 'Join' : 'Watch'}}
+              </ion-button>
+
+
               <!-- <ion-button slot="start" v-on:click="openTable(table.id)">
                   <ion-icon name="open"></ion-icon>
                 </ion-button>
@@ -122,42 +106,21 @@
                 </ion-button>
               </ion-buttons>
             </ion-item>
-            <ion-item
-              detail="true"
-              v-for="position of table.positions"
-              :key="position.id"
-              v-on:click="openPlayer(position.playerId)"
-            >
-              <ion-icon
-                name="radio-button-on"
-                xslot="start"
-                :color="[
-                  isInRoom(position.playerEmail, position.room)
-                    ? 'success'
-                    : 'light',
-                ]"
-              ></ion-icon>
-              
-              <ion-icon
-                v-if="position.color == 'Black'"
-                src="/images/chess_pawn_black.svg"
-                slot
-              ></ion-icon>
-              <ion-icon
-                v-else-if="position.color == 'White'"
-                src="/images/chess_pawn_white.svg"
-                slot
-              ></ion-icon>
-            
+            <ion-item detail="true" v-for="position of table.positions" :key="position.id"
+              v-on:click="openPlayer(position.playerId)">
+              <ion-icon name="radio-button-on" xslot="start" :color="[
+                isInRoom(position.playerEmail, position.room)
+                  ? 'success'
+                  : 'light',
+              ]"></ion-icon>
 
-              <ion-label
-                >{{ position.playerFirstName }}
-                {{ position.playerLastName }}</ion-label
-              >
-                   <TeamIcon
-                :title="position.playerTeam"
-                style="margin-right: 10px"
-              ></TeamIcon>
+              <ion-icon v-if="position.color == 'Black'" src="/images/chess_pawn_black.svg" slot></ion-icon>
+              <ion-icon v-else-if="position.color == 'White'" src="/images/chess_pawn_white.svg" slot></ion-icon>
+
+
+              <ion-label>{{ position.playerFirstName }}
+                {{ position.playerLastName }}</ion-label>
+              <TeamIcon :title="position.playerTeam" style="margin-right: 10px"></TeamIcon>
               <ion-badge slot="end" color="light">{{
                 position.points
               }}</ion-badge>
@@ -257,17 +220,19 @@ export default {
         params: { id: roundId, tournament: tournamentId },
       });
     },
-    openGame(id) {
-      this.$router.push({
-        name: "PlayGame",
-        params: { id: id },
-      });
-    },
-    watchGame(id) {
-      this.$router.push({
-        name: "PlayGame",
-        params: { id: id, spectate: true },
-      });
+    openGame(id, watch) {
+      if (!watch) {
+        this.$router.push({
+          name: "PlayGame",
+          params: { id: id },
+        });
+      }
+      if (watch) {
+        this.$router.push({
+          name: "PlayGame",
+          params: { id: id, spectate: true },
+        });
+      }
     },
     createTable() {
       let roundId = this.roundId;
@@ -275,7 +240,7 @@ export default {
       //get max table number from round
       let tables = this.round.reduce((max, t) => Math.max(max, t.tableNumber), 0);
 
-      
+
 
       let table = (tables || 0) + 1;
       let id = table + "R" + roundId + "T" + tournamentId;
@@ -397,7 +362,7 @@ export default {
     //tournamentSocket.connect(this.tournamentId);
     EventBus.$on("updated", this.onUpdate);
   },
-  created() {},
+  created() { },
   beforeDestroy() {
     //tournamentSocket.close();
     EventBus.$off("updated", this.onUpdate);

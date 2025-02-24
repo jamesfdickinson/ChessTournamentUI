@@ -15,8 +15,9 @@
           <ion-label position="stacked">Tournament Type</ion-label>
           <ion-select placeholder="Select One" :value="tournamentType"
             @ionChange="tournamentType = $event.target.value">
-            <ion-select-option value="Cribbage">Cribbage</ion-select-option>
-            <ion-select-option value="Chess">Chess</ion-select-option>
+            <ion-select-option value="CribbageOnline">Cribbage online</ion-select-option>
+            <ion-select-option value="CribbageInPerson">Cribbage in-person</ion-select-option>
+            <ion-select-option value="ChessInPerson">Chess in-person</ion-select-option>
             <ion-select-option value="Other">Other</ion-select-option>
           </ion-select>
         </ion-item>

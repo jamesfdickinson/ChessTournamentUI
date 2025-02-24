@@ -299,6 +299,7 @@ export default {
       if (isNaN(player.rating)) this.rating = 1000;
       if (isNaN(player.rating)) this.errors.push("Rating is not a number.");
       if (!player.email) this.errors.push("Email is required.");
+      if (accessCodeBasic) accessCodeBasic = accessCodeBasic.trim();
       if (accessCodeBasic && accessCodeBasic != password)
         this.errors.push("Incorrect access code");
 

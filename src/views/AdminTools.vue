@@ -42,6 +42,10 @@
           <ion-icon slot="start" name="trash"></ion-icon>
           <ion-label>Delete all players</ion-label>
         </ion-item>
+        <ion-item button detail="true" v-on:click="add20Players()">
+          <ion-icon slot="start" name="trash"></ion-icon>
+          <ion-label>Add 20 random players</ion-label>
+        </ion-item>
         <ion-item button detail="true" v-on:click="updateAllAvatars()">
           <ion-icon slot="start" name="contact"></ion-icon>
           <ion-label>Update all avatars from JD</ion-label>
@@ -181,7 +185,21 @@ export default {
             this.error = e;
           });
       });
+    },    
+    add20Players() {
+      this.$confirm(`Do you want to add 20 players?`).then(() => {
+        var tournamentId = this.tournamentId;
+        fetch
+          .get(`tools/Add20Players/${tournamentId}`)
+          .then((response) => {
+            this.message = response.data;
+          })
+          .catch((e) => {
+            this.error = e;
+          });
+      });
     },
+    
     updateAllAvatars() {
       this.$confirm(`Do you want to update all Avatars?`).then(() => {
         var tournamentId = this.tournamentId;

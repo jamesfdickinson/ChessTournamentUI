@@ -12,6 +12,8 @@ import VueMeta from 'vue-meta'
 // import "@ionic/core/css/ionic.bundle.css"
 
 // import Ionic  from '@ionic/vue';
+import { Analytics } from '@cardsjd/analytics';
+
 import AnalyticsGA from './services/AnalyticsGA'
 import Authentication from './services/Authentication'
 import Authorization from './services/Authorization'
@@ -32,6 +34,9 @@ const version = "2.1";
 const analyticsGA = new AnalyticsGA();
 analyticsGA.TrackStart("Tournament", version, "UA-2052018-24");
 analyticsGA.TrackPage("Start");
+
+const analyticsJD = new Analytics({appName: "Tournament", version: version});
+analyticsJD.trackStart();
 
 const authentication = new Authentication();
 const authorization = new Authorization();

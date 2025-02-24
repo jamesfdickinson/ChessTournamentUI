@@ -21,9 +21,6 @@
             <label for="Weights">Weights</label>
             <input type="radio" name="pairing" id="Swiss" value="Swiss" v-model="tournament.pairing">
             <label for="Swiss">Swiss (Dutch)</label>
-            <input type="radio" name="pairing" id="Swiss0" value="Swiss0" v-model="tournament.pairing">
-            <label for="Swiss0">Swiss 0</label>
-            
             <input type="radio" name="pairing" id="RoundRobin" value="RoundRobin" v-model="tournament.pairing">
             <label for="RoundRobin">Round Robin</label>
             <input type="radio" name="pairing" id="Stable" value="Stable" v-model="tournament.pairing">
@@ -42,10 +39,7 @@
             bye. Weights is efficient and flexible finding the most compatible pairing starting from the
             top.</ion-label>
         </ion-list-header>
-        <ion-item>
-          <ion-label>Round</ion-label>
-          <ion-input :value="round" @input="round = $event.target.value"></ion-input>
-        </ion-item>
+ 
 
         <ion-item>
           <div class="input-row">
@@ -112,60 +106,25 @@
         </ion-list-header>
         <ion-list-header>
           <ion-label class="ion-text-wrap">
-            The Swiss Dutch system is a non-elimination tournament format that's used when there are too many competitors
+            The Swiss Dutch system is a non-elimination tournament format that's used when there are too many
+            competitors
             for a round-robin tournament, but eliminating competitors before the end of the tournament isn't desirable.
             Rating is used for the first round ordering and splitting top half and matched with bottom half.
             Following rounds the tournament is sorted by points, then rating and splitting top half and matched with
             bottom half.
-            Swiss Dutch pairing is often referred to as Swiss in the chess world. 
-            
+            Swiss Dutch pairing is often referred to as Swiss in the chess world.
+
             <ul>
               <li>The primary goal of the swiss pairing is to match players with similar points.</li>
-            <li>Seeding is based on rating.</li>
-            <li>Each player will receive a maximum of 1 bye, unless all players have received a bye</li>
-            <li>There should be no more than 1 bye per division. Exceptions can occur with strong absolute settings or small division.</li>
+              <li>Seeding is based on rating.</li>
+              <li>Each player will receive a maximum of 1 bye, unless all players have received a bye</li>
+              <li>There should be no more than 1 bye per division. Exceptions can occur with strong absolute settings or
+                small division.</li>
 
             </ul>
-            <p>IFDA -Swiss Ducth Rules: <a href="https://handbook.fide.com/chapter/C0403Till2025">https://handbook.fide.com/chapter/C0403Till2025</a></p>
-            
-       </ion-label>
-
-        </ion-list-header>
-
-
-        <ion-list-header>
-          <ion-label>Absolutes</ion-label>
-        </ion-list-header>
-        <ion-item>
-          <ion-label>Not Played Before</ion-label>
-          <ion-checkbox slot="start" :checked="tournament.pairingAbsolutePlayed" @ionChange="
-            tournament.pairingAbsolutePlayed = $event.target.checked == true
-            "></ion-checkbox>
-        </ion-item>
-        <ion-item>
-          <ion-label>Not Same Team</ion-label>
-          <ion-checkbox slot="start" :checked="tournament.pairingAbsoluteTeam"
-            @ionChange="tournament.pairingAbsoluteTeam = $event.target.checked == true"></ion-checkbox>
-        </ion-item>
-
-      </ion-item-group>
-      <ion-item-group v-if="tournament.pairing == 'Swiss0'">
-        <ion-list-header>
-          <h1>Swiss 0</h1>
-        </ion-list-header>
-        <ion-list-header>
-          <ion-label class="ion-text-wrap">
-            (Older version of Swiss) Adjust each setting accroding to your needs. Absolute values can cause a bye.
-          </ion-label>
-
-        </ion-list-header>
-        <ion-list-header>
-          <ion-label class="ion-text-wrap">
-            The Swiss system is a non-elimination tournament format that's used when there are too many competitors
-            for a round-robin tournament, but eliminating competitors before the end of the tournament isn't desirable.
-            Rating is used for the first round ordering and spliting top half and matched with bottom half.
-            Following rounds the tournament is sorted by points, then rating and spliting top half and matched with
-            bottom half.
+            <p>IFDA -Swiss Ducth Rules: <a
+                href="https://handbook.fide.com/chapter/C0403Till2025">https://handbook.fide.com/chapter/C0403Till2025</a>
+            </p>
 
           </ion-label>
 
@@ -197,10 +156,6 @@
             bye. Round Robin pairing is focused on not playing the same player twice. Round Robin ignores score, grade,
             rating. </ion-label>
         </ion-list-header>
-        <ion-item>
-          <ion-label>Round</ion-label>
-          <ion-input :value="round" @input="round = $event.target.value"></ion-input>
-        </ion-item>
         <ion-item>
           <div class="input-row">
             <label>Different Team</label>
@@ -240,10 +195,7 @@
             bye. Stable Matching is more powerful than basic Weights, but requires more processing power and time. Each
             player's match compatibility is calculated with all other players regardless of order. </ion-label>
         </ion-list-header>
-        <ion-item>
-          <ion-label>Round</ion-label>
-          <ion-input :value="round" @input="round = $event.target.value"></ion-input>
-        </ion-item>
+       >
 
         <ion-item>
           <div class="input-row">
@@ -298,10 +250,28 @@
 
 
       </ion-item-group>
-
+      <ion-item-group>
+        <ion-accordion-group>
+          <ion-accordion value="first">
+            <ion-item slot="header" color="light">
+              <ion-label>First Accordion</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">First Content</div>
+          </ion-accordion>
+        </ion-accordion-group>
+        <ion-item>
+          <ion-label>Table Offset</ion-label>
+          <ion-input :value="round" @input="round = $event.target.value"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Round Number</ion-label>
+          <ion-input :value="round" @input="round = $event.target.value"></ion-input>
+        </ion-item>
+      </ion-item-group>
       <div class="ion-padding">
         <ion-button xexpand="block" @click="save()">Save</ion-button>
         <ion-button xexpand="block" @click="generatePairing()">Generate Pairing (Preview)</ion-button>
+
       </div>
 
       <div v-if="matches.length">
@@ -332,8 +302,9 @@
                   <input v-model="match.table" style="width: 40px;" />
                 </td> -->
                 <td>
-                     <input :value="match.table" @change="match.table = $event.target.value" type="number" min="0" max="999"></input> 
-                    <!-- {{ match.table }} -->
+                  <input :value="match.table" @change="match.table = $event.target.value" type="number" min="0"
+                    max="999"></input>
+                  <!-- {{ match.table }} -->
                 </td>
                 <td>{{ match.firstName }} {{ match.lastName }}</td>
                 <td>{{ match.color }}</td>
@@ -349,22 +320,14 @@
         </table>
         <div class="ion-padding">
           <ion-list>
-            <ion-item>
-              <ion-label>Round</ion-label>
-              <ion-input :value="round" @input="round = $event.target.value"></ion-input>
-            </ion-item>
+
             <ion-item>
               <ion-label>Save pairing settings</ion-label>
               <ion-checkbox slot="start" :checked="savePairingSettings"
                 @ionChange="savePairingSettings = $event.target.checked == true"></ion-checkbox>
             </ion-item>
-            <ion-item>
-              <ion-label>Send notifications on create</ion-label>
-              <ion-checkbox slot="start" :checked="sendNotifications"
-                @ionChange="sendNotifications = $event.target.checked == true"></ion-checkbox>
-            </ion-item>
           </ion-list>
-          <ion-button expand="block" @click="saveMatches()">Create Round</ion-button>
+          <ion-button expand="block" @click="saveMatches()">Create Round {{ roundToCreate }}</ion-button>
         </div>
       </div>
 
@@ -389,10 +352,9 @@ export default {
   data() {
     var tournamentId = this.$route.params.tournament;
     return {
-      round: 1,
+      round: null,
       tournament: {},
       tournamentId: tournamentId,
-      sendNotifications: true,
       savePairingSettings: true,
       matches: [],
       errors: [],
@@ -420,6 +382,9 @@ export default {
         .generatePairing(tournamentId, round, filter)
         .then((data) => {
           this.matches = data;
+          //get round number from matches, check first match else nothing
+          this.roundToCreate = this.matches.length ? this.matches[0].round : null;
+
           console.log(data);
         })
         .catch((e) => {
@@ -430,10 +395,8 @@ export default {
       this.errors = [];
 
       let tournamentId = this.$route.params.tournament;
-      let round = this.round;
       let matches = this.matches;
-      let sendNotifications = this.sendNotifications;
-
+      let round = this.roundToCreate;
       if (this.savePairingSettings) {
         this.save();
       }
@@ -441,13 +404,9 @@ export default {
       tournamentAPI
         .matchesCreate(tournamentId, matches)
         .then((data) => {
-          console.log(`Round ${round} created : ${data}`);
+          console.log(`Created : ${data}`);
           tournamentAPI.flowAction(tournamentId, "play");
-          //send notifications
-          if (sendNotifications) {
-            //this.sendRoundNotifications(tournamentId, round);
-            //this.sendRoundGameInvites(tournamentId, round);
-          }
+
           //go to round page
           this.$router.push({
             name: "Round",
@@ -487,7 +446,6 @@ export default {
       }
     },
     populate(tournament) {
-      this.round = (tournament.round || 0) + 1;
       this.tournament = tournament;
     },
     loadData() {

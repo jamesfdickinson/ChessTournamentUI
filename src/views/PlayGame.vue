@@ -1,18 +1,16 @@
 <template>
   <layout-no-menu>
-    <ion-header>
-      <ion-toolbar color="primary">
-        <ion-buttons slot="start">
-          <ion-icon
-            name="arrow-round-back"
-            size="large"
-            @click="$router.go(-1)"
-          ></ion-icon>
-        </ion-buttons>
-        <ion-title text-left>{{ id }}</ion-title>
+    <div class="gamePortalContainer">
+      <header>
+        <ion-header>
+          <ion-toolbar color="primary">
+            <ion-buttons slot="start">
+              <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
+            </ion-buttons>
+            <ion-title text-left>{{ id }}</ion-title>
 
-        <ion-buttons slot="end">
-          <!-- <ion-button         
+            <ion-buttons slot="end">
+              <!-- <ion-button         
             fill="outline"
             :href="getRoomLink(id, spectate)"
             target="_blank"
@@ -24,29 +22,28 @@
             Full Screen
           </ion-button> -->
 
-          <ion-button @click="fullScreen()">
-            <ion-icon name="expand" size="large"></ion-icon>
-          </ion-button>
-          <ion-button :href="roomURL" target="_blank" @click="$router.go(-1)">
-            <!-- <ion-icon name="globe" size="large"></ion-icon> -->
-            <ion-icon name="browsers" size="large"></ion-icon>
-            <!-- <ion-icon name="tv" size="large"></ion-icon>  -->
-          </ion-button>
-          <ion-button @click="openTable(id)">
-            <ion-icon name="create" size="large"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content id="gameFrame" v-if="this.roomURL">
-      <iframe
-        id="iframe-game"
-        :src="roomURL"
-        style="width: 100%; min-height: 100%"
-        allowfullscreen
-      >
-      </iframe>
-    </ion-content>
+              <ion-button @click="fullScreen()">
+                <ion-icon name="expand" size="large"></ion-icon>
+              </ion-button>
+              <ion-button :href="roomURL" target="_blank" @click="$router.go(-1)">
+                <!-- <ion-icon name="globe" size="large"></ion-icon> -->
+                <ion-icon name="browsers" size="large"></ion-icon>
+                <!-- <ion-icon name="tv" size="large"></ion-icon>  -->
+              </ion-button>
+              <ion-button @click="openTable(id)">
+                <ion-icon name="create" size="large"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+
+      </header>
+      <div class="gameWrapper">
+        <iframe id="iframe-game" :src="roomURL" style="width: 100%; min-height: 100%" allowfullscreen></iframe>
+      </div>
+
+
+    </div>
   </layout-no-menu>
 </template>
 
@@ -96,7 +93,7 @@ export default {
       userName = userName.replace("#", "");
       userName = userName.replace("@", "");
 
-     
+
 
       //note: can't trust players to supply their own cribbage id.  Had an issue with many with the same number
       //note: now link the systems using their email
@@ -201,7 +198,7 @@ export default {
     this.loadData();
     window.addEventListener("message", this.onChildWindowMessage);
   },
-  created() {},
+  created() { },
   beforeDestroy() {
     window.removeEventListener("message", this.onChildWindowMessage);
     // //close window to clean up
@@ -209,3 +206,64 @@ export default {
   },
 };
 </script>
+<style scoped>
+.gamePortalContainer {
+  width: 100%;
+  max-height: 100%;
+  height: 800px;
+
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+
+  background-size: 100%;
+}
+
+header {
+  width: 100%;
+  height: 100%;
+  flex-basis: 40px;
+  color: #000 !important;
+  background-color: #ffffff !important;
+  border-bottom: 1px solid #6e6e6e;
+  margin-bottom: 0px;
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+}
+
+.gameWrapper {
+  background: #000000;
+  flex: 1;
+}
+
+.contentWrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+
+@media (orientation: landscape) and (max-height: 800px) {
+  .gamePortalContainer {
+    flex-direction: row;
+  }
+  header {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    max-width: 60px;
+    width: inherit;
+  }
+  nav {
+    flex-direction: column;
+  }
+
+}
+
+@media (orientation: portrait) or (min-height: 800px) {
+  .gamePortalContainer {
+    flex-direction: column;
+  }
+}
+</style>
