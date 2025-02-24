@@ -98,7 +98,7 @@
                 <img v-if="tournament.image" :src="tournament.image" />
               </ion-thumbnail>
               <ion-label>
-                <h2>{{ tournament.name.substring(0,100) }}</h2>
+                <h2>{{ tournament.name ? tournament.name.substring(0,100) : '' }}</h2>
                 <p>
                   {{ getLocalDate(tournament.startDateTime) }}
                 </p>

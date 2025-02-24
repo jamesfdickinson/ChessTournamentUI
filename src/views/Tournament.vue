@@ -33,7 +33,7 @@
                 <img v-if="tournament.image" :src="tournament.image" />
               </ion-thumbnail>
               <ion-label style="white-space: normal">
-                <h1>{{ tournament.name.substring(0,100) }}</h1>
+                <h1>{{ tournament.name ? tournament.name.substring(0,100) : '' }}</h1>
                 <p>{{ getLocalDate(tournament.startDateTime) }}</p>
                 <p>Host: {{ tournament.hostName || "" }} <span v-if="tournament.coHostName" >& {{ tournament.coHostName || "" }}</span> </p>
                 <p>Rounds: {{ tournament.rounds }} - {{ tournament.pairing }} </p>
