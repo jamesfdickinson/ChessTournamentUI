@@ -39,7 +39,7 @@
             bye. Weights is efficient and flexible finding the most compatible pairing starting from the
             top.</ion-label>
         </ion-list-header>
- 
+
 
         <ion-item>
           <div class="input-row">
@@ -195,7 +195,7 @@
             bye. Stable Matching is more powerful than basic Weights, but requires more processing power and time. Each
             player's match compatibility is calculated with all other players regardless of order. </ion-label>
         </ion-list-header>
-       >
+        >
 
         <ion-item>
           <div class="input-row">
@@ -269,7 +269,7 @@
         </ion-item>
       </ion-item-group>
       <div class="ion-padding">
-        <ion-button xexpand="block" @click="save()">Save</ion-button>
+        <ion-button xexpand="block" @click="save()">Save Settings</ion-button>
         <ion-button xexpand="block" @click="generatePairing()">Generate Pairing (Preview)</ion-button>
 
       </div>
@@ -321,11 +321,6 @@
         <div class="ion-padding">
           <ion-list>
 
-            <ion-item>
-              <ion-label>Save pairing settings</ion-label>
-              <ion-checkbox slot="start" :checked="savePairingSettings"
-                @ionChange="savePairingSettings = $event.target.checked == true"></ion-checkbox>
-            </ion-item>
           </ion-list>
           <ion-button expand="block" @click="saveMatches()">Create Round {{ roundToCreate }}</ion-button>
         </div>
@@ -355,7 +350,6 @@ export default {
       round: null,
       tournament: {},
       tournamentId: tournamentId,
-      savePairingSettings: true,
       matches: [],
       errors: [],
       message: "",
@@ -391,60 +385,59 @@ export default {
           this.errors.push(e);
         });
     },
-    saveMatches() {
+    async saveMatches() {
       this.errors = [];
 
       let tournamentId = this.$route.params.tournament;
       let matches = this.matches;
       let round = this.roundToCreate;
-      if (this.savePairingSettings) {
-        this.save();
-      }
 
-      tournamentAPI
-        .matchesCreate(tournamentId, matches)
-        .then((data) => {
-          console.log(`Created : ${data}`);
-          tournamentAPI.flowAction(tournamentId, "play");
 
-          //go to round page
-          this.$router.push({
-            name: "Round",
-            params: { tournament: tournamentId, id: round },
-          });
-        })
-        .catch((e) => {
-          this.errors.push(e);
+      try {
+        const data = await tournamentAPI.matchesCreate(tournamentId, matches);
+
+        console.log(`Created : ${data}`);
+        await tournamentAPI.flowAction(tournamentId, "play");
+
+        //go to round page
+        this.$router.push({
+          name: "Round",
+          params: { tournament: tournamentId, id: round },
         });
-    },
-    sendRoundNotifications(tournamentId, round) {
-      if (tournamentId && round) {
-        tournamentAPI
-          .sendRoundNotifications(tournamentId, round)
-          .then((data) => {
-            this.success = "Sent: " + data || "";
-            console.log(data);
-          })
-          .catch((e) => {
-            this.error = "Error: " + e;
-            console.warn(e);
-          });
       }
-    },
-    sendRoundGameInvites(tournamentId, round) {
-      if (tournamentId && round) {
-        tournamentAPI
-          .sendRoundGameInvite(tournamentId, round)
-          .then((data) => {
-            this.success = "Sent: " + data || "";
-            console.log(data);
-          })
-          .catch((e) => {
-            this.error = "Error: " + e;
-            console.warn(e);
-          });
+      catch (e) {
+        this.errors.push(e);
       }
+
     },
+    // sendRoundNotifications(tournamentId, round) {
+    //   if (tournamentId && round) {
+    //     tournamentAPI
+    //       .sendRoundNotifications(tournamentId, round)
+    //       .then((data) => {
+    //         this.success = "Sent: " + data || "";
+    //         console.log(data);
+    //       })
+    //       .catch((e) => {
+    //         this.error = "Error: " + e;
+    //         console.warn(e);
+    //       });
+    //   }
+    // },
+    // sendRoundGameInvites(tournamentId, round) {
+    //   if (tournamentId && round) {
+    //     tournamentAPI
+    //       .sendRoundGameInvite(tournamentId, round)
+    //       .then((data) => {
+    //         this.success = "Sent: " + data || "";
+    //         console.log(data);
+    //       })
+    //       .catch((e) => {
+    //         this.error = "Error: " + e;
+    //         console.warn(e);
+    //       });
+    //   }
+    // },
     populate(tournament) {
       this.tournament = tournament;
     },
@@ -459,11 +452,11 @@ export default {
           this.errors.push(e);
         });
     },
-    save() {
+    async save() {
       let tournamentId = this.tournamentId;
       let tournament = this.tournament;
 
-      tournamentAPI
+      await tournamentAPI
         .tournamentUpdate(tournamentId, tournament)
         .then((response) => {
           console.log(response);
