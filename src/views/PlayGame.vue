@@ -211,7 +211,7 @@ export default {
   width: 100%;
   max-height: 100%;
   height: 800px;
-
+  height: 100%;
   text-align: center;
   display: flex;
   flex-direction: column;

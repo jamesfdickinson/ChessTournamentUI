@@ -48,7 +48,7 @@
                 slot="end" 
                 color="light" 
                 fill="outline"
-                @click="openGame(table.id, table.positions.some((p) => p.playerEmail == user.email))" 
+                @click="openGame(table.id, !table.positions.some((p) => p.playerEmail == user.email))" 
                 target="_blank"
                 >
                 {{table.positions.some((p) => p.playerEmail == user.email) ? 'Join' : 'Watch'}}
