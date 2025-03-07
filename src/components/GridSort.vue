@@ -15,7 +15,7 @@
       </div> -->
     </div>
     <div id="printable" class="section-to-print">
-      <h1 v-show="title" >{{ title }}</h1>
+      <h1 v-show="title" class="title">{{ title }}</h1>
       <div v-show="description" class="description">{{ description }}</div>
       <table>
         <thead>
@@ -153,6 +153,7 @@ export default {
 .title {
   margin: 20px 10px 10px 10px;
 }
+
 .description {
   margin: 3px 10px 3px 10px;
 }
