@@ -144,6 +144,12 @@
             <ion-label>Wall Chart</ion-label>
           </ion-item>
         </router-link>
+        <router-link :to="{ name: 'ReportTournamentStats', params: { tournament: tournamentId }}">
+          <ion-item button detail="true">
+            <ion-icon slot="start" name="albums"></ion-icon>
+            <ion-label>Tournament Stats</ion-label>
+          </ion-item>
+        </router-link>
       </ion-list>
 
       <!-- <ion-button v-on:click="openPlayers()">Players</ion-button>fdfggdfg

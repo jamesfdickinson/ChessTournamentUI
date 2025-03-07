@@ -4,7 +4,7 @@
       <div class="section-to-print">
         <GridSort :data="gridData" :columns="gridColumns"></GridSort>
        
-        <h1 v-show="title" class="title">{{ title }}</h1>
+        <h1 v-show="title" >{{ title }}</h1>
         <div v-show="description" class="description">{{ description }}</div>
          <ion-item>
           <ion-button slot="end" @click="reload()">Refresh</ion-button>

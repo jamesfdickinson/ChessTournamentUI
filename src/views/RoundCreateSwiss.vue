@@ -258,6 +258,10 @@
             <ion-label>Round Number</ion-label>
             <ion-input style="" :value="round" @input="round = $event.target.value"></ion-input>
           </ion-item>
+          <ion-item>
+            <ion-label>Table Offset</ion-label>
+            <ion-input style="" :value="tableOffset" @input="tableOffset = $event.target.value"></ion-input>
+          </ion-item>
         </details> 
      
 
@@ -355,6 +359,7 @@ export default {
       let tournament = this.tournament;
       let tournamentId = this.$route.params.tournament;
       let round = this.round;
+      let tableOffset = this.tableOffset ?? 1;
       let filter = {
         pairing: tournament.pairing,
         scoreMatchWeight: tournament.pairingWeightScore,
@@ -364,6 +369,7 @@ export default {
         sameRatingWeight: tournament.pairingWeightRating,
         sameTeamAbsolute: tournament.pairingAbsoluteTeam,
         playedBeforeAbsolute: tournament.pairingAbsolutePlayed,
+        tableOffset: tableOffset
       };
 
       tournamentAPI

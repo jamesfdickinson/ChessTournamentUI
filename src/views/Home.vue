@@ -5,7 +5,7 @@
         <div style="background-color:#3880ff;color:#FFFFFF;">
           <ion-img slot="" style="height: 100px" src="./images/trophyflat.png"></ion-img>
 
-          <h1 class="title">Bracket JD</h1>
+          <h1 class="titleHeader">Bracket JD</h1>
 
         </div>
         <div style="padding: 20px; max-width: 600px; margin: 0 auto;">
@@ -68,7 +68,7 @@
   </layout-no-menu>
 </template>
 <style>
-.title {
+.titleHeader {
   margin: 0;
   padding: 0;
   font-size: 30px;

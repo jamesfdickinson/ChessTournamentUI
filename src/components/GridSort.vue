@@ -15,7 +15,7 @@
       </div> -->
     </div>
     <div id="printable" class="section-to-print">
-      <h1 v-show="title" class="title">{{ title }}</h1>
+      <h1 v-show="title" >{{ title }}</h1>
       <div v-show="description" class="description">{{ description }}</div>
       <table>
         <thead>

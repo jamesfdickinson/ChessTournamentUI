@@ -51,6 +51,7 @@ import ReportScoreSubGradeGroupRank from './views/ReportScoreSubGradeGroupRank.v
 import ReportWallChart from './views/ReportWallChart.vue'
 import ReportPlayerDetailed from './views/ReportPlayerDetailed.vue'
 import ReportPlayerDetailedAdmin from './views/ReportPlayerDetailedAdmin.vue'
+import ReportTournamentStats from './views/ReportTournamentStats.vue'
 import User from './views/User.vue'
 import UserCreate from './views/UserCreate.vue'
 import UserEdit from './views/UserEdit.vue'
@@ -392,6 +393,11 @@ export default new VueRouter({
       path: '/:tournament/ReportPlayerDetailedAdmin',
       name: 'ReportPlayerDetailedAdmin',
       component: ReportPlayerDetailedAdmin
+    }, 
+    {
+      path: '/:tournament/ReportTournamentStats',
+      name: 'ReportTournamentStats',
+      component: ReportTournamentStats
     }, 
     
   ]
