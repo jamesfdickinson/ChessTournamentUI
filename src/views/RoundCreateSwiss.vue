@@ -124,7 +124,7 @@
                 small division.</li>
 
             </ul>
-            <p>IFDA -Swiss Ducth Rules: <a
+            <p>IFDA -Swiss Dutch Rules: <a
                 href="https://handbook.fide.com/chapter/C0403Till2025">https://handbook.fide.com/chapter/C0403Till2025</a>
             </p>
 
@@ -178,7 +178,7 @@
                 small division.</li>
 
             </ul>
-            <p>IFDA -Swiss Ducth Rules: <a
+            <p>IFDA -Swiss Dutch Rules: <a
                 href="https://handbook.fide.com/chapter/C0403Till2025">https://handbook.fide.com/chapter/C0403Till2025</a>
             </p>
 
