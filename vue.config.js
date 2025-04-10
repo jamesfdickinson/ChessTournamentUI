@@ -5,6 +5,7 @@ process.env.VUE_APP_VERSION = require('./package.json').version
 module.exports = {
   outputDir: 'www',
   publicPath: process.env.CORDOVA_PLATFORM ? '' : '/',
+  productionSourceMap: true, // Enable source maps in production
 
   devServer: {
 
