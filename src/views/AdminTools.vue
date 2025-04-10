@@ -78,6 +78,23 @@
           <ion-icon slot="start" name="contact"></ion-icon>
           <ion-label>Send All To Tournament Home Notification</ion-label>
         </ion-item>
+        <ion-item>
+          <ion-icon slot="start" name="contact"></ion-icon>
+          <ion-label text-wrap>
+            <div>Create Random Teams</div>
+
+
+            <input type="checkbox" v-model="isPresentOnly"> Present Only</input>
+
+            <input type="number" v-model="playersPerTeam" placeholder="Size" style="width: 70px; margin: 5px;">
+            </input>
+
+            <input type="button" value="Create" @click="AssignTeams(playersPerTeam, isPresentOnly)"></input>
+
+
+          </ion-label>
+
+        </ion-item>
       </ion-list>
       <div style="color: green">{{ message }}</div>
       <div style="color: red">{{ error }}</div>
@@ -102,6 +119,8 @@ export default {
       tournamentId: tournamentId,
       error: null,
       message: null,
+      playersPerTeam: null,
+      isPresentOnly: false,
     };
   },
   methods: {
@@ -185,7 +204,7 @@ export default {
             this.error = e;
           });
       });
-    },    
+    },
     add20Players() {
       this.$confirm(`Do you want to add 20 players?`).then(() => {
         var tournamentId = this.tournamentId;
@@ -199,7 +218,7 @@ export default {
           });
       });
     },
-    
+
     updateAllAvatars() {
       this.$confirm(`Do you want to update all Avatars?`).then(() => {
         var tournamentId = this.tournamentId;
@@ -278,7 +297,7 @@ export default {
           this.error = e;
         });
     },
-    
+
     SendAllToTournamentHomeNotification() {
       var tournamentId = this.tournamentId;
       fetch
@@ -290,10 +309,29 @@ export default {
           this.error = e;
         });
     },
+    AssignTeams(playersPerTeam, isPresentOnly) {
+      this.$confirm(`Do you want to assign teams? This will overwrite existing team assignments.`).then(() => {
+      var tournamentId = this.tournamentId;
+      if (!playersPerTeam) {
+        this.error = "Please enter a team size";
+        return;
+      }
+      isPresentOnly = !!isPresentOnly;// convert to boolean
+
+      fetch
+        .get(`tools/AssignTeams/${tournamentId}?playersPerTeam=${playersPerTeam}&isPresentOnly=${isPresentOnly}`)
+        .then((response) => {
+          this.message = response.data;
+        })
+        .catch((e) => {
+          this.error = e;
+        });
+      });
+    },
 
 
-    
-    
+
+
   },
   created() { },
 };
