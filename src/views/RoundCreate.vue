@@ -333,7 +333,14 @@
       </div>
       <div class="ion-padding" v-if="explanation" style="margin-bottom:20px;">
         <details>
-          <summary style="padding:15px;">Explanation: Pairing Breakdown</summary>
+          <summary style="padding:15px;">
+            Explanation: Pairing Breakdown
+  
+          </summary>
+          <ion-button size="small" @click.stop="printExplanation">
+              <ion-icon name="print" slot="start"></ion-icon>
+              Print
+            </ion-button>
           <div id="pairing-explanation" class="markdown" v-html="explanation"></div>
         </details>
       </div>
@@ -367,6 +374,54 @@ export default {
     };
   },
   methods: {
+    printExplanation(e) {
+      e.preventDefault();
+      const printContent = document.getElementById('pairing-explanation').innerHTML;
+      const originalBody = document.body.innerHTML;
+      
+      const printWindow = window.open('', '_blank');
+      printWindow.document.write(`
+        <html>
+          <head>
+            <title>Pairing Explanation</title>
+            <style>
+              body { font-family: Arial, sans-serif; }
+              .markdown table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 20px 0;
+                font-size: 16px;
+                text-align: left;
+              }
+              .markdown th,
+              .markdown td {
+                border: 1px solid #ddd;
+                padding: 8px;
+              }
+              .markdown th {
+                background-color: #f4f4f4;
+                font-weight: bold;
+              }
+              .markdown tr:nth-child(even) {
+                background-color: #f9f9f9;
+              }
+              .markdown table tr:hover {
+                background-color: #f1f1f1;
+              }
+            </style>
+          </head>
+          <body>
+            <h1>Pairing Explanation</h1>
+            <div class="markdown">${printContent}</div>
+          </body>
+        </html>
+      `);
+      
+      printWindow.document.close();
+      printWindow.focus();
+      printWindow.print();
+      printWindow.close();
+    },
     generatePairing() {
       this.errors = [];
       let tournament = this.tournament;
