@@ -28,8 +28,7 @@ import Round from './views/Round.vue'
 import RoundEdit from './views/RoundEdit.vue'
 import RoundEditRaw from './views/RoundEditRaw.vue'
 //import RoundCreate from './views/RoundCreate.vue'
-import RoundCreateSwiss from './views/RoundCreateSwiss.vue'
-import RoundCreateSingleElimination from './views/RoundCreateSingleElimination.vue'
+import RoundCreate from './views/RoundCreate.vue'
 import RoundDetails from './views/RoundDetails.vue'
 import RoundCurrent from './views/RoundCurrent.vue'
 import TableEdit from './views/TableEdit.vue'
@@ -256,17 +255,7 @@ export default new VueRouter({
     {
       path: '/:tournament/RoundCreate',
       name: 'RoundCreate',
-      component: RoundCreateSwiss
-    },
-    {
-      path: '/:tournament/RoundCreateSwiss',
-      name: 'RoundCreateSwiss',
-      component: RoundCreateSwiss
-    },
-    {
-      path: '/:tournament/RoundCreateSingleElimination',
-      name: 'RoundCreateSingleElimination',
-      component: RoundCreateSingleElimination
+      component: RoundCreate
     },
     {
       path: '/:tournament/RoundEdit/:id',
