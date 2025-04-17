@@ -1,6 +1,6 @@
 {
   "name": "chess-tournament",
-  "version": "2.28.0",
+  "version": "2.29.0",
   "private": true,
   "scripts": {
     "serve": "SET NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
@@ -22,6 +22,7 @@
     "bad-words-jd": "^1.5.16",
     "howler": "^2.2.1",
     "jsondiffpatch": "^0.4.1",
+    "markdown-it": "^14.1.0",
     "vue": "^2.7.16",
     "vue-json-csv": "^1.2.5",
     "vue-meta": "^2.4.0",

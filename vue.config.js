@@ -6,7 +6,9 @@ module.exports = {
   outputDir: 'www',
   publicPath: process.env.CORDOVA_PLATFORM ? '' : '/',
   productionSourceMap: true, // Enable source maps in production
-
+  configureWebpack: {
+    devtool: 'source-map'
+  },
   devServer: {
 
     host: 'localhost',

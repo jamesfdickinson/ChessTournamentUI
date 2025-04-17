@@ -82,18 +82,15 @@
           <ion-icon slot="start" name="contact"></ion-icon>
           <ion-label text-wrap>
             <div>Create Random Teams</div>
-
-
             <input type="checkbox" v-model="isPresentOnly"> Present Only</input>
-
             <input type="number" v-model="playersPerTeam" placeholder="Size" style="width: 70px; margin: 5px;">
             </input>
-
             <input type="button" value="Create" @click="AssignTeams(playersPerTeam, isPresentOnly)"></input>
-
-
           </ion-label>
-
+        </ion-item>
+        <ion-item button detail="true" v-on:click="ClearTeams()">
+          <ion-icon slot="start" name="contact"></ion-icon>
+          <ion-label>Clear Teams for all players</ion-label>
         </ion-item>
       </ion-list>
       <div style="color: green">{{ message }}</div>
@@ -311,23 +308,39 @@ export default {
     },
     AssignTeams(playersPerTeam, isPresentOnly) {
       this.$confirm(`Do you want to assign teams? This will overwrite existing team assignments.`).then(() => {
-      var tournamentId = this.tournamentId;
-      if (!playersPerTeam) {
-        this.error = "Please enter a team size";
-        return;
-      }
-      isPresentOnly = !!isPresentOnly;// convert to boolean
+        var tournamentId = this.tournamentId;
+        if (!playersPerTeam) {
+          this.error = "Please enter a team size";
+          return;
+        }
+        isPresentOnly = !!isPresentOnly;// convert to boolean
 
-      fetch
-        .get(`tools/AssignTeams/${tournamentId}?playersPerTeam=${playersPerTeam}&isPresentOnly=${isPresentOnly}`)
-        .then((response) => {
-          this.message = response.data;
-        })
-        .catch((e) => {
-          this.error = e;
-        });
+        fetch
+          .get(`tools/AssignTeams/${tournamentId}?playersPerTeam=${playersPerTeam}&isPresentOnly=${isPresentOnly}`)
+          .then((response) => {
+            this.message = response.data;
+          })
+          .catch((e) => {
+            this.error = e;
+          });
       });
     },
+    ClearTeams() {
+      this.$confirm(`Do you want to clear all team assignments? This will overwrite existing team assignments.`).then(() => {
+        var tournamentId = this.tournamentId;
+
+        fetch
+          .get(`tools/ClearTeams/${tournamentId}`)
+          .then((response) => {
+            this.message = response.data;
+          })
+          .catch((e) => {
+            this.error = e;
+          });
+      });
+    },
+
+
 
 
 

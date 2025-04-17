@@ -42,6 +42,12 @@ npm run lint
 ```
 
 ## Change Log
+### 2.9 "Swiss Pairing"
+- Swiss pairing sing FIDE rules
+- Rounds filter-able by team
+- Reports: Tournament 
+
+
 ### 2.5 "Pairing / Gender / Cohost"
 - 4 pairing options Weights, Swiss, Round Robin, and Stable
 - Pairing setting save for simple mode

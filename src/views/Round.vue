@@ -26,7 +26,7 @@
       </ion-toolbar>
     </ion-header>
     <ion-content>
-      <ion-searchbar placeholder="Table #, First, or Last Name" :value="searchInput"
+      <ion-searchbar placeholder="Table #, First, Last Name, or Team" :value="searchInput"
         @ionInput="searchInput = $event.target.value" @ionChange="searchInput = $event.target.value"></ion-searchbar>
       <ion-item>
         <ion-label>Hide Completed Games</ion-label>
@@ -43,14 +43,8 @@
               <ion-label slot="start">Table {{ table.tableNumber }}</ion-label>
 
 
-              <ion-button 
-                v-if="table.positions.some((p) => p.room)" 
-                slot="end" 
-                color="light" 
-                fill="outline"
-                @click="openGame(table.id, !table.positions.some((p) => p.playerEmail == user.email))" 
-                target="_blank"
-                >
+              <ion-button v-if="table.positions.some((p) => p.room)" slot="end" color="light" fill="outline"
+                @click="openGame(table.id, !table.positions.some((p) => p.playerEmail == user.email))" target="_blank">
                 {{table.positions.some((p) => p.playerEmail == user.email) ? 'Join' : 'Watch'}}
               </ion-button>
 
@@ -345,6 +339,10 @@ export default {
               return true;
             if (p.team && p.team.toLowerCase().startsWith(searchInput))
               return true;
+
+            if (p.playerTeam && p.playerTeam.toLowerCase().startsWith(searchInput))
+              return true;
+
             return false;
           });
           return anyMatched;

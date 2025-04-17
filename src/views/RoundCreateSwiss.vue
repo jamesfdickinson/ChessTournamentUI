@@ -196,7 +196,7 @@
             bye. Stable Matching is more powerful than basic Weights, but requires more processing power and time. Each
             player's match compatibility is calculated with all other players regardless of order. </ion-label>
         </ion-list-header>
-       
+
 
         <ion-item>
           <div class="input-row">
@@ -252,8 +252,8 @@
 
       </ion-item-group>
       <ion-item-group>
-      
-          <details>
+
+        <details>
           <summary style="padding:15px;">Advanced</summary>
           <ion-item>
             <ion-label>Round Number</ion-label>
@@ -263,8 +263,8 @@
             <ion-label>Table Offset</ion-label>
             <ion-input style="" :value="tableOffset" @input="tableOffset = $event.target.value"></ion-input>
           </ion-item>
-        </details> 
-     
+        </details>
+
 
       </ion-item-group>
       <div class="ion-padding">
@@ -325,12 +325,19 @@
         </div>
       </div>
 
-      <div class="ion-padding">
+      <div class="ion-padding" v-if="errors.length || message">
         <div style="color: green">{{ message }}</div>
         <ul style="color: red">
           <li v-for="error in errors" v-bind:key="error">*{{ error }}</li>
         </ul>
       </div>
+      <div class="ion-padding" v-if="explanation" style="margin-bottom:20px;">
+        <details>
+          <summary style="padding:15px;">Explanation: Pairing Breakdown</summary>
+          <div class="markdown" v-html="explanation"></div>
+        </details>
+      </div>
+       
     </ion-content>
     <!-- </ion-page> -->
   </layout-menu>
@@ -339,6 +346,8 @@
 <script>
 import TournamentAPI from "@/services/TournamentAPI";
 const tournamentAPI = new TournamentAPI();
+import MarkdownIt from "markdown-it";
+const markdown = new MarkdownIt();
 export default {
   name: "home",
 
@@ -352,6 +361,9 @@ export default {
       matches: [],
       errors: [],
       message: "",
+      tableOffset: null,
+      explanation: "",
+      roundToCreate: null
     };
   },
   methods: {
@@ -369,14 +381,16 @@ export default {
         sameGradeWeight: tournament.pairingWeightGrade,
         sameRatingWeight: tournament.pairingWeightRating,
         sameTeamAbsolute: tournament.pairingAbsoluteTeam,
-        playedBeforeAbsolute: tournament.pairingAbsolutePlayed,
-        tableOffset: tableOffset
+        playedBeforeAbsolute: tournament.pairingAbsolutePlayed
       };
 
       tournamentAPI
         .generatePairing(tournamentId, round, filter)
         .then((data) => {
-          this.matches = data;
+          this.matches = data.matches;
+          if (data.explanation) {
+            this.explanation = markdown.render(data.explanation);
+          }
           //get round number from matches, check first match else nothing
           this.roundToCreate = this.matches.length ? this.matches[0].round : null;
 
@@ -489,5 +503,32 @@ export default {
 
 .input-row label {
   flex-basis: 150px;
+}
+
+.markdown table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+.markdown th,
+.markdown td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.markdown th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.markdown tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.markdown table tr:hover {
+  background-color: #f1f1f1;
 }
 </style>
