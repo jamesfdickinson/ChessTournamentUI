@@ -45,7 +45,8 @@ npm run lint
 ### 2.9 "Swiss Pairing"
 - Swiss pairing sing FIDE rules
 - Rounds filter-able by team
-- Reports: Tournament 
+- Pairing Reports: Tournament + Save
+
 
 
 ### 2.5 "Pairing / Gender / Cohost"

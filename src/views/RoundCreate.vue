@@ -321,7 +321,7 @@
           <ion-list>
 
           </ion-list>
-          <ion-button expand="block" @click="saveMatches()">Create Round {{ roundToCreate }}</ion-button>
+          <ion-button expand="block" @click="savePairing()">Create Round {{ roundToCreate }}</ion-button>
         </div>
       </div>
 
@@ -341,7 +341,7 @@
               <ion-icon name="print" slot="start"></ion-icon>
               Print
             </ion-button>
-          <div id="pairing-explanation" class="markdown" v-html="explanation"></div>
+          <div id="pairing-explanation" class="markdown" v-html="explanationHTML"></div>
         </details>
       </div>
        
@@ -370,6 +370,7 @@ export default {
       message: "",
       tableOffset: null,
       explanation: "",
+      explanationHTML: "",
       roundToCreate: null
     };
   },
@@ -444,7 +445,8 @@ export default {
         .then((data) => {
           this.matches = data.matches;
           if (data.explanation) {
-            this.explanation = markdown.render(data.explanation);
+            this.explanation = data.explanation;
+            this.explanationHTML = markdown.render(data.explanation);
           }
           //get round number from matches, check first match else nothing
           this.roundToCreate = this.matches.length ? this.matches[0].round : null;
@@ -455,7 +457,38 @@ export default {
           this.errors.push(e);
         });
     },
-    async saveMatches() {
+    async savePairing() {
+      this.errors = [];
+
+      let tournamentId = this.$route.params.tournament;
+      let matches = this.matches;
+      let round = this.roundToCreate;
+
+      let pairingDetails = {
+        tournamentId: tournamentId,
+        round: round,
+        matches: matches,
+        explanation: this.explanation
+      }
+
+      try {
+        const data = await tournamentAPI.savePairing(tournamentId, round, pairingDetails);
+
+        console.log(`Created : ${data}`);
+        await tournamentAPI.flowAction(tournamentId, "play");
+
+        //go to round page
+        this.$router.push({
+          name: "Round",
+          params: { tournament: tournamentId, id: round },
+        });
+      }
+      catch (e) {
+        this.errors.push(e);
+      }
+
+    },
+    async saveMatches_old() {
       this.errors = [];
 
       let tournamentId = this.$route.params.tournament;
@@ -560,30 +593,4 @@ export default {
   flex-basis: 150px;
 }
 
-.markdown table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 20px 0;
-  font-size: 16px;
-  text-align: left;
-}
-
-.markdown th,
-.markdown td {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
-.markdown th {
-  background-color: #f4f4f4;
-  font-weight: bold;
-}
-
-.markdown tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-.markdown table tr:hover {
-  background-color: #f1f1f1;
-}
 </style>

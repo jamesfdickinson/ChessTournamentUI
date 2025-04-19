@@ -51,6 +51,7 @@ import ReportWallChart from './views/ReportWallChart.vue'
 import ReportPlayerDetailed from './views/ReportPlayerDetailed.vue'
 import ReportPlayerDetailedAdmin from './views/ReportPlayerDetailedAdmin.vue'
 import ReportTournamentStats from './views/ReportTournamentStats.vue'
+import ReportPairingReport from './views/ReportPairingReport.vue'
 import User from './views/User.vue'
 import UserCreate from './views/UserCreate.vue'
 import UserEdit from './views/UserEdit.vue'
@@ -388,6 +389,12 @@ export default new VueRouter({
       name: 'ReportTournamentStats',
       component: ReportTournamentStats
     }, 
+    {
+      path: '/:tournament/ReportPairingReport',
+      name: 'ReportPairingReport',
+      component: ReportPairingReport
+    }, 
+    
     
   ]
 });

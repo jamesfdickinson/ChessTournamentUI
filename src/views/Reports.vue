@@ -121,20 +121,20 @@
         </ion-list-header>
         <router-link :to="{ name: 'ReportScoreGroupRank', params: { tournament: tournamentId }}">
           <ion-item button detail="true">
-            <ion-icon slot="start" name="team"></ion-icon>
+            <ion-icon slot="start" name="contacts"></ion-icon>
             <ion-label>Team Group Rank</ion-label>
           </ion-item>
         </router-link>
         <router-link :to="{ name: 'ReportScoreGroupRankDetails', params: { tournament: tournamentId }}">
           <ion-item button detail="true">
-            <ion-icon slot="start" name="team"></ion-icon>
+            <ion-icon slot="start" name="contacts"></ion-icon>
             <ion-label>Team Group Rank Details</ion-label>
           </ion-item>
         </router-link>
 
         <router-link :to="{ name: 'ReportScoreSubGradeGroupRank', params: { tournament: tournamentId }}">
           <ion-item button detail="true">
-            <ion-icon slot="start" name="team"></ion-icon>
+            <ion-icon slot="start" name="contacts"></ion-icon>
             <ion-label>Group Sub-Grade Rank Team</ion-label>
           </ion-item>
         </router-link>
@@ -150,7 +150,14 @@
             <ion-label>Tournament Stats</ion-label>
           </ion-item>
         </router-link>
+        <router-link :to="{ name: 'ReportPairingReport', params: { tournament: tournamentId }}">
+          <ion-item button detail="true">
+            <ion-icon slot="start"  name="calculator"></ion-icon>
+            <ion-label>Pairing Report</ion-label>
+          </ion-item>
+        </router-link>
       </ion-list>
+      
 
       <!-- <ion-button v-on:click="openPlayers()">Players</ion-button>fdfggdfg
       <ion-button v-on:click="loadData()">Load</ion-button>

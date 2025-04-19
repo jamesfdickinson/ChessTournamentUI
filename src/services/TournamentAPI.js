@@ -110,6 +110,26 @@ export default class TournamentAPI {
                 return matches;
             });
     }
+
+    savePairing(tournamentId, round, pairingDetails) {
+        return fetch
+            .post(
+                `pairing/Save/${tournamentId}`,
+                pairingDetails
+            )
+            .then(response => {
+                let data = response.data;
+                return data;
+            });
+    }
+    pairingReports(tournamentId) {
+        return fetch
+            .get(`report/PairingReport/${tournamentId}`)
+            .then(response => {
+                let data = response.data;
+                return data;
+            });
+    }
     matchDelete(matchId) {
         return fetch
             .delete(`match/${matchId}`)
