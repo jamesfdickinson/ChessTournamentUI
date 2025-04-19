@@ -122,6 +122,7 @@ export default {
       let searchInput = this.searchInput;
       if (searchInput) {
         searchInput = searchInput.toLowerCase();
+        searchInput = searchInput.trim();
         filteredRound = filteredRound.filter((p) => {
           if (p.firstName && p.firstName.toLowerCase().startsWith(searchInput))
             return true;
