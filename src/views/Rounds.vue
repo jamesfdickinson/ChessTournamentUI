@@ -24,7 +24,7 @@
         </ion-buttons>-->
         <ion-title>Rounds</ion-title>
         <ion-buttons slot="end">
-          <ion-button
+          <!-- <ion-button
             @click="
               $router.push({
                 name: 'RoundsEdit',
@@ -33,7 +33,7 @@
             "
           >
             <ion-icon name="create"></ion-icon>
-          </ion-button>
+          </ion-button> -->
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
