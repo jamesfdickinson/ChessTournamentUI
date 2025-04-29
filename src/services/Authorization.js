@@ -50,7 +50,7 @@ export default class Authorization {
         const pagesCreate = ['TournamentCreate'];
         const authRequiredCreate = pagesCreate.includes(toPage);
 
-        const pagesAdmin = ['Admin', 'RoundEditRaw'];
+        const pagesAdmin = ['Admin', 'RoundEditRaw','RoundsEdit','TournamentEdit','AdminTools','RoundCreate','UserAccess','FAQEdit','SignUpEdit','TournamentVideoEdit'];
         const authRequiredAdmin = pagesAdmin.includes(toPage);
 
         const pagesRecorder = ['CheckIn', 'PlayerEdit', 'PlayerNew', 'TableEdit'];
