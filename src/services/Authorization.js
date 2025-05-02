@@ -45,9 +45,10 @@ export default class Authorization {
     }
     isPageAllowed(toPage, tournamentId, roles) {
         if (!roles) roles = [];
+        if(!tournamentId) tournamentId = 0;
 
         //redirect to login page if not logged in and trying to access a restricted page
-        const pagesCreate = ['TournamentCreate'];
+        const pagesCreate = ['TournamentCreate','TournamentEdit'];
         const authRequiredCreate = pagesCreate.includes(toPage);
 
         const pagesAdmin = ['Admin', 'RoundEditRaw','RoundsEdit','TournamentEdit','AdminTools','RoundCreate','UserAccess','FAQEdit','SignUpEdit','TournamentVideoEdit'];
@@ -78,9 +79,9 @@ export default class Authorization {
         if ((roles.includes(superAdminRole))) {
             return true;
         }
-        //check if has SuperAdmin role for tournament
-        if (authRequiredCreate && !(roles.includes(createRole))) {
-            return false;
+        //check if has Create role for tournament
+        if (authRequiredCreate && roles.includes(createRole) && tournamentId === 0) {
+            return true;
         }
 
         //check if has Admin role for tournament
