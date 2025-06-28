@@ -187,7 +187,7 @@
           </div>
         </div> -->
         <div class="flex-item" v-if="tournament.showTeamScores">
-          <ion-card style="xheight: 200px overflow-y: auto">
+          <ion-card style="xheight: 200px; overflow-y: auto">
             <ReportScoreGroupRank :players="players"></ReportScoreGroupRank>
           </ion-card>
         </div>
