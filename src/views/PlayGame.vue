@@ -56,11 +56,11 @@ export default {
   name: "PlayGame",
   components: {},
   data() {
-    let id = this.$route.params.id; //https://cardsjd.com/cribbageembedded/?room=T6R4T27&name=Jimmy&email=jimmy@jdsoftwarellc.com&id=
+    let id = this.$route.params.id; //https://cardsjd.com/cribbage/game/?room=T6R4T27&name=Jimmy&email=jimmy@jdsoftwarellc.com&id=
     let tournamentId = this.$route.params.tournament;
     let spectate = this.$route.params.spectate;
     let gameRoomLink =
-      "https://cardsjd.com/cribbageembedded/?room=[room]&name=[name]&email=[email]&id=[id]&spectate=[spectate]&avatar=[avatar]";
+      "https://cardsjd.com/cribbage/game/?room=[room]&name=[name]&email=[email]&id=[id]&spectate=[spectate]&avatar=[avatar]";
     //let gameRoomLink = "http://192.168.1.25:8081/CribbageUI/www/?room=[room]&name=[name]&email=[email]&id=[id]&spectate=[spectate]";
     let roomURL = "";
     return {
