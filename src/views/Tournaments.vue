@@ -284,12 +284,16 @@ export default {
       }
       if (sortOrder == "desc") {
         filteredData.sort((a, b) => {
-          return new Date(b.startDateTime) - new Date(a.startDateTime);
+          const startDateDiff = new Date(b.startDateTime) - new Date(a.startDateTime);
+          if (startDateDiff !== 0) return startDateDiff;
+          return new Date(b.createDate) - new Date(a.createDate);
         });
       }
       if (sortOrder == "asc") {
         filteredData.sort((a, b) => {
-          return new Date(a.startDateTime) - new Date(b.startDateTime);
+          const startDateDiff = new Date(a.startDateTime) - new Date(b.startDateTime);
+          if (startDateDiff !== 0) return startDateDiff;
+          return new Date(a.createDate) - new Date(b.createDate);
         });
       }
 
