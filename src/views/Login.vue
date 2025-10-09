@@ -161,8 +161,11 @@ export default {
     handleTokenCallback() {
       // If we have a token in the URL, attempt to use it for authentication
       if (this.userdata) {
-        console.log('Token received from callback');
-
+        console.log('Token received from callback', this.userdata);
+        if(!this.userdata || this.userdata.length < 10) {
+          console.error("Invalid userdata received.");
+          return;
+        }
         // Extract all user data from query parameters
         const userData = JSON.parse(this.userdata);
 
