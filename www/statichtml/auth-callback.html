@@ -30,7 +30,7 @@
                 const redirect = getQueryParam('redirect');
 
                 if (!returnUrl) {
-                    showError('Error: No return URL specified.');
+                    console.error('Error: No return URL specified.');
                     return;
                 }
 
@@ -66,8 +66,8 @@
                 console.error('Redirect error:', error);
             }
         }
+        redirectWithToken();
 
-       
     </script>
 </body>
 

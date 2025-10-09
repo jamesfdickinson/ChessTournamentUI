@@ -12,7 +12,7 @@
         <h2>Redirecting...</h2>
         <div class="spinner"></div>
         <p id="status">Please wait while we complete your authentication.</p>
-        <p><a href="#" onclick="window.history.back(); return false;">Click here to return</a></p>
+        <p><a href="#" onclick="window.history.back(); return false;">Click here to return to Tournament JD</a></p>
     </div>
 
     <script>
@@ -30,7 +30,7 @@
                 const redirect = getQueryParam('redirect');
 
                 if (!returnUrl) {
-                    showError('Error: No return URL specified.');
+                    console.error('Error: No return URL specified.');
                     return;
                 }
 
@@ -66,8 +66,8 @@
                 console.error('Redirect error:', error);
             }
         }
+        redirectWithToken();
 
-       
     </script>
 </body>
 

@@ -50,10 +50,11 @@
       <div padding style="text-align: center; margin-top: 15px">
         <p><a v-on:click="openPasswordReset()"> Forgot password?</a></p>
       </div>
-      
+
       <div padding style="text-align: center; margin-top: 30px; border-top: 1px solid #ccc; padding-top: 20px;">
         <p>Or login with your Bracket JD account</p>
-        <ion-button type="button" size="large" expand v-on:click="redirectToBracketJD()">Login with Bracket JD</ion-button>
+        <ion-button type="button" size="large" expand v-on:click="redirectToBracketJD()">Login with Bracket
+          JD</ion-button>
       </div>
 
 
@@ -84,13 +85,13 @@ export default {
   data() {
     let tournamentId = this.$route.params.tournament;
     let redirect = this.$route.query.redirect;
-    let token = this.$route.query.token;
+    let userdata = this.$route.query.userdata;
     return {
       tournamentId: tournamentId,
       userName: "",
       password: "",
       redirect: redirect,
-      token: token,
+      userdata: userdata,
       errors: [],
     };
   },
@@ -151,37 +152,49 @@ export default {
     redirectToBracketJD() {
       // Build the return URL pointing to our callback page
       const currentUrl = window.location.origin;
-      const returnUrl = `${currentUrl}/Login/callback`;
+      const returnUrl = `${currentUrl}/Login`;
       const redirectParam = this.redirect ? `&redirect=${encodeURIComponent(this.redirect)}` : '';
-      
-      // Redirect to bracketjd.com's auth-callback page which will extract the token and redirect back
-      window.location.href = `https://bracketjd.com/statichtml/auth-callback.html?returnUrl=${encodeURIComponent(returnUrl)}${redirectParam}`;
+
+      // Redirect to tournanametjd.com's auth-callback page which will extract the token and redirect back
+      window.location.href = `https://tournamentjd.com/statichtml/auth-callback.html?returnUrl=${encodeURIComponent(returnUrl)}${redirectParam}`;
     },
     handleTokenCallback() {
       // If we have a token in the URL, attempt to use it for authentication
-      if (this.token) {
+      if (this.userdata) {
         console.log('Token received from callback');
-        
+
         // Extract all user data from query parameters
-        const userData = {
-          token: this.$route.query.token,
-          username: this.$route.query.username,
-          avatar: this.$route.query.avatar,
-          name: this.$route.query.name,
-        };
-        
+        const userData = JSON.parse(this.userdata);
+
+
         console.log('User data received:', userData);
-        
+
+        //validate token format here if needed
+        if (!userData.token || userData.token.length < 10) {
+          console.error("Invalid token received.");
+          return;
+        }
+        if (!userData.username) {
+          console.error("Invalid user data received.");
+          return;
+        }
+        if (!userData.name) {
+          console.error("Invalid name received.");
+          return;
+        }
+        if (!userData.avatar) {
+          console.error("Invalid avatar received.");
+          return;
+        }
+
         // Store user data in localStorage
         localStorage.setItem("user", JSON.stringify(userData));
         notification.requestNotificationToken();
         notificationSocket.reconnect(userData.token);
-        
+
         // Redirect to the intended destination
         if (this.redirect) {
           this.$router.push({ path: this.redirect });
-        } else if (this.tournamentId) {
-          this.$router.push({ path: `/${this.tournamentId}` });
         } else {
           this.$router.push({ path: `/` });
         }
