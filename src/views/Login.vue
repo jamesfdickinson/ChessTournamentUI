@@ -52,7 +52,7 @@
       </div>
 
       <!-- Hidden iframe for cross-domain localStorage access -->
-      <iframe ref="bracketjdIframe" :src="iframeUrl" style="xdisplay: none;"></iframe>
+      <iframe ref="bracketjdIframe" :src="iframeUrl" style="display: none;"></iframe>
 
     </ion-content>
     <!-- </ion-page> -->
@@ -143,12 +143,8 @@ export default {
         });
     },
 
-    //todo: remove after a few months - 10/8/2025
+    //todo: remove after a few months - 12/30/2025
     //-------------Cross domain user data pull------------------//
-    //--window.addEventListener('message', this.handleCrossDomainMessage);
-    //--window.removeEventListener('message', this.handleCrossDomainMessage);
-
-  
     handleCrossDomainMessage(event) {
       // Only accept messages from trusted origins
       const trustedOrigins = [
@@ -168,20 +164,22 @@ export default {
         const crossDomainUser = event.data.value;
         console.log('Cross-domain user data received:', crossDomainUser);
 
-        // If this was automatically sent and we have a redirect, attempt auto-login
-        if (event.data.autoSent && this.redirect && crossDomainUser) {
-          console.log('Auto-sent data received with redirect - attempting cross-site login');
+        // If we have user data and a redirect, attempt auto-login
+        if (crossDomainUser && this.redirect) {
+          console.log('Attempting cross-site login with received data');
           this.attemptCrossSiteLogin(crossDomainUser);
         }
       }
     },
+
     attemptCrossSiteLogin(userdata) {
-      if (userdata) {
+      if (userdata && userdata.token) {
         localStorage.setItem("user", JSON.stringify(userdata));
         notification.requestNotificationToken();
-        notificationSocket.reconnect(user.token);
-        if (redirect) {
-          this.$router.push({ path: redirect });
+        notificationSocket.reconnect(userdata.token);
+        
+        if (this.redirect) {
+          this.$router.push({ path: this.redirect });
         } else {
           this.$router.push({ path: `/` });
         }
@@ -190,7 +188,7 @@ export default {
     //-------------end------------------//
   },
   created() {
-    // Always listen for cross-domain messages - the iframe will send data when ready
+    // Listen for cross-domain messages from the iframe
     window.addEventListener('message', this.handleCrossDomainMessage);
   },
   beforeDestroy() {

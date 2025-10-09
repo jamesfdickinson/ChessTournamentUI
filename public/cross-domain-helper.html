@@ -107,6 +107,24 @@
         // Send localStorage data automatically when loaded
         window.addEventListener('load', function() {
             console.log('Helper page loaded, preparing to send localStorage data');
+            console.log('Running in popup/iframe context:', window.location.origin);
+            console.log('Opener exists:', !!window.opener);
+            console.log('Parent is different:', window.parent !== window);
+            
+            // Check if localStorage is accessible
+            try {
+                const testAccess = localStorage.length;
+                console.log('localStorage is accessible, items count:', testAccess);
+                
+                // List all localStorage keys for debugging
+                console.log('All localStorage keys:');
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    console.log(`  - ${key}`);
+                }
+            } catch (e) {
+                console.error('localStorage is BLOCKED:', e);
+            }
             
             // Define trusted origins for security
             const trustedOrigins = [
@@ -118,62 +136,84 @@
                 'https://tournamentjd.com'
             ];
             
-            // Function to send localStorage data to parent
-            function sendLocalStorageData(targetOrigin) {
+            // Function to send localStorage data
+            function sendLocalStorageData(targetWindow, targetOrigin) {
                 try {
                     // Get the user data from localStorage
+                    console.log('Attempting to access localStorage for user key...');
                     const userValue = localStorage.getItem('user');
+                    console.log('Raw localStorage value:', userValue);
                     let parsedUserValue = null;
                     
                     if (userValue) {
                         try {
                             // Try to parse as JSON
                             parsedUserValue = JSON.parse(userValue);
+                            console.log('Parsed user value:', parsedUserValue);
                         } catch (e) {
                             // If not JSON, return as string
                             parsedUserValue = userValue;
+                            console.log('User value as string:', parsedUserValue);
                         }
+                    } else {
+                        console.log('No user data found in localStorage');
                     }
                     
-                    // Send the data to the parent window
-                    window.parent.postMessage({
+                    const message = {
                         action: 'localStorageData',
                         key: 'user',
                         value: parsedUserValue,
                         success: true,
                         autoSent: true  // Flag to indicate this was sent automatically
-                    }, targetOrigin);
+                    };
                     
-                    console.log('Auto-sent localStorage user data:', parsedUserValue);
+                    // Send the data to the target window
+                    console.log('Sending message to target window:', message);
+                    targetWindow.postMessage(message, targetOrigin);
+                    
+                    console.log('Successfully sent localStorage user data to', targetOrigin);
                     
                 } catch (error) {
-                    // Send error to parent window
-                    window.parent.postMessage({
+                    // Send error to target window
+                    const errorMessage = {
                         action: 'localStorageData',
                         key: 'user',
                         value: null,
                         success: false,
                         error: error.message,
                         autoSent: true
-                    }, targetOrigin);
+                    };
                     
                     console.error('Error auto-sending localStorage:', error);
+                    targetWindow.postMessage(errorMessage, targetOrigin);
                 }
             }
             
-            // Send data to all trusted origins
-            // In practice, you might want to be more specific about which origin to target
+            // Send data after a small delay
             setTimeout(function() {
-                if (window.parent !== window) {
-                    // Try to send to each trusted origin
+                // If opened as a popup (has window.opener)
+                if (window.opener && window.opener !== window) {
+                    console.log('Detected popup context, sending to opener');
+                    // Send to each trusted origin via the opener
                     trustedOrigins.forEach(origin => {
-                        sendLocalStorageData(origin);
+                        sendLocalStorageData(window.opener, origin);
                     });
-                    
-                    // Also send with wildcard (less secure but more compatible)
-                    sendLocalStorageData('*');
+                    // Also try wildcard for compatibility
+                    sendLocalStorageData(window.opener, '*');
                 }
-            }, 100); // Small delay to ensure parent is ready
+                // If in an iframe (has different parent)
+                else if (window.parent !== window) {
+                    console.log('Detected iframe context, sending to parent');
+                    // Send to each trusted origin via the parent
+                    trustedOrigins.forEach(origin => {
+                        sendLocalStorageData(window.parent, origin);
+                    });
+                    // Also try wildcard for compatibility
+                    sendLocalStorageData(window.parent, '*');
+                } else {
+                    console.log('Not in popup or iframe context, nothing to do');
+                }
+            }, 100); // Small delay to ensure parent/opener is ready
         });
     </script>
 </body>
