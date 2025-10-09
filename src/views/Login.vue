@@ -162,7 +162,7 @@ export default {
       // If we have a token in the URL, attempt to use it for authentication
       if (this.userdata) {
         console.log('Token received from callback', this.userdata);
-        if(!this.userdata || this.userdata.length < 10) {
+        if (!this.userdata || this.userdata.length < 10) {
           console.error("Invalid userdata received.");
           return;
         }
@@ -175,6 +175,10 @@ export default {
         //validate token format here if needed
         if (!userData.token || userData.token.length < 10) {
           console.error("Invalid token received.");
+          return;
+        }
+        if (!userData.userName) {
+          console.error("Invalid userName received.");
           return;
         }
         if (!userData.email) {

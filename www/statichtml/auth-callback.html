@@ -42,8 +42,11 @@
                     const userdata = {
                         token: userData.token,
                         email: userData.email || '',
+                        userName: userData.userName || '',
                         avatar: userData.avatar || '',
-                        name: userData.name || ''
+                        name: userData.name || '',
+                        gamerId: userData.gamerId || '',
+                        timeZone: userData.timeZone || ''
                     }
                     userDataString = JSON.stringify(userdata);
                 }
