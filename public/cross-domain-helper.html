@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cross-Domain Helper</title>
+</head>
+<body>
+    <script>
+        // This script runs in the context of bracketjd.com and can access its localStorage
+        console.log('Cross-domain helper loaded on:', window.location.origin);
+
+        // Listen for messages from the parent window
+        window.addEventListener('message', function(event) {
+            console.log('Received message in iframe:', event.data);
+            
+            // Verify the message is from a trusted origin (your app's domain)
+            // You should replace this with your actual domain
+            const trustedOrigins = [
+                'http://localhost:8080',
+                'http://127.0.0.1:8080',
+                'https://localhost:8080',
+                'https://127.0.0.1:8080',
+                // Add your production domain here
+                'https://tournamentjd.com',
+                'https://bracketjd.com'
+            ];
+            
+            if (!trustedOrigins.includes(event.origin)) {
+                console.warn('Message from untrusted origin:', event.origin);
+                return;
+            }
+
+            // Handle the request for localStorage data
+            if (event.data.action === 'getLocalStorage') {
+                const key = event.data.key;
+                
+                try {
+                    // Get the requested localStorage item
+                    const value = localStorage.getItem(key);
+                    let parsedValue = null;
+                    
+                    if (value) {
+                        try {
+                            // Try to parse as JSON
+                            parsedValue = JSON.parse(value);
+                        } catch (e) {
+                            // If not JSON, return as string
+                            parsedValue = value;
+                        }
+                    }
+                    
+                    // Send the data back to the parent window
+                    event.source.postMessage({
+                        action: 'localStorageData',
+                        key: key,
+                        value: parsedValue,
+                        success: true
+                    }, event.origin);
+                    
+                    console.log('Sent localStorage data for key:', key, parsedValue);
+                    
+                } catch (error) {
+                    // Send error back to parent window
+                    event.source.postMessage({
+                        action: 'localStorageData',
+                        key: key,
+                        value: null,
+                        success: false,
+                        error: error.message
+                    }, event.origin);
+                    
+                    console.error('Error accessing localStorage:', error);
+                }
+            }
+            
+            // Handle setting localStorage data (optional)
+            else if (event.data.action === 'setLocalStorage') {
+                const key = event.data.key;
+                const value = event.data.value;
+                
+                try {
+                    const stringValue = typeof value === 'string' ? value : JSON.stringify(value);
+                    localStorage.setItem(key, stringValue);
+                    
+                    event.source.postMessage({
+                        action: 'localStorageSet',
+                        key: key,
+                        success: true
+                    }, event.origin);
+                    
+                    console.log('Set localStorage data for key:', key);
+                    
+                } catch (error) {
+                    event.source.postMessage({
+                        action: 'localStorageSet',
+                        key: key,
+                        success: false,
+                        error: error.message
+                    }, event.origin);
+                    
+                    console.error('Error setting localStorage:', error);
+                }
+            }
+        });
+
+        // Send localStorage data automatically when loaded
+        window.addEventListener('load', function() {
+            console.log('Helper page loaded, preparing to send localStorage data');
+            
+            // Define trusted origins for security
+            const trustedOrigins = [
+                'http://localhost:8080',
+                'http://127.0.0.1:8080',
+                'https://localhost:8080',
+                'https://127.0.0.1:8080',
+                // Add your production domain here
+                'https://tournamentjd.com'
+            ];
+            
+            // Function to send localStorage data to parent
+            function sendLocalStorageData(targetOrigin) {
+                try {
+                    // Get the user data from localStorage
+                    const userValue = localStorage.getItem('user');
+                    let parsedUserValue = null;
+                    
+                    if (userValue) {
+                        try {
+                            // Try to parse as JSON
+                            parsedUserValue = JSON.parse(userValue);
+                        } catch (e) {
+                            // If not JSON, return as string
+                            parsedUserValue = userValue;
+                        }
+                    }
+                    
+                    // Send the data to the parent window
+                    window.parent.postMessage({
+                        action: 'localStorageData',
+                        key: 'user',
+                        value: parsedUserValue,
+                        success: true,
+                        autoSent: true  // Flag to indicate this was sent automatically
+                    }, targetOrigin);
+                    
+                    console.log('Auto-sent localStorage user data:', parsedUserValue);
+                    
+                } catch (error) {
+                    // Send error to parent window
+                    window.parent.postMessage({
+                        action: 'localStorageData',
+                        key: 'user',
+                        value: null,
+                        success: false,
+                        error: error.message,
+                        autoSent: true
+                    }, targetOrigin);
+                    
+                    console.error('Error auto-sending localStorage:', error);
+                }
+            }
+            
+            // Send data to all trusted origins
+            // In practice, you might want to be more specific about which origin to target
+            setTimeout(function() {
+                if (window.parent !== window) {
+                    // Try to send to each trusted origin
+                    trustedOrigins.forEach(origin => {
+                        sendLocalStorageData(origin);
+                    });
+                    
+                    // Also send with wildcard (less secure but more compatible)
+                    sendLocalStorageData('*');
+                }
+            }, 100); // Small delay to ensure parent is ready
+        });
+    </script>
+</body>
+</html>
