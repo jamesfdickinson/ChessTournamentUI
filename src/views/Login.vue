@@ -52,7 +52,8 @@
       </div>
 
       <!-- Hidden iframe for cross-domain localStorage access -->
-      <iframe ref="bracketjdIframe" :src="iframeUrl" style="display: none;"></iframe>
+      <iframe ref="bracketjdIframe" :src="iframeUrl" style="xdisplay: none;"></iframe>
+      <iframe src="https://cardsjd.com/cribbage/game" style="xdisplay: none;"></iframe>
 
     </ion-content>
     <!-- </ion-page> -->
