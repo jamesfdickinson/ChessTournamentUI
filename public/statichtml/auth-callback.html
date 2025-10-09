@@ -69,8 +69,13 @@
                 console.error('Redirect error:', error);
             }
         }
-        setTimeout(redirectWithToken, 3000);
-        
+        //check for parameter delay
+        const delay = getQueryParam('delay');
+        if (delay) {
+            setTimeout(redirectWithToken, parseInt(delay));
+        } else {
+            redirectWithToken();
+        }
 
     </script>
 </body>

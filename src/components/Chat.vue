@@ -101,7 +101,7 @@ export default {
     userId: String,
     mutedIds: String,
     adminIds: Array,
-    tournamentId: Number,
+    tournamentId: [String, Number],
   },
   data: function () {
     this.soundAlert = new Howl({
