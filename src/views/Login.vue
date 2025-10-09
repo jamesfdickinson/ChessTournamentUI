@@ -50,10 +50,13 @@
       <div padding style="text-align: center; margin-top: 15px">
         <p><a v-on:click="openPasswordReset()"> Forgot password?</a></p>
       </div>
+      
+      <div padding style="text-align: center; margin-top: 30px; border-top: 1px solid #ccc; padding-top: 20px;">
+        <p>Or login with your Bracket JD account</p>
+        <ion-button type="button" size="large" expand v-on:click="redirectToBracketJD()">Login with Bracket JD</ion-button>
+      </div>
 
-      <!-- Hidden iframe for cross-domain localStorage access -->
-      <iframe ref="bracketjdIframe" :src="iframeUrl" style="xdisplay: none;"></iframe>
-      <iframe src="https://cardsjd.com/cribbage/game" style="xdisplay: none;"></iframe>
+
 
     </ion-content>
     <!-- </ion-page> -->
@@ -81,13 +84,14 @@ export default {
   data() {
     let tournamentId = this.$route.params.tournament;
     let redirect = this.$route.query.redirect;
+    let token = this.$route.query.token;
     return {
       tournamentId: tournamentId,
       userName: "",
       password: "",
       redirect: redirect,
+      token: token,
       errors: [],
-      iframeUrl: 'https://bracketjd.com/cross-domain-helper.html',
     };
   },
   methods: {
@@ -144,57 +148,49 @@ export default {
         });
     },
 
-    //todo: remove after a few months - 12/30/2025
-    //-------------Cross domain user data pull------------------//
-    handleCrossDomainMessage(event) {
-      // Only accept messages from trusted origins
-      const trustedOrigins = [
-        'http://localhost:8080',
-        'https://localhost:8080',
-        'https://bracketjd.com'
-      ];
+    redirectToBracketJD() {
+      // Build the return URL pointing to our callback page
+      const currentUrl = window.location.origin;
+      const returnUrl = `${currentUrl}/Login/callback`;
+      const redirectParam = this.redirect ? `&redirect=${encodeURIComponent(this.redirect)}` : '';
       
-      if (!trustedOrigins.includes(event.origin)) {
-        console.warn('Message from untrusted origin:', event.origin);
-        return;
-      }
-
-      console.log('Received message from iframe:', event.data);
-
-      if (event.data.action === 'localStorageData' && event.data.key === 'user') {
-        const crossDomainUser = event.data.value;
-        console.log('Cross-domain user data received:', crossDomainUser);
-
-        // If we have user data and a redirect, attempt auto-login
-        if (crossDomainUser && this.redirect) {
-          console.log('Attempting cross-site login with received data');
-          this.attemptCrossSiteLogin(crossDomainUser);
-        }
-      }
+      // Redirect to bracketjd.com's auth-callback page which will extract the token and redirect back
+      window.location.href = `https://bracketjd.com/statichtml/auth-callback.html?returnUrl=${encodeURIComponent(returnUrl)}${redirectParam}`;
     },
-
-    attemptCrossSiteLogin(userdata) {
-      if (userdata && userdata.token) {
-        localStorage.setItem("user", JSON.stringify(userdata));
-        notification.requestNotificationToken();
-        notificationSocket.reconnect(userdata.token);
+    handleTokenCallback() {
+      // If we have a token in the URL, attempt to use it for authentication
+      if (this.token) {
+        console.log('Token received from callback');
         
+        // Extract all user data from query parameters
+        const userData = {
+          token: this.$route.query.token,
+          username: this.$route.query.username,
+          avatar: this.$route.query.avatar,
+          name: this.$route.query.name,
+        };
+        
+        console.log('User data received:', userData);
+        
+        // Store user data in localStorage
+        localStorage.setItem("user", JSON.stringify(userData));
+        notification.requestNotificationToken();
+        notificationSocket.reconnect(userData.token);
+        
+        // Redirect to the intended destination
         if (this.redirect) {
           this.$router.push({ path: this.redirect });
+        } else if (this.tournamentId) {
+          this.$router.push({ path: `/${this.tournamentId}` });
         } else {
           this.$router.push({ path: `/` });
         }
       }
     },
-    //-------------end------------------//
   },
   created() {
-    // Listen for cross-domain messages from the iframe
-    window.addEventListener('message', this.handleCrossDomainMessage);
-  },
-  beforeDestroy() {
-    // Clean up event listener
-    window.removeEventListener('message', this.handleCrossDomainMessage);
+    // Check if we're returning from bracketjd.com with a token
+    this.handleTokenCallback();
   },
 };
 </script>

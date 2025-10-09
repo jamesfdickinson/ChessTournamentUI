@@ -89,6 +89,11 @@ export default new VueRouter({
       component: Login
     },
     {
+      path: '/Login/callback',
+      name: 'LoginCallback',
+      component: Login
+    },
+    {
       path: '/PasswordChange',
       name: 'PasswordChange',
       component: PasswordChange
