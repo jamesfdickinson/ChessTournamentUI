@@ -177,8 +177,8 @@ export default {
           console.error("Invalid token received.");
           return;
         }
-        if (!userData.username) {
-          console.error("Invalid user data received.");
+        if (!userData.email) {
+          console.error("Invalid email received.");
           return;
         }
         if (!userData.name) {
