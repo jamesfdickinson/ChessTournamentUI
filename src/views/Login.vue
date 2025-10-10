@@ -4,7 +4,7 @@
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
-          <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
+          <ion-icon name="arrow-round-back" size="large" @click="back()"></ion-icon>
         </ion-buttons>
         <ion-title>Login</ion-title>
       </ion-toolbar>
@@ -52,9 +52,8 @@
       </div>
 
       <div padding style="text-align: center; margin-top: 30px; border-top: 1px solid #ccc; padding-top: 20px;">
-        <p>Or login with your Bracket JD account</p>
-        <ion-button type="button" size="large" expand v-on:click="redirectToBracketJD()">Login with Bracket
-          JD</ion-button>
+        <p>Or login with your <a v-on:click="redirectToBracketJD()">Bracket JD account</a></p>
+       
       </div>
 
 
@@ -97,7 +96,13 @@ export default {
   },
   methods: {
     back() {
-      this.$router.go(-1);
+      //switch back to this after removing auto login
+      //this.$router.go(-1);
+
+      // Clear the redirect count to prevent auto-redirect loop
+      localStorage.removeItem("login-redirect-count");
+      // Navigate to home instead of going back in history to avoid redirect loop
+      this.$router.push({ path: "/" });
     },
     openSignUp() {
       this.$router.push({ path: "UserCreate" });
@@ -148,7 +153,8 @@ export default {
           console.warn(e);
         });
     },
-
+    //----auth call back ------
+    //todo: delete in a few months - 10/9/25
     redirectToBracketJD() {
       // Build the return URL pointing to our callback page
       const currentUrl = window.location.origin;
@@ -207,10 +213,30 @@ export default {
         }
       }
     },
+    //----end auth call back ------
   },
   created() {
+    //todo: delete in a few months - 10/9/25
     // Check if we're returning from bracketjd.com with a token
     this.handleTokenCallback();
+    //auto login with bracketjd authcallback
+    //if no this.userdata try authcallback
+    //check if is on https://tournamentjd.com
+    const currentUrl = window.location.href;
+    const hasUserdata = this.userdata && this.userdata.length > 10;
+    const isOnTournamentJD = currentUrl.startsWith("https://tournamentjd.com");
+    if (!this.userdata && isOnTournamentJD) {
+
+      //check count the number of redirects to avoid loop
+      //if more than 4 times, stop trying
+      let redirectCount = parseInt(localStorage.getItem("login-redirect-count") || "0");
+      if (redirectCount < 5) {
+        // Increment the count and redirect
+        localStorage.setItem("login-redirect-count", (redirectCount + 1).toString());
+        //auto login with bracketjd
+        this.redirectToBracketJD();
+      }
+    }
   },
 };
 </script>
