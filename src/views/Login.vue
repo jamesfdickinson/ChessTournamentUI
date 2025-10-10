@@ -161,8 +161,8 @@ export default {
       const returnUrl = `${currentUrl}/Login`;
       const redirectParam = this.redirect ? `&redirect=${encodeURIComponent(this.redirect)}` : '';
 
-      // Redirect to tournanametjd.com's auth-callback page which will extract the token and redirect back
-      window.location.href = `https://tournamentjd.com/statichtml/auth-callback.html?returnUrl=${encodeURIComponent(returnUrl)}${redirectParam}`;
+      // Redirect to backetjd.com's auth-callback page which will extract the token and redirect back
+      window.location.href = `https://backetjd.com/statichtml/auth-callback.html?returnUrl=${encodeURIComponent(returnUrl)}${redirectParam}`;
     },
     handleTokenCallback() {
       // If we have a token in the URL, attempt to use it for authentication
