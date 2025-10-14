@@ -225,7 +225,7 @@ export default {
     const currentUrl = window.location.href;
     const hasUserdata = this.userdata && this.userdata.length > 10;
     const isOnTournamentJD = currentUrl.startsWith("https://tournamentjd.com");
-    if (!this.userdata && isOnTournamentJD) {
+    if (!this.userdata && this.redirect && isOnTournamentJD ) {
 
       //check count the number of redirects to avoid loop
       //if more than 4 times, stop trying
