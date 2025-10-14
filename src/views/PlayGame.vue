@@ -79,6 +79,14 @@ export default {
       if (!gameRoomLink) gameRoomLink = this.gameRoomLink;
 
       if (!gameRoomLink) return "";
+
+      //add platform=tournamentjd parameter
+      if (gameRoomLink.indexOf("?") > -1) {
+        gameRoomLink += "&platform=tournamentjd";
+      } else {
+        gameRoomLink += "?platform=tournamentjd";
+      }
+
       let user = authentication.getUser();
       var userName = user && user.name ? user.name : "unknown";
       let email = user && user.email ? user.email : "";

@@ -1,6 +1,6 @@
 {
   "name": "chess-tournament",
-  "version": "2.29.0",
+  "version": "2.30.0",
   "private": true,
   "scripts": {
     "serve": "SET NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
