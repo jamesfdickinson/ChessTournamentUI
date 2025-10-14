@@ -228,9 +228,9 @@ export default {
     if (!this.userdata && this.redirect && isOnTournamentJD ) {
 
       //check count the number of redirects to avoid loop
-      //if more than 4 times, stop trying
+      //if more than 1 times, stop trying
       let redirectCount = parseInt(localStorage.getItem("login-redirect-count") || "0");
-      if (redirectCount < 5) {
+      if (redirectCount < 2) {
         // Increment the count and redirect
         localStorage.setItem("login-redirect-count", (redirectCount + 1).toString());
         //auto login with bracketjd
