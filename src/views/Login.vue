@@ -75,7 +75,7 @@ export default {
 
   components: {},
   metaInfo: {
-    title: 'Bracket JD - Login',
+    title: 'Tournament JD - Login',
     titleTemplate: null, // override the parent template and just use the above title only
     meta: [
       { name: 'description', content: 'Login to play online tournaments. Need an account? Sign up. Forgot password?' },

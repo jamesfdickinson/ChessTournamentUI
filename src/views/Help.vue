@@ -9,7 +9,7 @@
             src="./images/trophyflat.png"
           ></ion-img>
           <ion-title>
-            <h1 style="text-align: center">Bracket JD</h1>
+            <h1 style="text-align: center">Tournament JD</h1>
           </ion-title>
         </div> <ion-item>
         <h1>Help</h1>

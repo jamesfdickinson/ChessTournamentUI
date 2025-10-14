@@ -1,8 +1,8 @@
 # Chess Tournament
 
-This is the UI for https://bracketjd.com.  It relies on the Chess Tournament web API for the backend.  
+This is the UI for https://tournamentjd.com.  It relies on the Chess Tournament web API for the backend.  
 
-Currently several local schools are using bracketjd.com.
+Currently several local schools are using tournamentjd.com.
 
 The tournament software is a web based and mobile optimized solution needed for our growing tournaments. After volunteering to run the pairings and scoring for local grade school chess club tournaments, we ran into multiple bottlenecks.  We tried different softwares and none could support larger groups than 50 without delaying the tournaments timeline even with multiple scorekeepers.  
 

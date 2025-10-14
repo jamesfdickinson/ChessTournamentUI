@@ -5,11 +5,11 @@
         <div style="background-color:#3880ff;color:#FFFFFF;">
           <ion-img slot="" style="height: 100px" src="./images/trophyflat.png"></ion-img>
 
-          <h1 class="titleHeader">Bracket JD</h1>
+          <h1 class="titleHeader">Tournament JD</h1>
 
         </div>
         <div style="padding: 20px; max-width: 600px; margin: 0 auto;">
-          <h1>Welcome to Bracket JD</h1>
+          <h1>Welcome to Tournament JD</h1>
           <div>
             <p>
               Play live tournaments online. Find an upcoming tournament and
@@ -57,7 +57,7 @@
 
           <footer>
             <p>
-              <a href="https://bracketjd.com">Bracket JD</a> |
+              <a href="https://tournamentjd.com">Tournament JD</a> |
               <a href="mailto:tournament@jdsoftwarellc.com">Contact</a> | <a href="">version {{ version }}</a>
 
             </p>
@@ -120,7 +120,7 @@ export default {
   name: "home",
   components: {},
   metaInfo: {
-    title: 'Bracket JD - Online Tournaments Software',
+    title: 'Tournament JD - Online Tournaments Software',
     titleTemplate: null, // override the parent template and just use the above title only
     meta: [
       { name: 'description', content: 'Play live tournaments online or in-person.  Host your own tournaments with a live video stream.' },

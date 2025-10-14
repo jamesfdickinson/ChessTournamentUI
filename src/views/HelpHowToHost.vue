@@ -5,13 +5,13 @@
         <div style="background-color:#3880ff;color:#FFFFFF;">
           <ion-img slot="" style="height: 100px" src="./images/trophyflat.png"></ion-img>
           <ion-title>
-            <h1 style="text-align: center">Bracket JD</h1>
+            <h1 style="text-align: center">Tournament JD</h1>
           </ion-title>
         </div>
         <div style="margin:20px 20px;">
 
           <h1>Tournament Hosting</h1>
-          <p>Bracket JD is used as a tournament tool to help run tournaments hosted either in-person or online.
+          <p>Tournament JD is used as a tournament tool to help run tournaments hosted either in-person or online.
             It is designed to be easy to use and flexible to support many different types of tournaments.
             Ultimately it is up to the tournament director to decide how to run the tournament. </p>
           <p>Below is a guide to help you get started hosting a tournament. </p>
@@ -169,7 +169,7 @@
             bottom of the tournaments page. You can also copy an old tournament
             from the admin section of that tournament.
           </p>
-          <p><a href="https://bracketjd.com/Tournaments">https://bracketjd.com/Tournaments</a></p>
+          <p><a href="https://tournamentjd.com/Tournaments">https://tournamentjd.com/Tournaments</a></p>
           <img style="max-width:400px;" src="/images/help/CreateTournamentButton.png"
             alt="screen shot of create tournament Button" />
 

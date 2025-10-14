@@ -108,7 +108,7 @@ export default {
       let subscribeURL = this.subscribeURL;
       if (twitchName) {
         html += `<iframe
-              src="https://player.twitch.tv/?channel=${twitchName}&parent=bracketjd.com&parent=localhost&muted=false"
+              src="https://player.twitch.tv/?channel=${twitchName}&parent=tournamentjd.com&parent=localhost&muted=false"
               width="100%"
               height="200"
               allowfullscreen="true">

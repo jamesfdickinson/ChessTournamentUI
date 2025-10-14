@@ -90,8 +90,8 @@ notificationSocket.onNotification = function (notification) {
   toast.show(message, 15000, audio, url, "_self");
   if (notification.autoOpenURL) {
     let isWindowHidden = document.hidden;
-    if (url.startsWith("https://bracketjd.com")) {
-      url = url.replace("https://bracketjd.com", "");
+    if (url.startsWith("https://tournamentjd.com")) {
+      url = url.replace("https://tournamentjd.com", "");
     }
     if (!isWindowHidden) {
       window.open(url, "_self");
