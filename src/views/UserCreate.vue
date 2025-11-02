@@ -217,7 +217,9 @@ export default {
         .catch((e) => {
           console.error(e);
           this.errors.push("Error: Save failed");
-          this.errors.push(e);
+          //get error message if any, not full stack
+          let errorData = e.response?.data || e.message || e;
+          this.errors.push(errorData);
         });
     },
     gameIdChange(gamerId) {

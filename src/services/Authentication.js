@@ -3,6 +3,14 @@ export default class Authentication {
     constructor() {
     }
     register(user) {
+        //get or create device id
+        let deviceId = localStorage.getItem("device-id");
+        if(!deviceId) {
+            //random number 16 digits long
+            deviceId = Math.floor(Math.random() * 1e16).toString();
+            localStorage.setItem("device-id", deviceId);
+        }
+        user.deviceId = deviceId;
         return fetch.put(`authentication/register`, user)
             .then(response => {
                 var user = response.data;
