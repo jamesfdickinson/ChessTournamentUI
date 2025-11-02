@@ -190,9 +190,13 @@ export default {
         });
     },
     gameIdChange(gamerId) {
+      if(!gamerId) return;
       gamification.GetUser(gamerId).then((userData) => {
         if (!userData) return;
         let avatar = userData.Avatar;
+        if(avatar && !avatar.startsWith("http")) {
+          avatar = "https://cardsjd.com/cribbage/game/" + avatar;
+        }
         this.gamificationAvatar = avatar;
       });
     },
