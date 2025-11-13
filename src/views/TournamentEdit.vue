@@ -357,11 +357,6 @@ export default {
         this.error = "Error: rounds is not a number";
         return;
       }
-      tournament.round = parseInt(tournament.round);
-      if (isNaN(tournament.round)) {
-        this.error = "Error: round is not a number";
-        return;
-      }
       tournament.maxPlayers = parseInt(tournament.maxPlayers);
       if (isNaN(tournament.maxPlayers)) {
         this.error = "Error: maxPlayers is not a number";
