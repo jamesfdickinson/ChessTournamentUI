@@ -4,11 +4,7 @@
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
-          <ion-icon
-            name="arrow-round-back"
-            size="large"
-            @click="$router.go(-1)"
-          ></ion-icon>
+          <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
         </ion-buttons>
         <ion-title>Edit Tournament</ion-title>
       </ion-toolbar>
@@ -19,19 +15,13 @@
           <ion-label>FAQ Content</ion-label>
         </ion-list-header>
         <ion-item>
-          <ckeditor
-            :editor="editor"
-            v-model="tournament.faqContent"
-            :config="editorConfig"
-          ></ckeditor>
+          <ckeditor :editor="editor" v-model="tournament.faqContent" :config="editorConfig"></ckeditor>
         </ion-item>
       </ion-list>
       <div style="padding: 15px 15px">
         <ion-button expand="block" v-on:click="save()">Save</ion-button>
         <hr />
-        <ion-button expand="block" color="light" v-on:click="back()"
-          >Cancel</ion-button
-        >
+        <ion-button expand="block" color="light" v-on:click="back()">Cancel</ion-button>
 
         <div style="color: red">{{ error }}</div>
       </div>
@@ -41,9 +31,9 @@
 </template>
 
 <script>
-import fetch from "@/services/fetch";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-
+import TournamentAPI from "@/services/TournamentAPI";
+const tournamentAPI = new TournamentAPI();
 export default {
   name: "home",
   components: {},
@@ -80,12 +70,12 @@ export default {
     back() {
       this.$router.back();
     },
-    save() {
+    async save() {
       let tournamentId = this.tournamentId;
       let tournament = this.tournament;
 
-      fetch
-        .put(`tournament/${tournamentId}`, tournament)
+      await tournamentAPI
+        .tournamentUpdate(tournamentId, tournament)
         .then((response) => {
           console.log(response);
           //back
@@ -96,13 +86,13 @@ export default {
           console.warn(e);
         });
     },
-    loadData() {
+    async loadData() {
       let tournamentId = this.tournamentId;
       if (tournamentId) {
-        fetch
-          .get(`tournament/${tournamentId}`)
-          .then((response) => {
-            this.tournament = response.data;
+        await tournamentAPI
+          .tournament(tournamentId)
+          .then((data) => {
+            this.tournament = data;
           })
           .catch((e) => {
             this.error = "Error: Load failed";

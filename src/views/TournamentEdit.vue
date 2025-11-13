@@ -76,7 +76,7 @@
           <ion-input :value="tournament.rounds" @input="tournament.rounds = $event.target.value"></ion-input>
         </ion-item>
 
-        
+
         <!-- 
           
         <ion-item>
@@ -141,14 +141,14 @@
             <ion-img :src="tournament.image"></ion-img>
           </ion-thumbnail>
         </ion-item>
-           
+
         <ion-item>
           <ion-label position="stacked">Streaming: Twitch Profile</ion-label>
           <ion-input :value="tournament.twitchProfile" @input="tournament.twitchProfile = $event.target.value">
           </ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="stacked">Streaming: YouTube Channel ID</ion-label> 
+          <ion-label position="stacked">Streaming: YouTube Channel ID</ion-label>
           <ion-input :value="tournament.youTubeStream" @input="tournament.youTubeStream = $event.target.value">
           </ion-input>
         </ion-item>
@@ -186,12 +186,14 @@
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Muted Users (separated by commas)</ion-label>
-          <ion-textarea auto-grow="true" :value="tournament.mutedUsers" @input="tournament.mutedUsers = $event.target.value">
+          <ion-textarea auto-grow="true" :value="tournament.mutedUsers"
+            @input="tournament.mutedUsers = $event.target.value">
           </ion-textarea>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Banned Users (separated by commas)</ion-label>
-          <ion-textarea auto-grow="true" :value="tournament.bannedUsers" @input="tournament.bannedUsers = $event.target.value">
+          <ion-textarea auto-grow="true" :value="tournament.bannedUsers"
+            @input="tournament.bannedUsers = $event.target.value">
           </ion-textarea>
         </ion-item>
         <ion-item>
@@ -310,10 +312,12 @@
 </template>
 
 <script>
-import fetch from "@/services/fetch";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import TournamentTemplate from "@/services/TournamentTemplate";
 import Authentication from "@/services/Authentication";
+import TournamentAPI from "@/services/TournamentAPI";
+const tournamentAPI = new TournamentAPI();
+
 const authentication = new Authentication();
 const tournamentTemplate = new TournamentTemplate();
 export default {
@@ -347,7 +351,7 @@ export default {
     back() {
       this.$router.back();
     },
-    save() {
+   async save() {
       let tournamentId = this.tournamentId;
       let tournament = this.tournament;
       let startDate = this.startDate;
@@ -390,8 +394,8 @@ export default {
       }
 
       if (tournamentId && tournament) {
-        fetch
-          .put(`tournament/${tournamentId}`, tournament)
+        await tournamentAPI
+          .tournamentUpdate(tournamentId, tournament)
           .then((response) => {
             console.log(response);
             this.$router.back(); //back
@@ -401,12 +405,12 @@ export default {
             console.warn(e);
           });
       } else {
-        fetch
-          .post(`tournament`, tournament)
-          .then((response) => {
-            console.log(response);
-            if (response.data && response.data.id) {
-              let newTournamentId = response.data.id;
+         await tournamentAPI
+          .tournamentCreate(tournament)
+          .then((data) => {
+            console.log(data);
+            if (data && data.id) {
+              let newTournamentId = data.id;
               this.$router.push({
                 name: "Tournament",
                 params: { tournament: newTournamentId },
@@ -429,8 +433,8 @@ export default {
       let tournamentId = this.tournamentId;
       this.$confirm(`Are you sure you want to delete the Tournament?`).then(
         () => {
-          fetch
-            .delete(`tournament/${tournamentId}`)
+          tournamentAPI
+            .tournamentDelete(tournamentId)
             .then((response) => {
               console.log(response);
               this.$router.push({
@@ -444,14 +448,14 @@ export default {
         }
       );
     },
-    loadData() {
+    async loadData() {
       let tournamentId = this.tournamentId;
       let copyId = this.copyId;
       if (tournamentId) {
-        fetch
-          .get(`tournament/${tournamentId}`)
-          .then((response) => {
-            this.tournament = response.data;
+       await tournamentAPI
+          .tournament(tournamentId)
+          .then((data) => {
+            this.tournament = data;
             if (this.tournament && this.tournament.startDateTime) {
               let date = new Date(this.tournament.startDateTime);
               this.startDate = this.getHTML5DateStringsFromDate(date);
@@ -465,10 +469,10 @@ export default {
           });
       }
       if (copyId) {
-        fetch
-          .get(`tournament/${copyId}`)
-          .then((response) => {
-            this.tournament = response.data;
+          await tournamentAPI
+          .tournament(copyId)
+          .then((data) => {
+            this.tournament = data;
             this.tournament.id = 0;
             this.tournament.round = 0;
             this.tournament.state = "setup";

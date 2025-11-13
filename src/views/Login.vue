@@ -153,17 +153,17 @@ export default {
           console.warn(e);
         });
     },
-    //----auth call back ------
-    //todo: delete in a few months - 10/9/25
-    redirectToBracketJD() {
-      // Build the return URL pointing to our callback page
-      const currentUrl = window.location.origin;
-      const returnUrl = `${currentUrl}/Login`;
-      const redirectParam = this.redirect ? `&redirect=${encodeURIComponent(this.redirect)}` : '';
+    // //----auth call back ------
+    // //todo: delete in a few months - 10/9/25
+    // redirectToBracketJD() {
+    //   // Build the return URL pointing to our callback page
+    //   const currentUrl = window.location.origin;
+    //   const returnUrl = `${currentUrl}/Login`;
+    //   const redirectParam = this.redirect ? `&redirect=${encodeURIComponent(this.redirect)}` : '';
 
-      // Redirect to bracketjd.com's auth-callback page which will extract the token and redirect back
-      window.location.href = `https://bracketjd.com/statichtml/auth-callback.html?returnUrl=${encodeURIComponent(returnUrl)}${redirectParam}`;
-    },
+    //   // Redirect to bracketjd.com's auth-callback page which will extract the token and redirect back
+    //   window.location.href = `https://bracketjd.com/statichtml/auth-callback.html?returnUrl=${encodeURIComponent(returnUrl)}${redirectParam}`;
+    // },
     handleTokenCallback() {
       // If we have a token in the URL, attempt to use it for authentication
       if (this.userdata) {
@@ -219,24 +219,24 @@ export default {
     //todo: delete in a few months - 10/9/25
     // Check if we're returning from bracketjd.com with a token
     this.handleTokenCallback();
-    //auto login with bracketjd authcallback
-    //if no this.userdata try authcallback
-    //check if is on https://tournamentjd.com
-    const currentUrl = window.location.href;
-    const hasUserdata = this.userdata && this.userdata.length > 10;
-    const isOnTournamentJD = currentUrl.startsWith("https://tournamentjd.com");
-    if (!this.userdata && this.redirect && isOnTournamentJD ) {
+    // //auto login with bracketjd authcallback
+    // //if no this.userdata try authcallback
+    // //check if is on https://tournamentjd.com
+    // const currentUrl = window.location.href;
+    // const hasUserdata = this.userdata && this.userdata.length > 10;
+    // const isOnTournamentJD = currentUrl.startsWith("https://tournamentjd.com");
+    // if (!this.userdata && this.redirect && isOnTournamentJD ) {
 
-      //check count the number of redirects to avoid loop
-      //if more than 1 times, stop trying
-      let redirectCount = parseInt(localStorage.getItem("login-redirect-count") || "0");
-      if (redirectCount < 2) {
-        // Increment the count and redirect
-        localStorage.setItem("login-redirect-count", (redirectCount + 1).toString());
-        //auto login with bracketjd
-        this.redirectToBracketJD();
-      }
-    }
+    //   //check count the number of redirects to avoid loop
+    //   //if more than 1 times, stop trying
+    //   let redirectCount = parseInt(localStorage.getItem("login-redirect-count") || "0");
+    //   if (redirectCount < 2) {
+    //     // Increment the count and redirect
+    //     localStorage.setItem("login-redirect-count", (redirectCount + 1).toString());
+    //     //auto login with bracketjd
+    //     this.redirectToBracketJD();
+    //   }
+    // }
   },
 };
 </script>

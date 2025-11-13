@@ -44,21 +44,19 @@
         </ion-item>
         <ion-item>
           <div>
-            <template v-for="avatar in avatars">
-              <label :for="avatar.name" :key="avatar.url">
-                <input
-                  :value="avatar.url"
-                  type="radio"
-                  :id="avatar.name"
-                  name="avatar"
-                  v-model="user.avatar"
-                />
-                <img
-                  style="width: 60px; height: 60px; max-width: 60px"
-                  :src="avatar.url"
-                />
-              </label>
-            </template>
+            <label v-for="avatar in avatars" :key="avatar.url" :for="avatar.name" >
+              <input
+                :value="avatar.url"
+                type="radio"
+                :id="avatar.name"
+                name="avatar"
+                v-model="user.avatar"
+              />
+              <img
+                style="width: 60px; height: 60px; max-width: 60px"
+                :src="avatar.url"
+              />
+            </label>
             <template v-if="gamificationAvatar">
               <label for="gamification">
                 <input

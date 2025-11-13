@@ -39,8 +39,10 @@
 </template>
 
 <script>
-import fetch from "@/services/fetch";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import TournamentAPI from "@/services/TournamentAPI";
+const tournamentAPI = new TournamentAPI();
+
 export default {
   name: "home",
   components: {},
@@ -76,12 +78,12 @@ export default {
     back() {
       this.$router.back();
     },
-    save() {
+    async save() {
       let tournamentId = this.tournamentId;
       let tournament = this.tournament;
 
-      fetch
-        .put(`tournament/${tournamentId}`, tournament)
+      await tournamentAPI
+        .tournamentUpdate(tournamentId, tournament)
         .then((response) => {
           console.log(response);
           //back
@@ -92,13 +94,13 @@ export default {
           console.warn(e);
         });
     },
-    loadData() {
+    async loadData() {
       let tournamentId = this.tournamentId;
       if (tournamentId) {
-        fetch
-          .get(`tournament/${tournamentId}`)
-          .then(response => {
-            this.tournament = response.data;
+         await tournamentAPI
+          .tournament(tournamentId)
+          .then(data => {
+            this.tournament = data;
           })
           .catch(e => {
             this.error = "Error: Load failed";

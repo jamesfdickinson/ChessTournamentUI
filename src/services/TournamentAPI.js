@@ -16,6 +16,14 @@ export default class TournamentAPI {
         let data = response.data;
         return data;
     }
+    tournament(tournamentId) {
+        return fetch
+            .get(`tournament/${tournamentId}`)
+            .then((response) => {
+                let data = response.data;
+                return data
+            })
+    }
     tournamentView(tournamentId) {
         return fetch
             .get(`TournamentView/${tournamentId}`)
@@ -24,6 +32,14 @@ export default class TournamentAPI {
                 return data
             })
     }
+    tournamentCreate(tournament) {
+        return fetch
+           .post(`tournament`, tournament)
+            .then(response => {
+                let data = response.data;
+                return data;
+            });
+    }
     tournamentUpdate(tournamentId, tournament) {
         return fetch
             .put(`tournament/${tournamentId}`, tournament)
@@ -31,6 +47,10 @@ export default class TournamentAPI {
                 let data = response.data;
                 return data;
             });
+    }
+    tournamentDelete(tournamentId) {
+        return fetch
+            .delete(`tournament/${tournamentId}`)
     }
     round(tournamentId, roundId) {
         return fetch
