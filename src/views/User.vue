@@ -4,11 +4,7 @@
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
-          <ion-icon
-            name="arrow-round-back"
-            size="large"
-            @click="$router.go(-1)"
-          ></ion-icon>
+          <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
         </ion-buttons>
 
         <ion-title>User</ion-title>
@@ -41,13 +37,18 @@
           <ion-label position="fixed">Avatar</ion-label>
           <ion-avatar><img :src="user.avatar" /></ion-avatar>
         </ion-item>
-        <ion-item>
+        <!-- <ion-item>
           <ion-label position="fixed">Newsletter</ion-label>
           <ion-label>{{ user.emailSubscribe ? "true" : "false" }}</ion-label>
-        </ion-item>
+        </ion-item> -->
         <ion-item>
           <ion-label position="fixed">Password</ion-label>
           <ion-button v-on:click="PasswordChange()">Change Password</ion-button>
+        </ion-item>
+        <ion-item>
+          <ion-label position="fixed">Verified?</ion-label>
+          <ion-label v-if="isVerified">true</ion-label>
+          <ion-button v-if="!isVerified" v-on:click="VerifyEmail()">Verify Email</ion-button>
         </ion-item>
         <!-- <ion-item>
           <ion-label>Allow Notifications</ion-label>
@@ -61,9 +62,7 @@
       <hr />
 
       <div style="text-align: center">
-        <ion-button type="submit" size="large" v-on:click="logOut()"
-          >Log Out</ion-button
-        >
+        <ion-button type="submit" size="large" v-on:click="logOut()">Log Out</ion-button>
       </div>
 
       <div style="color: red">{{ error }}</div>
@@ -82,6 +81,7 @@ export default {
     var user = authentication.getUser() || {};
     return {
       user: user,
+      isVerified: false,
       error: "",
     };
   },
@@ -96,26 +96,26 @@ export default {
     PasswordChange() {
       this.$router.push({ path: `PasswordChange` });
     },
-    save() {
-      let user = this.user;
-      let redirect = this.redirect;
-      authentication
-        .register(user)
-        .then((userData) => {
-          let user = userData;
-          console.log("User Logged in: " + user.username, user);
-          //back
-          if (redirect) {
-            this.$router.push({ path: redirect });
-          } else {
-            this.$router.push({ path: `/` });
-          }
-        })
-        .catch((e) => {
-          this.error = "Error: Save failed";
-          console.warn(e);
-        });
+    VerifyEmail() {
+      this.$router.push({ path: `VerifyEmail` });
     },
+     async loadData() {
+      //hackish way to get if user is verified.
+      //the user data is pulling locally from storage.
+      //we need to pull from the server to get the latest data.
+      //but I dont have a endpoint to pull private data yet without proper authentication.
+      const userPublic = await authentication.getUserByUserName(this.user.userName);
+      this.isVerified = userPublic.verified;
+
+     }
+  },
+  created() {
+    // Redirect to login if no user is logged in
+    if (!this.user || !this.user.userName) {
+      this.$router.push({ name: 'Login' });
+      return;
+    }
+    this.loadData();
   },
 };
 </script>

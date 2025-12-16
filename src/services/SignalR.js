@@ -26,7 +26,17 @@ export default class SignalR {
         this.connection.onreconnected(() => {
             if (this.onReconnect) this.onReconnect();
         });
-        return this.connection.start();
+        this.connection.onclose((error) => {
+            if (error) {
+                console.log('SignalR connection closed with error:', error.message);
+            } else {
+                console.log('SignalR connection closed.');
+            }
+        });
+        return this.connection.start().catch(err => {
+            console.error('SignalR connection error:', err.message);
+            throw err;
+        });
     }
     close() {
         this.connection.stop();
@@ -38,7 +48,9 @@ export default class SignalR {
     send(action, ...args) {
         // this.connection.invoke("SendMessage","jh", "user","message");
         if (this.connection && this.connection.connectionState == "Connected")
-            this.connection.invoke(action, ...args);
+            return this.connection.invoke(action, ...args).catch(err => {
+                console.error('SignalR invocation error:', err.message);
+            });
     }
     notification(notification) {
         if (this.onNotification)

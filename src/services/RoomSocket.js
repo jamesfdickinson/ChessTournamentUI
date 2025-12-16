@@ -21,6 +21,13 @@ export default class RoomSocket {
             .withAutomaticReconnect()
             .build();
         this.connection.onreconnected(() => this.onSocketConnected());
+        this.connection.onclose((error) => {
+            if (error) {
+                console.log('RoomSocket connection closed with error:', error.message);
+            } else {
+                console.log('RoomSocket connection closed.');
+            }
+        });
         // this.connection.on("UserInfo", this.onSUserInfo.bind(this));
         // this.connection.on("JoinRoom", this.onSJoinRoom.bind(this));
         // this.connection.on("LeaveRoom", this.onSLeaveRoom.bind(this));
@@ -28,7 +35,10 @@ export default class RoomSocket {
         // this.connection.on("Signal", this.onSSignal.bind(this));
         this.connection.on("Update", this.onSocketUpdate.bind(this));
         this.connection.on("Signal", this.onSocketSignal.bind(this));
-        return this.connection.start().then(() => this.onSocketConnected());
+        return this.connection.start().then(() => this.onSocketConnected()).catch(err => {
+            console.error('RoomSocket connection error:', err.message);
+            throw err;
+        });
     }
     close() {
         if (this.connection)
@@ -68,22 +78,32 @@ export default class RoomSocket {
     //actions//
     update(room) {
         if (this.connection && this.connection.connectionState == "Connected")
-            this.connection.invoke("Update", room);
+            return this.connection.invoke("Update", room).catch(err => {
+                console.error('RoomSocket Update error:', err.message);
+            });
     }
     offer(to, from, data) {
         if (this.connection && this.connection.connectionState == "Connected")
-            this.connection.invoke("Signal", to, from, "Offer", JSON.stringify(data));
+            return this.connection.invoke("Signal", to, from, "Offer", JSON.stringify(data)).catch(err => {
+                console.error('RoomSocket Offer error:', err.message);
+            });
     }
     answer(to,from, data) {
         if (this.connection && this.connection.connectionState == "Connected")
-            this.connection.invoke("Signal", to, from, "Answer", JSON.stringify(data));
+            return this.connection.invoke("Signal", to, from, "Answer", JSON.stringify(data)).catch(err => {
+                console.error('RoomSocket Answer error:', err.message);
+            });
     }
     candidate(to,from, data) {
         if (this.connection && this.connection.connectionState == "Connected")
-            this.connection.invoke("Signal", to, from, "Candidate", JSON.stringify(data));
+            return this.connection.invoke("Signal", to, from, "Candidate", JSON.stringify(data)).catch(err => {
+                console.error('RoomSocket Candidate error:', err.message);
+            });
     }
     joinRoom(room, name,avatar) {
         if (this.connection && this.connection.connectionState == "Connected")
-            this.connection.invoke("JoinRoom", room, name,avatar);
+            return this.connection.invoke("JoinRoom", room, name,avatar).catch(err => {
+                console.error('RoomSocket JoinRoom error:', err.message);
+            });
     }
 }

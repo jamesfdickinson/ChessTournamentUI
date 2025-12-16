@@ -32,10 +32,20 @@ export default class NotificationSocket {
             .withAutomaticReconnect([0, 3000, 5000, 10000, 15000, 30000, 60000, 60000 * 2, 60000 * 4])
             .build();
         this.connection.onreconnected(() => this.onConnected());
+        this.connection.onclose((error) => {
+            if (error) {
+                console.log('NotificationSocket connection closed with error:', error.message);
+            } else {
+                console.log('NotificationSocket connection closed.');
+            }
+        });
         this.connection.on("Notification", this.notification.bind(this));
         this.connection.on("Update", this.update.bind(this));
         this.connection.on("Patch", this.patch.bind(this));
-        return this.connection.start().then(() => this.onConnected());
+        return this.connection.start().then(() => this.onConnected()).catch(err => {
+            console.error('NotificationSocket connection error:', err.message);
+            throw err;
+        });
     }
     close() {
         if (this.connection)
@@ -65,7 +75,9 @@ export default class NotificationSocket {
     }
     track(location) {
         if (this.connection && this.connection.connectionState == "Connected")
-            this.connection.invoke("Track", location);
+            return this.connection.invoke("Track", location).catch(err => {
+                console.error('NotificationSocket Track error:', err.message);
+            });
     }
     update(data) {
         this.tournamentView = data;
@@ -101,7 +113,9 @@ export default class NotificationSocket {
         this.tournamentView = null;
         //this.getTournament(this.tournamentId);
         if (this.connection && this.connection.connectionState == "Connected")
-            this.connection.invoke("JoinTournament", tournamentId);
+            return this.connection.invoke("JoinTournament", tournamentId).catch(err => {
+                console.error('NotificationSocket JoinTournament error:', err.message);
+            });
     }
     getTournament(tournamentId) {
         if (!tournamentId) tournamentId = this.tournamentId;
@@ -112,7 +126,9 @@ export default class NotificationSocket {
             })
             .catch(() => {
                 if (this.connection && this.connection.connectionState == "Connected")
-                    this.connection.invoke("GetTournament", tournamentId);
+                    return this.connection.invoke("GetTournament", tournamentId).catch(err => {
+                        console.error('NotificationSocket GetTournament error:', err.message);
+                    });
             });
     }
 }

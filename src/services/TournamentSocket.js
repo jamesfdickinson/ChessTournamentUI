@@ -30,9 +30,19 @@ export default class TournamentSocket {
             .withAutomaticReconnect([0, 3000, 5000, 10000, 15000, 30000, 60000, 60000 * 2, 60000 * 4])
             .build();
         this.connection.onreconnected(() => this.onConnected());
+        this.connection.onclose((error) => {
+            if (error) {
+                console.log('TournamentSocket connection closed with error:', error.message);
+            } else {
+                console.log('TournamentSocket connection closed.');
+            }
+        });
         this.connection.on("Update", this.update.bind(this));
         this.connection.on("Patch", this.patch.bind(this));
-        return this.connection.start().then(() => this.onConnected());
+        return this.connection.start().then(() => this.onConnected()).catch(err => {
+            console.error('TournamentSocket connection error:', err.message);
+            throw err;
+        });
     }
     close() {
         if (this.connection)
@@ -75,6 +85,8 @@ export default class TournamentSocket {
     getTournament() {
         let tournamentId = this.tournamentId;
         if (this.connection && this.connection.connectionState == "Connected")
-            this.connection.invoke("GetTournament", tournamentId);
+            return this.connection.invoke("GetTournament", tournamentId).catch(err => {
+                console.error('TournamentSocket GetTournament error:', err.message);
+            });
     }
 }

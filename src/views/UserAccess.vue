@@ -19,11 +19,7 @@
 
           <ion-item>
             <ion-label position="stacked">Role</ion-label>
-            <ion-select
-              placeholder="Select One"
-              :value="role"
-              @ionChange="role= $event.target.value;"
-            >
+            <ion-select placeholder="Select One" :value="role" @ionChange="role = $event.target.value;">
               <ion-select-option value="Basic">Basic</ion-select-option>
               <ion-select-option value="Recorder">Recorder</ion-select-option>
               <ion-select-option value="Admin">Admin</ion-select-option>
@@ -34,27 +30,26 @@
         <ion-button @click="addUser()" expand="block">Add</ion-button>
       </ion-card>
 
-      <ion-searchbar
-        placeholder="Name, Role, or Email"
-        :value="searchInput"
-        @ionInput="searchInput = $event.target.value;"
-        @ionChange="searchInput= $event.target.value;"
-      ></ion-searchbar>
+      <ion-searchbar placeholder="Name, Role, or Email" :value="searchInput"
+        @ionInput="searchInput = $event.target.value;" @ionChange="searchInput = $event.target.value;"></ion-searchbar>
 
       <table class="table">
         <thead>
           <tr>
-            <th>User</th>
+            <th>Name</th>
+            <th>UserName</th>
             <th>Role</th>
+            <th>Verified</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
           <template v-for="tournamentUser of filteredItems">
             <tr :key="tournamentUser.id">
- 
-              <td>{{tournamentUser.name}} {{tournamentUser.userName}}</td>
-              <td>{{tournamentUser.role}}</td>
+              <td>{{ tournamentUser.name }}</td>
+              <td>{{ tournamentUser.userName }}</td>
+              <td>{{ tournamentUser.role }}</td>
+              <td>{{ tournamentUser.verified ? "true" : "false" }}</td>
               <td>
 
                 <ion-button @click="removeUser(tournamentUser.id)"><ion-icon name="trash"></ion-icon></ion-button>
@@ -90,7 +85,7 @@ export default {
         .get(`tournamentuser/${tournamentId}`)
         .then(response => {
           this.users = response.data;
-          this.users.sort(function(a, b) {
+          this.users.sort(function (a, b) {
             if (a.role < b.role) return -1;
             if (a.role > b.role) return 1;
             if (a.userName < b.userName) return -1;
@@ -108,11 +103,11 @@ export default {
       var role = this.role;
       fetch
         .post(`tournamentuser/${tournamentId}`, {
-          TournamentId:parseInt(tournamentId),
-          userName:userName,
-          role:role,
+          TournamentId: parseInt(tournamentId),
+          userName: userName,
+          role: role,
 
-           })
+        })
         .then(() => {
           this.loadData();
         })

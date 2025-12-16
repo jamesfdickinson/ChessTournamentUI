@@ -80,6 +80,10 @@ export default class Authentication {
         if(!user) return null;
         return user.token;
     }
+    async getUserByUserName(userName) {
+        const response = await fetch.get(`User/${userName}`);
+        return response.data;
+    }
     sendNotificationToken(currentToken, userName) {
         //get user Id
         if (!userName) {
@@ -92,6 +96,9 @@ export default class Authentication {
             "userName": userName
         };
         return fetch.post(`NotificationToken`, data);
+    }
+    verifyEmail(email) {
+        return fetch.post(`authentication/VerifyEmail`, { email: email });
     }
    
     

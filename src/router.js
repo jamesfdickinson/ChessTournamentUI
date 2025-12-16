@@ -4,6 +4,7 @@ import Home from './views/Home.vue'
 import Login from './views/Login.vue'
 import PasswordChange from './views/PasswordChange.vue'
 import PasswordResetRequest from './views/PasswordResetRequest.vue'
+import VerifyEmail from './views/VerifyEmail.vue'
 import AccessDenied from './views/AccessDenied.vue'
 import Tournament from './views/Tournament.vue'
 import TournamentEdit from './views/TournamentEdit.vue'
@@ -97,6 +98,11 @@ export default new VueRouter({
       path: '/PasswordResetRequest',
       name: 'PasswordResetRequest',
       component: PasswordResetRequest
+    },
+    {
+      path: '/VerifyEmail',
+      name: 'VerifyEmail',
+      component: VerifyEmail
     },
     {
       path: '/User',
