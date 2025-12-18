@@ -267,6 +267,11 @@
           <ion-checkbox slot="start" :checked="tournament.sendPostEmail"
             @ionChange="tournament.sendPostEmail = $event.target.checked == true"></ion-checkbox>
         </ion-item>
+        <ion-item>
+          <ion-label>Require Email Verification</ion-label>
+          <ion-checkbox slot="start" :checked="tournament.requireVerified"
+            @ionChange="tournament.requireVerified = $event.target.checked == true"></ion-checkbox>
+        </ion-item>
         <ion-list-header>
           <ion-label>Signup Page</ion-label>
         </ion-list-header>
@@ -351,7 +356,7 @@ export default {
     back() {
       this.$router.back();
     },
-   async save() {
+    async save() {
       let tournamentId = this.tournamentId;
       let tournament = this.tournament;
       let startDate = this.startDate;
@@ -405,7 +410,7 @@ export default {
             console.warn(e);
           });
       } else {
-         await tournamentAPI
+        await tournamentAPI
           .tournamentCreate(tournament)
           .then((data) => {
             console.log(data);
@@ -452,7 +457,7 @@ export default {
       let tournamentId = this.tournamentId;
       let copyId = this.copyId;
       if (tournamentId) {
-       await tournamentAPI
+        await tournamentAPI
           .tournament(tournamentId)
           .then((data) => {
             this.tournament = data;
@@ -469,7 +474,7 @@ export default {
           });
       }
       if (copyId) {
-          await tournamentAPI
+        await tournamentAPI
           .tournament(copyId)
           .then((data) => {
             this.tournament = data;

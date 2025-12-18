@@ -45,10 +45,21 @@
             <td>Status</td>
             <td>{{ tournament.state }}</td>
           </tr>
+          <tr v-if="tournament.requireVerified">
+            <td>Required</td>
+            <td>Email verification</td>
+          </tr>
         </table>
 
 
-        <p><ion-button size="large" v-on:click="tournamentOpen(tournament.id)">Enter</ion-button></p>
+        <p>
+          <ion-button size="large" v-on:click="tournamentOpen(tournament.id)"
+            :disabled="requireVerified">Enter</ion-button>
+        </p>
+
+        <p v-if="requireVerified === true">
+          <ion-button size="medium" v-on:click="verifyEmail()">Verify Email</ion-button>
+        </p>
 
         <p> <img class="tournament-img" v-if="tournament.image" :src="tournament.image" :alt="tournament.type" /></p>
 
@@ -119,7 +130,11 @@ details[open] summary {
 
 <script>
 import fetch from "@/services/fetch";
+import TournamentAPI from "@/services/TournamentAPI";
+import Authentication from "@/services/Authentication";
 
+const tournamentAPI = new TournamentAPI();
+const authentication = new Authentication();
 export default {
   name: "TournamentOverview",
   metaInfo() {
@@ -137,14 +152,21 @@ export default {
   },
   components: {},
   data() {
-    var tournamentId = this.$route.params.tournament;
+    let tournamentId = this.$route.params.tournament;
+
+    let user = authentication.getUser();
     return {
       tournamentId: tournamentId,
       tournament: {},
+      user: user,
+      requireVerified: false,
       errors: []
     };
   },
   methods: {
+    verifyEmail() {
+      this.$router.push({ name: "VerifyEmail" });
+    },
     tournamentOpen(tournamentId) {
       this.$router.push({
         name: "Tournament",
@@ -158,16 +180,26 @@ export default {
       let options = { dateStyle: "medium", timeStyle: "short" };
       return localDate.toLocaleString(undefined, options);
     },
-    loadData() {
+    async loadData() {
       var tournamentId = this.tournamentId;
-      fetch
-        .get(`tournament/${tournamentId}`)
-        .then(response => {
-          this.tournament = response.data;
-        })
-        .catch(e => {
-          this.errors.push(e);
-        });
+      try {
+        const tournament = await tournamentAPI.tournament(tournamentId)
+        this.tournament = tournament;
+
+        //check if user is verified
+        const user = this.user;
+        if (tournament?.requireVerified && user && user.userName) {
+          const userPublic = await authentication.getUserByUserName(user.userName);
+          const userIsVerified = userPublic?.verified;
+          if (userIsVerified === false) {
+            this.requireVerified = true;
+          }
+        }
+
+
+      } catch (e) {
+        this.errors.push("Failed to load tournament data. " + (e.message || e));
+      }
     }
   },
   created() {
