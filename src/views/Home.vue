@@ -3,7 +3,7 @@
     <ion-page class="ion-page" main>
       <ion-content>
         <div style="background-color:#3880ff;color:#FFFFFF;">
-          <ion-img slot="" style="height: 100px" src="./images/trophyflat.png"></ion-img>
+          <ion-img slot="" style="height: 100px" src="/images/trophyflat.png"></ion-img>
 
           <h1 class="titleHeader">Tournament JD</h1>
 
@@ -19,20 +19,31 @@
             </p>
           </div>
 
+          <h2>Choose a Game</h2>
+          <div class="gameTypeContainer">
+            <a href="Tournaments/chess" class="gameTypeBox">
+              <img src="/images/icons/chess-128.png" alt="Chess" />
+              <div>Chess</div>
+            </a>
+            <a href="Tournaments/cribbage" class="gameTypeBox">
+              <img src="/images/icons/cribbage-128.png" alt="Cribbage" />
+              <div>Cribbage</div>
+            </a>
+            <a href="Tournaments/all" class="gameTypeBox">
+              <img src="/images/icons/games_card_diamonds-128.png" alt="Other Games" />
+              <div>Other</div>
+            </a>
+          </div>
+
           <div class="searchBox">
             <h2>Find Tournament</h2>
             <div style=" display: flex;">
               <input type="text" placeholder="Search.." class="searchText" v-model="searchQuery" />
               <input type="submit" value="Search" class="searchButton" v-on:click="search()" />
             </div>
-            <p>
-              <a href="Tournaments/all">All</a> |
-              <a href="Tournaments/chess">Chess</a> |
-              <a href="Tournaments/cribbage">Cribbage</a>
-            </p>
+
 
           </div>
-
           <div class="quoteBox">
             <div>
               <h2>How to play</h2>
@@ -81,6 +92,43 @@
 
 .searchBox {
   margin: 30px 0;
+}
+
+.gameTypeContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.gameTypeBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 5px;
+  border-radius: 8px;
+  background-color: #f7f7f7;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: inherit;
+  transition: transform 0.2s, box-shadow 0.2s;
+  min-width: 100px;
+}
+
+.gameTypeBox:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.gameTypeBox img {
+  max-width: 100px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.gameTypeBox div {
+  text-align: center;
+  font-weight: 500;
 }
 
 .searchText {
