@@ -17,6 +17,7 @@ import SignUp from './views/SignUp.vue'
 import SignUpChess from './views/SignUpChess.vue'
 import SignUpComplete from './views/SignUpComplete.vue'
 import SignUpEdit from './views/SignUpEdit.vue'
+import Payment from './views/Payment.vue'
 import TeamEdit from './views/TeamEdit.vue'
 import PlayGame from './views/PlayGame.vue'
 import ChatRoom from './views/ChatRoom.vue'
@@ -216,7 +217,12 @@ export default new VueRouter({
       path: '/:tournament/SignUpEdit',
       name: 'SignUpEdit',
       component: SignUpEdit
-    },    
+    },
+    {
+      path: '/:tournament/Payment',
+      name: 'Payment',
+      component: Payment
+    },
   
     {
       path: '/:tournament/TeamEdit/:id',

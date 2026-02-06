@@ -197,6 +197,11 @@
           </ion-textarea>
         </ion-item>
         <ion-item>
+          <ion-label position="stacked">Stripe Account</ion-label>
+          <ion-input :value="tournament.stripeAccount"
+            @input="tournament.stripeAccount = $event.target.value"></ion-input>
+        </ion-item>
+        <ion-item>
           <ion-label>Auto Advance Rounds</ion-label>
           <ion-checkbox slot="start" :checked="tournament.autoAdvanceRounds" @ionChange="
             tournament.autoAdvanceRounds = $event.target.checked == true
@@ -271,6 +276,11 @@
           <ion-label>Require Email Verification</ion-label>
           <ion-checkbox slot="start" :checked="tournament.requireVerified"
             @ionChange="tournament.requireVerified = $event.target.checked == true"></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>Allow Payment</ion-label>
+          <ion-checkbox slot="start" :checked="tournament.allowPayment"
+            @ionChange="tournament.allowPayment = $event.target.checked == true"></ion-checkbox>
         </ion-item>
         <ion-list-header>
           <ion-label>Signup Page</ion-label>

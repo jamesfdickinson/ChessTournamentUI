@@ -34,7 +34,7 @@ export default class TournamentAPI {
     }
     tournamentCreate(tournament) {
         return fetch
-           .post(`tournament`, tournament)
+            .post(`tournament`, tournament)
             .then(response => {
                 let data = response.data;
                 return data;
@@ -103,6 +103,12 @@ export default class TournamentAPI {
                 return data;
             });
     }
+    async playerCreate(player) {
+        const response = await fetch.post(`player`, player);
+        let data = response.data;
+        return data;
+    }
+
     flowGet(tournamentId) {
         return fetch
             .get(`TournamentFlow/${tournamentId}`)

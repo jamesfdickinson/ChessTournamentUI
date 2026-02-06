@@ -1,26 +1,63 @@
 <template>
   <layout-no-menu>
-    <!-- <ion-page class="ion-page" main> -->
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
           <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
         </ion-buttons>
 
-        <ion-title>Sign Up</ion-title>
+        <ion-title>Registration</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content>
-      <div v-if="!showSignUpPage">
+      <div v-if="this.state === 'players'">
         <ion-item>
-          <p>Sign up is closed</p>
+          <ion-label class="ion-text-center">
+            <h1>Players</h1>
+          </ion-label>
         </ion-item>
+        <ion-list>
+          <ion-item v-for="player in regirestedPlayers" :key="player.id">
+            <ion-avatar slot="start">
+              <AvatarIcon :name="player.firstName" :image="player.avatar"></AvatarIcon>
+            </ion-avatar>
+            <ion-label>
+              <h2>{{ player.firstName }} {{ player.lastName }}</h2>
+              <p v-if="player.grade || player.team">
+                <span v-if="player.grade">Grade {{ player.grade }}</span>
+                <span v-if="player.grade && player.team"> • </span>
+                <span v-if="player.team">{{ player.team }}</span>
+              </p>
+            </ion-label>
+            <ion-label v-if="tournament.allowPayment" :color="player.paid ? 'success' : 'danger'" slot="end">
+              {{ player.paid ? '[Paid]' : '[Unpaid]' }}
+            </ion-label>
+          </ion-item>
+        </ion-list>
+
+        <ion-item v-if="showClosed">
+          <ion-label class="ion-text-center">
+            <p>Registration is closed</p>
+          </ion-label>
+        </ion-item>
+
+        <div class="ion-padding-horizontal ion-margin-top">
+          <ion-button v-if="allowAnotherPlayer" expand="block" color="secondary" @click="addAnotherPlayer">
+            Add Another Player
+          </ion-button>
+          <ion-button v-if="paymentNeeded" expand="block" class="ion-margin-top" @click="payment">
+            Continue to Payment
+          </ion-button>
+        </div>
+
       </div>
-      <div v-if="showSignUpPage">
-        <!-- <ion-item>
-        <h3>Sign Up</h3>
-        </ion-item>-->
+      <div v-if="this.state === 'register'">
         <ion-item>
+          <ion-label class="ion-text-center">
+            <h1>Player Registration</h1>
+          </ion-label>
+        </ion-item>
+        <ion-item v-if="tournament.signUpText">
           <p v-html="tournament.signUpText"></p>
         </ion-item>
         <ion-item>
@@ -29,7 +66,6 @@
           </router-link>
         </ion-item>
         <form @submit.prevent="handleSubmit">
-          <!-- <ion-card> -->
           <ion-list>
             <ion-item>
               <ion-label position="stacked">Name</ion-label>
@@ -56,19 +92,6 @@
               <ion-input :value="player.team" @input="player.team = $event.target.value"></ion-input>
             </ion-item>
 
-            <!-- <ion-item>
-            <ion-label position="stacked">Last Name</ion-label>
-            <ion-input :value="player.lastName" @input="player.lastName = $event.target.value"></ion-input>
-            </ion-item>-->
-            <!-- <ion-item>
-              <ion-label position="stacked">Cribbage ID</ion-label>
-              <ion-input
-                type="number"
-                :value="player.gamerId"
-                @input="player.gamerId = $event.target.value"
-              ></ion-input>
-            </ion-item> -->
-
             <ion-item v-if="type === 'Chess'">
               <ion-label position="stacked">Grade</ion-label>
               <div style="width: 100%">
@@ -92,74 +115,6 @@
                 </select>
               </div>
             </ion-item>
-            <!-- <ion-item>
-              <ion-label position="stacked">Grade</ion-label>
-              <select 
-                placeholder="Select One"
-                :value="player.grade"
-                @ionChange="player.grade= $event.target.value;player.rating =player.grade*100;"
-              >
-               <option disabled value="">Select One</option>
-                <option value="0">K</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                <option value="12">Open Division</option>
-              </select>
-            </ion-item> -->
-            <!-- <ion-item>
-              <ion-label position="stacked">Grade</ion-label>
-              <ion-select
-                placeholder="Select One"
-                :value="player.grade"
-                @ionChange="player.grade= $event.target.value;player.rating =player.grade*100;"
-              >
-                <ion-select-option value="0">K</ion-select-option>
-                <ion-select-option value="1">1</ion-select-option>
-                <ion-select-option value="2">2</ion-select-option>
-                <ion-select-option value="3">3</ion-select-option>
-                <ion-select-option value="4">4</ion-select-option>
-                <ion-select-option value="5">5</ion-select-option>
-                <ion-select-option value="6">6</ion-select-option>
-                <ion-select-option value="7">7</ion-select-option>
-                <ion-select-option value="8">8</ion-select-option>
-                 <ion-select-option value="9">9</ion-select-option>
-                <ion-select-option value="10">10</ion-select-option>
-                <ion-select-option value="11">11</ion-select-option>
-                <ion-select-option value="12">12</ion-select-option>
-                <ion-select-option value="12">Open Division</ion-select-option>
-              </ion-select>
-            </ion-item> -->
-            <!-- <ion-item>
-              <ion-label position="stacked">Grade</ion-label>
-              <ion-input
-                type="number"
-                :value="player.grade"
-                @input="player.grade = $event.target.value;player.rating =player.grade*100"
-              ></ion-input>
-            </ion-item>-->
-            <!-- <ion-item v-if="type === 'Chess'">
-              <ion-label position="stacked">Skill level</ion-label>
-              <div style="width: 100%">
-                <select v-model="skillLevelAdjustment"
-                  @change="player.rating = player.grade * 100 + parseInt(skillLevelAdjustment)">
-                  <option disabled value="">Select One</option>
-                  <option value="-50">Beginning</option>
-                  <option value="0">Intermediate</option>
-                  <option value="50">Advanced</option>
-
-                </select>
-              </div>
-            </ion-item> -->
             <ion-item v-if="type === 'Chess'">
               <ion-label position="stacked">Rating</ion-label>
               <ion-input type="number" :value="player.rating" @input="player.rating = $event.target.value"></ion-input>
@@ -190,6 +145,7 @@
               <ion-label position="stacked">Email</ion-label>
               <ion-input type="email" :value="player.email" @input="player.email = $event.target.value"></ion-input>
             </ion-item>
+
             <ion-item v-if="tournament.accessCodeBasic">
               <ion-label position="stacked">Access Code</ion-label>
               <ion-input :value="password" @input="password = $event.target.value"></ion-input>
@@ -202,30 +158,29 @@
                 @ionChange="agreeTerms = $event.target.checked == true"></ion-checkbox>
             </ion-item>
           </ion-list>
-          <!-- </ion-card> -->
 
-          <!-- <p v-if="errors.length">
-          <b>Please correct the following error(s):</b>
-          </p>-->
           <ul style="color: red">
             <li v-for="error in errors" v-bind:key="error">*{{ error }}</li>
           </ul>
-          <ion-button type="submit" expand="block">Submit</ion-button>
+          <div class="ion-padding-horizontal">
+            <ion-button type="submit" expand="block">Next</ion-button>
+          </div>
         </form>
       </div>
-      <div style="height:200px"><!--Spacer to all room for the keyboard on ios--></div>
+      <div style="height:200px"></div>
     </ion-content>
-    <!-- </ion-page> -->
   </layout-no-menu>
 </template>
 
 <script>
-import fetch from "@/services/fetch";
+import AvatarIcon from "@/components/AvatarIcon.vue";
+import TournamentAPI from "@/services/TournamentAPI";
 import Authentication from "@/services/Authentication";
+const tournamentAPI = new TournamentAPI();
 const authentication = new Authentication();
 export default {
   name: "home",
-  components: {},
+  components: { AvatarIcon },
   data() {
     var tournamentId = this.$route.params.tournament;
     var playerId = this.$route.params.id;
@@ -247,24 +202,179 @@ export default {
       allowNotifications: true,
     };
     return {
+      state: "loading",
       playerId: playerId,
       tournamentId: tournamentId,
       tournament: {},
       teams: [],
       skillLevelAdjustment: 0,
-      showSignUpPage: true,
       type: null,
       player: player,
       agreeTerms: false,
       password: null,
       errors: [],
+      regirestedPlayers: []
     };
   },
+  computed: {
+    allowAnotherPlayer() {
+      if (!this.tournament) return false;
+      if (!this.tournament.allowMultiplePlayersPerLogin) return false;
+      if (!this.tournament.allowRegistration) return false;
+      return true;
+    },
+    paymentNeeded() {
+      if (!this.tournament) return false;
+      if (!this.tournament.allowPayment) return false;
+      const anyUnpaid = this.regirestedPlayers.some(player => !player.paid);
+      return anyUnpaid;
+    },
+    showClosed() {
+      if (!this.tournament) return false;
+      if (this.tournament.allowRegistration) return false;
+      return true;
+    }
+  },
   methods: {
+    //if player arealdy regirested show list of players.  Find them by email or new field called CreatedBy (username)
+    //next state function
+    async flow() {
+      const tournament = this.tournament;
+      const registeredPlayers = this.getRegisteredPlayers();
+
+      //show registration form if no players are registered
+      if (registeredPlayers.length === 0 && tournament.allowRegistration) {
+        await this.populateForm();
+        this.state = "register";
+      } else {
+        await this.populateRegisteredPlayers();
+        this.state = "players";
+      }
+    },
+    async populateRegisteredPlayers() {
+      this.state = "players";
+      let tournamentId = this.tournamentId;
+      try {
+        this.tournament = await tournamentAPI.tournamentView(tournamentId)
+        const tournament = this.tournament;
+
+        //gets all players with the same email as the current user
+        this.regirestedPlayers = this.getRegisteredPlayers()
+      } catch (e) {
+        this.errors.push(e);
+      }
+
+    },
+    getRegisteredPlayers() {
+      const tournament = this.tournament;
+      const user = authentication.getUser();
+      if (!tournament) return [];
+      if (!user) return [];
+
+      const regirestedPlayers = tournament?.players?.filter(player => player.email === user.email || (player.createdBy && player.createdBy === user.username));
+      return regirestedPlayers;
+    },
     back() {
       this.$router.back();
     },
-    handleSubmit() {
+    addAnotherPlayer() {
+      this.populateForm();
+    },
+    validatePlayer(player, agreeTerms, isTeamRequired, accessCodeBasic, password) {
+      const errors = [];
+      
+      if (!agreeTerms) errors.push("Agree to terms is required.");
+      if (!player.firstName) errors.push("First name is required.");
+      if (!player.team && isTeamRequired) errors.push("Team is required.");
+      if (!player.grade) errors.push("Grade is required.");
+      if (isNaN(player.grade)) errors.push("Grade is not a number.");
+      if (isNaN(player.rating)) errors.push("Rating is not a number.");
+      if (!player.email) errors.push("Email is required.");
+      
+      const trimmedAccessCode = accessCodeBasic ? accessCodeBasic.trim() : null;
+      if (trimmedAccessCode && trimmedAccessCode != password) {
+        errors.push("Incorrect access code");
+      }
+      
+      return errors;
+    },
+    payment(){
+      this.$router.push({ name: `Payment`, params: { tournament: this.tournamentId } });
+    },
+    finish() {
+      //check if payment is required
+      let paymentRequired = this.tournament && this.tournament.allowPayment;
+      if (paymentRequired) {
+        this.$router.push({ name: `Payment`, params: { tournament: this.tournamentId } });
+        return;
+      } else {
+        this.$router.push({ name: `Tournament`, params: { tournament: this.tournamentId } });
+      }
+
+    },
+    populateForm() {
+      //reset all fields
+      this.player = {
+        tournamentId: this.tournamentId,
+        firstName: "",
+        lastName: "",
+        grade: "",
+        team: "",
+        rating: 1000,
+        division: 1,
+        isPresent: false,
+        paid: false,
+        parentName: "",
+        email: "",
+        gender: "",
+        parentPhone: "",
+        emailHelpList: true,
+        allowNotifications: true,
+      };
+      this.agreeTerms = false;
+      //this.password = null; //dont reset password
+      this.errors = [];
+
+
+      //load tournament data
+      let tournament = this.tournament;
+      if (tournament) {
+        const allowRegistration = tournament.allowRegistration;
+
+        if (allowRegistration) this.state = "register";
+        if (!allowRegistration) this.state = "players";
+
+        if (tournament.type) {
+          this.type = tournament.type;
+          if (tournament.type === "Chess") {
+            this.player.firstName = "";
+          }
+        }
+        if (tournament.teams) {
+          this.teams = tournament.teams.split(",").map(function (item) {
+            return item.trim();
+          }).sort();
+        }
+      }
+
+      //load user data
+      let user = authentication.getUser();
+      if (user) {
+        if (user.email) this.player.email = user.email;
+        if (user.name) this.player.firstName = user.name;
+        if (user.gamerId) this.player.gamerId = user.gamerId;
+        if (user.avatar) this.player.avatar = user.avatar;
+        if (user.timeZone) this.player.timeZone = user.timeZone;
+        if (user.userName) this.player.createUser = user.userName;
+      }
+
+      if (user) {
+        const regirestedPlayers = tournament?.players?.filter(player => player.email === user.email || (player.createdBy && player.createdBy === user.username));
+        this.regirestedPlayers = regirestedPlayers;
+        console.log(regirestedPlayers);
+      }
+    },
+    async handleSubmit() {
       let tournamentId = parseInt(this.tournamentId);
       let player = this.player;
       let agreeTerms = this.agreeTerms;
@@ -284,77 +394,44 @@ export default {
 
       player.tournamentId = tournamentId;
       if (tournament) {
-        //player.isPresent = !(tournament.requireCheckIn === true);
         accessCodeBasic = tournament.accessCodeBasic;
       }
 
-      //validation
-      this.errors = [];
-      if (!agreeTerms) this.errors.push("Agree to terms is required.");
-      if (!player.firstName) this.errors.push("First name is required.");
-      //if (!player.lastName) this.errors.push("last name is required.");
-      if (!player.team && isTeamRequired) this.errors.push("Team is required.");
-      if (!player.grade) this.errors.push("Grade is required.");
-      if (isNaN(player.grade)) this.errors.push("Grade is not a number.");
-      if (isNaN(player.rating)) this.rating = 1000;
-      if (isNaN(player.rating)) this.errors.push("Rating is not a number.");
-      if (!player.email) this.errors.push("Email is required.");
-      if (accessCodeBasic) accessCodeBasic = accessCodeBasic.trim();
-      if (accessCodeBasic && accessCodeBasic != password)
-        this.errors.push("Incorrect access code");
+      if (isNaN(player.rating)) player.rating = 1000;
 
-
-
+      this.errors = this.validatePlayer(player, agreeTerms, isTeamRequired, accessCodeBasic, password);
       if (this.errors.length > 0) return;
 
-      fetch
-        .post(`player`, player)
-        .then((response) => {
-          console.log(response);
-          //back
-          this.$router.push({ name: `Tournament` });
-        })
-        .catch((e) => {
-          //display error
-          console.error(e);
-          this.errors.push("error signing up.");
-          if (e.response && e.response.data) {
-            console.error(e.response.data);
-            this.errors.push(e.response.data);
-          }
-        });
-    },
-    loadData() {
-      let tournamentId = this.tournamentId;
-      fetch
-        .get(`tournament/${tournamentId}`)
-        .then((response) => {
-          let tournament = response.data;
-          this.tournament = tournament;
-          if (tournament) this.showSignUpPage = tournament.allowRegistration;
-          if (tournament && tournament.type) {
-            this.type = tournament.type;
-            if (tournament.type === "Chess") {
-              this.player.firstName = "";
-            }
-          }
-          if (tournament && tournament.teams) {
-            this.teams = tournament.teams.split(",").map(function (item) {
-              return item.trim();
-            }).sort();
-          }
-        })
-        .catch((e) => {
-          this.errors.push(e);
-        });
-      let user = authentication.getUser();
-      if (user) {
-        if (user.email) this.player.email = user.email;
-        if (user.name) this.player.firstName = user.name;
-        if (user.gamerId) this.player.gamerId = user.gamerId;
-        if (user.avatar) this.player.avatar = user.avatar;
-        if (user.timeZone) this.player.timeZone = user.timeZone;
+      //todo: handle flow in flow()
+      try {
+        const response = await tournamentAPI.playerCreate(player);
+        console.log(response);
+        if (this.tournament.allowMultiplePlayersPerLogin) {
+          this.populateRegisteredPlayers();
+        }
+        else {
+          this.finish();
+        };
+      } catch (e) {
+        //display error
+        console.error(e);
+        this.errors.push("error signing up.");
+        if (e.response && e.response.data) {
+          console.error(e.response.data);
+          this.errors.push(e.response.data);
+        }
       }
+
+    },
+    async loadData() {
+      let tournamentId = this.tournamentId;
+      try {
+        this.tournament = await tournamentAPI.tournamentView(tournamentId);
+      } catch (e) {
+        this.errors.push(e);
+      }
+      this.flow();
+
     },
   },
   created() {
