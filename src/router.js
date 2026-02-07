@@ -14,6 +14,7 @@ import TournamentVideoEdit from './views/TournamentVideoEdit.vue'
 import TournamentOverview from './views/TournamentOverview.vue'
 import CheckIn from './views/CheckIn.vue'
 import SignUp from './views/SignUp.vue'
+import SignUpRegister from './views/SignUpRegister.vue'
 import SignUpChess from './views/SignUpChess.vue'
 import SignUpComplete from './views/SignUpComplete.vue'
 import SignUpEdit from './views/SignUpEdit.vue'
@@ -202,6 +203,11 @@ export default new VueRouter({
       path: '/:tournament/SignUp',
       name: 'SignUp',
       component: SignUp
+    },
+    {
+      path: '/:tournament/SignUpRegister',
+      name: 'SignUpRegister',
+      component: SignUpRegister
     },
     {
       path: '/:tournament/SignUpChess',

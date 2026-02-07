@@ -201,6 +201,11 @@
           <ion-input :value="tournament.stripeAccount"
             @input="tournament.stripeAccount = $event.target.value"></ion-input>
         </ion-item>
+         <ion-item>
+          <ion-label position="stacked">Price</ion-label>
+          <ion-input :value="tournament.price"
+            @input="tournament.price = $event.target.value"></ion-input>
+        </ion-item>
         <ion-item>
           <ion-label>Auto Advance Rounds</ion-label>
           <ion-checkbox slot="start" :checked="tournament.autoAdvanceRounds" @ionChange="
@@ -279,7 +284,7 @@
         </ion-item>
         <ion-item>
           <ion-label>Allow Payment</ion-label>
-          <ion-checkbox slot="start" :checked="tournament.allowPayment"
+          <ion-checkbox slot="start" :checked="tournament.allowPayment" disabled="true"
             @ionChange="tournament.allowPayment = $event.target.checked == true"></ion-checkbox>
         </ion-item>
         <ion-list-header>

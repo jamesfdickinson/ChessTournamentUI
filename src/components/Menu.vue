@@ -27,24 +27,30 @@
       <ion-icon slot="start" name="paper"></ion-icon>
       <ion-label>Reports</ion-label>
     </ion-item>
-   <router-link :to="{ name: 'SignUp'}">
+    <router-link :to="{ name: 'SignUp' }">
       <ion-item button detail="true">
         <ion-icon slot="start" name="clipboard"></ion-icon>
         <ion-label>Register</ion-label>
       </ion-item>
     </router-link>
+    <router-link :to="{ name: 'Payment' }">
+      <ion-item button detail="true">
+        <ion-icon slot="start" name="card"></ion-icon>
+        <ion-label>Payment</ion-label>
+      </ion-item>
+    </router-link>
     <ion-list-header>
       <ion-label>Admin</ion-label>
     </ion-list-header>
-   <ion-list-header>
+    <ion-list-header>
       <ion-label>Recorder</ion-label>
     </ion-list-header>
-     <router-link :to="{ name: 'CheckIn', params: { tournament: tournamentId }}">
+    <router-link :to="{ name: 'CheckIn', params: { tournament: tournamentId } }">
       <ion-item button detail="true">
         <ion-icon slot="start" name="clipboard"></ion-icon>
         <ion-label>Recorder Settings</ion-label>
       </ion-item>
-    </router-link> 
+    </router-link>
 
     <!-- <ion-list-header>
       <ion-label>Coach</ion-label>
@@ -158,10 +164,10 @@ export default {
       this.$router.push({ path: "home" });
       this.posts = [];
     },
-    
+
   },
   created() {
-   
+
   },
 };
 </script>
