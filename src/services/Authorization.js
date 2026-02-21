@@ -100,6 +100,10 @@ export default class Authorization {
         return true;
 
     }
+    hasCreateRole(roles) {
+        if (!roles) roles = [];
+        return roles.includes('0-SuperAdmin') || roles.includes('0-Create');
+    }
     inviteCode(code, userName, tournamentId) {
         return fetch.post(`accesscode`, { code: code.trim(), userName: userName, tournamentId: parseInt(tournamentId) })
             .then(response => {

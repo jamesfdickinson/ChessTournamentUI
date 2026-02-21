@@ -261,4 +261,58 @@ export default class TournamentAPI {
         let data = response.data;
         return data;
     }
+    requestHostAccess(userName, name, email, reason) {
+        const token = this.authentication.getToken();
+        return fetch
+            .post('RequestHostAccess', { userName, name, email, reason }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            })
+            .then(response => response.data)
+            .catch(error => {
+                if (error.response) throw error.response.data || error.response.statusText;
+                throw error;
+            });
+    }
+    getTournamentUsers(tournamentId) {
+        const token = this.authentication.getToken();
+        return fetch
+            .get(`tournamentuser/${tournamentId}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            })
+            .then(response => response.data)
+            .catch(error => {
+                if (error.response) throw error.response.data || error.response.statusText;
+                throw error;
+            });
+    }
+    addTournamentUser(tournamentId, userName, role) {
+        const token = this.authentication.getToken();
+        return fetch
+            .post(`tournamentuser/${tournamentId}`, {
+                TournamentId: parseInt(tournamentId),
+                userName,
+                role,
+            }, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            })
+            .then(response => response.data)
+            .catch(error => {
+                if (error.response) throw error.response.data || error.response.statusText;
+                throw error;
+            });
+    }
+    removeTournamentUser(tournamentUserId) {
+        const token = this.authentication.getToken();
+        return fetch
+            .delete(`tournamentuser/${tournamentUserId}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            })
+            .then(response => response.data)
+            .catch(error => {
+                if (error.response) throw error.response.data || error.response.statusText;
+                throw error;
+            });
+    }
 }

@@ -9,6 +9,8 @@ import AccessDenied from './views/AccessDenied.vue'
 import Tournament from './views/Tournament.vue'
 import TournamentEdit from './views/TournamentEdit.vue'
 import TournamentCreate from './views/TournamentCreate.vue'
+import HostAccessRequest from './views/HostAccessRequest.vue'
+import HostAccess from './views/HostAccess.vue'
 import Tournaments from './views/Tournaments.vue'
 import TournamentVideoEdit from './views/TournamentVideoEdit.vue'
 import TournamentOverview from './views/TournamentOverview.vue'
@@ -162,6 +164,16 @@ export default new VueRouter({
       path: '/TournamentCreate',
       name: 'TournamentCreate',
       component: TournamentCreate
+    },
+    {
+      path: '/HostAccessRequest',
+      name: 'HostAccessRequest',
+      component: HostAccessRequest
+    },
+    {
+      path: '/HostAccess',
+      name: 'HostAccess',
+      component: HostAccess
     },
     {
       path: '/TournamentCopy/:copyId',

@@ -75,6 +75,10 @@ export default {
   methods: {
     getRoomLink(room, spectate, gameRoomLink) {
       //todo: pass template in from tournament settings or position
+      let tournament = this.tournamentId;
+      //extract table from room name, assume format 1R3T9349 where 1 is table, 3 is round, 9349 is tournament
+      let table = (room && room.match(/^(\d+)R/)||[])[1] || "";
+      let round = (room && room.match(/R(\d+)T/)||[])[1] || "";
 
       if (!gameRoomLink) gameRoomLink = this.gameRoomLink;
 
@@ -128,10 +132,9 @@ export default {
       url = url.replace("[id]", gamerId);
       url = url.replace("[spectate]", spectate);
       url = url.replace("[avatar]", avatar);
-
-      // url = url.replace("[tournament]", tournament);
-      // url = url.replace("[round]", round);
-      // url = url.replace("[table]", table);
+      url = url.replace("[tournament]", tournament);
+      url = url.replace("[round]", round);
+      url = url.replace("[table]", table);
 
       return url;
     },

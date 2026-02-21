@@ -64,7 +64,9 @@
 </template>
 
 <script>
-import fetch from "@/services/fetch";
+import TournamentAPI from "@/services/TournamentAPI.js";
+
+const tournamentAPI = new TournamentAPI();
 
 export default {
   name: "home",
@@ -81,10 +83,10 @@ export default {
   methods: {
     loadData() {
       var tournamentId = this.$route.params.tournament;
-      fetch
-        .get(`tournamentuser/${tournamentId}`)
-        .then(response => {
-          this.users = response.data;
+      tournamentAPI
+        .getTournamentUsers(tournamentId)
+        .then(data => {
+          this.users = data;
           this.users.sort(function (a, b) {
             if (a.role < b.role) return -1;
             if (a.role > b.role) return 1;
@@ -98,16 +100,8 @@ export default {
     },
     addUser() {
       var tournamentId = this.$route.params.tournament;
-      parseInt
-      var userName = this.userName;
-      var role = this.role;
-      fetch
-        .post(`tournamentuser/${tournamentId}`, {
-          TournamentId: parseInt(tournamentId),
-          userName: userName,
-          role: role,
-
-        })
+      tournamentAPI
+        .addTournamentUser(tournamentId, this.userName, this.role)
         .then(() => {
           this.loadData();
         })
@@ -116,8 +110,8 @@ export default {
         });
     },
     removeUser(tournamentUserId) {
-      fetch
-        .delete(`tournamentuser/${tournamentUserId}`)
+      tournamentAPI
+        .removeTournamentUser(tournamentUserId)
         .then(() => {
           this.loadData();
         })

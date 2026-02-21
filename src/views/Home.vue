@@ -69,7 +69,7 @@
           <footer>
             <p>
               <a href="https://tournamentjd.com">Tournament JD (formerly Bracket JD)</a> |
-              <a href="mailto:tournament@jdsoftwarellc.com">Contact</a> | <a href="">version {{ version }}</a>
+              <a href="mailto:tournament@jdsoftwarellc.com">Contact</a> | <a href="">TournamentJD version {{ version }}</a>
 
             </p>
           </footer>

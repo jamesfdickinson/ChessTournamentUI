@@ -31,6 +31,11 @@
 </template>
 
 <script>
+import Authentication from "@/services/Authentication.js";
+import Authorization from "@/services/Authorization.js";
+const authentication = new Authentication();
+const authorization = new Authorization();
+
 export default {
   name: "home",
   components: {},
@@ -57,7 +62,14 @@ export default {
       });
     },
     loadData() {
-
+      const user = authentication.getUser();
+      if (!user) {
+        this.$router.push({ name: 'Login' });
+        return;
+      }
+      if (!authorization.hasCreateRole(user.roles)) {
+        this.$router.push({ name: 'RequestHostAccess' });
+      }
     },
   },
   created() {
