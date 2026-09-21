@@ -1,28 +1,38 @@
 {
   "name": "chess-tournament",
-  "version": "0.1.0",
+  "version": "2.31.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "serve": "SET NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
+    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider vue-cli-service build",
+    "lint": "SET NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service lint",
+    "build-dev": "SET NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service build --mode development",
+    "build-cordova": "SET NODE_OPTIONS=--openssl-legacy-provider && cross-env CORDOVA_PLATFORM=ios vue-cli-service build --dest src-cordova/www/",
+    "serve-cordova": "SET NODE_OPTIONS=--openssl-legacy-provider && cross-env CORDOVA_PLATFORM=ios vue-cli-service serve"
   },
   "dependencies": {
+    "@cardsjd/analytics": "^0.1.4",
+    "@ckeditor/ckeditor5-build-classic": "^19.0.0",
+    "@ckeditor/ckeditor5-vue": "^1.0.1",
     "@ionic/core": "^4.7.4",
     "@ionic/vue": "0.0.1",
-    
+    "@microsoft/signalr": "^5.0.17",
+    "@widgetbot/embed-api": "^1.1.3",
     "axios": "^0.19.0",
-    "vue": "^2.6.10",
+    "bad-words-jd": "^1.5.16",
+    "howler": "^2.2.1",
+    "jsondiffpatch": "^0.4.1",
+    "markdown-it": "^14.1.0",
+    "vue": "^2.7.16",
     "vue-json-csv": "^1.2.5",
-    "vue-router": "^3.1.2"
+    "vue-meta": "^2.4.0",
+    "vue-router": "^3.1.2",
+    "vue-simple-alert": "^1.1.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.10.0",
-    "@vue/cli-plugin-eslint": "^3.10.0",
-    "@vue/cli-service": "^3.10.0",
-    "babel-eslint": "^10.0.2",
-    "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.2.3",
-    "vue-template-compiler": "^2.6.10"
+    "@vue/cli-plugin-babel": "^5.0.8",
+    "@vue/cli-service": "^5.0.8",
+    "cross-env": "^7.0.0",
+    "fs": "^0.0.1-security"
   }
 }

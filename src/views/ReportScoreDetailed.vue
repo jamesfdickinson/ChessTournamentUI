@@ -30,7 +30,7 @@
 
 <script>
 // @ is an alias to /src
-import fetch from "@/fetch.js";
+import fetch from "@/services/fetch";
 import GridSort from "@/components/GridSort.vue";
 export default {
   name: "ReportScoreDetailed",
@@ -51,7 +51,7 @@ export default {
       tournamentId: tournamentId,
       data: [],
       searchQuery: "",
-      gridColumns: ["name", "points", "school", "grade", "division"],
+      gridColumns: ["name", "points", "team", "grade", "division"],
       gridData: [],
       title: title,
       description: description,

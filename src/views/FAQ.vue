@@ -18,7 +18,7 @@
     </ion-header>
     <ion-content padding>
       <ion-item>
-        <div v-html="tournament.faqcontent"></div>
+        <div v-html="tournament.faqContent"></div>
       </ion-item>
     </ion-content>
     <!-- </ion-page> -->
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import fetch from "@/fetch.js";
+import fetch from "@/services/fetch";
 
 export default {
   name: "home",

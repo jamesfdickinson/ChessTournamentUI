@@ -21,7 +21,7 @@
 
 <script>
 // @ is an alias to /src
-import fetch from "@/fetch.js";
+import fetch from "@/services/fetch";
 import GridSort from "@/components/GridSort.vue";
 export default {
   name: "ReportScoreGroupRank",
@@ -32,12 +32,12 @@ export default {
     var tournamentId = this.$route.params.tournament;
     var title = "Score Sub Grade Group Rank";
     var description =
-      "This report generates scores based on 3 grade groups k-2, 3-5, 6-8. The points are of the top 4 scores of per school.";
+      "This report generates scores based on 3 grade groups k-2, 3-5, 6-8. The points are of the top 4 scores of per team.";
     return {
       tournamentId: tournamentId,
       data: [],
       searchQuery: "",
-      gridColumns: ["grouping", "school", "rank", "totalPoints", "players"],
+      gridColumns: ["grouping", "team", "rank", "totalPoints", "players"],
       gridData: [],
       title: title,
       description: description,

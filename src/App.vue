@@ -1,6 +1,6 @@
 
 <template>
-  <router-view :key="$route.fullPath"/>
+  <router-view :key="$route.fullPath" />
 </template>
 <!-- 
 <style src='@ionic/core/css/core.css'></style>

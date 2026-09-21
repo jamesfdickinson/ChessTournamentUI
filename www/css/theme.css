@@ -1,8 +1,64 @@
 :root {
-    --ion-color-secondary: #006600;
-    --ion-color-secondary-rgb: 0,102,0;
-    --ion-color-secondary-contrast: #ffffff;
-    --ion-color-secondary-contrast-rgb: 255,255,255;
-    --ion-color-secondary-shade: #005a00;
-    --ion-color-secondary-tint: #1a751a;
-  }
+  --ion-color-secondary: #006600;
+  --ion-color-secondary-rgb: 0, 102, 0;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #005a00;
+  --ion-color-secondary-tint: #1a751a;
+}
+ion-content {
+  user-select: text;
+  -webkit-user-select: text;
+}
+ion-list a {
+  text-decoration: none;
+}
+
+.ios input,
+.ios textarea,
+.ios select,
+.ios .searchbar-input.sc-ion-searchbar-ios,
+.ios .native-input.sc-ion-input-ios,
+.ios .native-textarea.sc-ion-textarea-ios {
+  font-size: 16px;
+}
+
+header {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-bottom: 1.25em;
+  text-transform: uppercase;
+}
+
+section {
+  margin-top: 1em;
+  margin-bottom: 2.5em;
+}
+
+section:not(.full-width),
+.full-width > header {
+  padding: 0 10px;
+}
+/* 
+.initialBox {
+  width: 32px;
+  font-weight: bold;
+  background-color: #097123;
+  color: white;
+  padding: 3px 5px;
+  display: inline-block;
+  margin-right: 10px;
+  overflow: hidden;
+  word-break: break-all;
+ 
+  white-space: nowrap;
+  text-align: center;
+  border-radius: 5px;
+
+  
+}
+
+.initialBox::first-letter {
+  visibility: visible;
+} */

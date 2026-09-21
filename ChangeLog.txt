@@ -1,0 +1,70 @@
+Tournament JD UI Change Log
+
+2026-03-17
+Team Links And Back Navigation
+- Linked team names in the team score rank report to the Team page.
+- Linked team names in the detailed score group rank report to the Team page.
+
+2026-03-16
+IPhone Input Zoom Fix
+- Fixed an iPhone/iOS Safari issue where focusing small text inputs could zoom the page and leave it visually stuck until refresh.
+- Updated viewport behavior and applied iOS-specific 16px text-entry sizing to prevent Safari auto-zoom on focus.
+- Included follow-up sizing cleanup for iOS text boxes and search fields.
+
+2026-03-16
+Tournament View Cleanup
+- Hide the game-room watch icon when a watch link is not available.
+
+2026-03-13
+Teams And Profiles
+- Added a Teams page and team navigation improvements.
+- Added avatar editing support.
+- Added team links and team-related cleanup in group reports.
+
+2026-03-13
+Chat And Team Management
+- Removed system chat sounds for system messages.
+- Added chat and player team change updates.
+
+2026-03-12
+Check-In And Round Settings
+- Renamed check-in settings to allowSelfCheckIn and requireCheckInEveryRound for clearer admin options.
+- Removed the play timer where it was no longer needed.
+- Removed unused tournament socket API code.
+
+2026-03-11
+Team Report Improvements
+- Cleaned up group team reports and improved responsive behavior.
+- Added allow team change options and reorganized related settings.
+
+2026-03-06
+Registration And Host Access
+- Show all players registered by a user during registration flows.
+- Improved request host access flow and cleaned up game type handling.
+
+2026-03-03
+PlayGame And Stats
+- Added play-game end time handling.
+- Added report tournament stats updates.
+
+2026-02-28
+Gameplay Timing Fixes
+- Fixed end-of-tournament last-round play timing.
+- Improved start and end time handling in PlayGame.
+- Added support for round times during gameplay.
+
+2026-02-21
+Hosting, Auth, And Deployment
+- Added authentication, host request, and host management improvements.
+- Added PlayGame stream support.
+- Updated Azure App Service deployment workflow configuration.
+
+2026-02-07
+Payment Beta
+- Added payment beta support.
+- Added player registration and cart flow updates.
+
+2025-12-18
+Verification Updates
+- Added required verified email support.
+- Added verified button and status updates.

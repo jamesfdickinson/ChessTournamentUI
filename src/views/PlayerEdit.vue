@@ -11,6 +11,14 @@
       </ion-toolbar>
     </ion-header>
     <ion-content>
+      <ion-avatar style="margin: 15px auto; width: 100px; height: 100px">
+        <img :src="player.avatar ? player.avatar : '/images/avatars/agent.png'" />
+      </ion-avatar>
+      <div style="text-align: center; margin-bottom: 10px">
+        <ion-button size="small" @click="openAvatarEdit()">
+          Edit Avatar
+        </ion-button>
+      </div>
       <ion-list>
         <ion-item>
           <ion-label position="stacked">First Name</ion-label>
@@ -20,9 +28,18 @@
           <ion-label position="stacked">Last Name</ion-label>
           <ion-input :value="player.lastName" @input="player.lastName = $event.target.value"></ion-input>
         </ion-item>
+
         <ion-item>
-          <ion-label position="stacked">School</ion-label>
-          <ion-input :value="player.school" @input="player.school = $event.target.value"></ion-input>
+          <ion-label position="stacked">Avatar</ion-label>
+          <ion-input :value="player.avatar" @input="player.avatar = $event.target.value"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Gamer ID</ion-label>
+          <ion-input :value="player.gamerId" @input="player.gamerId = $event.target.value"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Team</ion-label>
+          <ion-input :value="player.team" @input="player.team = $event.target.value"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Grade</ion-label>
@@ -40,59 +57,57 @@
         <ion-item>
           <ion-label>IsPresent</ion-label>
 
-          <ion-checkbox
-            slot="start"
-            :checked="player.isPresent"
-            @ionChange="player.isPresent = ($event.target.checked == true);"
-          ></ion-checkbox>
+          <ion-checkbox slot="start" :checked="player.isPresent"
+            @ionChange="player.isPresent = $event.target.checked == true"></ion-checkbox>
         </ion-item>
 
         <ion-item>
           <ion-label>Paid</ion-label>
-          <ion-checkbox
-            slot="start"
-            :checked="player.paid"
-            @ionChange="player.paid = ($event.target.checked == true);"
-          ></ion-checkbox>
+          <ion-checkbox slot="start" :checked="player.paid"
+            @ionChange="player.paid = $event.target.checked == true"></ion-checkbox>
         </ion-item>
-        <ion-item>
+        <!-- <ion-item>
           <ion-label>Allow SMS Notifications</ion-label>
           <ion-checkbox
             slot="start"
             :checked="player.allowNotifications"
             @ionChange="player.allowNotifications = ($event.target.checked == true);"
           ></ion-checkbox>
-        </ion-item>
-        <ion-item>
+        </ion-item>-->
+        <!-- <ion-item>
           <ion-label position="stacked">Parent's Name</ion-label>
           <ion-input :value="player.parentName" @input="player.parentName = $event.target.value"></ion-input>
+        </ion-item>-->
+        <ion-item>
+          <ion-label position="stacked">Email</ion-label>
+          <ion-input :value="player.email" @input="player.email = $event.target.value"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="stacked">Parent's Email</ion-label>
-          <ion-input :value="player.parentEmail" @input="player.parentEmail = $event.target.value"></ion-input>
+          <ion-label position="stacked">Gender</ion-label>
+          <ion-input :value="player.gender" @input="player.gender = $event.target.value"></ion-input>
         </ion-item>
-        <ion-item>
-          <ion-label position="stacked">Parent's Phone Number</ion-label>
+        <!-- <ion-item>
+          <ion-label position="stacked">Phone Number</ion-label>
           <ion-input :value="player.parentPhone" @input="player.parentPhone = $event.target.value"></ion-input>
-        </ion-item>
-        <ion-item></ion-item>
+        </ion-item>-->
       </ion-list>
-
-      <ion-button expand="block" v-on:click="save()">Save</ion-button>
-      <hr>
-      <ion-button expand="block" color="light" v-on:click="back()">Cancel</ion-button>
-      <hr>
-       <ion-button  color="danger" v-on:click="deletePlayer()">Delete</ion-button> 
-    <!-- <ion-button @click="presentAlertConfirm">Show Alert (confirm)</ion-button> -->
-      <!-- <ion-button color="danger">Delete</ion-button> -->
-      <div style="color:red;">{{error}}</div>
+      <section>
+        <ion-button expand="block" v-on:click="save()">Save</ion-button>
+        <hr />
+        <ion-button expand="block" color="light" v-on:click="back()">Cancel</ion-button>
+        <hr />
+        <ion-button color="danger" v-on:click="deletePlayer()">Delete</ion-button>
+        <!-- <ion-button @click="presentAlertConfirm">Show Alert (confirm)</ion-button> -->
+        <!-- <ion-button color="danger">Delete</ion-button> -->
+      </section>
+      <div style="color: red">{{ error }}</div>
     </ion-content>
     <!-- </ion-page> -->
   </layout-no-menu>
 </template>
 
 <script>
-import fetch from "@/fetch.js";
+import fetch from "@/services/fetch";
 
 export default {
   name: "home",
@@ -106,25 +121,55 @@ export default {
       player: {
         tournamentId: tournamentId,
         rating: 1000,
-        allowNotifications: true
+        allowNotifications: true,
+        division: 1,
+        team: "",
+        isPresent: true,
+        gender: ""
       },
-      error: ""
+      error: "",
     };
   },
   methods: {
     back() {
       this.$router.back();
     },
+    openAvatarEdit() {
+      if (!this.playerId) return;
+      this.$router.push({
+        name: "AvatarEdit",
+        params: { id: this.playerId, tournament: this.tournamentId },
+      });
+    },
     save() {
+      this.error = "";
       let tournamentId = this.tournamentId;
-      let redirect = this.redirect;
+      //let redirect = this.redirect;
       var playerId = this.playerId;
       var player = this.player;
 
+      //validation
+      let errors = [];
+      if (!player.firstName) errors.push("first name is required.");
+      //if (!player.team) errors.push("team is required.");
+      //if (!player.grade) errors.push("grade is required.");
+      //if (isNaN(player.grade)) errors.push("grade is not a number.");
+      if (!player.rating) player.rating = 1000;
+      player.rating = parseInt(player.rating) || 1000;
+      if (isNaN(player.rating)) errors.push("rating is not a number.");
+      if (!player.division) player.division = 1;
+      player.division = parseInt(player.division) || 1;
+      if (isNaN(player.division)) errors.push("division is not a number.");
+      if (errors.length > 0) {
+        this.error = errors;
+        return;
+      }
+
       if (playerId) {
         fetch
-          .post(`player/${playerId}`, player)
-          .then(response => {
+          .put(`player/${playerId}`, player)
+          .then((response) => {
+            console.log(response);
             //back
             this.$router.back();
             //if (redirect) {
@@ -133,34 +178,41 @@ export default {
             //    this.$router.push({ path: `/${tournamentId}/Player/${playerId}` });
             // }
           })
-          .catch(e => {
-            this.error = "Error: Save failed";
+          .catch((e) => {
+            this.error = "Error: Save failed." + e;
             console.warn(e);
           });
       } else {
         player.tournamentId = tournamentId;
         fetch
-          .put(`player`, player)
-          .then(response => {
+          .post(`player`, player)
+          .then((response) => {
+            console.log(response);
             //back
             this.$router.back();
           })
-          .catch(e => {
-            this.error = "Error: Save failed";
+          .catch((e) => {
+            this.error = "Error: Save failed." + e;
             console.warn(e);
           });
       }
     },
     deletePlayer() {
-      var playerId = this.playerId;
+      let playerId = this.playerId;
+      let tournamentId = this.tournamentId;
       if (playerId) {
         fetch
           .delete(`player/${playerId}`)
-          .then(response => {
+          .then((response) => {
+            console.log(response);
             //back
-            this.$router.back();
+            //this.$router.back();
+            this.$router.push({
+              name: "Players",
+              params: { tournament: tournamentId },
+            });
           })
-          .catch(e => {
+          .catch((e) => {
             this.error = "Error: Delete failed";
             console.warn(e);
           });
@@ -171,43 +223,18 @@ export default {
       if (playerId) {
         fetch
           .get(`player/${playerId}`)
-          .then(response => {
+          .then((response) => {
             this.player = response.data;
           })
-          .catch(e => {
+          .catch((e) => {
             this.error = "Error: Load failed";
             console.warn(e);
           });
       }
-    }
-    // ,
-    //  presentAlertConfirm() {
-    //   return this.$ionic.alertController
-    //     .create({
-    //       header: 'Confirm!',
-    //       message: 'Message <strong>text</strong>!!!',
-    //       buttons: [
-    //         {
-    //           text: 'Cancel',
-    //           role: 'cancel',
-    //           cssClass: 'secondary',
-    //           handler: blah => {
-    //             console.log('Confirm Cancel:', blah)
-    //           },
-    //         },
-    //         {
-    //           text: 'Okay',
-    //           handler: () => {
-    //             console.log('Confirm Okay')
-    //           },
-    //         },
-    //       ],
-    //     })
-    //     .then(a => a.present())
-    // },
+    },
   },
   created() {
     this.loadData();
-  }
+  },
 };
 </script>

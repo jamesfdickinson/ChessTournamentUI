@@ -1,0 +1,111 @@
+
+<template>
+  <div v-show="title">
+    <div v-show="isLoaded" class="teamIcon" :style="teamIconStyle">
+      <img :src="'images/teams/' + title + '.png'" @load="loaded" />
+    </div>
+    <!-- <img v-if="image" v-bind:src="image" /> -->
+    <div
+      v-if="!isLoaded"
+      class="initialBox"
+      v-bind:style="initialBoxStyle"
+    >
+      {{ stringAbbreviation(title) }}
+    </div>
+  </div>
+</template>
+
+
+<script>
+export default {
+  name: "TeamIcon",
+  props: {
+    title: String,
+    size: {
+      type: Number,
+      default: 26,
+    },
+  },
+  data: function () {
+    return {
+      isLoaded: false,
+    };
+  },
+  computed: {
+    teamIconStyle() {
+      return {
+        width: `${this.size}px`,
+        maxHeight: `${Math.round(this.size * 0.96)}px`,
+      };
+    },
+    initialBoxStyle() {
+      return {
+        backgroundColor: this.stringToColour(this.title),
+        minWidth: `${this.size}px`,
+      };
+    },
+  },
+  methods: {
+    loaded() {
+      this.isLoaded = true;
+    },
+    stringAbbreviation(str) {
+      if (!str) return;
+      var matches = str.match(/\b(\w)/g);
+      if (!matches) return str.substring(0, 4);
+      
+      var acronym = matches.join("");
+      if (acronym.length > 1) return acronym.substring(0, 4);
+
+      return str.substring(0, 4);
+    },
+    stringToColour(str) {
+      if (!str) str = "";
+      var hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        hash = str.charCodeAt(i) + ((hash << 5) - hash);
+      }
+      var colour = "#";
+      for (let i = 0; i < 3; i++) {
+        let value = (hash >> (i * 8)) & 0xff;
+        value = Math.floor(value * 0.7); //make darker
+        colour += ("00" + value.toString(16)).substr(-2);
+      }
+      return colour;
+    },
+  },
+};
+</script>
+<style scoped>
+.teamIcon {
+  max-height: 25px;
+  width: 26px;
+  display: inline-block;
+  text-align: center;
+}
+.teamIcon img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+.initialBox {
+  min-width: 26px;
+
+  font-weight: bold;
+  background-color: #097123;
+  color: white;
+  padding: 3px 5px;
+  display: inline-block;
+
+  overflow: hidden;
+  word-break: break-all;
+
+  white-space: nowrap;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.initialBox::first-letter {
+  visibility: visible;
+}
+</style>

@@ -4,129 +4,366 @@
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
-          <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
+          <ion-icon
+            name="arrow-round-back"
+            size="large"
+            @click="$router.go(-1)"
+          ></ion-icon>
         </ion-buttons>
-        <ion-title>Record Score</ion-title>
+        <ion-title>Table</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content padding>
-      <ion-item>
-        <h1>Who Won?</h1>
-      </ion-item>
-      <ion-item>
-        <ion-label>Table: {{table.id}}</ion-label>
-      </ion-item>
-
+      <!-- <ion-card> -->
       <ion-list>
-        <template v-for="position of table.positions">
-          <ion-list-header :key="position.color">
-            <ion-label>{{position.color}}</ion-label>
-          </ion-list-header>
-          <ion-item button detail="true" :key="position.id" v-on:click="reportWin(position.playerId)">
-            <ion-icon
-              v-if="position.color=='Black'"
-              src="/images/chess_pawn_black.svg"
-              slot="start"
-            ></ion-icon>
-            <ion-icon
-              v-else-if="position.color=='White'"
-              src="/images/chess_pawn_white.svg"
-              slot="start"
-            ></ion-icon>
-            <ion-icon v-else name="contact" slot="start"></ion-icon>
-            <ion-label>{{position.playerFirstName}} {{position.playerLastName}}</ion-label>
-          </ion-item>
-        </template>
-        <ion-list-header>
-          <ion-label>Tie</ion-label>
-        </ion-list-header>
-        <ion-item button detail="true" v-on:click="reportTie()">
-          <ion-icon name="radio-button-off" slot="start"></ion-icon>
-          <ion-label>Tie Game</ion-label>
+        <!-- <ion-item>
+          <ion-label>Table</ion-label>
+          <ion-label slot="end">{{tableId}}</ion-label>
+        </ion-item>-->
+        <ion-item>
+          <ion-label>Id</ion-label>
+          <ion-label slot="end">{{ tableId }}</ion-label>
+          <ion-button
+            slot="end"
+            color="light"
+            v-on:click="watchGame(tableId)"
+            target="_blank"
+            >Watch</ion-button
+          >
         </ion-item>
       </ion-list>
+      <ion-list>
+        <ion-list-header>
+          <h3>Verify the winner</h3>
+        </ion-list-header>
+        <ion-radio-group
+          :value="winner"
+          @ionChange="selectWinner($event.target.value)"
+        >
+          <template v-for="position of positions">
+            <ion-item :key="position.id">
+              <ion-radio slot="start" :value="position.playerId"></ion-radio>
+              <ion-icon
+                v-if="position.color == 'Black'"
+                src="/images/chess_pawn_black.svg"
+                slot
+              ></ion-icon>
+              <ion-icon
+                v-else-if="position.color == 'White'"
+                src="/images/chess_pawn_white.svg"
+                slot
+              ></ion-icon>
+              <ion-label
+                >{{ position.playerFirstName }}
+                {{ position.playerLastName }}
+              </ion-label>
+            </ion-item>
+          </template>
+          <ion-item>
+            <ion-radio slot="start" value="tie"></ion-radio>
+            <ion-label>Tie</ion-label>
+          </ion-item>
+        </ion-radio-group>
+      </ion-list>
+
+      <ion-list>
+        <ion-list-header>
+          <h3>Players</h3>
+        </ion-list-header>
+        <template v-for="position of positions">
+          <ion-item :key="position.id">
+            <ion-label slot
+              >{{ position.playerFirstName }}
+              {{ position.playerLastName }}
+            </ion-label>
+            <ion-input
+              slot="end"
+              type="number"
+              :value="position.points"
+              @input="position.points = parseFloat($event.target.value) || 0"
+            ></ion-input>
+            <ion-input
+              slot="end"
+              type="number"
+              :value="position.tieBreaker"
+              @input="position.tieBreaker = parseFloat($event.target.value) || 0"
+            ></ion-input>
+            <ion-input
+              slot="end"
+              type="string"
+              :value="position.color"
+              @input="position.color = $event.target.value || ''"
+            ></ion-input>
+            <ion-icon
+              name="trash"
+              slot="end"
+              v-on:click="
+                deletePosition(position);
+                $event.stopPropagation();
+              "
+            ></ion-icon>
+          </ion-item>
+        </template>
+        <ion-item>
+          <ion-label>
+            <select v-model="positionNew.playerId">
+              <option disabled value="">Select One</option>
+              <option value="-1">Bye</option>
+              <template v-for="player in players">
+                <option :key="player.playerId" :value="player.playerId">
+                  {{ `${player.firstName} ${player.lastName}` }}
+                </option>
+              </template>
+            </select>
+          </ion-label>
+        <on-label>
+            <select v-model="positionNew.color">
+              <option disabled value="">Select Color</option>
+              <option value="White">White</option>
+              <option value="Black">Black</option>
+            </select></on-label>
+          <ion-button slot="end" v-on:click="createPosition(positionNew)"
+            >Add</ion-button
+          >
+        </ion-item>
+      </ion-list>
+      <ion-list>
+        <ion-button expand="block" v-on:click="save()">Save</ion-button>
+      </ion-list>
+
+      <ion-list> </ion-list>
     </ion-content>
     <!-- </ion-page> -->
+    <!-- v-on:click="reportWin(position.playerId)" -->
   </layout-menu>
 </template>
 
 <script>
-import fetch from "@/fetch.js";
+import TournamentAPI from "@/services/TournamentAPI";
+//import Authentication from "@/services/Authentication";
+//import Authorization from "@/services/Authorization";
+const tournamentAPI = new TournamentAPI();
+//const authentication = new Authentication();
+//const authorization = new Authorization();
 
 export default {
   name: "TableEdit",
 
   components: {},
   data() {
-    let tournamentId = this.$route.params.tournament;
-    let round = this.$route.params.round;
+    let tournamentId = parseInt(this.$route.params.tournament);
+    let roundId = parseInt(this.$route.params.round);
     let tableId = this.$route.params.id;
-    let redirect = this.$route.query.redirect;
+    let table = parseInt(this.$route.params.table) || 0;
+    //let redirect = this.$route.query.redirect;
     return {
       tournamentId: tournamentId,
-      round: round,
+      roundId: roundId,
       tableId: tableId,
-      table: {},
-      errors: []
+      winner: "",
+      players: [],
+      positions: [],
+      positionNew: {
+        tournamentId: tournamentId,
+        round: roundId,
+        room: tableId,
+        table: table,
+        points: null,
+      },
+      errors: [],
+      winPoints: 2,
+      tiePoints: 1,
+      lossPoints: 0,
     };
   },
   methods: {
     back() {
       this.$router.go(-1);
     },
-    reportWin(playerId) {
-      let round = this.round;
-      let tableId = this.tableId;
+    watchGame(id) {
+      this.$router.push({
+        name: "PlayGame",
+        params: { id: id, spectate: true },
+      });
+    },
+    save() {
       let tournamentId = this.tournamentId;
-
-      fetch
-        .post(
-          `table/ReportWin/${tableId}?round=${round}&tournament=${tournamentId}&winner=${playerId}`
-        )
-        .then(response => {
-          console.log(response.data);
+      let positions = this.positions;
+      tournamentAPI
+        .matchesUpdate(tournamentId, positions)
+        .then((data) => {
+          console.log(data);
           this.$router.go(-1);
         })
-        .catch(e => {
+        .catch((e) => {
           this.errors.push(e);
         });
     },
-    reportTie() {
-      let round = this.round;
-      let tableId = this.tableId;
+    deletePosition(position) {
+      this.errors = [];
+      this.messages = [];
+      this.$confirm(
+        `Do you want to delete player ${position.playerFirstName}?`
+      ).then(() => {
+        tournamentAPI
+          .matchDelete(position.id)
+          .then(() => {
+            this.messages.push("Deleted");
+            this.loadData();
+          })
+          .catch((e) => {
+            this.errors.push(e);
+          });
+      });
+    },
+    createPosition(match) {
+      //Bug: why is table being saved as "0"
+      this.errors = [];
+      this.messages = [];
       let tournamentId = this.tournamentId;
 
-      fetch
-        .post(
-          `table/ReportTie/${tableId}?round=${round}&tournament=${tournamentId}`
-        )
-        .then(response => {
-          console.log(response.data);
-          this.$router.go(-1);
+      
+      if(match.table === 0) {
+         match.table = this.tableNumber;
+      }
+      //if table is not set, extract from room
+      if(match.table === 0) {
+        const regex = /(\d+)R/;
+        const str = match.room;
+        const matchRegex = str.match(regex);
+        if (matchRegex) {
+          const extractedNumber = matchRegex[1];
+          match.table = extractedNumber;
+        }
+        
+      }
+      //let roundId = this.roundId;
+      tournamentAPI
+        .matchesCreate(tournamentId, [match])
+        .then(() => {
+          this.messages.push("Created");
+          this.loadData();
+          //reset create row
+          this.positionNew.playerId = null;
         })
-        .catch(e => {
+        .catch((e) => {
           this.errors.push(e);
         });
+    },
+    selectWinner(winner) {
+      //todo: move settings to backend tournament settings
+      let winPoints = this.winPoints || 2;
+      let tiePoints = this.tiePoints || 1;
+      let lossPoints = this.lossPoints || 0;
+
+      let positions = this.positions;
+      if (!positions) return;
+      for (let i = 0; i < positions.length; i++) {
+        let position = positions[i];
+        //todo: give point to player and zero to all others
+        if (winner == position.playerId) {
+          position.points = winPoints;
+        } else {
+          position.points = lossPoints;
+        }
+        //tie
+        if (winner === "tie") {
+          position.points = tiePoints;
+        }
+      }
+    },
+    populate(data) {
+      this.winPoints = data.winPoints;
+      this.tiePoints = data.tiePoints;
+      this.lossPoints = data.lossPoints;
     },
     loadData() {
-      //api/table/1?round=2&tournament=117
-
-      let round = this.round;
+      //let round = this.round;
       let tableId = this.tableId;
       let tournamentId = this.tournamentId;
 
-      fetch
-        .get(`table/${tableId}?round=${round}&tournament=${tournamentId}`)
-        .then(response => {
-          this.table = response.data;
+      tournamentAPI
+        .tournamentView(tournamentId)
+        .then((data) => {
+          this.populate(data);
         })
-        .catch(e => {
+        .catch((e) => {
           this.errors.push(e);
         });
-    }
+
+      //get table may need to be by tournamentid / round / table number, but then how does room id fit in
+      //api/table/1?round=2&tournament=117
+      tournamentAPI
+        .tableGet(tableId)
+        .then((data) => {
+          this.tableNumber = data.tableNumber;
+          this.positions = data.positions || [];
+          //this.checkAccess(this.table);
+        })
+        .catch((e) => {
+          this.errors.push(e);
+        });
+
+      tournamentAPI
+        .players(tournamentId)
+        .then((data) => {
+          this.players = data;
+        })
+        .catch((e) => {
+          this.errors.push(e);
+        });
+    },
+    // checkAccess(table) {
+    //   let round = this.round;
+    //   let tableId = this.tableId;
+    //   let tournamentId = this.tournamentId;
+
+    //   //page access based on role
+    //   let allowAccess = this.authorizationPage();
+    //   if (allowAccess) return true;
+
+    //   //allow self report
+    //   let allowAccessUser = this.authorizationPageUser(table);
+    //   if (!allowAccessUser && !allowAccess) {
+    //     let redirectUrl = `/${tournamentId}/AccessDenied?redirect=/${tournamentId}/round/${round}/TableEdit/${tableId}`;
+    //     this.$router.replace(redirectUrl);
+    //   }
+    // },
+    //authorizationPage() {
+    //   let tournamentId = this.tournamentId;
+    //   let user = authentication.getUser();
+    //   if (!user) return false;
+    //   let roles = user.roles || [];
+
+    //   //page access based on role
+    //   let allowAccess = authorization.isPageAllowed(
+    //     "TableEdit",
+    //     tournamentId,
+    //     roles
+    //   );
+
+    //   return allowAccess;
+    // },
+    // authorizationPageUser(table) {
+    //   let user = authentication.getUser();
+    //   if (!user) return false;
+    //   let userName = user.userName;
+
+    //   //allow self report
+    //   if (!table) return false;
+    //   let positions = table.positions;
+    //   if (!positions) return;
+
+    //   for (let i = 0; i < positions.length; i++) {
+    //     let position = positions[i];
+    //     let playerEmail = position.playerEmail;
+    //     if (playerEmail === userName) return true;
+    //   }
+    //   return false;
+    // },
   },
   created() {
     this.loadData();
-  }
+  },
 };
 </script>

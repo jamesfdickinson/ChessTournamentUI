@@ -53,8 +53,9 @@
 
 <script>
 // @ is an alias to /src
-import fetch from "@/fetch.js";
+import TournamentAPI from "@/services/TournamentAPI";
 import GridSort from "@/components/GridSort.vue";
+const tournamentAPI = new TournamentAPI();
 export default {
   name: "RoundDetails",
   components: {
@@ -72,11 +73,12 @@ export default {
       searchQuery: "",
       gridColumns: [
         "table",
-        "name",
+        "firstName", 
+        "lastName",
         "color",
         "points",
         "totalPoints",
-        "school",
+        "team",
         "grade",
         "division"
       ],
@@ -97,10 +99,10 @@ export default {
     loadData() {
       var tournamentId = this.tournamentId;
       var roundId = this.roundId;
-      fetch
-        .get(`round/${roundId}?tournament=${tournamentId}`)
-        .then(response => {
-          this.data = response.data;
+       tournamentAPI
+        .round(tournamentId, roundId)
+        .then((data) => {
+           this.data = data;
           this.gridData = this.data;
         })
         .catch(e => {

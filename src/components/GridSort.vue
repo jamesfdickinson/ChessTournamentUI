@@ -2,28 +2,51 @@
   <div>
     <div class="section-not-to-print">
       <!-- <ion-button style="float:right;" @click="print()">Print</ion-button>-->
-      <download-csv style="float:right;" :data="filteredData" :name="(title||'report')+'.csv'">
+      <download-csv
+        v-if="showExport"
+        style="float: right"
+        :data="filteredData"
+        :name="(title || 'report') + '.csv'"
+      >
         <ion-button>Export Data</ion-button>
       </download-csv>
+      <!-- <div v-if="showRefresh"  style="float: right">
+        <ion-button>Refresh</ion-button>
+      </div> -->
     </div>
     <div id="printable" class="section-to-print">
-      <h1 v-show="title" class="title">{{title}}</h1>
-      <div v-show="description" class="description">{{description}}</div>
+      <h1 v-show="title" class="title">{{ title }}</h1>
+      <div v-show="description" class="description">{{ description }}</div>
       <table>
         <thead>
           <tr>
             <th v-for="key in columns" :key="key" @click="sortBy(key)">
-              {{ key | capitalize }}
+              {{ getColumnTitle(key) }}
               <span
                 class="arrow section-not-to-print"
-                :class="sortOrders && (sortOrders[key] > 0) ? 'asc' : 'dsc'"
+                :class="sortOrders && sortOrders[key] > 0 ? 'asc' : 'dsc'"
               ></span>
             </th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="entry in filteredData" :key="entry.indexOf">
-            <td v-for="key in columns" :key="key">{{entry[key]}}</td>
+            <td v-for="key in columns" :key="key">
+              <template v-if="isLinkColumn(key)">
+                <component
+                  :is="getLinkComponent(key)"
+                  :to="getLinkUrl(key, entry)"
+                  :href="getExternalUrl(key, entry)"
+                  :target="getLinkTarget(key)"
+                  class="grid-link"
+                >
+                  {{ entry[key] }}
+                </component>
+              </template>
+              <template v-else>
+                {{ entry[key] }}
+              </template>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -37,19 +60,30 @@ export default {
   props: {
     data: Array,
     columns: Array,
+    columnTitles: Object,
     filterKey: String,
     sortKeys: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     sortOrders: {
       type: Object,
-      default: () => ({})
+      default: () => ({}),
     },
     title: String,
-    description: String
+    description: String,
+    showExport: Boolean,
+    showRefresh: Boolean,
+    linkColumn: {
+      type: String,
+      default: null
+    },
+    urlPattern: {
+      type: String,
+      default: null
+    },
   },
-  data: function() {
+  data: function () {
     // var sortOrders = {};
     // this.columns.forEach(function(key) {
     //   sortOrders[key] = 1;
@@ -57,31 +91,54 @@ export default {
     return {};
   },
   computed: {
-    filteredData: function() {
+    filteredData: function () {
       var data = this.getFilteredData();
       return data;
-    }
+    },
   },
   filters: {
-    capitalize: function(str) {
+    capitalize: function (str) {
       return str.charAt(0).toUpperCase() + str.slice(1);
-    }
+    },
   },
   methods: {
-    getFilteredData: function() {
+    getColumnTitle: function (key) {
+      if (this.columnTitles && this.columnTitles[key]) {
+        return this.columnTitles[key];
+      }
+      return key;
+    },
+    isLinkColumn: function (key) {
+      return this.linkColumn && this.linkColumn === key;
+    },
+    buildUrlFromPattern: function (urlPattern, entry) {
+      return urlPattern.replace(/\{(\w+)\}/g, function(match, key) {
+        return entry[key] !== undefined ? entry[key] : match;
+      });
+    },
+    getLinkUrl: function (key, entry) {
+      if (!this.urlPattern) return null;
+      return this.buildUrlFromPattern(this.urlPattern, entry);
+    },
+    getExternalUrl: function (key, entry) {
+      return null; // Not using external links in this simplified version
+    },
+    getLinkTarget: function (key) {
+      return '_self';
+    },
+    getLinkComponent: function (key) {
+      return 'router-link';
+    },
+    getFilteredData: function () {
       //var sortKey = this.sortKey;
       var sortKeys = this.sortKeys;
       var sortOrders = this.sortOrders;
       var filterKey = this.filterKey && this.filterKey.toLowerCase();
       var data = this.data;
       if (filterKey) {
-        data = data.filter(function(row) {
-          return Object.keys(row).some(function(key) {
-            return (
-              String(row[key])
-                .toLowerCase()
-                .indexOf(filterKey) > -1
-            );
+        data = data.filter(function (row) {
+          return Object.keys(row).some(function (key) {
+            return String(row[key]).toLowerCase().indexOf(filterKey) > -1;
           });
         });
       }
@@ -94,7 +151,7 @@ export default {
       //   });
       // }
       if (sortKeys) {
-        data = data.slice().sort(function(a, b) {
+        data = data.slice().sort(function (a, b) {
           for (let i = 0; i < sortKeys.length; i++) {
             let sortKey = sortKeys[i];
 
@@ -102,6 +159,12 @@ export default {
             let order = sortOrders[sortKey] || 1;
             let aV = a[sortKey];
             let bV = b[sortKey];
+            if (typeof aV === "string" || aV instanceof String) {
+              aV = aV.toLowerCase();
+            }
+            if (typeof bV === "string" || bV instanceof String) {
+              bV = bV.toLowerCase();
+            }
             let compValue = aV === bV ? 0 : aV > bV ? 1 : -1;
             if (compValue !== 0) return compValue * order;
           }
@@ -110,7 +173,7 @@ export default {
       }
       return data;
     },
-    sortBy: function(key) {
+    sortBy: function (key) {
       //add array of sort keys
 
       //remove it if it is in the list
@@ -126,13 +189,13 @@ export default {
 
       //sort order
       if (!this.sortOrders) this.sortOrders = {};
-      if (!this.sortOrders[key]) this.sortOrders[key] = 1; 
+      if (!this.sortOrders[key]) this.sortOrders[key] = 1;
       this.sortOrders[key] = this.sortOrders[key] * -1;
-    }
+    },
     // ,    print() {
     //   window.print();
     // }
-  }
+  },
 };
 </script>
 
@@ -141,6 +204,7 @@ export default {
 .title {
   margin: 20px 10px 10px 10px;
 }
+
 .description {
   margin: 3px 10px 3px 10px;
 }
@@ -156,6 +220,14 @@ li {
   margin: 0 10px;
 }
 a {
+  color: #16a085;
+}
+.grid-link {
+  color: #3880ff;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.grid-link:hover {
   color: #16a085;
 }
 table {
@@ -177,7 +249,8 @@ th {
   -ms-user-select: none;
   user-select: none;
 
-  white-space: nowrap;
+  white-space: normal;
+  word-wrap: break-word;
   text-align: left;
 }
 tr:nth-child(even) {
@@ -194,14 +267,14 @@ td {
   text-align: left;
 }
 th {
-  font-size: 1em;
-  /* font-size: 20px; */
+  /* font-size: 1em; */
+  font-size: 16px;
   font-weight: 500;
 }
 
 td {
   padding: 4px 4px;
-  font-size: 0.8em;
+  font-size: 14px;
 }
 
 th.active {

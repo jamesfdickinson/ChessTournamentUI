@@ -1,0 +1,53 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy to Azure Web App - TournamentJD-Beta
+
+on:
+  push:
+    branches:
+      - beta
+  workflow_dispatch:
+
+concurrency:
+  group: tournamentjd-beta-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build static app
+        run: npm run build
+        env:
+          VUE_APP_API_URL: ${{ vars.VUE_APP_API_URL || 'https://bracketjd-api.azurewebsites.net/' }}
+
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_E8068EF21CCF4615AD7D1074594A2432 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_B7372552FB8844D7B3833D496830E70D }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_65F4E4B9DCBB4C4CAD754E95E43E6A55 }}
+
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'TournamentJD-Beta'
+          slot-name: 'Production'
+          package: ./www

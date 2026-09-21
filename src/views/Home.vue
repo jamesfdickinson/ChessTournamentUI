@@ -1,79 +1,209 @@
 <template>
-  <layout-menu>
+  <layout-no-menu>
     <ion-page class="ion-page" main>
-      <!-- <ion-page class="ion-page" main> -->
-      <ion-header>
-        <ion-toolbar color="primary">
-          <ion-buttons slot="start">
-            <ion-menu-toggle>
-              <ion-button>
-                <ion-icon slot="icon-only" name="menu"></ion-icon>
-              </ion-button>
-            </ion-menu-toggle>
-          </ion-buttons>
-          <ion-title>Chess Tournament</ion-title>
-        </ion-toolbar>
-      </ion-header>
       <ion-content>
-        <ion-list>
-          <template v-for="tournament of tournaments">
-            <router-link :key="tournament.id">
-              <ion-card :to="{ name: 'Tournament', params: { tournament: tournamentId }}">
-                <ion-img src="./images/chess-board.jpg"></ion-img>
-                <ion-card-header>
-                  <ion-card-title>{{tournament.name}}</ion-card-title>
-                </ion-card-header>
-                <ion-card-content>
-                  <p>{{tournament.details}}</p>
-                </ion-card-content>
-              </ion-card>
-            </router-link>
-          </template>
-        </ion-list>
-        <router-link :to="{ name: 'Tournament', params: { tournament: 120 }}">
-          <ion-card>
-            <!-- <ion-img src="./images/chess-board.jpg"></ion-img> -->
-            <ion-card-header>
-              <ion-card-title>Brookwood and Minter Bridge</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              <p>Jan 26th Chess Tournament at Witch hazel led by Brookwood and Minter Bridge</p>
-            </ion-card-content>
-          </ion-card>
-        </router-link>
+        <div style="background-color:#3880ff;color:#FFFFFF;">
+          <ion-img slot="" style="height: 100px" src="/images/trophyflat.png"></ion-img>
+
+          <h1 class="titleHeader">Tournament JD</h1>
+
+        </div>
+        <div style="padding: 20px; max-width: 600px; margin: 0 auto;">
+          <h1>Welcome to Tournament JD</h1>
+          <div>
+            <p>
+              Play live tournaments online. Find an upcoming tournament and
+              register to play. The tournaments are hosted live by the
+              community. Hosts utilize a live video stream to answer
+              questions, create rounds, and entertain the players.
+            </p>
+          </div>
+
+          <h2>Choose a Game</h2>
+          <div class="gameTypeContainer">
+            <a href="Tournaments/chess" class="gameTypeBox">
+              <img src="/images/icons/chess-128.png" alt="Chess" />
+              <div>Chess</div>
+            </a>
+            <a href="Tournaments/cribbage" class="gameTypeBox">
+              <img src="/images/icons/cribbage-128.png" alt="Cribbage" />
+              <div>Cribbage</div>
+            </a>
+            <a href="Tournaments/all" class="gameTypeBox">
+              <img src="/images/icons/games_card_diamonds-128.png" alt="Other Games" />
+              <div>Other</div>
+            </a>
+          </div>
+
+          <div class="searchBox">
+            <h2>Find Tournament</h2>
+            <div style=" display: flex;">
+              <input type="text" placeholder="Search.." class="searchText" v-model="searchQuery" />
+              <input type="submit" value="Search" class="searchButton" v-on:click="search()" />
+            </div>
+
+
+          </div>
+          <div class="quoteBox">
+            <div>
+              <h2>How to play</h2>
+              <ol>
+                <li>Click on <a href="Login">Login / Sign up</a> and create an
+                  account (FREE)</li>
+                <li>Find a tournament</li>
+                <li>Registrater for a tournament</li>
+                <li>Read the tournament's FAQ/Rules</li>
+                <li>Be on the tournament page when it starts</li>
+                <li>Any questions, ask the tournament host</li>
+              </ol>
+            </div>
+          </div>
+
+
+          <div class="quoteBox">
+            <h2>Details</h2>
+            <a href="help/HowToHost">Tournament Overview</a>
+          </div>
+
+
+          <footer>
+            <p>
+             
+              <a href="mailto:tournament@jdsoftwarellc.com">Contact</a> |
+              <router-link :to="{ name: 'ChangeLog' }">Change Log</router-link> |
+              <router-link :to="{ name: 'ChangeLog' }"> version {{ version }}</router-link>
+
+            </p>
+            <p>TournamentJD - Bracket JD</p>
+          </footer>
+        </div>
       </ion-content>
     </ion-page>
-  </layout-menu>
+  </layout-no-menu>
 </template>
+<style>
+.titleHeader {
+  margin: 0;
+  padding: 0;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #FFFFFF;
+  text-align: center;
+  padding-bottom: 10px;
+}
 
+.searchBox {
+  margin: 30px 0;
+}
+
+.gameTypeContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.gameTypeBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 5px;
+  border-radius: 8px;
+  background-color: #f7f7f7;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: inherit;
+  transition: transform 0.2s, box-shadow 0.2s;
+  min-width: 100px;
+}
+
+.gameTypeBox:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.gameTypeBox img {
+  max-width: 100px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.gameTypeBox div {
+  text-align: center;
+  font-weight: 500;
+}
+
+.searchText {
+  flex-grow: 1;
+  border-radius: 3px;
+  margin: 0 5px 0 0px;
+  padding: 5px 5px;
+  transition: box-shadow 0.2s linear;
+  border: 0;
+  box-shadow: 0 1px 3px 0 rgba(35, 40, 43, 0.2), 0 1px 3px 0 rgba(0, 0, 0, 0.3), inset 0 0 0 1px #C3CACE;
+}
+
+.searchButton {
+  background-color: rgb(56, 128, 255);
+  border: 1px solid rgb(56, 128, 255);
+  color: #FFFFFF;
+  border-radius: 3px;
+  box-shadow: 0 4px 6px 1px rgba(35, 40, 43, 0.2), 0 1px 3px 0 rgba(35, 40, 43, 0.3);
+  padding: 5px 10px
+}
+
+.quoteBox {
+  margin: 30px 0;
+  background-color: #f7f7f7;
+  border-radius: 3px;
+  padding: 5px 20px 10px 20px;
+}
+
+footer {
+  margin-top: 30px;
+  text-align: center;
+}
+</style>
 <script>
 // @ is an alias to /src
-//import HelloWorld from '@/components/HelloWorld.vue'
-import LayoutMenu from "@/components/LayoutMenu.vue";
-
 export default {
   name: "home",
-  components: { LayoutMenu },
+  components: {},
+  metaInfo: {
+    title: 'Tournament JD - Online Tournaments Software',
+    titleTemplate: null, // override the parent template and just use the above title only
+    meta: [
+      { name: 'description', content: 'Play live tournaments online or in-person.  Host your own tournaments with a live video stream.' },
+    ]
+  },
   data() {
+    const version = process.env.VUE_APP_VERSION || "2.0.0";
     return {
-      tournaments: [],
-      errors: []
+      searchQuery: "",
+      version: version,
     };
   },
   methods: {
-    loadData() {
-      fetch
-        .get(`tournament`)
-        .then(response => {
-          this.tournaments = response.data;
-        })
-        .catch(e => {
-          this.errors.push(e);
-        });
-    }
+    search() {
+      const searchQuery = this.searchQuery;
+      this.$router.push({ name: "Tournaments", params: { type: "all", searchQuery: searchQuery } });
+    },
+    login() {
+      this.$router.push({ name: "Login" });
+    },
+    userDetails() {
+      this.$router.push({ name: "User" });
+    },
+    tournamentsPage(type) {
+      if (!type) type = "all";
+      this.$router.push({ name: "Tournaments" });
+    },
+
   },
   created() {
-    this.loadData();
-  }
+
+  },
+
 };
 </script>

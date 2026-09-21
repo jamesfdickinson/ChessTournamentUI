@@ -1,23 +1,18 @@
 {
-  "short_name": "Chess Tournament",
-  "name": "Chess Tournament",
+  "short_name": "Tournament JD",
+  "name": "Tournament JD - Online Tournaments",
   "display": "standalone",
   "orientationx": "landscape",
   "icons": [
     {
-      "src": "images/Icons/chess_rook_white.png",
-      "type": "image/png",
-      "sizes": "48x48"
-    },
-    {
-      "src": "images/Icons/chess_rook_white.png",
-      "type": "image/png",
-      "sizes": "96x96"
-    },
-    {
-      "src": "images/Icons/chess_rook_white.png",
+      "src": "images/icons/trophy-192x192.png",
       "type": "image/png",
       "sizes": "192x192"
+    },
+    {
+      "src": "images/icons/trophy-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
     }
   ],
   "start_url": "/"

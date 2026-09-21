@@ -5,7 +5,7 @@
         <ion-buttons slot="start">
           <ion-icon name="arrow-round-back" size="large" @click="$router.go(-1)"></ion-icon>
         </ion-buttons>
-        <ion-title>Scores - Score Group Rank</ion-title>
+        <ion-title id="title" >Scores - Score Group Rank</ion-title>
         <ion-buttons slot="end">
           <ion-button @click="print()">
             <ion-icon name="print" size="large"></ion-icon>
@@ -14,14 +14,22 @@
       </ion-toolbar>
     </ion-header>
     <div class="section-to-print">
-      <GridSort :data="gridData" :columns="gridColumns" :title="title" :description="description"></GridSort>
+      <GridSort
+        :data="gridData"
+        :columns="gridColumns"
+        :columnTitles="columnTitles"
+        :title="title"
+        :description="description"
+        :linkColumn="'team'"
+        :urlPattern="'/' + tournamentId + '/team/{team}'"
+      ></GridSort>
     </div>
   </layout-raw>
 </template>
 
 <script>
 // @ is an alias to /src
-import fetch from "@/fetch.js";
+import fetch from "@/services/fetch";
 import GridSort from "@/components/GridSort.vue";
 export default {
   name: "ReportScoreGroupRank",
@@ -32,12 +40,19 @@ export default {
     var tournamentId = this.$route.params.tournament;
     var title = "Score Group Rank";
     var description =
-      "This report ranks schools based on the top 5 total points from each school (per division).";
+      "This report ranks teams based on the top 5 total points from each team (per division).";
     return {
       tournamentId: tournamentId,
       data: [],
       searchQuery: "",
-      gridColumns: ["school", "rank", "groupPoints", "players", "division"],
+      gridColumns: ["team", "rank", "groupPoints", "players", "division"],
+      columnTitles: {
+        team: "Team",
+        rank: "Rank",
+        groupPoints: "Group Points",
+        players: "Players",
+        division: "Division"
+      },
       gridData: [],
       title: title,
       description: description,

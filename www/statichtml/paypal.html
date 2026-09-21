@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+
+<body style="background-color: rgb(56, 128, 255);">
+    <div style="text-align: center;">
+        <img style="height: 70px;" src="https://tournamentjd.com/images/trophyflat.png">
+    </div>
+
+    <content
+        style="  margin:10px auto; width: 200px; display:block;  border-radius: 25px;  padding:50px; background-color:white;">
+        <form  target="paypal" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+            <input type="hidden" name="cmd" value="_cart">
+            <input type="hidden" name="business" value="byupirate@yahoo.com">
+            <input type="hidden" name="lc" value="US">
+            <input type="hidden" name="item_name" value="Registration fee for chess Tournament">
+            <input type="hidden" name="button_subtype" value="products">
+            <input type="hidden" name="no_note" value="0">
+            <input type="hidden" name="currency_code" value="USD">
+            <input type="hidden" name="add" value="1">
+            <input type="hidden" name="bn" value="PP-ShopCartBF:btn_cart_LG.gif:NonHostedGuest">
+            <table>
+                <tr>
+                    <td><input type="hidden" name="on0" value="student #">Quantity</td>
+                </tr>
+                <tr>
+                    <td><select name="os0">
+                            <option value="1 students">1 students $6.50 USD</option>
+                            <option value="2 students">2 students $13.00 USD</option>
+                            <option value="3 students">3 students $19.00 USD</option>
+                        </select> </td>
+                </tr>
+                <tr>
+                    <td><input type="hidden" name="on1" value="name of student">Student Name(s)</td>
+                </tr>
+                <tr>
+                    <td><input type="text" name="os1" maxlength="200"></td>
+                </tr>
+            </table>
+            <input type="hidden" name="option_select0" value="1 students">
+            <input type="hidden" name="option_amount0" value="6.50">
+            <input type="hidden" name="option_select1" value="2 students">
+            <input type="hidden" name="option_amount1" value="13.00">
+            <input type="hidden" name="option_select2" value="3 students">
+            <input type="hidden" name="option_amount2" value="19.00">
+            <input type="hidden" name="option_index" value="0">
+            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_cart_LG.gif" border="0" name="submit"
+                alt="PayPal - The safer, easier way to pay online!">
+            <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+        </form>
+    </content>
+
+</body>
+
+</html>

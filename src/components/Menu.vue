@@ -4,14 +4,21 @@
       <ion-icon slot="start" name="contact"></ion-icon>
       <ion-label>Players</ion-label>
     </ion-item>
+
     <ion-item button detail="true" v-on:click="openRounds()">
       <ion-icon slot="start" name="paper"></ion-icon>
       <ion-label>Rounds</ion-label>
     </ion-item>
-    <ion-item button detail="true" v-on:click="openScores()">
-      <ion-icon slot="start" name="podium"></ion-icon>
-      <ion-label>Reports</ion-label>
+    <ion-item button detail="true" v-on:click="openTeams()">
+      <ion-icon slot="start" name="people"></ion-icon>
+      <ion-label>Teams</ion-label>
     </ion-item>
+    <!-- <router-link :to="{ name: 'Standings' }">
+      <ion-item button detail="true">
+        <ion-icon slot="start" name="podium"></ion-icon>
+        <ion-label>Standings</ion-label>
+      </ion-item>
+    </router-link> -->
 
     <!-- <ion-item button detail="true" v-on:click="openSignUp()">
       <ion-icon slot="start" name="clipboard"></ion-icon>
@@ -21,19 +28,32 @@
       <ion-icon slot="start" name="help"></ion-icon>
       <ion-label>FAQ</ion-label>
     </ion-item>
-    <router-link :to="{ name: 'SignUp'}">
+    <ion-item button detail="true" v-on:click="openReports()">
+      <ion-icon slot="start" name="paper"></ion-icon>
+      <ion-label>Reports</ion-label>
+    </ion-item>
+    <router-link :to="{ name: 'SignUp' }">
       <ion-item button detail="true">
         <ion-icon slot="start" name="clipboard"></ion-icon>
-        <ion-label>Sign Up</ion-label>
+        <ion-label>Register</ion-label>
       </ion-item>
-    </router-link> 
+    </router-link>
+    <!-- <router-link :to="{ name: 'Payment' }">
+      <ion-item button detail="true">
+        <ion-icon slot="start" name="card"></ion-icon>
+        <ion-label>Payment</ion-label>
+      </ion-item>
+    </router-link> -->
+    <ion-list-header>
+      <ion-label>Admin</ion-label>
+    </ion-list-header>
     <ion-list-header>
       <ion-label>Recorder</ion-label>
     </ion-list-header>
-    <router-link :to="{ name: 'Registration', params: { tournament: tournamentId }}">
+    <router-link :to="{ name: 'CheckIn', params: { tournament: tournamentId } }">
       <ion-item button detail="true">
         <ion-icon slot="start" name="clipboard"></ion-icon>
-        <ion-label>Registration</ion-label>
+        <ion-label>Recorder Settings</ion-label>
       </ion-item>
     </router-link>
 
@@ -44,50 +64,55 @@
       <ion-icon slot="start" name="filing"></ion-icon>
       <ion-label>Roster</ion-label>
     </ion-item>-->
-       
-    <ion-list-header>
-      <ion-label>Admin</ion-label>
-    </ion-list-header>
 
-<a v-bind:href="'https://admin.chessclub.io/'+ tournamentId+'/'">
- <ion-item button detail="true">
-        <ion-icon slot="start" name="cog"></ion-icon>
-        <ion-label>Admin Settings</ion-label>
-      </ion-item>
-</a>
-    <!-- <router-link :to="{ name: 'Admin', params: { tournament: tournamentId }}">
+    <!-- <ion-list-header>
+      <ion-label>Admin</ion-label>
+    </ion-list-header>-->
+    <router-link :to="{ name: 'Admin', params: { tournament: tournamentId } }">
       <ion-item button detail="true">
         <ion-icon slot="start" name="cog"></ion-icon>
         <ion-label>Admin Settings</ion-label>
       </ion-item>
-    </router-link> -->
+    </router-link>
+    <!-- <a v-bind:href="'https://admin.chessclub.io/'+ tournamentId+'/'">
+      <ion-item button detail="true">
+        <ion-icon slot="start" name="cog"></ion-icon>
+        <ion-label>Admin Settings</ion-label>
+      </ion-item>
+    </a>-->
+
     <ion-list-header>
       <ion-label>Other</ion-label>
     </ion-list-header>
-    <router-link :to="{ name: 'Tournaments'}">
+    <router-link :to="{ name: 'Tournaments' }">
       <ion-item button detail="true">
         <ion-icon slot="start" name="trophy"></ion-icon>
         <ion-label>Tournaments</ion-label>
       </ion-item>
     </router-link>
 
-    <ion-list-header>
+    <!-- <ion-list-header>
       <ion-label>Login</ion-label>
-    </ion-list-header>
-    <router-link :to="{ name: 'Login'}">
+    </ion-list-header>-->
+    <!-- <router-link :to="{ name: 'Login'}">
       <ion-item button detail="true">
         <ion-icon slot="start" name="contact"></ion-icon>
         <ion-label>Login</ion-label>
       </ion-item>
-    </router-link>
-    <ion-item button detail="true" v-on:click="LogOut()">
+    </router-link>-->
+    <!-- <ion-item button detail="true" v-on:click="LogOut()">
       <ion-icon slot="start" name="contact"></ion-icon>
       <ion-label>Log Out</ion-label>
-    </ion-item>
+    </ion-item> -->
   </ion-items>
 </template>
-
+<style scoped>
+a {
+  text-decoration: none;
+}
+</style>
 <script>
+
 export default {
   name: "menutournament",
   components: {},
@@ -95,7 +120,7 @@ export default {
     var tournamentId = this.$route.params.tournament || 120;
     return {
       tournamentId: tournamentId,
-      errors: []
+      errors: [],
     };
   },
   methods: {
@@ -107,57 +132,53 @@ export default {
     openHome() {
       this.$router.push({
         name: "Tournament",
-        params: { tournament: this.tournamentId }
+        params: { tournament: this.tournamentId },
       });
     },
     openPlayers() {
       this.$router.push({
         name: "Players",
-        params: { tournament: this.tournamentId }
+        params: { tournament: this.tournamentId },
       });
     },
     openRounds() {
       this.$router.push({
         name: "Rounds",
-        params: { tournament: this.tournamentId }
+        params: { tournament: this.tournamentId },
       });
     },
-    openScores() {
+    openTeams() {
+      this.$router.push({
+        name: "Teams",
+        params: { tournament: this.tournamentId },
+      });
+    },
+    openReports() {
       this.$router.push({
         name: "Reports",
-        params: { tournament: this.tournamentId }
+        params: { tournament: this.tournamentId },
       });
     },
     openSignUp() {
       this.$router.push({
         name: "signup",
-        params: { tournament: this.tournamentId }
+        params: { tournament: this.tournamentId },
       });
     },
     openFAQ() {
       this.$router.push({
         name: "FAQ",
-        params: { tournament: this.tournamentId }
+        params: { tournament: this.tournamentId },
       });
     },
     clearData() {
       this.$router.push({ path: "home" });
       this.posts = [];
     },
-    loadData() {
-      // var tournamentId = this.tournamentId;
-      // fetch
-      //   .get(`tournament/${tournamentId}`)
-      //   .then(response => {
-      //     this.tournament = response.data;
-      //   })
-      //   .catch(e => {
-      //     this.errors.push(e);
-      //   });
-    }
+
   },
   created() {
-    this.loadData();
-  }
+
+  },
 };
 </script>
